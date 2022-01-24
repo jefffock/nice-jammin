@@ -6,6 +6,7 @@ import Auth from './Auth'
 import Account from './Account'
 import './App.css';
 import Versions from './components/versions'
+import Reviews from './components/reviews'
 
 function App() {
   const [session, setSession] = useState(null)
@@ -16,6 +17,7 @@ function App() {
   const [versions, setVersions] = useState(null)
   const [version, setVersion] = useState(null)
   const [reviews, setReviews] = useState(null)
+  const [showSignIn, setShowSignIn] = useState(false)
   const songRef = useRef();
   const versionsRef = useRef();
 
@@ -100,6 +102,10 @@ function App() {
     <>
       <div className="app">
         <h1>Nice Jammin</h1>
+        <button onClick={e => {setShowSignIn(true)}}>Sign In or Sign Up</button>
+        {showSignIn &&
+        <Auth />
+        }
         <div className="current-selection-div">
           <h2>{artist}</h2>
           <h2>{song}</h2>
@@ -157,9 +163,7 @@ function App() {
         </>
         }
         {version &&
-        <>
-        <p>Reviews</p>
-        </>}
+        <Reviews reviews={reviews} song={song}/>}
         {/* <div className="container" style={{ padding: '50px 0 100px 0' }}>
           {!session ? <Auth /> : <Account key={session.user.id} session={session} />}
         </div> */}
