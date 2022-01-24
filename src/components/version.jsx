@@ -18,7 +18,7 @@ function Version(props) {
 
   if (props) {
   return (
-    <div className="version-div">
+    <div className="version">
       <p onClick={e => handleClick()}>{props.date}, {props.avg}, {props.num}</p>
       </div>
   )

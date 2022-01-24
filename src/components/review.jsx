@@ -8,7 +8,7 @@ function Review(props) {
   })
 
   return (
-    <div>
+    <div className="review">
       <p>{props.data.review}, {props.data.rating}, {props.data.profiles_username}, {props.data.helpful}, {props.data.funny}</p>
     </div>
   )

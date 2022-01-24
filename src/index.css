@@ -14,14 +14,60 @@ code {
 button {
   margin-right: 5px;
   margin-top: 5px;
+  font-size: large;
+  overflow: hidden;
+  border: none;
+  border-radius: 5px;
+  border: 2px solid green;
+  background-color: rgb(255, 255, 255);
+  height: 40px;
+}
+
+button:hover {
+  background-color: rgb(240, 240, 240);
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 10px 30px 0 rgba(0,0,0,0.19);
+  cursor: pointer;
+}
+
+.version:hover {
+  background-color: rgb(0, 197, 0);
+  color: white;
+  box-shadow: 0 9px 12px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 .back-buttons-div {
   display: flex
 }
 
+.small-button {
+  border: 1px solid green;
+  font-size: medium;
+  height: auto;
+}
+
 .current-selection-div {
 
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+}
+
+.sign-in-button {
+  height: min-content;
+}
+
+.link {
+  text-decoration: underline;
+}
+
+.link:hover {
+  color:blue;
+  cursor: pointer;
 }
 
 .back {

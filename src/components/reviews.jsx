@@ -11,7 +11,7 @@ function Reviews(props) {
   return (
     <div>
       <br></br>
-      <button>Review this {props.song}</button>
+      <button>Review {props.song} from {props.date}</button>
       <h3>Reviews</h3>
       <p>Review, Rating, User, Helpful, Funny</p>
       {props.reviews &&
@@ -20,7 +20,9 @@ function Reviews(props) {
           return (
             <Review data={review} />
           )
-        }
+        } return (
+          <div></div>
+        )
       })}
     </div>
   )

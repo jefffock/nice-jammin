@@ -97,15 +97,29 @@ function App() {
     fetchRatings(version.id)
   }
 
+  function handleShowSignIn(show) {
+    setShowSignIn(show)
+  }
 
+  if (showSignIn) {
+    return (
+      <div className="app">
+        <h1>Nice Jammin</h1>
+        <Auth handleShowSignIn={handleShowSignIn}/>
+      </div>
+    )
+  }
   return (
     <>
       <div className="app">
-        <h1>Nice Jammin</h1>
-        <button onClick={e => {setShowSignIn(true)}}>Sign In or Sign Up</button>
-        {showSignIn &&
-        <Auth />
-        }
+        <div className="header">
+          <h1 className="title">Nice Jammin</h1>
+          {!session &&
+          <button className="sign-in-button small-button"
+          onClick={e => {setShowSignIn(true)}}>Create an Account or Sign In</button>}
+          {session &&
+          <button className="sign-in-button small-button">View Profile</button>}
+        </div>
         <div className="current-selection-div">
           <h2>{artist}</h2>
           <h2>{song}</h2>
@@ -122,7 +136,7 @@ function App() {
         <div className="back-buttons-div">
           {artist &&
           <>
-          <button className="back" onClick={e => {
+          <button className="back small-button" onClick={e => {
             setArtist(null);
             setSong(null);
             setVersion(null)}}>Change Artist</button>
@@ -130,14 +144,14 @@ function App() {
           </>}
           {song &&
           <>
-          <button className="back" onClick={e => {
+          <button className="back small-button" onClick={e => {
             setSong(null);
             setVersion(null)}}>Change Song</button>
             <br></br>
           </>}
           {version &&
           <>
-          <button className="back" onClick={e => {
+          <button className="back small-button" onClick={e => {
             setVersion(null)}}>Change Version</button>
           </>}
         </div>
@@ -153,17 +167,17 @@ function App() {
         <>
         <br></br>
         <br></br>
-        <button>Add a Song</button>
+        <button className="small-button">Add a Song</button>
         </>}
         {song && versions && !version &&
         <>
         <h3>Versions</h3>
-        <button>Add A Version</button>
+        <button className="small-button">Add A Great Version</button>
         <Versions versions={versions} handleVersionChange={handleVersionChange}/>
         </>
         }
         {version &&
-        <Reviews reviews={reviews} song={song}/>}
+        <Reviews reviews={reviews} song={song} date={version.date}/>}
         {/* <div className="container" style={{ padding: '50px 0 100px 0' }}>
           {!session ? <Auth /> : <Account key={session.user.id} session={session} />}
         </div> */}
