@@ -7,9 +7,11 @@ import Account from './Account'
 import './App.css';
 import Versions from './components/versions'
 import Reviews from './components/reviews'
+import AddSong from './components/addSong'
 
 function App() {
   const [session, setSession] = useState(null)
+  const [user, setUser] = useState(null)
   const [artists, setArtists] = useState(null)
   const [artist, setArtist] = useState('Phish')
   const [songs, setSongs] = useState(null)
@@ -18,18 +20,27 @@ function App() {
   const [version, setVersion] = useState(null)
   const [reviews, setReviews] = useState(null)
   const [showSignIn, setShowSignIn] = useState(false)
+  const [showProfile, setShowProfile] = useState(false)
+  const [showPleaseConfirm, setShowPleaseConfirm] = useState(false)
+  const [showAddSong, setShowAddSong] = useState(false)
   const songRef = useRef();
   const versionsRef = useRef();
 
   handleVersionChange.bind(this)
-
 
   useEffect(() => {
     setSession(supabase.auth.session())
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
     })
+    setUser(supabase.auth.user())
   }, [])
+
+  useEffect(() => {
+    if (user) {
+      setShowPleaseConfirm(false)
+    }
+  })
 
   useEffect(() => {
     fetchArtists()
@@ -77,6 +88,7 @@ function App() {
   }
 
   function handleArtistChange(artist) {
+    console.log('session', session)
     setArtist(artist);
     fetchSongs(artist);
     setSong(null);
@@ -97,29 +109,62 @@ function App() {
     fetchRatings(version.id)
   }
 
+  async function signOut() {
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      alert(error)
+    } else {
+      console.log('signed out')
+    }
+  }
+
   function handleShowSignIn(show) {
     setShowSignIn(show)
+  }
+
+  function handleNotConfirmedYet() {
+    setShowPleaseConfirm(true)
   }
 
   if (showSignIn) {
     return (
       <div className="app">
         <h1>Nice Jammin</h1>
-        <Auth handleShowSignIn={handleShowSignIn}/>
+        <Auth handleShowSignIn={handleShowSignIn}
+        handleNotConfirmedYet={handleNotConfirmedYet}/>
       </div>
     )
-  }
-  return (
+  } if (showProfile) {
+    return (
+      <div>
+        <div className="header">
+          <h1>Nice Jammin</h1>
+          <button className="header-button small-button"
+          onClick={e => setShowProfile(false)}>Back to app</button>
+          <button className="header-button small-button"
+          onClick={e => {signOut()}}>Log Out</button>
+        </div>
+        <h2>Profile</h2>
+      </div>
+    )
+  } return (
     <>
       <div className="app">
         <div className="header">
           <h1 className="title">Nice Jammin</h1>
-          {!session &&
-          <button className="sign-in-button small-button"
-          onClick={e => {setShowSignIn(true)}}>Create an Account or Sign In</button>}
+          {!session && !showPleaseConfirm &&
+          <button className="header-button small-button"
+          onClick={e => setShowSignIn(true)}>Create an Account or Sign In</button>}
           {session &&
-          <button className="sign-in-button small-button">View Profile</button>}
+          <>
+          <button className="header-button small-button"
+          onClick={e => setShowProfile(true)}>View Profile</button>
+          <button className="header-button small-button"
+          onClick={e => {signOut()}}>Log Out</button>
+          </>}
         </div>
+        {showPleaseConfirm &&
+        <h3>Please confirm your email address to start contributing. Thank you!</h3>}
         <div className="current-selection-div">
           <h2>{artist}</h2>
           <h2>{song}</h2>
@@ -127,6 +172,7 @@ function App() {
           <h2>{version.date}</h2>
           }
         </div>
+
         {!artist &&
           artists.map(artist => {
             return (
@@ -134,7 +180,7 @@ function App() {
             )
           })}
         <div className="back-buttons-div">
-          {artist &&
+          {artist && !showAddSong &&
           <>
           <button className="back small-button" onClick={e => {
             setArtist(null);
@@ -142,33 +188,37 @@ function App() {
             setVersion(null)}}>Change Artist</button>
             <br></br>
           </>}
-          {song &&
+          {song && !showAddSong &&
           <>
           <button className="back small-button" onClick={e => {
             setSong(null);
             setVersion(null)}}>Change Song</button>
             <br></br>
           </>}
-          {version &&
+          {version && !showAddSong &&
           <>
           <button className="back small-button" onClick={e => {
             setVersion(null)}}>Change Version</button>
           </>}
         </div>
-        {songs && !song && artist &&
+        {songs && !song && artist && !showAddSong &&
         <p>Choose a song:</p>}
-        {songs && !song && artist &&
+        {songs && !song && artist && !showAddSong &&
         songs.map(song => {
           return (
             <button onClick={() => handleSongChange(song)}>{song.song}</button>
           )
         })}
-        {songs && !song && artist &&
+        {songs && !song && artist && !showAddSong &&
         <>
         <br></br>
         <br></br>
-        <button className="small-button">Add a Song</button>
+        <button className="small-button"
+        onClick={e => setShowAddSong(true)}>Add a Song</button>
         </>}
+        {showAddSong &&
+        <AddSong setShowAddSong={setShowAddSong} artist={artist}/>
+        }
         {song && versions && !version &&
         <>
         <h3>Versions</h3>

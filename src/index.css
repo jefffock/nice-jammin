@@ -52,12 +52,13 @@ button:hover {
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .title {
 }
 
-.sign-in-button {
+.header-button {
   height: min-content;
 }
 
@@ -72,4 +73,20 @@ button:hover {
 
 .back {
   margin: 10px
+}
+
+.versions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.version {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.versions {
+  max-width: 500px;
 }

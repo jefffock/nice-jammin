@@ -3,48 +3,53 @@ import { supabase } from './supabaseClient'
 
 export default function Auth(props) {
   const [loading, setLoading] = useState(false)
-  const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [displayName, setDisplayName] = useState('')
   const [showCreateAccount, setShowCreateAccount] = useState(true)
 
-  const handleLogin = async (email, password) => {
-    try {
-      setLoading(true)
-      const { error } = await supabase.auth.signIn({ email })
-      if (error) throw error
-      alert('Check your email for the login link!')
-    } catch (error) {
-      alert(error.error_description || error.message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   async function signInWithEmail(email, password) {
+    setLoading(true)
     const { user, error } = await supabase.auth.signIn({
       email: email,
       password: password,
     })
+    if (error) {
+      alert(error.error_description || error.message)
+    } else {
+    setLoading(false)
+    props.handleShowSignIn(false)
+    }
   }
 
-  async function signUpWithEmail(email, password, username) {
-    console.log(`in sign up. email: ${email}, pw: ${password}, username: ${username}`)
-    const { user, error } = await supabase.auth.signUp({
-      // username: username,
+  async function signUpWithEmail(email, password, displayName) {
+    setLoading(true)
+    const { user, session, error } = await supabase.auth.signUp({
       email: email,
       password: password,
     })
     if (error) {
-      console.log('error', error)
-      return (
-        <p>Error: {error}</p>
-      )
+      alert(error.error_description || error.message)
     } else {
-      console.log('successful creation', user)
-      return (
-        <p>Successfully created account! Check your email to confirm sign up</p>
-      )
+      console.log('in the else block, should close showSignIn')
+      createProfile(displayName, user)
+      props.handleShowSignIn(false)
+      props.handleNotConfirmedYet()
+    }
+    setLoading(false)// <p>Successfully created account! Check your email to confirm sign up</p>
+  }
+
+  async function createProfile(displayName, user) {
+    console.log('in create profile', displayName, 'user', user)
+    const { data, error } = await supabase
+      .from('profiles')
+      .insert([
+    { name: displayName, id: user.id }
+    ])
+    if (error) {
+      alert (error)
+    } else {
+      console.log('successfully created user profile', data)
     }
   }
 
@@ -102,16 +107,6 @@ export default function Auth(props) {
         <>
         <h2>Create an account</h2>
         <div>
-          <label htmlFor="username">Username: </label>
-          <input
-            className="inputField"
-            type="username"
-            placeholder="Choose a username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <br></br>
-          <br></br>
           <label htmlFor="email">Email: </label>
           <input
             className="inputField"
@@ -130,13 +125,23 @@ export default function Auth(props) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <br></br>
+          <br></br>
+          <label htmlFor="display-name">Display name: </label>
+           <input
+            className="inputField"
+            type="display-name"
+            placeholder="TroyPistachio"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+          />
         </div>
         <br></br>
         <div>
           <button
           onClick={(e) => {
             e.preventDefault()
-            signUpWithEmail(email, password, username)
+            signUpWithEmail(email, password, displayName)
           }}
           className={'button block'}
           disabled={loading}

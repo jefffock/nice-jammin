@@ -9,8 +9,12 @@ function Versions(props) {
   })
 
   return (
-    <div>
-      <p>Date, Average Rating, Number of Ratings</p>
+    <div className="versions">
+      <div className="versions-header">
+        <p>Date</p>
+        <p>Rating</p>
+        <p>#</p>
+      </div>
       {props.versions &&
       props.versions.map(({ date, avg_rating, num_reviews, id}) => {
         return (
