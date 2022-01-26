@@ -3,11 +3,13 @@ import './index.css'
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from './supabaseClient'
 import Auth from './Auth'
-import Account from './Account'
+import Account from './components/Account'
 import './App.css';
 import Versions from './components/versions'
 import Reviews from './components/reviews'
 import AddSong from './components/addSong'
+import AddVersion from './components/addVersion'
+import AddReview from './components/addReview'
 
 function App() {
   const [session, setSession] = useState(null)
@@ -23,6 +25,8 @@ function App() {
   const [showProfile, setShowProfile] = useState(false)
   const [showPleaseConfirm, setShowPleaseConfirm] = useState(false)
   const [showAddSong, setShowAddSong] = useState(false)
+  const [showAddVersion, setShowAddVersion] = useState(false)
+  const [showAddReview, setShowAddReview] = useState(false)
   const songRef = useRef();
   const versionsRef = useRef();
 
@@ -40,15 +44,15 @@ function App() {
     if (user) {
       setShowPleaseConfirm(false)
     }
-  })
+  }, [user])
 
   useEffect(() => {
     fetchArtists()
-  }, [])
+  }, [user])
 
   useEffect(() => {
-    fetchSongs('Phish')
-  }, [])
+    fetchSongs(artist)
+  }, [artist])
 
   async function fetchArtists() {
     const { data, error } = await supabase
@@ -144,7 +148,7 @@ function App() {
           <button className="header-button small-button"
           onClick={e => {signOut()}}>Log Out</button>
         </div>
-        <h2>Profile</h2>
+        <Account key={session.user.id} session={session}/>
       </div>
     )
   } return (
@@ -180,7 +184,7 @@ function App() {
             )
           })}
         <div className="back-buttons-div">
-          {artist && !showAddSong &&
+          {artist && !showAddSong && !showAddVersion && !showAddReview &&
           <>
           <button className="back small-button" onClick={e => {
             setArtist(null);
@@ -188,49 +192,52 @@ function App() {
             setVersion(null)}}>Change Artist</button>
             <br></br>
           </>}
-          {song && !showAddSong &&
+          {song && !showAddSong && !showAddVersion && !showAddReview &&
           <>
           <button className="back small-button" onClick={e => {
             setSong(null);
             setVersion(null)}}>Change Song</button>
             <br></br>
           </>}
-          {version && !showAddSong &&
+          {version && !showAddSong && !showAddVersion && !showAddReview &&
           <>
           <button className="back small-button" onClick={e => {
             setVersion(null)}}>Change Version</button>
           </>}
         </div>
-        {songs && !song && artist && !showAddSong &&
+        {songs && !song && artist && !showAddSong && !showAddVersion && !showAddReview &&
         <p>Choose a song:</p>}
-        {songs && !song && artist && !showAddSong &&
+        {songs && !song && artist && !showAddSong && !showAddVersion && !showAddReview &&
         songs.map(song => {
           return (
             <button onClick={() => handleSongChange(song)}>{song.song}</button>
           )
         })}
-        {songs && !song && artist && !showAddSong &&
+        {songs && !song && artist && !showAddSong && !showAddVersion && !showAddReview &&
         <>
         <br></br>
         <br></br>
         <button className="small-button"
         onClick={e => setShowAddSong(true)}>Add a Song</button>
         </>}
-        {showAddSong &&
+        {showAddSong && !showAddReview &&!showAddVersion &&
         <AddSong setShowAddSong={setShowAddSong} artist={artist}/>
         }
-        {song && versions && !version &&
+        {song && versions && !version && !showAddVersion && !showAddReview && !showAddSong &&
         <>
         <h3>Versions</h3>
-        <button className="small-button">Add A Great Version</button>
+        <button className="small-button"
+        onClick={e => setShowAddVersion(true)}>Add A Great Version</button>
         <Versions versions={versions} handleVersionChange={handleVersionChange}/>
         </>
         }
-        {version &&
-        <Reviews reviews={reviews} song={song} date={version.date}/>}
-        {/* <div className="container" style={{ padding: '50px 0 100px 0' }}>
-          {!session ? <Auth /> : <Account key={session.user.id} session={session} />}
-        </div> */}
+        {showAddVersion && !showAddReview && !showAddSong &&
+        <AddVersion setShowAddVersion={setShowAddVersion} artist={artist} song={song} />
+        }
+        {version &&  !showAddVersion && !showAddReview && !showAddSong &&
+        <Reviews reviews={reviews} song={song} date={version.date} setShowAddReview={setShowAddReview}/>}
+        {showAddReview && version &&
+        <AddReview song={song} date={version.date} setShowAddReview={setShowAddReview}/>}
       </div>
     </>
   )

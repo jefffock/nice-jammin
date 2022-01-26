@@ -11,7 +11,7 @@ function Reviews(props) {
   return (
     <div>
       <br></br>
-      <button>Review {props.song} from {props.date}</button>
+      <button onClick={e => props.setShowAddReview(true)}>Review {props.song} from {props.date}</button>
       <h3>Reviews</h3>
       <p>Review, Rating, User, Helpful, Funny</p>
       {props.reviews &&

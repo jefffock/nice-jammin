@@ -1,40 +1,63 @@
 import { useState, useEffect, useRef } from 'react'
+import { supabase } from './../supabaseClient'
 
 function AddSong(props) {
-  const [artist, Artist] = useState(props.artist)
   const [song, setSong] = useState('')
   const [loading, setLoading] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+  const [showAlreadyExistsMessage, setShowAlreadyExistsMessage] = useState(false)
+  const [cover, setCover] = useState(false)
 
-  function addSong(artist, song) {
+
+  async function testSong(artist, song) {
     setLoading(true)
     setShowSuccessMessage(false)
     console.log('in add song', artist, song)
-    //if song exists
-      //alert: song exists
-    //else
-      //insert into db
-      //add points to user profile
-    setShowSuccessMessage(true)
+    const { data, error } = await supabase
+      .from('songs')
+      .select('song, artist')
+      .eq('song', song)
+      .eq('artist', artist)
+    if (error) {
+      alert(error)
+    } else if (data.length === 0) {
+      console.log('song doesn\'t exist yet')
+      addSong(artist, song)
+    } else {
+      setShowAlreadyExistsMessage(true)
+    }
     setLoading(false)
+  }
+
+  async function addSong(artist, song) {
+    setLoading(true)
+    const { data, error } = await supabase
+      .from('songs')
+      .insert([
+        { song: song, artist: artist }
+      ])
+    if (error) {
+      alert(error)
+    } else {
+      console.log('data')
+      setShowSuccessMessage(true)
+    }
   }
 
   return (
     <div>
       <h1>Add Song</h1>
-      {showSuccessMessage &&
-      <p>Successfully added {song}. Thank you for contributing!</p>}
       <div>
       <label htmlFor="artist">Artist: </label>
           <input
             className="inputField"
             type="artist"
             placeholder="Artist"
-            value={artist}
+            value={props.artist}
           />
           <br></br>
           <br></br>
-          <label htmlFor="song">Song Name: </label>
+          <label htmlFor="song">Song: </label>
           <input
           className="inputField"
           type="song"
@@ -42,13 +65,22 @@ function AddSong(props) {
           value={song}
           onChange={(e) => {
             setSong(e.target.value);
-            setShowSuccessMessage(false)}
+            setShowSuccessMessage(false);
+            setShowAlreadyExistsMessage(false)}
           }/>
           <p>Please check for typos &#x263A;</p>
+          <label htmlFor="cover">This is a cover: </label>
+          <input type="checkbox" id="cover"
+          onChange={e => setCover(e.target.checked)}></input>
       </div>
+      <br></br>
       <button
-      onClick={e => addSong(artist, song)}
+      onClick={e => testSong(props.artist, song)}
       disabled={loading}>Add this song</button>
+      {showSuccessMessage &&
+      <p>Successfully added {song}. Thank you for contributing! To see it in the songs list, refresh the page</p>}
+      {showAlreadyExistsMessage &&
+      <p>{song} by {props.artist} has already been added.</p>}
       <br></br>
       <br></br>
       <button className="small-button"

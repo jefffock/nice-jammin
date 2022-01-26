@@ -90,3 +90,73 @@ button:hover {
 .versions {
   max-width: 500px;
 }
+
+.no-image {
+  background-color: rgb(158, 158, 158);
+}
+
+.avatar-upload {
+  border: 2px solid green;
+}
+
+.avatar-upload:hover {
+  cursor: pointer;
+}
+
+.checkboxes-container {
+  display: grid;
+  width: auto;
+  max-width: 400px;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: repeat(10, auto);
+}
+
+.col1 {
+  grid-column-start: 1;
+  grid-row-start: auto;
+}
+
+.col2 {
+  grid-column-start: 2;
+  grid-row-start: auto;
+}
+
+.row1 {
+  grid-row-start: 1;
+}
+
+.row2 {
+  grid-row-start: 2;
+}
+
+.row3 {
+  grid-row-start: 3;
+}
+
+.row4 {
+  grid-row-start: 4;
+}
+
+.row5 {
+  grid-row-start: 5;
+}
+
+.row6 {
+  grid-row-start: 6;
+}
+
+.row7 {
+  grid-row-start: 7;
+}
+
+.row8 {
+  grid-row-start: 8;
+}
+
+.row9 {
+  grid-row-start: 9;
+}
+
+.row10 {
+  grid-row-start: 10;
+}

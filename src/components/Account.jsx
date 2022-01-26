@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react'
-import { supabase } from './supabaseClient'
+import { supabase } from './../supabaseClient'
 import Avatar from './Avatar'
 
-export default function Account({ session }) {
+export default function Account(props) {
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState(null)
-  const [website, setWebsite] = useState(null)
+  const [points, setPoints] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
 
   useEffect(() => {
     getProfile()
-  }, [session])
+  }, [props.session])
 
   async function getProfile() {
     try {
@@ -19,7 +19,7 @@ export default function Account({ session }) {
 
       let { data, error, status } = await supabase
         .from('profiles')
-        .select(`username, website, avatar_url`)
+        .select(`name, avatar_url, points`)
         .eq('id', user.id)
         .single()
 
@@ -28,8 +28,8 @@ export default function Account({ session }) {
       }
 
       if (data) {
-        setUsername(data.username)
-        setWebsite(data.website)
+        setUsername(data.name)
+        setPoints(data.points)
         setAvatarUrl(data.avatar_url)
       }
     } catch (error) {
@@ -39,15 +39,14 @@ export default function Account({ session }) {
     }
   }
 
-  async function updateProfile({ username, website, avatar_url }) {
+  async function updateProfile({ username, avatar_url }) {
     try {
       setLoading(true)
       const user = supabase.auth.user()
 
       const updates = {
         id: user.id,
-        username,
-        website,
+        name: username,
         avatar_url,
         updated_at: new Date(),
       }
@@ -55,7 +54,6 @@ export default function Account({ session }) {
       let { error } = await supabase.from('profiles').upsert(updates, {
         returning: 'minimal', // Don't return the value after inserting
       })
-
       if (error) {
         throw error
       }
@@ -67,13 +65,18 @@ export default function Account({ session }) {
   }
 
   return (
+    <>
+    <div>
+      <h2>Welcome, {username}</h2>
+    </div>
     <div className="form-widget">
       <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" type="text" value={session.user.email} disabled />
+        <label htmlFor="email">Email: </label>
+        <input id="email" type="text" value={props.session.user.email} disabled />
       </div>
+      <br></br>
       <div>
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">Username: </label>
         <input
           id="username"
           type="text"
@@ -81,29 +84,28 @@ export default function Account({ session }) {
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
+      <br></br>
       <Avatar
       url={avatar_url}
       size={150}
       onUpload={(url) => {
         setAvatarUrl(url)
-        updateProfile({ username, website, avatar_url: url })
+        updateProfile({ username, avatar_url: url })
       }}
     />
+    <br></br>
+    <br></br>
+    <br></br>
       <div>
         <button
           className="button block primary"
-          onClick={() => updateProfile({ username, website, avatar_url })}
+          onClick={() => updateProfile({ username, avatar_url })}
           disabled={loading}
         >
-          {loading ? 'Loading ...' : 'Update'}
-        </button>
-      </div>
-
-      <div>
-        <button className="button block" onClick={() => supabase.auth.signOut()}>
-          Sign Out
+          {loading ? 'Loading ...' : 'Update Profile'}
         </button>
       </div>
     </div>
+    </>
   )
 }
