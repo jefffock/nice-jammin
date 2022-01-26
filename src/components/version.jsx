@@ -47,8 +47,9 @@ function Version(props) {
     } if (props.data.trippy) {
       tagBuilder+='Trippy, '
     } if (props.data.type2) {
-      tagBuilder+='Type II'
-    } setTags(tagBuilder)
+      tagBuilder+='Type II, '
+    } let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
+    setTags(finalTags)
   }, [props])
 
   function handleClick() {

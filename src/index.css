@@ -79,8 +79,8 @@ button:hover {
 
 .versions {
   display: grid;
-  grid-template-columns: auto auto auto 50%;
-  column-gap: 10px
+  grid-template-columns: auto auto auto auto;
+  column-gap: 15px
 }
 
 .version-col1 {

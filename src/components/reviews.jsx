@@ -11,19 +11,25 @@ function Reviews(props) {
   return (
     <div>
       <br></br>
-      <button onClick={e => props.setShowAddReview(true)}>Review {props.song} from {props.date}</button>
       <h3>Reviews</h3>
-      <p>Review, Rating, User, Helpful, Funny</p>
-      {props.reviews &&
-      props.reviews.map(review => {
-        if (review.review) {
-          return (
-            <Review data={review} />
+      <button onClick={e => props.setShowAddReview(true)}>Review {props.song} from {props.date}</button>
+      {props.reviews.length === 0 &&
+      <p>No reviews yet!</p>}
+      {props.reviews.length > 0 &&
+      <>
+        <p>Review, Rating, User, Helpful, Funny</p>
+        {props.reviews &&
+        props.reviews.map(review => {
+          if (review.review) {
+            return (
+              <Review data={review} />
+            )
+          } return (
+            <div></div>
           )
-        } return (
-          <div></div>
-        )
-      })}
+        })}
+      </>
+      }
     </div>
   )
 }
