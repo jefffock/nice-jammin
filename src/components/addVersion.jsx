@@ -29,23 +29,9 @@ function AddVersion(props) {
   const [acoustic, setAcoustic] = useState(false)
 
   useEffect(() => {
-
-    console.log('props.songData', props.songData)
-    async function getSongId() {
-      console.log('ingetSongId')
-      const { data, error } = await supabase
-        .from('songs')
-        .select('id')
-        .eq('song', props.song)
-        .eq('artist', props.artist)
-      if (error) {
-        console.log('error', error)
-      } else {
-        console.log('songId', data[0].id)
-        setSongId(data[0].id)
-      }
-    } getSongId()
-  }, [props.song, props.artist])
+    console.log('props in addVersions', props)
+    setSongId(props.songData.id)
+  }, [props])
 
 
   async function testVersion(date) {

@@ -9,8 +9,9 @@ function AddRating(props) {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 
   useEffect(() => {
+    console.log('props in add rating', props)
     setCharCount(comment.length)
-  }, [comment])
+  }, [comment, props])
 
   async function testRating() {
     setLoading(true)
@@ -18,13 +19,23 @@ function AddRating(props) {
     if (charCount > 10000) {
       alert(`Your enthusiasm is commendable! Also, character limit exceeded`)
     } else {
-      insertRating()
+      // insertRating()
     }
   }
 
   async function insertRating() {
     const { data, error } = await supabase
-      .from('')
+      .from('ratings')
+      .insert(
+        [{
+          version_id: props.version.id,
+          user_id: props.user.id,
+          rating: rating,
+          version_date: props.date,
+          // profiles_username,
+          comment: comment
+        }]
+      )
   }
 
   function handleBackClick() {

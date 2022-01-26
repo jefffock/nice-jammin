@@ -19,8 +19,9 @@ function Header(props) {
       {props.session && props.showProfile &&
       <button className="header-button small-button"
       onClick={e => props.setShowProfile(false)}>Back to the Music</button>}
+      {props.session &&
       <button className="header-button small-button"
-      onClick={e => {props.signOut()}}>Log Out</button>
+      onClick={e => {props.signOut()}}>Log Out</button>}
       {props.showPleaseConfirm &&
       <h3>Please confirm your email address to start contributing. Thank you!</h3>}
     </div>

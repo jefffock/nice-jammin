@@ -29,6 +29,9 @@ function App() {
   const [showAddSong, setShowAddSong] = useState(false)
   const [showAddVersion, setShowAddVersion] = useState(false)
   const [showAddRating, setShowAddRating] = useState(false)
+  const [username, setUsername] = useState(null)
+  const [points, setPoints] = useState(null)
+  const [avatar_url, setAvatarUrl] = useState(null)
   const songRef = useRef();
   const versionsRef = useRef();
 
@@ -45,7 +48,7 @@ function App() {
   useEffect(() => {
     if (user) {
       setShowPleaseConfirm(false)
-    }
+    } fetchProfile()
   }, [user])
 
   useEffect(() => {
@@ -55,6 +58,25 @@ function App() {
   useEffect(() => {
     fetchSongs(artist)
   }, [artist])
+
+  async function fetchProfile() {
+    const user = supabase.auth.user()
+    if (user) {
+      let { data, error, status } = await supabase
+        .from('profiles')
+        .select(`name, avatar_url, points`)
+        .eq('id', user.id)
+        .single()
+      if (error) {
+        console.log('error getting profile')
+      } if (data) {
+        console.log('data in fetchProfile', data)
+        setUsername(data.name)
+        setPoints(data.points)
+        setAvatarUrl(data.avatar_url)
+      }
+    }
+  }
 
   async function fetchArtists() {
     const { data, error } = await supabase
@@ -149,7 +171,8 @@ function App() {
       <div className="app">
         <h1>Nice Jammin</h1>
         <Auth handleShowSignIn={handleShowSignIn}
-        handleNotConfirmedYet={handleNotConfirmedYet}/>
+        handleNotConfirmedYet={handleNotConfirmedYet}
+        setUser={setUser}/>
       </div>
     )
   } if (showProfile) {
@@ -158,7 +181,13 @@ function App() {
        <Header session={session} showPleaseConfirm={showPleaseConfirm}
         setShowSignIn={setShowSignIn} setShowProfile={setShowProfile}
         signOut={signOut} showProfile={showProfile}/>
-        <Account key={session.user.id} session={session}/>
+        <Account key={session.user.id}
+        session={session}
+        username={username}
+        points={points}
+        avatar={avatar_url}
+        user={user}
+        fetchProfile={fetchProfile}/>
       </div>
     )
   } return (
@@ -236,9 +265,20 @@ function App() {
         fetchVersions={fetchVersions}/>
         }
         {version &&  !showAddVersion && !showAddRating && !showAddSong &&
-        <Reviews reviews={reviews} song={song} songData={songData} date={version.date} setShowAddRating={setShowAddRating}/>}
+        <Reviews
+        reviews={reviews}
+        song={song}
+        songData={songData}
+        date={version.date}
+        setShowAddRating={setShowAddRating}/>}
         {showAddRating && version &&
-        <AddRating artist={artist} song={song} songData={songData} date={version.date} setShowAddRating={setShowAddRating}/>}
+        <AddRating artist={artist}
+        songData={songData}
+        date={version.date}
+        version={version}
+        user={user}
+        setShowAddRating={setShowAddRating}
+        fetchRatings={fetchRatings}/>}
       </div>
     </>
   )

@@ -24,6 +24,7 @@ export default function Avatar({ url, size, onUpload }) {
 
 
   async function uploadAvatar(event) {
+    console.log('in upload avatar')
     try {
       setUploading(true)
 
@@ -41,6 +42,7 @@ export default function Avatar({ url, size, onUpload }) {
         .upload(filePath, file)
 
       if (uploadError) {
+        console.log('upload error')
         throw uploadError
       }
 

@@ -17,8 +17,10 @@ export default function Auth(props) {
     if (error) {
       alert(error.error_description || error.message)
     } else {
+      console.log('user after sign in', user)
     setLoading(false)
     props.handleShowSignIn(false)
+    props.setUser(user)
     }
   }
 
