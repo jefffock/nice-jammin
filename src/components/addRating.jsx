@@ -27,6 +27,11 @@ function AddRating(props) {
       .from('')
   }
 
+  function handleBackClick() {
+    props.setShowAddRating(false)
+    
+  }
+
   return (
     <div>
       <h2>Add Rating</h2>
@@ -93,8 +98,10 @@ function AddRating(props) {
         <button
         onClick={e => testRating()}
         disabled={loading}>Add your rating</button>
+        {showSuccessMessage &&
+        <p>Added your rating to the {props.date} version of {props.song}. Thank you for contributing!</p>}
         <br></br>
-      <button className="small-button" onClick={e => props.setShowAddRating(false)}>Back</button>
+      <button className="small-button" onClick={e => handleBackClick()}>Back</button>
     </div>
   )
 }

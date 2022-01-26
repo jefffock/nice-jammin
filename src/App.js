@@ -225,7 +225,12 @@ function App() {
         <Versions versions={versions} handleVersionChange={handleVersionChange} setShowAddVersion={setShowAddVersion}/>
         }
         {showAddVersion && !showAddRating && !showAddSong &&
-        <AddVersion setShowAddVersion={setShowAddVersion} artist={artist} song={song} songData={songData} user={user}/>
+        <AddVersion setShowAddVersion={setShowAddVersion}
+        artist={artist}
+        song={song}
+        songData={songData}
+        user={user}
+        fetchVersions={fetchVersions}/>
         }
         {version &&  !showAddVersion && !showAddRating && !showAddSong &&
         <Reviews reviews={reviews} song={song} songData={songData} date={version.date} setShowAddRating={setShowAddRating}/>}

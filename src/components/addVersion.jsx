@@ -29,8 +29,8 @@ function AddVersion(props) {
   const [acoustic, setAcoustic] = useState(false)
 
   useEffect(() => {
-    console.log('user', props.user)
-    console.log('props.song', props.song)
+
+    console.log('props.songData', props.songData)
     async function getSongId() {
       console.log('ingetSongId')
       const { data, error } = await supabase
@@ -159,6 +159,10 @@ function AddVersion(props) {
       }
   }
 
+  function handleBackClick() {
+    props.setShowAddVersion(false)
+    props.fetchVersions(props.songData.id)
+  }
 
   return (
     <>
@@ -340,13 +344,13 @@ function AddVersion(props) {
       onClick={e => testVersion(date)}
       disabled={loading}>Add this version</button>
       {showSuccessMessage &&
-      <p>Successfully added the {date} version of {props.song}. Thank you for contributing! To see it in the songs list, refresh the page</p>}
+      <p>Added the {date} version of {props.song}. Thank you for contributing!</p>}
       {showAlreadyExistsMessage &&
       <p>The {date} version of {props.song} has already been added.</p>}
       <br></br>
       <br></br>
       <button className="small-button"
-        onClick={e => props.setShowAddVersion(false)}>Back</button>
+        onClick={e => handleBackClick()}>Back</button>
     </div>
     </>
   )

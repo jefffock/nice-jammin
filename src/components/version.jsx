@@ -6,7 +6,6 @@ function Version(props) {
 
 
   useEffect(() => {
-    console.log('props in Version', props)
     let tagBuilder = '';
     if (props.data.acoustic) {
       tagBuilder+='Acoustic, '
