@@ -29,6 +29,8 @@ function AddVersion(props) {
   const [acoustic, setAcoustic] = useState(false)
 
   useEffect(() => {
+    console.log('user', props.user)
+    console.log('props.song', props.song)
     async function getSongId() {
       console.log('ingetSongId')
       const { data, error } = await supabase
@@ -74,10 +76,11 @@ function AddVersion(props) {
   async function insertVersion(date) {
     console.log('in insert version', date)
     setLoading(true)
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('versions')
-      .insert([
-        { song_id: songId,
+      .insert(
+        [{ song_id: songId,
+          version_user_id: props.user.id,
           date: date,
           funky: funky,
           ambient: ambient,
@@ -99,19 +102,63 @@ function AddVersion(props) {
           crunchy: crunchy,
           happy: happy,
           acoustic: acoustic
-        }
-      ])
+        }])
     if (error) {
-      alert(error)
+      alert('error adding version', error)
     } else {
-      console.log('data')
       setShowSuccessMessage(true)
+      getVersionSubmitterPoints()
     }
   }
 
-  function handleChange(e) {
-    console.log('checked', e.target.checked)
+  async function getSongSubmitterPoints() {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('points')
+      .eq('id', props.songData.user_id)
+    if (error) {
+      alert('error getting song submitter points', error)
+    } else {
+      console.log('points', data)
+      addSongSubmitterPoints(data[0].points, props.songData.user_id)
+    }
   }
+
+  async function getVersionSubmitterPoints() {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('points')
+      .eq('id', props.user.id)
+    if (error) {
+      alert('error getting your points', error)
+    } else {
+      console.log('points', data)
+      addVersionSubmitterPoints(data[0].points, props.user.id)
+    }
+  }
+
+  async function addSongSubmitterPoints(prevPoints, userId) {
+    const { data, error } = await supabase
+      .from('profiles')
+      .update({ points: (prevPoints + 1)}, {returning: 'minimal'})
+      .match({ id: userId })
+      if (error) {
+        alert('error adding song submitter points', error)
+      }
+  }
+
+  async function addVersionSubmitterPoints(prevPoints, userId) {
+    const { data, error } = await supabase
+      .from('profiles')
+      .update({ points: (prevPoints + 10)}, {returning: 'minimal'})
+      .match({ id: userId })
+      if (error) {
+        alert('error adding your points', error)
+      } else {
+        getSongSubmitterPoints()
+      }
+  }
+
 
   return (
     <>
@@ -299,7 +346,7 @@ function AddVersion(props) {
       <br></br>
       <br></br>
       <button className="small-button"
-        onClick={e => props.setShowAddVersion(false)}>Cancel</button>
+        onClick={e => props.setShowAddVersion(false)}>Back</button>
     </div>
     </>
   )

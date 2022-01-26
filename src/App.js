@@ -9,7 +9,7 @@ import Versions from './components/versions'
 import Reviews from './components/reviews'
 import AddSong from './components/addSong'
 import AddVersion from './components/addVersion'
-import AddReview from './components/addReview'
+import AddRating from './components/addRating'
 import Header from './components/header'
 
 function App() {
@@ -19,6 +19,7 @@ function App() {
   const [artist, setArtist] = useState(null)
   const [songs, setSongs] = useState(null)
   const [song, setSong] = useState(null)
+  const [songData, setSongData] = useState(null)
   const [versions, setVersions] = useState(null)
   const [version, setVersion] = useState(null)
   const [reviews, setReviews] = useState(null)
@@ -27,7 +28,7 @@ function App() {
   const [showPleaseConfirm, setShowPleaseConfirm] = useState(false)
   const [showAddSong, setShowAddSong] = useState(false)
   const [showAddVersion, setShowAddVersion] = useState(false)
-  const [showAddReview, setShowAddReview] = useState(false)
+  const [showAddRating, setShowAddRating] = useState(false)
   const songRef = useRef();
   const versionsRef = useRef();
 
@@ -58,7 +59,8 @@ function App() {
   async function fetchArtists() {
     const { data, error } = await supabase
       .from('artists')
-      .select()
+      .select('*')
+      .order('ratings', {ascending: false})
     if (error) {
       console.log(error)
       alert(error)
@@ -73,6 +75,7 @@ function App() {
         .from('songs')
         .select('*, artists!inner(*)')
         .eq('artists.artist', artist)
+        .order('ratings', {ascending: false})
       setSongs(data)
       console.log('songData', data)
     }
@@ -84,6 +87,7 @@ function App() {
       .from('versions')
       .select('*, songs!inner(*)')
       .eq('songs.id', songId)
+      .order('avg_rating', {ascending: false})
     setVersions(data)
     console.log('version data', data)
     versionsRef.current = data
@@ -95,6 +99,7 @@ function App() {
       .from('ratings')
       .select('*, versions!inner(*)')
       .eq('versions.id', versionId)
+      .order('helpful', {ascending: false})
     setReviews(data)
     console.log('review data', data)
   }
@@ -110,6 +115,7 @@ function App() {
   function handleSongChange(song) {
     console.log('song in handleSongChange', song)
     setVersions(null)
+    setSongData(song)
     setSong(song.song)
     fetchVersions(song.id)
     songRef.current = song.id
@@ -176,7 +182,7 @@ function App() {
             )
           })}
         <div className="back-buttons-div">
-          {artist && !showAddSong && !showAddVersion && !showAddReview &&
+          {artist && !showAddSong && !showAddVersion && !showAddRating &&
           <>
           <button className="back small-button" onClick={e => {
             setArtist(null);
@@ -184,47 +190,47 @@ function App() {
             setVersion(null)}}>Change Artist</button>
             <br></br>
           </>}
-          {song && !showAddSong && !showAddVersion && !showAddReview &&
+          {song && !showAddSong && !showAddVersion && !showAddRating &&
           <>
           <button className="back small-button" onClick={e => {
             setSong(null);
             setVersion(null)}}>Change Song</button>
             <br></br>
           </>}
-          {version && !showAddSong && !showAddVersion && !showAddReview &&
+          {version && !showAddSong && !showAddVersion && !showAddRating &&
           <>
           <button className="back small-button" onClick={e => {
             setVersion(null)}}>Change Version</button>
           </>}
         </div>
-        {songs && !song && artist && !showAddSong && !showAddVersion && !showAddReview &&
+        {songs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
         <p>Choose a song:</p>}
-        {songs && !song && artist && !showAddSong && !showAddVersion && !showAddReview &&
+        {songs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
         songs.map(song => {
           return (
             <button onClick={() => handleSongChange(song)}>{song.song}</button>
           )
         })}
-        {songs && !song && artist && !showAddSong && !showAddVersion && !showAddReview &&
+        {songs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
         <>
         <br></br>
         <br></br>
         <button className="small-button"
         onClick={e => setShowAddSong(true)}>Add a Song</button>
         </>}
-        {showAddSong && !showAddReview &&!showAddVersion &&
-        <AddSong setShowAddSong={setShowAddSong} artist={artist}/>
+        {showAddSong && !showAddRating &&!showAddVersion &&
+        <AddSong setShowAddSong={setShowAddSong} artist={artist} user={user}/>
         }
-        {song && versions && !version && !showAddVersion && !showAddReview && !showAddSong &&
+        {song && versions && !version && !showAddVersion && !showAddRating && !showAddSong &&
         <Versions versions={versions} handleVersionChange={handleVersionChange} setShowAddVersion={setShowAddVersion}/>
         }
-        {showAddVersion && !showAddReview && !showAddSong &&
-        <AddVersion setShowAddVersion={setShowAddVersion} artist={artist} song={song} />
+        {showAddVersion && !showAddRating && !showAddSong &&
+        <AddVersion setShowAddVersion={setShowAddVersion} artist={artist} song={song} songData={songData} user={user}/>
         }
-        {version &&  !showAddVersion && !showAddReview && !showAddSong &&
-        <Reviews reviews={reviews} song={song} date={version.date} setShowAddReview={setShowAddReview}/>}
-        {showAddReview && version &&
-        <AddReview song={song} date={version.date} setShowAddReview={setShowAddReview}/>}
+        {version &&  !showAddVersion && !showAddRating && !showAddSong &&
+        <Reviews reviews={reviews} song={song} songData={songData} date={version.date} setShowAddRating={setShowAddRating}/>}
+        {showAddRating && version &&
+        <AddRating artist={artist} song={song} songData={songData} date={version.date} setShowAddRating={setShowAddRating}/>}
       </div>
     </>
   )

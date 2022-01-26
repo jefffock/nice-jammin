@@ -17,7 +17,7 @@ function Versions(props) {
       onClick={e => props.setShowAddVersion(true)}>Add A Great Version</button>
       {props.versions.length > 0 &&
       <>
-        <p>Choose a Version:</p>
+        <p>Choose a Date:</p>
         <div className="versions">
           <p className="version-col1">Date</p>
           <p className="version-col2">Average</p>

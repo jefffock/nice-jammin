@@ -66,13 +66,13 @@ function Version(props) {
       <div className="version-col1 version-date" onClick={e => handleClick()}>
         <p>{props.data.date}</p>
       </div>
-      <div className="version-col2" onClick={e => handleClick()}>
+      <div className="version-col2">
         <p>{props.data.avg_rating}</p>
       </div>
-      <div className="version-col3" onClick={e => handleClick()}>
+      <div className="version-col3">
         <p>{props.data.num_reviews}</p>
       </div>
-      <div className="version-col4" onClick={e => handleClick()}>
+      <div className="version-col4">
         <p>{tags}</p>
       </div>
       <div className="line"></div>

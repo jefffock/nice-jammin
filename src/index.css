@@ -80,7 +80,7 @@ button:hover {
 .versions {
   display: grid;
   grid-template-columns: auto auto auto auto;
-  column-gap: 15px
+  column-gap: 15px;
 }
 
 .version-col1 {
@@ -109,16 +109,19 @@ button:hover {
 }
 
 .version-date {
-  border: 2px solid white
-
+  border: 2px solid white;
+  text-decoration: underline;
+  height: min-content;
 }
 .version-date:hover {
-  /* background-color: rgb(0, 197, 0); */
+  background-color: gainsboro;
   /* color: white; */
   /* box-shadow: 0 9px 12px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19); */
   cursor: pointer;
   border: 2px solid green;
   border-radius: 5px;
+  background: rgb(194,194,194);
+  background: linear-gradient(145deg, rgba(194,194,194,1) 0%, rgba(214,214,214,1) 35%, rgba(255,255,255,1) 100%);
 }
 
 .line {

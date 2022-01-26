@@ -8,6 +8,9 @@ function AddSong(props) {
   const [showAlreadyExistsMessage, setShowAlreadyExistsMessage] = useState(false)
   const [cover, setCover] = useState(false)
 
+  useEffect(() => {
+    console.log('user', props.user)
+  }, [props.user])
 
   async function testSong(artist, song) {
     setLoading(true)
@@ -33,14 +36,39 @@ function AddSong(props) {
     setLoading(true)
     const { data, error } = await supabase
       .from('songs')
-      .insert([
-        { song: song, artist: artist }
-      ])
+      .insert(
+        { song: song, artist: artist, cover: cover, user_id: props.user.id }, {returning: 'minimal'})
     if (error) {
       alert(error)
     } else {
-      console.log('data')
+      console.log('data', data)
       setShowSuccessMessage(true)
+      getPoints()
+    }
+  }
+
+  async function getPoints() {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('points')
+      .eq('id', props.user.id)
+    if (error) {
+      alert(error)
+    } else {
+      console.log('points', data)
+      addPoints(data[0].points)
+    }
+  }
+
+  async function addPoints(points) {
+    const { data, error } = await supabase
+      .from('profiles')
+      .update({ points: (points + 10) }, {returning: 'minimal'})
+      .match({ id: props.user.id })
+    if (error) {
+      alert(error)
+    } else {
+      console.log('data in addPoints', data)
     }
   }
 
@@ -84,7 +112,7 @@ function AddSong(props) {
       <br></br>
       <br></br>
       <button className="small-button"
-        onClick={e => props.setShowAddSong(false)}>Cancel</button>
+        onClick={e => props.setShowAddSong(false)}>Back</button>
     </div>
   )
 }
