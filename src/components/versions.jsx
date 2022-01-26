@@ -23,6 +23,7 @@ function Versions(props) {
           <p className="version-col2">Average</p>
           <p className="version-col3">Ratings</p>
           <p className="version-col4">Tags</p>
+          <p className="version-col5">Added by</p>
           <div className="line"></div>
           {props.versions &&
           props.versions.map((data) => {

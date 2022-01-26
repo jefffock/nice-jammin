@@ -79,7 +79,7 @@ button:hover {
 
 .versions {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: repeat(auto, 5);
   column-gap: 15px;
 }
 
@@ -103,7 +103,12 @@ button:hover {
 
 .version-col4 {
   grid-column-start: 4;
-  /* max-width: 50%; */
+  align-self: center;
+  justify-self: center;
+}
+
+.version-col5 {
+  grid-column-start: 5;
   align-self: center;
   justify-self: center;
 }
@@ -127,7 +132,7 @@ button:hover {
 .line {
   height: 1px;
   background-color: black;
-  grid-column: span 4;
+  grid-column: span 5;
 }
 
 .no-image {

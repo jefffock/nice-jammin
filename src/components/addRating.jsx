@@ -29,7 +29,7 @@ function AddRating(props) {
 
   function handleBackClick() {
     props.setShowAddRating(false)
-    
+    props.fetchRatings(props.songData.id)
   }
 
   return (

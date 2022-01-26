@@ -219,7 +219,10 @@ function App() {
         onClick={e => setShowAddSong(true)}>Add a Song</button>
         </>}
         {showAddSong && !showAddRating &&!showAddVersion &&
-        <AddSong setShowAddSong={setShowAddSong} artist={artist} user={user}/>
+        <AddSong setShowAddSong={setShowAddSong}
+        artist={artist}
+        user={user}
+        fetchSongs={fetchSongs}/>
         }
         {song && versions && !version && !showAddVersion && !showAddRating && !showAddSong &&
         <Versions versions={versions} handleVersionChange={handleVersionChange} setShowAddVersion={setShowAddVersion}/>

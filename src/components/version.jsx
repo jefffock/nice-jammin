@@ -3,6 +3,8 @@ import { supabase } from '../supabaseClient'
 
 function Version(props) {
   let [tags, setTags] = useState('')
+  let [name, setName] = useState('')
+  let [points, setPoints] = useState(null)
 
 
   useEffect(() => {
@@ -49,7 +51,26 @@ function Version(props) {
       tagBuilder+='Type II, '
     } let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
     setTags(finalTags)
+    getNameAndPoints()
   }, [props])
+
+  useEffect(() => {
+    console.log('props.data', props.data)
+  })
+
+  async function getNameAndPoints() {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('points, name')
+      .eq('id', props.data.version_user_id)
+    if (error) {
+      alert('error getting name and points')
+    } else {
+      console.log('data', data)
+      setName(data[0].name)
+      setPoints(data[0].points)
+    }
+  }
 
   function handleClick() {
     let version = {
@@ -73,6 +94,9 @@ function Version(props) {
       </div>
       <div className="version-col4">
         <p>{tags}</p>
+      </div>
+      <div className="version-col5">
+        <p>{name} - {points}</p>
       </div>
       <div className="line"></div>
     </>

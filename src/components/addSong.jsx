@@ -72,6 +72,11 @@ function AddSong(props) {
     }
   }
 
+  function handleBackClick() {
+    props.setShowAddSong(false)
+    props.fetchSongs(props.artist)
+  }
+
   return (
     <div>
       <h1>Add Song</h1>
@@ -112,7 +117,7 @@ function AddSong(props) {
       <br></br>
       <br></br>
       <button className="small-button"
-        onClick={e => props.setShowAddSong(false)}>Back</button>
+        onClick={e => handleBackClick()}>Back</button>
     </div>
   )
 }
