@@ -26,6 +26,7 @@ function AddVersion(props) {
   const [soaring, setSoaring] = useState(false)
   const [crunchy, setCrunchy] = useState(false)
   const [happy, setHappy] = useState(false)
+  const [acoustic, setAcoustic] = useState(false)
 
   useEffect(() => {
     async function getSongId() {
@@ -76,7 +77,29 @@ function AddVersion(props) {
     const { data, error } = await supabase
       .from('versions')
       .insert([
-        { song_id: songId, date: date }
+        { song_id: songId,
+          date: date,
+          funky: funky,
+          ambient: ambient,
+          fast: fast,
+          slow: slow,
+          bliss: bliss,
+          shred: shred,
+          dark: dark,
+          silly: silly,
+          guest: guest,
+          type2: type2,
+          groovy: groovy,
+          peaks: peaks,
+          reggae: reggae,
+          heavy: heavy,
+          jazzy: jazzy,
+          trippy: trippy,
+          soaring: soaring,
+          crunchy: crunchy,
+          happy: happy,
+          acoustic: acoustic
+        }
       ])
     if (error) {
       alert(error)
@@ -91,6 +114,7 @@ function AddVersion(props) {
   }
 
   return (
+    <>
     <div>
       <h1>Add Version</h1>
       <div>
@@ -182,7 +206,7 @@ function AddVersion(props) {
             <br></br>
             <br></br>
           </div>
-          <div className="col1 row3">
+          <div className="col1 row10">
             <label htmlFor="guest">Guest</label>
             <input type="checkbox" id='guest'
             onChange={e => setGuest(e.target.checked)}></input>
@@ -238,7 +262,7 @@ function AddVersion(props) {
             <br></br>
             <br></br>
           </div>
-          <div className="col1 row10">
+          <div className="col1 row3">
             <label htmlFor="soaring">Soaring</label>
             <input type="checkbox" id="soaring"
             onChange={e => setSoaring(e.target.checked)}></input>
@@ -257,10 +281,14 @@ function AddVersion(props) {
             <input type="checkbox" id="happy"
             onChange={e => setHappy(e.target.checked)}></input>
           </div>
+          <div className="col2 row10">
+              <label htmlFor="acoustic">Acoustic</label>
+              <input type="checkbox" id="acoustic"
+              onChange={e => setAcoustic(e.target.checked)}></input>
+            </div>
+          </div>
         </div>
         <br></br>
-        <br></br>
-      </div>
       <button
       onClick={e => testVersion(date)}
       disabled={loading}>Add this version</button>
@@ -273,6 +301,7 @@ function AddVersion(props) {
       <button className="small-button"
         onClick={e => props.setShowAddVersion(false)}>Cancel</button>
     </div>
+    </>
   )
 }
 

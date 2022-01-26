@@ -6,6 +6,7 @@ function AddReview(props) {
   return (
     <div>
       <h1>Add Review</h1>
+      <button onClick={e => props.setShowAddReview(false)}>Cancel</button>
     </div>
   )
 }

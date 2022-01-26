@@ -9,23 +9,31 @@ function Versions(props) {
   })
 
   return (
-    <div className="versions">
-      <div className="versions-header">
-        <p>Date</p>
-        <p>Rating</p>
-        <p>#</p>
-      </div>
-      {props.versions &&
-      props.versions.map(({ date, avg_rating, num_reviews, id}) => {
-        return (
-          <Version date={date}
-          avg={avg_rating}
-          num={num_reviews}
-          id={id}
-          handleVersionChange={props.handleVersionChange}/>
-        )
-      })}
-    </div>
+    <>
+      <h3>Versions</h3>
+      {props.versions.length === 0 &&
+      <p>No versions submitted yet!</p>}
+      <button className="small-button"
+      onClick={e => props.setShowAddVersion(true)}>Add A Great Version</button>
+      {props.versions.length > 0 &&
+      <>
+        <p>Choose a Version:</p>
+        <div className="versions">
+          <p className="version-col1">Date</p>
+          <p className="version-col2">Average</p>
+          <p className="version-col3">Ratings</p>
+          <p className="version-col4">Tags</p>
+          <div className="line"></div>
+          {props.versions &&
+          props.versions.map((data) => {
+            return (
+                <Version data={data}
+                handleVersionChange={props.handleVersionChange}/>)
+          })}
+        </div>
+      </>
+      }
+    </>
   )
 }
 

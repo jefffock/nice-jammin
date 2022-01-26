@@ -10,12 +10,13 @@ import Reviews from './components/reviews'
 import AddSong from './components/addSong'
 import AddVersion from './components/addVersion'
 import AddReview from './components/addReview'
+import Header from './components/header'
 
 function App() {
   const [session, setSession] = useState(null)
   const [user, setUser] = useState(null)
   const [artists, setArtists] = useState(null)
-  const [artist, setArtist] = useState('Phish')
+  const [artist, setArtist] = useState(null)
   const [songs, setSongs] = useState(null)
   const [song, setSong] = useState(null)
   const [versions, setVersions] = useState(null)
@@ -48,7 +49,7 @@ function App() {
 
   useEffect(() => {
     fetchArtists()
-  }, [user])
+  }, [])
 
   useEffect(() => {
     fetchSongs(artist)
@@ -58,16 +59,23 @@ function App() {
     const { data, error } = await supabase
       .from('artists')
       .select()
-    setArtists(data)
+    if (error) {
+      console.log(error)
+      alert(error)
+    } else {
+      setArtists(data)
+    }
   }
 
   async function fetchSongs(artist) {
-    const { data, error } = await supabase
-      .from('songs')
-      .select('*, artists!inner(*)')
-      .eq('artists.artist', artist)
-    setSongs(data)
-    console.log('songData', data)
+    if (artist) {
+      const { data, error } = await supabase
+        .from('songs')
+        .select('*, artists!inner(*)')
+        .eq('artists.artist', artist)
+      setSongs(data)
+      console.log('songData', data)
+    }
   }
 
   async function fetchVersions(songId) {
@@ -140,44 +148,28 @@ function App() {
     )
   } if (showProfile) {
     return (
-      <div>
-        <div className="header">
-          <h1>Nice Jammin</h1>
-          <button className="header-button small-button"
-          onClick={e => setShowProfile(false)}>Back to app</button>
-          <button className="header-button small-button"
-          onClick={e => {signOut()}}>Log Out</button>
-        </div>
+      <div className="app">
+       <Header session={session} showPleaseConfirm={showPleaseConfirm}
+        setShowSignIn={setShowSignIn} setShowProfile={setShowProfile}
+        signOut={signOut} showProfile={showProfile}/>
         <Account key={session.user.id} session={session}/>
       </div>
     )
   } return (
     <>
       <div className="app">
-        <div className="header">
-          <h1 className="title">Nice Jammin</h1>
-          {!session && !showPleaseConfirm &&
-          <button className="header-button small-button"
-          onClick={e => setShowSignIn(true)}>Create an Account or Sign In</button>}
-          {session &&
-          <>
-          <button className="header-button small-button"
-          onClick={e => setShowProfile(true)}>View Profile</button>
-          <button className="header-button small-button"
-          onClick={e => {signOut()}}>Log Out</button>
-          </>}
-        </div>
-        {showPleaseConfirm &&
-        <h3>Please confirm your email address to start contributing. Thank you!</h3>}
+        <Header session={session} showPleaseConfirm={showPleaseConfirm}
+        setShowSignIn={setShowSignIn} setShowProfile={setShowProfile}
+        signOut={signOut} />
         <div className="current-selection-div">
           <h2>{artist}</h2>
           <h2>{song}</h2>
           {version &&
-          <h2>{version.date}</h2>
-          }
+          <h2>{version.date}</h2>}
         </div>
-
         {!artist &&
+        <p>Choose an artist:</p>}
+        {!artist && artists &&
           artists.map(artist => {
             return (
               <button onClick={() => handleArtistChange(artist.artist)}>{artist.artist}</button>
@@ -224,12 +216,7 @@ function App() {
         <AddSong setShowAddSong={setShowAddSong} artist={artist}/>
         }
         {song && versions && !version && !showAddVersion && !showAddReview && !showAddSong &&
-        <>
-        <h3>Versions</h3>
-        <button className="small-button"
-        onClick={e => setShowAddVersion(true)}>Add A Great Version</button>
-        <Versions versions={versions} handleVersionChange={handleVersionChange}/>
-        </>
+        <Versions versions={versions} handleVersionChange={handleVersionChange} setShowAddVersion={setShowAddVersion}/>
         }
         {showAddVersion && !showAddReview && !showAddSong &&
         <AddVersion setShowAddVersion={setShowAddVersion} artist={artist} song={song} />

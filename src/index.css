@@ -11,6 +11,12 @@ code {
     monospace;
 }
 
+.app {
+  max-width: 1000px;
+  justify-self: center;
+  margin: 0 auto
+}
+
 button {
   margin-right: 5px;
   margin-top: 5px;
@@ -20,7 +26,8 @@ button {
   border-radius: 5px;
   border: 2px solid green;
   background-color: rgb(255, 255, 255);
-  height: 40px;
+  height: 35px;
+  min-height: min-content;
 }
 
 button:hover {
@@ -29,11 +36,6 @@ button:hover {
   cursor: pointer;
 }
 
-.version:hover {
-  background-color: rgb(0, 197, 0);
-  color: white;
-  box-shadow: 0 9px 12px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}
 
 .back-buttons-div {
   display: flex
@@ -42,7 +44,7 @@ button:hover {
 .small-button {
   border: 1px solid green;
   font-size: medium;
-  height: auto;
+  height: min-content;
 }
 
 .current-selection-div {
@@ -75,20 +77,54 @@ button:hover {
   margin: 10px
 }
 
-.versions-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.version {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .versions {
-  max-width: 500px;
+  display: grid;
+  grid-template-columns: auto auto auto 50%;
+  column-gap: 10px
+}
+
+.version-col1 {
+  grid-column-start: 1;
+  align-self: center;
+  justify-self: center;
+}
+
+.version-col2 {
+  grid-column-start: 2;
+  align-self: center;
+  justify-self: center;
+}
+
+.version-col3 {
+  grid-column-start: 3;
+  align-self: center;
+  justify-self: center;
+}
+
+.version-col4 {
+  grid-column-start: 4;
+  /* max-width: 50%; */
+  align-self: center;
+  justify-self: center;
+}
+
+.version-date {
+  border: 2px solid white
+
+}
+.version-date:hover {
+  /* background-color: rgb(0, 197, 0); */
+  /* color: white; */
+  /* box-shadow: 0 9px 12px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19); */
+  cursor: pointer;
+  border: 2px solid green;
+  border-radius: 5px;
+}
+
+.line {
+  height: 1px;
+  background-color: black;
+  grid-column: span 4;
 }
 
 .no-image {
