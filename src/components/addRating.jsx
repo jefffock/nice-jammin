@@ -19,7 +19,7 @@ function AddRating(props) {
     if (charCount > 10000) {
       alert(`Your enthusiasm is commendable! Also, character limit exceeded`)
     } else {
-      // insertRating()
+      insertRating()
     }
   }
 
@@ -27,20 +27,25 @@ function AddRating(props) {
     const { data, error } = await supabase
       .from('ratings')
       .insert(
-        [{
+        {
           version_id: props.version.id,
           user_id: props.user.id,
           rating: rating,
           version_date: props.date,
-          // profiles_username,
-          comment: comment
-        }]
-      )
+          comment: comment,
+          profiles_username: props.username
+        }, {returning: 'minimal'})
+      if (error) {
+        console.log('error adding rating: ', error)
+      } else {
+        console.log('success adding rating. now time to add points')
+        setLoading(false)
+      }
   }
 
   function handleBackClick() {
-    props.setShowAddRating(false)
     props.fetchRatings(props.songData.id)
+    props.setShowAddRating(false)
   }
 
   return (
@@ -50,8 +55,7 @@ function AddRating(props) {
         <input
           className="inputField"
           type="artist"
-          placeholder="Artist"
-          value={props.artist}
+          value={props.songData.artist}
         />
         <br></br>
         <br></br>
@@ -59,16 +63,14 @@ function AddRating(props) {
         <input
           className="inputField"
           type="song"
-          placeholder="Song"
-          value={props.song}
-        />
+          value={props.songData.song}/>
         <br></br>
         <br></br>
         <label htmlFor="version">Date: </label>
         <input
         className="inputField"
         placeholder=""
-        value={props.date}></input>
+        value={props.version.date}></input>
         <br></br>
         <br></br>
         <label htmlFor="rating">Rating: </label>

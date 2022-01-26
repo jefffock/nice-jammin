@@ -13,7 +13,7 @@ function Versions(props) {
       <h3>Versions</h3>
       {props.versions.length === 0 &&
       <p>No versions submitted yet!</p>}
-      <button className="small-button"
+      <button
       onClick={e => props.setShowAddVersion(true)}>Add A Great Version</button>
       {props.versions.length > 0 &&
       <>

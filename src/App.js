@@ -38,10 +38,15 @@ function App() {
   handleVersionChange.bind(this)
 
   useEffect(() => {
+    console.log('in the set session hook')
     setSession(supabase.auth.session())
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
     })
+  }, [])
+
+  useEffect(() => {
+    console.log('in the set user hook')
     setUser(supabase.auth.user())
   }, [])
 
@@ -49,7 +54,7 @@ function App() {
     if (user) {
       setShowPleaseConfirm(false)
     } fetchProfile()
-  }, [user])
+  }, [session, user])
 
   useEffect(() => {
     fetchArtists()
@@ -150,6 +155,7 @@ function App() {
   }
 
   async function signOut() {
+    setShowProfile(false)
     const { error } = await supabase.auth.signOut()
     if (error) {
       alert(error)
@@ -197,17 +203,32 @@ function App() {
         setShowSignIn={setShowSignIn} setShowProfile={setShowProfile}
         signOut={signOut} />
         <div className="current-selection-div">
-          <h2>{artist}</h2>
-          <h2>{song}</h2>
+          <h2 onClick={e => {
+            setSong(null)
+            setVersion(null)
+            setShowAddSong(false)
+            setShowAddVersion(false)
+            setShowAddRating(false)
+          }}>{artist}</h2>
+          <h2 onClick={e => {
+            setVersion(null)
+            setShowAddSong(false)
+            setShowAddVersion(false)
+            setShowAddRating(false)
+          }}>{song}</h2>
           {version &&
-          <h2>{version.date}</h2>}
+          <h2 onClick={e => {
+            setShowAddSong(false)
+            setShowAddVersion(false)
+            setShowAddRating(false)
+          }}>{version.date}</h2>}
         </div>
         {!artist &&
         <p>Choose an artist:</p>}
         {!artist && artists &&
           artists.map(artist => {
             return (
-              <button onClick={() => handleArtistChange(artist.artist)}>{artist.artist}</button>
+              <button className="button-in-list" onClick={() => handleArtistChange(artist.artist)}>{artist.artist}</button>
             )
           })}
         <div className="back-buttons-div">
@@ -237,7 +258,7 @@ function App() {
         {songs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
         songs.map(song => {
           return (
-            <button onClick={() => handleSongChange(song)}>{song.song}</button>
+            <button className="button-in-list" onClick={() => handleSongChange(song)}>{song.song}</button>
           )
         })}
         {songs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
@@ -272,13 +293,13 @@ function App() {
         date={version.date}
         setShowAddRating={setShowAddRating}/>}
         {showAddRating && version &&
-        <AddRating artist={artist}
+        <AddRating
         songData={songData}
-        date={version.date}
         version={version}
         user={user}
         setShowAddRating={setShowAddRating}
-        fetchRatings={fetchRatings}/>}
+        fetchRatings={fetchRatings}
+        username={username}/>}
       </div>
     </>
   )
