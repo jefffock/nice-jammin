@@ -6,7 +6,8 @@ export default function Auth(props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
-  const [showCreateAccount, setShowCreateAccount] = useState(true)
+  const [showCreateAccount, setShowCreateAccount] = useState(false)
+  const [status, setStatus] = useState('')
 
   async function signInWithEmail(email, password) {
     setLoading(true)
@@ -26,23 +27,40 @@ export default function Auth(props) {
 
   async function signUpWithEmail(email, password, displayName) {
     setLoading(true)
-    const { user, session, error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    })
-    if (error) {
-      alert(error.error_description || error.message)
-    } else {
-      console.log('in the else block, should close showSignIn')
-      createProfile(displayName, user)
-      props.handleShowSignIn(false)
-      props.handleNotConfirmedYet()
+    setStatus('Creating your account')
+    if (displayName.length < 1) {
+      setStatus('Although a blank username would be super cool, it needs to be at least 1 character. Thank you for understanding.')
+      setLoading(false)
     }
-    setLoading(false)// <p>Successfully created account! Check your email to confirm sign up</p>
+    if (displayName.length > 20) {
+      setStatus('Maximum username length: 20 characters')
+      setLoading(false)
+    } else {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('name')
+        .eq('name', displayName)
+      console.log('data', data)
+      if (data.length > 0) {
+        setStatus('Great minds think alike! Someone else already has that username. Please choose another.')
+        setLoading(false)
+      } else {
+        const { user, session, error } = await supabase.auth.signUp({
+          email: email,
+          password: password,
+        })
+        if (error) {
+          alert(error.error_description || error.message)
+        } else {
+          createProfile(displayName, user)
+          props.handleShowSignIn(false)
+          props.handleNotConfirmedYet()
+        }
+      }
+    }
   }
 
   async function createProfile(displayName, user) {
-    console.log('in create profile', displayName, 'user', user)
     const { data, error } = await supabase
       .from('profiles')
       .insert([
@@ -51,7 +69,7 @@ export default function Auth(props) {
     if (error) {
       alert (error)
     } else {
-      console.log('successfully created user profile', data)
+      setLoading(false)
     }
   }
 
@@ -92,11 +110,12 @@ export default function Auth(props) {
               e.preventDefault()
               signInWithEmail(email, password)
             }}
-            className={'button block'}
+            className='primary-button'
             disabled={loading}
           >
             {loading ? <span>Loading</span> : <span>Sign In</span>}
           </button>
+          <p className="error-message">{status}</p>
         </div>
         <br></br>
         <br></br>
@@ -145,11 +164,13 @@ export default function Auth(props) {
             e.preventDefault()
             signUpWithEmail(email, password, displayName)
           }}
-          className={'button block'}
+          className='primary-button'
           disabled={loading}
         >
           {loading ? <span>Loading</span> : <span>Create Account</span>}
         </button>
+        <br></br>
+        <p className="error-message">{status}</p>
         <br></br>
         <br></br>
         <br></br>

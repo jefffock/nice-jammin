@@ -172,6 +172,10 @@ function App() {
     setShowPleaseConfirm(true)
   }
 
+  function goHome() {
+    
+  }
+
   if (showSignIn) {
     return (
       <div className="app">
