@@ -42,6 +42,7 @@ function AddRating(props) {
       .from('ratings')
       .select('*')
       .eq('rating_submitter_user_id', id)
+      .eq('version_id', props.version.id)
     if (error) {
       console.log('error in checkUserAlreadyRated', error)
     } else {
@@ -64,6 +65,7 @@ function AddRating(props) {
         rating: rating,
         comment: comment
       })
+      .match({rating_submitter_user_id: props.user.id})
     if (error) {
       console.log('error updating rating')
     } else {
@@ -78,7 +80,7 @@ function AddRating(props) {
       .insert(
         {
           version_id: props.version.id,
-          user_id: props.user.id,
+          rating_submitter_user_id: props.user.id,
           rating: rating,
           version_date: props.date,
           comment: comment,
@@ -87,9 +89,44 @@ function AddRating(props) {
       if (error) {
         console.log('error adding rating: ', error)
       } else {
-        console.log('success adding rating. now time to add points')
-        setLoading(false)
+        console.log('success adding rating. now time to add update average')
+        getVersionAverageData()
       }
+  }
+
+  async function getVersionAverageData() {
+    const { data, error } = await supabase
+      .from('versions')
+      .select('avg_rating, sum_ratings, num_ratings')
+      .eq('id', props.version.id)
+    if (error) {
+      console.log('error getting version average data')
+    } else {
+      console.log('data in get version average data', data[0])
+      let newSum = data[0].sum_ratings + rating;
+      let newNum = data[0].num_ratings + 1;
+      let newAvg = newSum/newNum;
+      updateVersionAverageData(newSum, newNum, newAvg)
+    }
+  }
+
+  async function updateVersionAverageData(newSum, newNum, newAvg) {
+    let versionId = props.version.id
+    console.log('versionId', versionId)
+    console.log('newAvg', newAvg, 'newSum', newSum, 'new Num', newNum)
+    const { data, error } = await supabase
+      .from('versions')
+      .update({
+        sum_ratings: newSum,
+        num_ratings: newNum,
+        avg_rating: newAvg
+      })
+      .match({id: versionId})
+    if (error) {
+      console.log('error updating average data', error)
+    } else {
+      console.log('successfuly updated version average data, time to add points', data)
+    }
   }
 
   //get average rating
@@ -108,28 +145,6 @@ function AddRating(props) {
   return (
     <div>
       <h2>Add Rating</h2>
-      <label htmlFor="artist">Artist: </label>
-        <input
-          className="inputField"
-          type="artist"
-          value={props.songData.artist}
-        />
-        <br></br>
-        <br></br>
-        <label htmlFor="song">Name: </label>
-        <input
-          className="inputField"
-          type="song"
-          value={props.songData.song}/>
-        <br></br>
-        <br></br>
-        <label htmlFor="version">Date: </label>
-        <input
-        className="inputField"
-        placeholder=""
-        value={props.version.date}></input>
-        <br></br>
-        <br></br>
         <label htmlFor="rating">Rating: </label>
         <select
         name="rating"

@@ -67,7 +67,8 @@ button {
 
 .primary-button {
   background-color: var(--primary-color);
-  color: white
+  color: white;
+  height: fit-content;
 }
 
 .primary-button:hover {
