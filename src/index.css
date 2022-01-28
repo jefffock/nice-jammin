@@ -11,31 +11,59 @@ code {
     monospace;
 }
 
+
+
 .app {
+  --primary-color: #115A92;
+  --primary-color-darker: #0d446e;
+  --secondary-color: #338a59;
+  --secondary-color-darker: #215839;
   max-width: 1000px;
   justify-self: center;
-  margin: 0 auto
+  margin: auto;
+}
+
+h1 {
+  color: var(--primary-color);
+}
+
+h2 {
+  color: var(--primary-color);
 }
 
 button {
-  margin-right: 5px;
-  margin-top: 5px;
+  margin: 3px;
   font-size: large;
   overflow: hidden;
   border: none;
-  border-radius: 5px;
-  border: 2px solid green;
+  border-radius: 18px;
+  border: 1px solid var(--primary-color);
   /* background-color: rgb(255, 255, 255); */
-  background-color: green;
+  background-color: white;
   color: white;
-  height: 35px;
+  height: 36px;
   min-height: min-content;
 }
 
 .button-in-list {
-  border: 2px solid green;
-  background-color: rgb(255, 255, 255);
-  color: black;
+  border: 1px solid var(--primary-color);
+  background-color: white;
+  color: var(--primary-color)
+}
+
+.button-in-list:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.primary-button {
+  background-color: var(--primary-color);
+  color: white
+}
+
+.primary-button:hover {
+  background: var(--primary-color-darker);
+
 }
 
 button:hover {
@@ -44,27 +72,21 @@ button:hover {
   cursor: pointer;
 }
 
-
 .back-buttons-div {
-  display: flex
+  display: flex;
 }
 
 .small-button {
   /* border: 1px solid green; */
-  background-color: white;
-  color: navy;
+  color: var(--secondary-color);
   border: none;
   font-size: medium;
   height: min-content;
-  text-decoration: underline;
 }
 
 .small-button:hover {
-  color: blue;
-}
-
-.current-selection-div {
-
+  background-color: var(--secondary-color);
+  color: white;
 }
 
 .header {
@@ -73,20 +95,16 @@ button:hover {
   align-items: center;
 }
 
-.title {
-}
-
 .header-button {
   height: min-content;
 }
 
 .link {
-  text-decoration: underline;
-  color: navy
+  color: var(--secondary-color)
 }
 
 .link:hover {
-  color:blue;
+  color: var(--secondary-color-darker);
   cursor: pointer;
 }
 
@@ -96,7 +114,7 @@ button:hover {
 
 .versions {
   display: grid;
-  grid-template-columns: repeat(auto, 5);
+  grid-template-columns: repeat(auto, 4);
   column-gap: 15px;
 }
 
@@ -124,32 +142,25 @@ button:hover {
   justify-self: center;
 }
 
-.version-col5 {
-  grid-column-start: 5;
-  align-self: center;
-  justify-self: center;
-}
+/* .version-date {
+  border-radius: 16px;
+  padding-left: 10px;
+  padding-right: 10px;
 
-.version-date {
-  border: 2px solid white;
-  text-decoration: underline;
-  height: min-content;
-}
+} */
+
 .version-date:hover {
-  background-color: gainsboro;
-  /* color: white; */
-  /* box-shadow: 0 9px 12px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19); */
+  background: var(--primary-color);
+  color: white;
   cursor: pointer;
-  border: 2px solid green;
-  border-radius: 5px;
-  background: rgb(194,194,194);
-  background: linear-gradient(145deg, rgba(194,194,194,1) 0%, rgba(214,214,214,1) 35%, rgba(255,255,255,1) 100%);
 }
 
 .line {
   height: 1px;
-  background-color: black;
-  grid-column: span 5;
+  background-color: rgb(107, 107, 107);
+  grid-column: span 4;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .no-image {
@@ -157,7 +168,7 @@ button:hover {
 }
 
 .avatar-upload {
-  border: 2px solid green;
+  border: 2px solid var(--secondary-color)
 }
 
 .avatar-upload:hover {
@@ -224,9 +235,17 @@ button:hover {
 
 .review-container {
   display: grid;
-  grid-template-columns: repeat(auto, 4);
-  grid-template-rows: auto;
-  max-width: 1000px
+  grid-template-columns: repeat(10px, 2);
+  grid-template-rows: repeat(10px, 2);
+  justify-content: space-around;
+  justify-items: center;
+  align-items: center;
+  align-content: start;
+}
+
+p {
+  padding-top: 10px;
+  margin: 0;
 }
 
 .review-comment {
@@ -240,16 +259,16 @@ button:hover {
 }
 
 .review-rating {
+  grid-column-start: 1;
+  grid-row-start: 2;
+}
+
+.review-helpful {
   grid-column-start: 2;
   grid-row-start: 1;
 }
 
-.review-helpful {
-  grid-column-start: 3;
-  grid-row-start: 1;
-}
-
 .review-funny {
-  grid-column-start: 4;
-  grid-row-start: 1;
+  grid-column-start: 2;
+  grid-row-start: 2;
 }

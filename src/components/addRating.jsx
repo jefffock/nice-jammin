@@ -108,11 +108,12 @@ function AddRating(props) {
         <p>{10000 - charCount} characters left</p>}
         <br></br>
         <br></br>
-        <button
+        <button className="primary-button"
         onClick={e => testRating()}
         disabled={loading}>Add your rating</button>
         {showSuccessMessage &&
         <p>Added your rating to the {props.date} version of {props.song}. Thank you for contributing!</p>}
+        <br></br>
         <br></br>
       <button className="small-button" onClick={e => handleBackClick()}>Back</button>
     </div>

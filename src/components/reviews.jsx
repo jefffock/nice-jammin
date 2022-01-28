@@ -16,9 +16,9 @@ function Reviews(props) {
   }, [props])
 
   return (
-    <div>
+    <div className="reviews">
       <br></br>
-      <button onClick={e => props.setShowAddRating(true)}>Rate {props.song} from {props.date}</button>
+      <button className="primary-button" onClick={e => props.setShowAddRating(true)}>Rate {props.song} from {props.date}</button>
       <br></br>
       <br></br>
       <label htmlFor="review-sort">Sort comments by: </label>
@@ -32,7 +32,6 @@ function Reviews(props) {
         <option value="funny">Funny</option>
         <option value="created_at">Newest</option>
       </select>
-      <h3>Comments</h3>
       {props.reviews && (props.reviews.length === 0) &&
       <p>No reviews yet!</p>}
       {props.reviews && (props.reviews.length > 0) &&

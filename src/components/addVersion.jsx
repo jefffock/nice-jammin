@@ -326,7 +326,7 @@ function AddVersion(props) {
           </div>
         </div>
         <br></br>
-      <button
+      <button className="primary-button"
       onClick={e => testVersion(date)}
       disabled={loading}>Add this version</button>
       {showSuccessMessage &&

@@ -202,27 +202,6 @@ function App() {
         <Header session={session} showPleaseConfirm={showPleaseConfirm}
         setShowSignIn={setShowSignIn} setShowProfile={setShowProfile}
         signOut={signOut} />
-        <div className="current-selection-div">
-          <h2 onClick={e => {
-            setSong(null)
-            setVersion(null)
-            setShowAddSong(false)
-            setShowAddVersion(false)
-            setShowAddRating(false)
-          }}>{artist}</h2>
-          <h2 onClick={e => {
-            setVersion(null)
-            setShowAddSong(false)
-            setShowAddVersion(false)
-            setShowAddRating(false)
-          }}>{song}</h2>
-          {version &&
-          <h2 onClick={e => {
-            setShowAddSong(false)
-            setShowAddVersion(false)
-            setShowAddRating(false)
-          }}>{version.date}</h2>}
-        </div>
         {!artist &&
         <p>Choose an artist:</p>}
         {!artist && artists &&
@@ -252,6 +231,27 @@ function App() {
           <button className="back small-button" onClick={e => {
             setVersion(null)}}>Change Version</button>
           </>}
+        </div>
+        <div className="current-selection-div">
+          <h2 onClick={e => {
+            setSong(null)
+            setVersion(null)
+            setShowAddSong(false)
+            setShowAddVersion(false)
+            setShowAddRating(false)
+          }}>{artist}</h2>
+          <h2 onClick={e => {
+            setVersion(null)
+            setShowAddSong(false)
+            setShowAddVersion(false)
+            setShowAddRating(false)
+          }}>{song}</h2>
+          {version &&
+          <h2 onClick={e => {
+            setShowAddSong(false)
+            setShowAddVersion(false)
+            setShowAddRating(false)
+          }}>{version.date}</h2>}
         </div>
         {songs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
         <p>Choose a song:</p>}

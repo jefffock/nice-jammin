@@ -83,19 +83,16 @@ function Version(props) {
   if (props) {
   return (
     <>
-      <div className="version-col1 version-date" onClick={e => handleClick()}>
-        <p>{props.data.date}</p>
+      <div className="version-col1" onClick={e => handleClick()}>
+        <p className="version-date">{props.data.date}</p>
       </div>
       <div className="version-col2">
         <p>{props.data.avg_rating}</p>
       </div>
       <div className="version-col3">
-        <p>{props.data.num_reviews}</p>
-      </div>
-      <div className="version-col4">
         <p>{tags}</p>
       </div>
-      <div className="version-col5">
+      <div className="version-col4">
         <p>{name} - {points}</p>
       </div>
       <div className="line"></div>

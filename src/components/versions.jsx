@@ -13,7 +13,7 @@ function Versions(props) {
       <h3>Versions</h3>
       {props.versions.length === 0 &&
       <p>No versions submitted yet!</p>}
-      <button
+      <button className="primary-button"
       onClick={e => props.setShowAddVersion(true)}>Add A Great Version</button>
       {props.versions.length > 0 &&
       <>
@@ -21,9 +21,8 @@ function Versions(props) {
         <div className="versions">
           <p className="version-col1">Date</p>
           <p className="version-col2">Average</p>
-          <p className="version-col3">Ratings</p>
-          <p className="version-col4">Tags</p>
-          <p className="version-col5">Added by</p>
+          <p className="version-col3">Tags</p>
+          <p className="version-col4">Added by</p>
           <div className="line"></div>
           {props.versions &&
           props.versions.map((data) => {
