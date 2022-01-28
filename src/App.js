@@ -32,8 +32,6 @@ function App() {
   const [username, setUsername] = useState(null)
   const [points, setPoints] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
-  const songRef = useRef();
-  const versionsRef = useRef();
 
   handleVersionChange.bind(this)
 
@@ -42,6 +40,7 @@ function App() {
     setSession(supabase.auth.session())
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
+      setUser(session.user)
     })
   }, [])
 
@@ -57,28 +56,32 @@ function App() {
   }, [session, user])
 
   useEffect(() => {
-    fetchArtists()
+    if (!artists) {
+      fetchArtists()
+    }
   }, [])
 
   useEffect(() => {
+    console.log('artist changed to ', artist, 'fetching songs')
     fetchSongs(artist)
   }, [artist])
 
   async function fetchProfile() {
     const user = supabase.auth.user()
     if (user) {
+      let id = user.id
+      console.log('id', id)
       let { data, error, status } = await supabase
         .from('profiles')
-        .select(`name, avatar_url, points`)
-        .eq('id', user.id)
-        .single()
+        .select('*')
+        .eq('id', id)
       if (error) {
         console.log('error getting profile')
       } if (data) {
         console.log('data in fetchProfile', data)
-        setUsername(data.name)
-        setPoints(data.points)
-        setAvatarUrl(data.avatar_url)
+        setUsername(data[0].name)
+        setPoints(data[0].points)
+        setAvatarUrl(data[0].avatar_url)
       }
     }
   }
@@ -109,16 +112,17 @@ function App() {
   }
 
   async function fetchVersions(songId) {
-    console.log('currentSong', songId)
+    console.log('currentSongid in fetch Versions', songId)
     const { data, error } = await supabase
       .from('versions')
-      .select('*, songs!inner(*)')
-      .eq('songs.id', songId)
+      .select('*')
+      .eq('song_id', songId)
       .order('avg_rating', {ascending: false})
+    if (error) {
+      console.log('error fetching versions', error)
+    }
     setVersions(data)
     console.log('version data', data)
-    versionsRef.current = data
-    console.log('versionsRef', versionsRef)
   }
 
   async function fetchRatings(versionId) {
@@ -132,11 +136,11 @@ function App() {
   }
 
   function handleArtistChange(artist) {
-    console.log('session', session)
+    console.log('artist', artist)
     setArtist(artist);
     fetchSongs(artist);
     setSong(null);
-    setVersions(null)
+    setVersions(null);
   }
 
   function handleSongChange(song) {
@@ -145,7 +149,6 @@ function App() {
     setSongData(song)
     setSong(song.song)
     fetchVersions(song.id)
-    songRef.current = song.id
   }
 
   function handleVersionChange(version) {
@@ -158,7 +161,7 @@ function App() {
     setShowProfile(false)
     const { error } = await supabase.auth.signOut()
     if (error) {
-      alert(error)
+      console.log('error,', error)
     } else {
       console.log('signed out')
     }
@@ -173,7 +176,12 @@ function App() {
   }
 
   function goHome() {
-    
+    setArtist(null)
+    setSong(null)
+    setVersion(null)
+    setShowAddSong(false)
+    setShowAddVersion(false)
+    setShowAddRating(false)
   }
 
   if (showSignIn) {
@@ -182,15 +190,20 @@ function App() {
         <h1>Nice Jammin</h1>
         <Auth handleShowSignIn={handleShowSignIn}
         handleNotConfirmedYet={handleNotConfirmedYet}
-        setUser={setUser}/>
+        setUser={setUser}
+        fetchProfile={fetchProfile}/>
       </div>
     )
   } if (showProfile) {
     return (
       <div className="app">
-       <Header session={session} showPleaseConfirm={showPleaseConfirm}
-        setShowSignIn={setShowSignIn} setShowProfile={setShowProfile}
-        signOut={signOut} showProfile={showProfile}/>
+       <Header session={session}
+       showPleaseConfirm={showPleaseConfirm}
+        setShowSignIn={setShowSignIn}
+        setShowProfile={setShowProfile}
+        signOut={signOut}
+        showProfile={showProfile}
+        goHome={goHome}/>
         <Account key={session.user.id}
         session={session}
         username={username}
@@ -203,24 +216,16 @@ function App() {
   } return (
     <>
       <div className="app">
-        <Header session={session} showPleaseConfirm={showPleaseConfirm}
-        setShowSignIn={setShowSignIn} setShowProfile={setShowProfile}
-        signOut={signOut} />
-        {!artist &&
-        <p>Choose an artist:</p>}
-        {!artist && artists &&
-          artists.map(artist => {
-            return (
-              <button className="button-in-list" onClick={() => handleArtistChange(artist.artist)}>{artist.artist}</button>
-            )
-          })}
+        <Header session={session}
+        showPleaseConfirm={showPleaseConfirm}
+        setShowSignIn={setShowSignIn}
+        setShowProfile={setShowProfile}
+        signOut={signOut}
+        goHome={goHome}/>
         <div className="back-buttons-div">
           {artist && !showAddSong && !showAddVersion && !showAddRating &&
           <>
-          <button className="back small-button" onClick={e => {
-            setArtist(null);
-            setSong(null);
-            setVersion(null)}}>Change Artist</button>
+          <button className="back small-button" onClick={e => goHome()}>Change Artist</button>
             <br></br>
           </>}
           {song && !showAddSong && !showAddVersion && !showAddRating &&
@@ -236,6 +241,15 @@ function App() {
             setVersion(null)}}>Change Version</button>
           </>}
         </div>
+        {!artist &&
+        <p>Choose an artist:</p>}
+        <br></br>
+        {!artist && artists &&
+          artists.map(artist => {
+            return (
+              <button className="button-in-list" onClick={() => handleArtistChange(artist.artist)}>{artist.artist}</button>
+            )
+          })}
         <div className="current-selection-div">
           <h2 onClick={e => {
             setSong(null)
@@ -258,7 +272,10 @@ function App() {
           }}>{version.date}</h2>}
         </div>
         {songs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
-        <p>Choose a song:</p>}
+        <>
+        <p>Choose a song:</p>
+        <br></br>
+        </>}
         {songs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
         songs.map(song => {
           return (

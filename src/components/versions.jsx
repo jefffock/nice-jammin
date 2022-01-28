@@ -27,7 +27,7 @@ function Versions(props) {
           {props.versions &&
           props.versions.map((data) => {
             return (
-                <Version data={data}
+                <Version versionData={data}
                 handleVersionChange={props.handleVersionChange}/>)
           })}
         </div>

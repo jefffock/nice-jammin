@@ -5,15 +5,27 @@ import Avatar from './Avatar'
 export default function Account(props) {
   const [loading, setLoading] = useState(false)
   const [newAvatarUrl, setNewAvatarUrl] = useState(props.avatar)
+  const [userName, setUsername] = useState(props.username)
 
   useEffect(() => {
-    console.log('props in account', props)
-  })
+    if (!userName) {
+      props.fetchProfile()
+    }
+  }, [props])
+
+  async function getUserName(id) {
+    let { data, error } = await supabase
+      .from('profiles')
+      .select('name')
+      .eq('id', id)
+    if (error) {
+      console.log('error')
+    }
+  }
 
   async function updateProfile() {
     console.log('props in account', props)
     setLoading(true)
-
     let { error } = await supabase
     .from('profiles')
     .update({avatar_url: newAvatarUrl,
@@ -29,7 +41,7 @@ export default function Account(props) {
   return (
     <>
     <div>
-      <h2>Welcome, {props.username}</h2>
+      <h2>Hi {props.username ? props.username : userName}</h2>
     </div>
     <div className="form-widget">
       <div>
@@ -59,7 +71,7 @@ export default function Account(props) {
     <br></br>
       <div>
         <button
-          className="button block primary"
+          className="button primary-button"
           onClick={() => updateProfile()}
           disabled={loading}
         >

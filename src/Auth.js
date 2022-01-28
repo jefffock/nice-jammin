@@ -22,6 +22,7 @@ export default function Auth(props) {
     setLoading(false)
     props.handleShowSignIn(false)
     props.setUser(user)
+    props.fetchProfile()
     }
   }
 

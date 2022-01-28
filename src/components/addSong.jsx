@@ -79,17 +79,8 @@ function AddSong(props) {
 
   return (
     <div>
-      <h1>Add Song</h1>
+      <h3>Add Song</h3>
       <div>
-      <label htmlFor="artist">Artist: </label>
-          <input
-            className="inputField"
-            type="artist"
-            placeholder="Artist"
-            value={props.artist}
-          />
-          <br></br>
-          <br></br>
           <label htmlFor="song">Song: </label>
           <input
           className="inputField"
@@ -107,7 +98,7 @@ function AddSong(props) {
           onChange={e => setCover(e.target.checked)}></input>
       </div>
       <br></br>
-      <button
+      <button className="primary-button"
       onClick={e => testSong(props.artist, song)}
       disabled={loading}>Add this song</button>
       {showSuccessMessage &&

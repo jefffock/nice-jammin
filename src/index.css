@@ -11,8 +11,6 @@ code {
     monospace;
 }
 
-
-
 .app {
   --primary-color: #115A92;
   --primary-color-darker: #0d446e;
@@ -29,6 +27,15 @@ h1 {
 
 h2 {
   color: var(--primary-color);
+}
+
+h3 {
+  padding-left: 10px;
+  color: var(--secondary-color);
+}
+
+p {
+  color: var(--secondary-color-darker);
 }
 
 button {
@@ -99,6 +106,14 @@ button:hover {
 
 .header-button {
   height: min-content;
+}
+
+.bottom-row {
+  margin-top: -50px
+}
+
+.current-selection-div {
+  margin-top: -30px;
 }
 
 .link {
@@ -273,4 +288,8 @@ p {
 .review-funny {
   grid-column-start: 2;
   grid-row-start: 2;
+}
+
+.emojis {
+  font-size: 30px;
 }

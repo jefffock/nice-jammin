@@ -9,45 +9,45 @@ function Version(props) {
 
   useEffect(() => {
     let tagBuilder = '';
-    if (props.data.acoustic) {
+    if (props.versionData.acoustic) {
       tagBuilder+='Acoustic, '
-    } if (props.data.ambient) {
+    } if (props.versionData.ambient) {
       tagBuilder+='Ambient, '
-    } if (props.data.bliss) {
+    } if (props.versionData.bliss) {
       tagBuilder+='Bliss, '
-    } if (props.data.crunchy) {
+    } if (props.versionData.crunchy) {
       tagBuilder+='Crunchy, '
-    } if (props.data.dark) {
+    } if (props.versionData.dark) {
       tagBuilder+='Dark, '
-    } if (props.data.fast) {
+    } if (props.versionData.fast) {
       tagBuilder+='Fast, '
-    } if (props.data.funky) {
+    } if (props.versionData.funky) {
       tagBuilder+='Funky, '
-    } if (props.data.groovy) {
+    } if (props.versionData.groovy) {
       tagBuilder+='Groovy, '
-    } if (props.data.guest) {
+    } if (props.versionData.guest) {
       tagBuilder+='Guest, '
-    } if (props.data.happy) {
+    } if (props.versionData.happy) {
       tagBuilder+='Happy, '
-    } if (props.data.heavy) {
+    } if (props.versionData.heavy) {
       tagBuilder+='Heavy, '
-    } if (props.data.jazzy) {
+    } if (props.versionData.jazzy) {
       tagBuilder+='Jazzy, '
-    } if (props.data.peaks) {
+    } if (props.versionData.peaks) {
       tagBuilder+='Peaks, '
-    } if (props.data.reggae) {
+    } if (props.versionData.reggae) {
       tagBuilder+='Reggae, '
-    } if (props.data.shred) {
+    } if (props.versionData.shred) {
       tagBuilder+='Shred, '
-    } if (props.data.silly) {
+    } if (props.versionData.silly) {
       tagBuilder+='Silly, '
-    } if (props.data.slow) {
+    } if (props.versionData.slow) {
       tagBuilder+='Slow, '
-    } if (props.data.soaring) {
+    } if (props.versionData.soaring) {
       tagBuilder+='Soaring, '
-    } if (props.data.trippy) {
+    } if (props.versionData.trippy) {
       tagBuilder+='Trippy, '
-    } if (props.data.type2) {
+    } if (props.versionData.type2) {
       tagBuilder+='Type II, '
     } let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
     setTags(finalTags)
@@ -55,14 +55,14 @@ function Version(props) {
   }, [props])
 
   useEffect(() => {
-    console.log('props.data', props.data)
+    console.log('props.data', props.versionData)
   })
 
   async function getNameAndPoints() {
     const { data, error } = await supabase
       .from('profiles')
       .select('points, name')
-      .eq('id', props.data.version_user_id)
+      .eq('id', props.versionData.version_user_id)
     if (error) {
       alert('error getting name and points')
     } else {
@@ -73,27 +73,23 @@ function Version(props) {
   }
 
   function handleClick() {
-    let version = {
-      id: props.data.id,
-      date: props.data.date
-    }
-    props.handleVersionChange(version)
+    props.handleVersionChange(props.versionData)
   }
 
   if (props) {
   return (
     <>
       <div className="version-col1" onClick={e => handleClick()}>
-        <p className="version-date">{props.data.date}</p>
+        <p className="version-date">{props.versionData.date}</p>
       </div>
       <div className="version-col2">
-        <p>{props.data.avg_rating}</p>
+        <p>{props.versionData.avg_rating}</p>
       </div>
       <div className="version-col3">
         <p>{tags}</p>
       </div>
       <div className="version-col4">
-        <p>{name} - {points}</p>
+        <p>{name}, {points}</p>
       </div>
       <div className="line"></div>
     </>
