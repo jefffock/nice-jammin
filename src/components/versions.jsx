@@ -172,7 +172,8 @@ function Versions(props) {
           filteredVersions.map((data) => {
             return (
                 <Version versionData={data}
-                handleVersionChange={props.handleVersionChange}/>)
+                handleVersionChange={props.handleVersionChange}
+                addNameAndPointsToVersion={props.addNameAndPointsToVersion}/>)
           })}
         </div>
       </>

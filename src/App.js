@@ -216,6 +216,18 @@ function App() {
     }
   }
 
+  function addNameAndPointsToVersion(id, name, points) {
+    console.log('in addNameAndPointsToVersion')
+    for (var i = 0; i < versions.length; i++) {
+      if (versions[i].id === id) {
+        console.log('in the if block')
+        versions[i].name = name;
+        versions[i].points = points;
+        break;
+      }
+    } console.log('versions[i]', versions[i])
+  }
+
   if (showSignIn) {
     return (
       <div className="app">
@@ -347,7 +359,10 @@ function App() {
         nameToAdd={songSearchTerm}/>
         }
         {song && versions && !version && !showAddVersion && !showAddRating && !showAddSong &&
-        <Versions versions={versions} handleVersionChange={handleVersionChange} setShowAddVersion={setShowAddVersion}/>
+        <Versions versions={versions}
+        handleVersionChange={handleVersionChange}
+        setShowAddVersion={setShowAddVersion}
+        addNameAndPointsToVersion={addNameAndPointsToVersion}/>
         }
         {showAddVersion && !showAddRating && !showAddSong &&
         <AddVersion setShowAddVersion={setShowAddVersion}

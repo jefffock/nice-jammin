@@ -3,11 +3,11 @@ import { supabase } from '../supabaseClient'
 
 function Version(props) {
   let [tags, setTags] = useState('')
-  let [name, setName] = useState('')
-  let [points, setPoints] = useState(null)
-
+  let [name, setName] = useState(props.versionData.name || '')
+  let [points, setPoints] = useState(props.versionData.points || null)
 
   useEffect(() => {
+    // console.log('props.data in version', props.versionData)
     let tagBuilder = '';
     if (props.versionData.acoustic) {
       tagBuilder+='Acoustic, '
@@ -51,7 +51,9 @@ function Version(props) {
       tagBuilder+='Type II, '
     } let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
     setTags(finalTags)
-    getNameAndPoints()
+    if (!props.versionData.name || !props.versionData.points) {
+      getNameAndPoints()
+    }
   }, [props])
 
   async function getNameAndPoints() {
@@ -62,9 +64,10 @@ function Version(props) {
     if (error) {
       alert('error getting name and points')
     } else {
-      console.log('data', data)
+      // console.log('data', data)
       setName(data[0].name)
       setPoints(data[0].points)
+      props.addNameAndPointsToVersion(props.versionData.id, data[0].name, data[0].points)
     }
   }
 
