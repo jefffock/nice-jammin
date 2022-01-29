@@ -90,52 +90,8 @@ function AddRating(props) {
         console.log('error adding rating: ', error)
       } else {
         console.log('success adding rating. now time to add update average')
-        getVersionAverageData()
       }
   }
-
-  async function getVersionAverageData() {
-    const { data, error } = await supabase
-      .from('versions')
-      .select('avg_rating, sum_ratings, num_ratings')
-      .eq('id', props.version.id)
-    if (error) {
-      console.log('error getting version average data')
-    } else {
-      console.log('data in get version average data', data[0])
-      let newSum = data[0].sum_ratings + rating;
-      let newNum = data[0].num_ratings + 1;
-      let newAvg = newSum/newNum;
-      updateVersionAverageData(newSum, newNum, newAvg)
-    }
-  }
-
-  async function updateVersionAverageData(newSum, newNum, newAvg) {
-    let versionId = props.version.id
-    console.log('versionId', versionId)
-    console.log('newAvg', newAvg, 'newSum', newSum, 'new Num', newNum)
-    const { data, error } = await supabase
-      .from('versions')
-      .update({
-        sum_ratings: newSum,
-        num_ratings: newNum,
-        avg_rating: newAvg
-      })
-      .match({id: versionId})
-    if (error) {
-      console.log('error updating average data', error)
-    } else {
-      console.log('successfuly updated version average data, time to add points', data)
-    }
-  }
-
-  //get average rating
-  //update average rating
-  //add points to user
-  //get song submitter points
-  //add points to song submitter
-  //get version submitter points
-  //add points to version submitter
 
   function handleBackClick() {
     props.fetchRatings(props.songData.id)

@@ -166,8 +166,12 @@ function AddVersion (props) {
           setShowSuccessMessage(false);
           setShowAlreadyExistsMessage(false);}
         }/>
+        {filteredSongs.length > 0 &&
+        <>
         <br></br>
         <br></br>
+        </>
+        }
         {filteredSongs.length > 0 &&
         filteredSongs.map(song => {
           return (

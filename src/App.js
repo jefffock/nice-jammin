@@ -21,7 +21,8 @@ function App() {
   const [song, setSong] = useState(null)
   const [songData, setSongData] = useState(null)
   const [songName, setSongName] = useState(null)
-  const [nameToAdd, setNameToAdd] = useState(null)
+  const [filteredSongs, setFilteredSongs] = useState([])
+  const [songSearchTerm, setSongSearchTerm] = useState(null)
   const [versions, setVersions] = useState(null)
   const [version, setVersion] = useState(null)
   const [reviews, setReviews] = useState(null)
@@ -109,6 +110,7 @@ function App() {
         .eq('artists.artist', artist)
         .order('ratings', {ascending: false})
       setSongs(data)
+      setFilteredSongs(data)
     }
   }
 
@@ -187,11 +189,28 @@ function App() {
   }
 
   function handleShowAddSong(songName) {
+    if (songName) {
+      setSongSearchTerm(songName)
+    }
     setShowAddVersion(false)
     setShowAddSong(true)
     setSongName('')
-    if (songName) {
-      setNameToAdd(songName)
+  }
+
+  function filterSongs(searchTerm) {
+    console.log('searchTerm', searchTerm)
+    setSongSearchTerm(searchTerm)
+    if (searchTerm === '') {
+      setFilteredSongs(songs)
+    } else {
+      let newFilteredSongs = []
+      let myRegex = new RegExp(searchTerm, "ig")
+      for (var i = 0; i < songs.length; i++) {
+        if (myRegex.test(songs[i].song)) {
+          newFilteredSongs.push(songs[i])
+        }
+      }
+      setFilteredSongs(newFilteredSongs)
     }
   }
 
@@ -286,11 +305,19 @@ function App() {
           })}
         {songs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
         <>
+        <label htmlFor="song">Search: </label>
+        <input
+          className="inputField"
+          type="song"
+          placeholder=""
+          value={songSearchTerm}
+          onChange={(e) => {
+            filterSongs(e.target.value)}}></input>
         <p>Choose a song:</p>
         <br></br>
         </>}
-        {songs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
-        songs.map(song => {
+        {songs && filteredSongs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
+        filteredSongs.map(song => {
           return (
             <button className="button-in-list"
             onClick={() => handleSongChange(song)}>{song.song}</button>
@@ -300,15 +327,17 @@ function App() {
         <>
         <br></br>
         <br></br>
+        <p>Not seeing what you're looking for?</p>
+        <br></br>
         <button className="small-button"
-        onClick={e => handleShowAddSong()}>Add a Song</button>
+        onClick={e => handleShowAddSong(songSearchTerm)}>Add a Song</button>
         </>}
         {showAddSong && !showAddRating &&!showAddVersion &&
         <AddSong setShowAddSong={setShowAddSong}
         artist={artist}
         user={user}
         fetchSongs={fetchSongs}
-        nameToAdd={nameToAdd}/>
+        nameToAdd={songSearchTerm}/>
         }
         {song && versions && !version && !showAddVersion && !showAddRating && !showAddSong &&
         <Versions versions={versions} handleVersionChange={handleVersionChange} setShowAddVersion={setShowAddVersion}/>
