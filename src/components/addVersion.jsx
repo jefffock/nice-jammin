@@ -154,7 +154,6 @@ function AddVersion (props) {
 
   function handleBackClick() {
     props.setShowAddVersion(false)
-    props.fetchVersions(props.songData.id)
   }
 
   return (
@@ -249,10 +248,10 @@ function AddVersion (props) {
       onClick={e => testVersion(date)}
       disabled={loading}>Add this version</button>}
       {showSuccessMessage &&
-      <p>Added the {date} version of {props.song}. Thank you for contributing!</p>}
+      <p>Added the {date} version of {songName}. Thank you for contributing!</p>}
       {showAlreadyExistsMessage &&
       <>
-      <p>The {date} version of {props.song} has already been added.</p>
+      <p>You have good taste: the {date} version of {songName} has already been added.</p>
       <br></br>
       <br></br>
       </>}

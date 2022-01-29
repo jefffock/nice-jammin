@@ -127,8 +127,9 @@ function Versions(props) {
       onClick={e => props.setShowAddVersion(true)}>Add a great version</button>
       <br></br>
       <br></br>
+      {props.versions.length > 0 &&
       <button className="small-button"
-      onClick={e => setShowFilters(!showFilters)}>{filterText}</button>
+      onClick={e => setShowFilters(!showFilters)}>{filterText}</button>}
       {showFilters &&
       <>
       <br></br>
@@ -156,11 +157,14 @@ function Versions(props) {
         <FilterChip currentFilterState={trippy} text='Trippy' setFilter={setTrippy}/>
         <FilterChip currentFilterState={type2} text='Type II' setFilter={setType2}/>
       </>}
+      {filters.length > 0 && filteredVersions.length === 0 &&
+        <p>Sorry, no submitted versions match those filters. It'd be a lot cooler if some did.</p>
+      }
       {filteredVersions.length > 0 &&
       <>
       <br></br>
       <br></br>
-        <p>Choose a Date to view comments:</p>
+        <p>Choose a date to add or view comments</p>
         <br></br>
         <div className="versions">
           <p className="version-col1">Date</p>

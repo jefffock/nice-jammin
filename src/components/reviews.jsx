@@ -17,7 +17,6 @@ function Reviews(props) {
 
   return (
     <div className="reviews">
-      <br></br>
       <button className="primary-button" onClick={e => props.setShowAddRating(true)}>Rate {props.songData.song} from {props.date}</button>
       <br></br>
       <br></br>
@@ -34,6 +33,8 @@ function Reviews(props) {
       </select>
       {props.reviews && (props.reviews.length === 0) &&
       <p>No reviews yet!</p>}
+      <br></br>
+      <br></br>
       {props.reviews && (props.reviews.length > 0) &&
       props.reviews.map(review => {
           if (review.comment) {

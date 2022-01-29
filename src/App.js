@@ -188,6 +188,7 @@ function App() {
     setShowAddVersion(false)
     setShowAddRating(false)
     setShowProfile(false)
+    setSongName(null)
   }
 
   function handleShowAddSong(songName) {
@@ -340,8 +341,8 @@ function App() {
           return (
             <button className="button-in-list"
             onClick={() => handleSongChange(song)}>{song.song}</button>
-          )
-        })}
+            )
+          })}
         {songs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
         <>
         <br></br>

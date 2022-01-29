@@ -81,6 +81,7 @@ function AddRating(props) {
         {
           version_id: props.version.id,
           rating_submitter_user_id: props.user.id,
+          song_submitter_user_id: props.songData.user_id,
           rating: rating,
           version_date: props.date,
           comment: comment,
