@@ -45,6 +45,10 @@ function AddVersion (props) {
     console.log('funky', funky)
   }, [funky])
 
+  useEffect(() => {
+    console.log('date', date)
+  }, [date])
+
 
   async function testVersion(date) {
     if (date === '') {
@@ -103,7 +107,10 @@ function AddVersion (props) {
           soaring: soaring,
           crunchy: crunchy,
           happy: happy,
-          acoustic: acoustic
+          acoustic: acoustic,
+          soulful: soulful,
+          official_release: officialRelease,
+          sloppy: sloppy
         }])
     if (error) {
       console.log('error', error)
@@ -192,11 +199,13 @@ function AddVersion (props) {
           setShowSuccessMessage(false);
           setShowAlreadyExistsMessage(false)}
         }/>
-        <br></br>
-        <br></br>
         {songExists && (date !== '') &&
-        <p>Please make sure {props.artist} played {songName} on {date} &#x263A;</p>}
+        <>
         <br></br>
+        <br></br>
+        <p>Please make sure {props.artist} played {songName} on {date} &#x263A;</p>
+        <br></br>
+        </>}
         {!songExists && (songName !== '') &&
         <>
         <p>If "{songName}" is a song played by {props.artist}, please add it!</p>
@@ -232,9 +241,9 @@ function AddVersion (props) {
           <FilterChip currentFilterState={sloppy} text='Sloppy' setFilter={setSloppy}/>
           <FilterChip currentFilterState={trippy} text='Trippy' setFilter={setTrippy}/>
           <FilterChip currentFilterState={type2} text='Type II' setFilter={setType2}/>
-        </div>
+          </div>
+          <br></br>
         </>}
-      <br></br>
       {songExists && date &&
       <button className="primary-button"
       onClick={e => testVersion(date)}
@@ -242,7 +251,11 @@ function AddVersion (props) {
       {showSuccessMessage &&
       <p>Added the {date} version of {props.song}. Thank you for contributing!</p>}
       {showAlreadyExistsMessage &&
-      <p>The {date} version of {props.song} has already been added.</p>}
+      <>
+      <p>The {date} version of {props.song} has already been added.</p>
+      <br></br>
+      <br></br>
+      </>}
       <br></br>
       <br></br>
       <button className="small-button"

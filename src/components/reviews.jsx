@@ -18,7 +18,7 @@ function Reviews(props) {
   return (
     <div className="reviews">
       <br></br>
-      <button className="primary-button" onClick={e => props.setShowAddRating(true)}>Rate {props.song} from {props.date}</button>
+      <button className="primary-button" onClick={e => props.setShowAddRating(true)}>Rate {props.songData.song} from {props.date}</button>
       <br></br>
       <br></br>
       <label htmlFor="review-sort">Sort comments by: </label>

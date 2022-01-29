@@ -43,7 +43,9 @@ function App() {
     setSession(supabase.auth.session())
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
-      setUser(session.user)
+      if (session.user) {
+        setUser(session.user)
+      }
     })
   }, [])
 
@@ -148,7 +150,6 @@ function App() {
 
   function handleSongChange(song) {
     console.log('song in handleSongChange', song)
-    setVersions(null)
     setSongData(song)
     setSong(song)
     setSongName(song.song)
@@ -186,6 +187,7 @@ function App() {
     setShowAddSong(false)
     setShowAddVersion(false)
     setShowAddRating(false)
+    setShowProfile(false)
   }
 
   function handleShowAddSong(songName) {
@@ -262,6 +264,7 @@ function App() {
           <>
           <button className="back small-button" onClick={e => {
             setSong(null);
+            setSongName(null)
             setVersion(null)}}>Change Song</button>
             <br></br>
           </>}
@@ -281,6 +284,7 @@ function App() {
             setShowAddSong(false)
             setShowAddVersion(false)
             setShowAddRating(false)
+            setSongName(null)
           }}>{artist}</h2>
           {!showAddVersion &&
           <h2 onClick={e => {
@@ -313,8 +317,11 @@ function App() {
           value={songSearchTerm}
           onChange={(e) => {
             filterSongs(e.target.value)}}></input>
+        {filteredSongs.length > 0 &&
+        <>
         <p>Choose a song:</p>
         <br></br>
+        </>}
         </>}
         {songs && filteredSongs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
         filteredSongs.map(song => {
@@ -327,7 +334,7 @@ function App() {
         <>
         <br></br>
         <br></br>
-        <p>Not seeing what you're looking for?</p>
+        <p>Not seeing the song you're looking for?</p>
         <br></br>
         <button className="small-button"
         onClick={e => handleShowAddSong(songSearchTerm)}>Add a Song</button>
@@ -355,7 +362,6 @@ function App() {
         {version &&  !showAddVersion && !showAddRating && !showAddSong &&
         <Reviews
         reviews={reviews}
-        song={song}
         songData={songData}
         date={version.date}
         setShowAddRating={setShowAddRating}/>}

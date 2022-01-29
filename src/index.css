@@ -68,7 +68,7 @@ button {
 .primary-button {
   background-color: var(--primary-color);
   color: white;
-  height: fit-content;
+  height: 32px;
 }
 
 .primary-button:hover {
@@ -193,64 +193,6 @@ button:hover {
   cursor: pointer;
 }
 
-.checkboxes-container {
-  display: grid;
-  width: auto;
-  max-width: 400px;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: repeat(10, auto);
-}
-
-.col1 {
-  grid-column-start: 1;
-  grid-row-start: auto;
-}
-
-.col2 {
-  grid-column-start: 2;
-  grid-row-start: auto;
-}
-
-.row1 {
-  grid-row-start: 1;
-}
-
-.row2 {
-  grid-row-start: 2;
-}
-
-.row3 {
-  grid-row-start: 3;
-}
-
-.row4 {
-  grid-row-start: 4;
-}
-
-.row5 {
-  grid-row-start: 5;
-}
-
-.row6 {
-  grid-row-start: 6;
-}
-
-.row7 {
-  grid-row-start: 7;
-}
-
-.row8 {
-  grid-row-start: 8;
-}
-
-.row9 {
-  grid-row-start: 9;
-}
-
-.row10 {
-  grid-row-start: 10;
-}
-
 .review-container {
   display: grid;
   grid-template-columns: repeat(10px, 2);
@@ -297,6 +239,7 @@ p {
 
 .filter-chip {
   height: min-content;
+  margin-top: 7px;
 }
 
 .empty {

@@ -1,16 +1,28 @@
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from './../supabaseClient'
+import FilterChip from './FilterChip'
 
 function AddSong(props) {
   const [song, setSong] = useState(props.nameToAdd || '')
   const [loading, setLoading] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [showAlreadyExistsMessage, setShowAlreadyExistsMessage] = useState(false)
+  const [original, setOriginal] = useState(true)
   const [cover, setCover] = useState(false)
 
   useEffect(() => {
     console.log('user', props.user)
   }, [props.user])
+
+  useEffect(() => {
+    if (cover || !original) {
+      setCover(true)
+      setOriginal(false)
+    } else {
+      setCover(false)
+      setOriginal(true)
+    }
+  }, [cover, original])
 
   async function testSong(artist, song) {
     setLoading(true)
@@ -41,9 +53,18 @@ function AddSong(props) {
     if (error) {
       alert(error)
     } else {
-      console.log('data', data)
       setShowSuccessMessage(true)
     }
+  }
+
+  function handleCoverClick() {
+    setCover(true)
+    setOriginal(false)
+  }
+
+  function handleOriginalClick() {
+    setOriginal(true)
+    setCover(false)
   }
 
   function handleBackClick() {
@@ -55,11 +76,11 @@ function AddSong(props) {
     <div>
       <h3>Add Song</h3>
       <div>
-          <label htmlFor="song">Song: </label>
+          {/* <label htmlFor="song">Song: </label> */}
           <input
           className="inputField"
           type="song"
-          placeholder=""
+          placeholder="Song name..."
           value={song}
           onChange={(e) => {
             setSong(e.target.value);
@@ -67,16 +88,16 @@ function AddSong(props) {
             setShowAlreadyExistsMessage(false)}
           }/>
           <p>Please check for typos &#x263A;</p>
-          <label htmlFor="cover">This is a cover: </label>
-          <input type="checkbox" id="cover"
-          onChange={e => setCover(e.target.checked)}></input>
+          <br></br>
+          <FilterChip currentFilterState={original} text='Original' setFilter={handleOriginalClick}/>
+          <FilterChip currentFilterState={cover} text='Cover' setFilter={handleCoverClick}/>
       </div>
       <br></br>
       <button className="primary-button"
       onClick={e => testSong(props.artist, song)}
       disabled={loading}>Add this song</button>
       {showSuccessMessage &&
-      <p>Successfully added {song}. Thank you for contributing! To see it in the songs list, refresh the page</p>}
+      <p>Successfully added {song}. Thank you for contributing!</p>}
       {showAlreadyExistsMessage &&
       <p>{song} by {props.artist} has already been added.</p>}
       <br></br>

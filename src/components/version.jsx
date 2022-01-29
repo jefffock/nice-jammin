@@ -54,10 +54,6 @@ function Version(props) {
     getNameAndPoints()
   }, [props])
 
-  useEffect(() => {
-    console.log('props.data', props.versionData)
-  })
-
   async function getNameAndPoints() {
     const { data, error } = await supabase
       .from('profiles')
