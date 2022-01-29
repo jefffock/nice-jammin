@@ -1,7 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from './../supabaseClient'
+import FilterChip from './FilterChip'
 
-function AddVersion(props) {
+function AddVersion (props) {
+  const [song, setSong] = useState(props.song)
+  const [songExists, setSongExists] = useState(true)
+  const [songName, setSongName] = useState(props.songName)
+  const [filteredSongs, setFilteredSongs] = useState('')
   const [date, setDate] = useState('')
   const [loading, setLoading] = useState(false)
   const [songId, setSongId] = useState('')
@@ -27,11 +32,18 @@ function AddVersion(props) {
   const [crunchy, setCrunchy] = useState(false)
   const [happy, setHappy] = useState(false)
   const [acoustic, setAcoustic] = useState(false)
+  const [soulful, setSoulful] = useState(false)
+  const [officialRelease, setOfficialRelease] = useState(false)
+  const [sloppy, setSloppy] = useState(false)
 
   useEffect(() => {
     console.log('props in addVersions', props)
     setSongId(props.songData.id)
   }, [props])
+
+  useEffect(() => {
+    console.log('funky', funky)
+  }, [funky])
 
 
   async function testVersion(date) {
@@ -97,59 +109,40 @@ function AddVersion(props) {
       console.log('error', error)
     } else {
       setShowSuccessMessage(true)
-      getVersionSubmitterPoints()
     }
   }
 
-  async function getVersionSubmitterPoints() {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('points')
-      .eq('id', props.user.id)
-    if (error) {
-      alert('error getting your points', error)
+  function filterSongs(searchTerm) {
+    console.log('searchTerm', searchTerm)
+    setSongName(searchTerm)
+    if (searchTerm === '') {
+      setFilteredSongs([])
     } else {
-      console.log('points', data)
-      addVersionSubmitterPoints(data[0].points, props.user.id)
-    }
-  }
-
-  async function addVersionSubmitterPoints(prevPoints, userId) {
-    const { data, error } = await supabase
-      .from('profiles')
-      .update({ points: (prevPoints + 10)}, {returning: 'minimal'})
-      .match({ id: userId })
-      if (error) {
-        alert('error adding your points', error)
+      let newFilteredSongs = []
+      let myRegex = new RegExp(searchTerm, "ig")
+      for (var i = 0; i < props.songs.length; i++) {
+        if (myRegex.test(props.songs[i].song)) {
+          newFilteredSongs.push(props.songs[i])
+        }
+      }
+      setFilteredSongs(newFilteredSongs)
+      if (newFilteredSongs.length === 1 && searchTerm === newFilteredSongs[0].song) {
+        setSongExists(true)
       } else {
-        getSongSubmitterPoints()
+        setSongExists(false)
       }
-  }
-
-  async function getSongSubmitterPoints() {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('points')
-      .eq('id', props.songData.user_id)
-    if (error) {
-      alert('error getting song submitter points', error)
-    } else {
-      console.log('points', data)
-      addSongSubmitterPoints(data[0].points, props.songData.user_id)
     }
   }
 
-
-  async function addSongSubmitterPoints(prevPoints, userId) {
-    console.log('in add song submitter points', userId, prevPoints)
-    const { data, error } = await supabase
-      .from('profiles')
-      .update({ points: (prevPoints + 1)}, {returning: 'minimal'})
-      .match({ id: userId })
-      if (error) {
-        console.log('error adding song submitter points', error)
-      }
+  function handleSongChange(song) {
+    setSong(song)
+    setSongId(song.id)
+    setSongExists(true)
+    setSongName(song.song)
+    setFilteredSongs([])
+    setSongExists(true)
   }
+
 
 
   function handleBackClick() {
@@ -162,6 +155,28 @@ function AddVersion(props) {
     <div>
       <h3>Add Version</h3>
       <div>
+      <label htmlFor="song">Song: </label>
+      <input
+        className="inputField"
+        type="song"
+        placeholder=""
+        value={songName}
+        onChange={(e) => {
+          filterSongs(e.target.value)
+          setShowSuccessMessage(false);
+          setShowAlreadyExistsMessage(false);}
+        }/>
+        <br></br>
+        <br></br>
+        {filteredSongs.length > 0 &&
+        filteredSongs.map(song => {
+          return (
+            <button className="button-in-list song-select"
+            onClick={() => handleSongChange(song)}>{song.song}</button>
+          )
+        })}
+        <br></br>
+        <br></br>
         <label htmlFor="version">Date: </label>
         <input
         className="inputField"
@@ -173,151 +188,53 @@ function AddVersion(props) {
           setShowSuccessMessage(false);
           setShowAlreadyExistsMessage(false)}
         }/>
-        <p>Please make sure {props.artist} played {props.song} on that date &#x263A;</p>
-        <p>Please check all that apply:</p>
-        <div className="checkboxes-container">
-          <div className="col1 row1">
-            <label htmlFor="funky">Funky</label>
-            <input type="checkbox" id="funky"
-            onChange={e => setFunky(e.target.checked)}></input>
-            <br></br>
-            <br></br>
-          </div>
-          <div className="col1 row2">
-            <label htmlFor="fast">Fast</label>
-            <input type="checkbox" id="fast"
-            onChange={e => setFast(e.target.checked)}></input>
-            <br></br>
-            <br></br>
-          </div>
-          <div className="col2 row4">
-            <label htmlFor="slow">Slow</label>
-            <input type="checkbox" id="slow"
-            onChange={e => setSlow(e.target.checked)}></input>
-            <br></br>
-            <br></br>
-          </div>
-          <div className="col1 row4">
-            <label htmlFor="bliss">Bliss</label>
-            <input type="checkbox" id="bliss"
-            onChange={e => setBliss(e.target.checked)}></input>
-            <br></br>
-            <br></br>
-          </div>
-          <div className="col2 row1">
-            <label htmlFor="dark">Dark</label>
-            <input type="checkbox" id="dark"
-            onChange={e => setDark(e.target.checked)}></input>
-            <br></br>
-            <br></br>
-          </div>
-          <div className="col2 row2">
-            <label htmlFor="shred">Shred</label>
-            <input type="checkbox" id="shred"
-            onChange={e => setShred(e.target.checked)}></input>
-            <br></br>
-            <br></br>
-          </div>
-          <div className="col2 row3">
-            <label htmlFor="ambient">Ambient/Space</label>
-            <input type="checkbox" id="ambient"
-            onChange={e => setAmbient(e.target.checked)}></input>
-            <br></br>
-            <br></br>
-          </div>
-          <div className="col1 row6">
-            <label htmlFor="silly">Silly</label>
-            <input type="checkbox" id="silly"
-            onChange={e => setSilly(e.target.checked)}></input>
-            <br></br>
-            <br></br>
-          </div>
-          <div className="col1 row10">
-            <label htmlFor="guest">Guest</label>
-            <input type="checkbox" id='guest'
-            onChange={e => setGuest(e.target.checked)}></input>
-            <br></br>
-            <br></br>
-          </div>
-          <div className="col2 row5">
-            <label htmlFor="type2">Type II</label>
-            <input type="checkbox" id='type2'
-            onChange={e => setType2(e.target.checked)}></input>
-            <br></br>
-            <br></br>
-          </div>
-          <div className="col1 row7">
-            <label htmlFor="groovy">Groovy</label>
-            <input type="checkbox" id="groovy"
-            onChange={e => setGroovy(e.target.checked)}></input>
-            <br></br>
-            <br></br>
-          </div>
-          <div className="col1 row8">
-            <label htmlFor="peaks">Peaks</label>
-            <input type="checkbox" id="peaks"
-            onChange={e => setPeaks(e.target.checked)}></input>
-            <br></br>
-            <br></br>
-          </div>
-          <div className="col2 row6">
-            <label htmlFor="reggae">Reggae</label>
-            <input type="checkbox" id="reggae"
-            onChange={e => setReggae(e.target.checked)}></input>
-            <br></br>
-            <br></br>
-          </div>
-          <div className="col2 row7">
-            <label htmlFor="heavy">Heavy</label>
-            <input type="checkbox" id="hjazzyeavy"
-            onChange={e => setHeavy(e.target.checked)}></input>
-            <br></br>
-            <br></br>
-          </div>
-          <div className="col1 row9">
-            <label htmlFor="jazzy">Jazzy</label>
-            <input type="checkbox" id="jazzy"
-            onChange={e => setJazzy(e.target.checked)}></input>
-            <br></br>
-            <br></br>
-          </div>
-          <div className="col2 row8">
-            <label htmlFor="trippy">Trippy</label>
-            <input type="checkbox" id="trippy"
-            onChange={e => setTrippy(e.target.checked)}></input>
-            <br></br>
-            <br></br>
-          </div>
-          <div className="col1 row3">
-            <label htmlFor="soaring">Soaring</label>
-            <input type="checkbox" id="soaring"
-            onChange={e => setSoaring(e.target.checked)}></input>
-            <br></br>
-            <br></br>
-          </div>
-          <div className="col2 row9">
-            <label htmlFor="crunchy">Crunchy</label>
-            <input type="checkbox" id="crunchy"
-            onChange={e => setCrunchy(e.target.checked)}></input>
-            <br></br>
-            <br></br>
-          </div>
-          <div className="col1 row5">
-            <label htmlFor="happy">Happy</label>
-            <input type="checkbox" id="happy"
-            onChange={e => setHappy(e.target.checked)}></input>
-          </div>
-          <div className="col2 row10">
-              <label htmlFor="acoustic">Acoustic</label>
-              <input type="checkbox" id="acoustic"
-              onChange={e => setAcoustic(e.target.checked)}></input>
-            </div>
-          </div>
-        </div>
         <br></br>
+        <br></br>
+        {songExists && (date !== '') &&
+        <p>Please make sure {props.artist} played {songName} on {date} &#x263A;</p>}
+        <br></br>
+        {!songExists && (songName !== '') &&
+        <>
+        <p>If "{songName}" is a song played by {props.artist}, please add it!</p>
+        <button className="small-button"
+        onClick={e => props.handleShowAddSong(songName)}>Go to 'Add A Song'</button>
+        </>
+        }
+        {songExists && (date !== '') &&
+        <>
+        <p>Please select all that apply to this version:</p>
+        <br></br>
+        <div className="tags">
+          <FilterChip currentFilterState={acoustic} text='Acoustic' setFilter={setAcoustic}/>
+          <FilterChip currentFilterState={ambient} text='Ambient/Space' setFilter={setAmbient}/>
+          <FilterChip currentFilterState={bliss} text='Bliss' setFilter={setBliss}/>
+          <FilterChip currentFilterState={crunchy} text='Crunchy' setFilter={setCrunchy}/>
+          <FilterChip currentFilterState={dark} text='Dark' setFilter={setDark}/>
+          <FilterChip currentFilterState={fast} text='Fast' setFilter={setFast}/>
+          <FilterChip currentFilterState={funky} text='Funky' setFilter={setFunky}/>
+          <FilterChip currentFilterState={groovy} text='Groovy' setFilter={setGroovy}/>
+          <FilterChip currentFilterState={guest} text='Guest' setFilter={setGuest}/>
+          <FilterChip currentFilterState={happy} text='Happy' setFilter={setHappy}/>
+          <FilterChip currentFilterState={heavy} text='Heavy' setFilter={setHeavy}/>
+          <FilterChip currentFilterState={jazzy} text='Jazzy' setFilter={setJazzy}/>
+          <FilterChip currentFilterState={officialRelease} text='Official Release' setFilter={setOfficialRelease}/>
+          <FilterChip currentFilterState={peaks} text='Peaks' setFilter={setPeaks}/>
+          <FilterChip currentFilterState={reggae} text='Reggae' setFilter={setReggae}/>
+          <FilterChip currentFilterState={shred} text='Shred' setFilter={setShred}/>
+          <FilterChip currentFilterState={silly} text='Silly' setFilter={setSilly}/>
+          <FilterChip currentFilterState={slow} text='Slow' setFilter={setSlow}/>
+          <FilterChip currentFilterState={soaring} text='Soaring' setFilter={setSoaring}/>
+          <FilterChip currentFilterState={soulful} text='Soulful' setFilter={setSoulful}/>
+          <FilterChip currentFilterState={sloppy} text='Sloppy' setFilter={setSloppy}/>
+          <FilterChip currentFilterState={trippy} text='Trippy' setFilter={setTrippy}/>
+          <FilterChip currentFilterState={type2} text='Type II' setFilter={setType2}/>
+        </div>
+        </>}
+      <br></br>
+      {songExists && date &&
       <button className="primary-button"
       onClick={e => testVersion(date)}
-      disabled={loading}>Add this version</button>
+      disabled={loading}>Add this version</button>}
       {showSuccessMessage &&
       <p>Added the {date} version of {props.song}. Thank you for contributing!</p>}
       {showAlreadyExistsMessage &&
@@ -326,7 +243,8 @@ function AddVersion(props) {
       <br></br>
       <button className="small-button"
         onClick={e => handleBackClick()}>Back</button>
-    </div>
+      </div>
+      </div>
     </>
   )
 }

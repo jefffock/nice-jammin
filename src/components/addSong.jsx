@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { supabase } from './../supabaseClient'
 
 function AddSong(props) {
-  const [song, setSong] = useState('')
+  const [song, setSong] = useState(props.nameToAdd || '')
   const [loading, setLoading] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [showAlreadyExistsMessage, setShowAlreadyExistsMessage] = useState(false)
@@ -43,32 +43,6 @@ function AddSong(props) {
     } else {
       console.log('data', data)
       setShowSuccessMessage(true)
-      getPoints()
-    }
-  }
-
-  async function getPoints() {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('points')
-      .eq('id', props.user.id)
-    if (error) {
-      alert(error)
-    } else {
-      console.log('points', data)
-      addPoints(data[0].points)
-    }
-  }
-
-  async function addPoints(points) {
-    const { data, error } = await supabase
-      .from('profiles')
-      .update({ points: (points + 10) }, {returning: 'minimal'})
-      .match({ id: props.user.id })
-    if (error) {
-      alert(error)
-    } else {
-      console.log('data in addPoints', data)
     }
   }
 

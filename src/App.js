@@ -20,6 +20,8 @@ function App() {
   const [songs, setSongs] = useState(null)
   const [song, setSong] = useState(null)
   const [songData, setSongData] = useState(null)
+  const [songName, setSongName] = useState(null)
+  const [nameToAdd, setNameToAdd] = useState(null)
   const [versions, setVersions] = useState(null)
   const [version, setVersion] = useState(null)
   const [reviews, setReviews] = useState(null)
@@ -107,7 +109,6 @@ function App() {
         .eq('artists.artist', artist)
         .order('ratings', {ascending: false})
       setSongs(data)
-      console.log('songData', data)
     }
   }
 
@@ -147,7 +148,8 @@ function App() {
     console.log('song in handleSongChange', song)
     setVersions(null)
     setSongData(song)
-    setSong(song.song)
+    setSong(song)
+    setSongName(song.song)
     fetchVersions(song.id)
   }
 
@@ -182,6 +184,15 @@ function App() {
     setShowAddSong(false)
     setShowAddVersion(false)
     setShowAddRating(false)
+  }
+
+  function handleShowAddSong(songName) {
+    setShowAddVersion(false)
+    setShowAddSong(true)
+    setSongName('')
+    if (songName) {
+      setNameToAdd(songName)
+    }
   }
 
   if (showSignIn) {
@@ -244,12 +255,6 @@ function App() {
         {!artist &&
         <p>Choose an artist:</p>}
         <br></br>
-        {!artist && artists &&
-          artists.map(artist => {
-            return (
-              <button className="button-in-list" onClick={() => handleArtistChange(artist.artist)}>{artist.artist}</button>
-            )
-          })}
         <div className="current-selection-div">
           <h2 onClick={e => {
             setSong(null)
@@ -258,12 +263,13 @@ function App() {
             setShowAddVersion(false)
             setShowAddRating(false)
           }}>{artist}</h2>
+          {!showAddVersion &&
           <h2 onClick={e => {
             setVersion(null)
             setShowAddSong(false)
             setShowAddVersion(false)
             setShowAddRating(false)
-          }}>{song}</h2>
+          }}>{songName}</h2>}
           {version &&
           <h2 onClick={e => {
             setShowAddSong(false)
@@ -271,6 +277,13 @@ function App() {
             setShowAddRating(false)
           }}>{version.date}</h2>}
         </div>
+        {!artist && artists &&
+          artists.map(artist => {
+            return (
+              <button className="button-in-list"
+              onClick={() => handleArtistChange(artist.artist)}>{artist.artist}</button>
+            )
+          })}
         {songs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
         <>
         <p>Choose a song:</p>
@@ -279,7 +292,8 @@ function App() {
         {songs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
         songs.map(song => {
           return (
-            <button className="button-in-list" onClick={() => handleSongChange(song)}>{song.song}</button>
+            <button className="button-in-list"
+            onClick={() => handleSongChange(song)}>{song.song}</button>
           )
         })}
         {songs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
@@ -287,13 +301,14 @@ function App() {
         <br></br>
         <br></br>
         <button className="small-button"
-        onClick={e => setShowAddSong(true)}>Add a Song</button>
+        onClick={e => handleShowAddSong()}>Add a Song</button>
         </>}
         {showAddSong && !showAddRating &&!showAddVersion &&
         <AddSong setShowAddSong={setShowAddSong}
         artist={artist}
         user={user}
-        fetchSongs={fetchSongs}/>
+        fetchSongs={fetchSongs}
+        nameToAdd={nameToAdd}/>
         }
         {song && versions && !version && !showAddVersion && !showAddRating && !showAddSong &&
         <Versions versions={versions} handleVersionChange={handleVersionChange} setShowAddVersion={setShowAddVersion}/>
@@ -301,10 +316,12 @@ function App() {
         {showAddVersion && !showAddRating && !showAddSong &&
         <AddVersion setShowAddVersion={setShowAddVersion}
         artist={artist}
-        song={song}
+        songName={songName}
         songData={songData}
         user={user}
-        fetchVersions={fetchVersions}/>
+        fetchVersions={fetchVersions}
+        songs={songs}
+        handleShowAddSong={handleShowAddSong}/>
         }
         {version &&  !showAddVersion && !showAddRating && !showAddSong &&
         <Reviews

@@ -294,3 +294,22 @@ p {
 .emojis {
   font-size: 30px;
 }
+
+.filter-chip {
+  height: min-content;
+}
+
+.empty {
+  background: white;
+  color: gray;
+  border: 1px solid gray;
+}
+
+.full {
+  background: var(--secondary-color);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+}
