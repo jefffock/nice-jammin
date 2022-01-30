@@ -69,7 +69,7 @@ function AddRating(props) {
     if (error) {
       console.log('error updating rating')
     } else {
-      setAddRatingStatus('Updated rating')
+      setAddRatingStatus('Updated your rating and comment')
     }
   }
 
@@ -90,12 +90,13 @@ function AddRating(props) {
       if (error) {
         console.log('error adding rating: ', error)
       } else {
+        setAddRatingStatus('Added your rating. Thanks for contributing!')
         console.log('success adding rating. now time to add update average')
       }
   }
 
   function handleBackClick() {
-    props.fetchRatings(props.songData.id)
+    props.fetchRatings(props.version.id)
     props.setShowAddRating(false)
   }
 

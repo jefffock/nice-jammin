@@ -84,6 +84,7 @@ export default function Auth(props) {
         {!showCreateAccount &&
         <>
         <h2 className="header">Sign In</h2>
+        <br></br>
         <div>
           <label htmlFor="email">Email: </label>
           <input
@@ -122,6 +123,8 @@ export default function Auth(props) {
         <br></br>
         <br></br>
         <p className="link" onClick={e => setShowCreateAccount(true)}>Create an account</p>
+        <br></br>
+        <br></br>
         <p className="link" onClick={e => handleShowSignInClick(false)}>Nevermind, I just want to browse</p>
         </>
         }
@@ -179,6 +182,8 @@ export default function Auth(props) {
         <div>
           <p className="link" onClick={e => setShowCreateAccount(false)}>I already have an account</p>
         </div>
+        <br></br>
+        <br></br>
         </div>
           <p className="link" onClick={e => handleShowSignInClick(false)}>Nevermind, I just want to browse</p>
         </>}

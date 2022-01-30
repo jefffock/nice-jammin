@@ -87,6 +87,8 @@ function AddSong(props) {
             setShowSuccessMessage(false);
             setShowAlreadyExistsMessage(false)}
           }/>
+          <br></br>
+          <br></br>
           <p>Please check for typos &#x263A;</p>
           <br></br>
           <FilterChip currentFilterState={original} text='Original' setFilter={handleOriginalClick}/>
@@ -98,6 +100,8 @@ function AddSong(props) {
       disabled={loading}>Add this song</button>
       {showSuccessMessage &&
       <p>Successfully added {song}. Thank you for contributing!</p>}
+      <br></br>
+      <br></br>
       {showAlreadyExistsMessage &&
       <p>{song} by {props.artist} has already been added.</p>}
       <br></br>

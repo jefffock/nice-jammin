@@ -207,7 +207,10 @@ function AddVersion (props) {
         </>}
         {!songExists && (songName !== '') &&
         <>
+        <br></br>
+        <br></br>
         <p>If "{songName}" is a song played by {props.artist}, please add it!</p>
+        <br></br>
         <button className="small-button"
         onClick={e => props.handleShowAddSong(songName)}>Go to 'Add A Song'</button>
         </>

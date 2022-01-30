@@ -116,8 +116,6 @@ function Versions(props) {
 
   return (
     <>
-      {props.versions.length > 0 &&
-      <h3>Versions</h3>}
       {props.versions.length === 0 &&
       <>
       <p>No versions submitted yet!</p>

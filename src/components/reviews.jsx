@@ -17,23 +17,13 @@ function Reviews(props) {
 
   return (
     <div className="reviews">
-      <button className="primary-button" onClick={e => props.setShowAddRating(true)}>Rate {props.songData.song} from {props.date}</button>
+      <button className="primary-button"
+      onClick={e => props.setShowAddRating(true)}
+      >Rate {props.songData.song} from {props.date}</button>
       <br></br>
       <br></br>
-      <label htmlFor="review-sort">Sort comments by: </label>
-      <select
-      name="review-sort"
-      id="review-sort"
-      className="inputField"
-      value={sort}
-      onChange={e => setSort(e.target.value)}>
-        <option value="helpful">Helpful</option>
-        <option value="funny">Funny</option>
-        <option value="created_at">Newest</option>
-      </select>
       {props.reviews && (props.reviews.length === 0) &&
       <p>No reviews yet!</p>}
-      <br></br>
       <br></br>
       {props.reviews && (props.reviews.length > 0) &&
       props.reviews.map(review => {
@@ -41,7 +31,7 @@ function Reviews(props) {
             return (
               <Review data={review} />
             )
-          } return
+          } return <></>
         })}
     </div>
   )

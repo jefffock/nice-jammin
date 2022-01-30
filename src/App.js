@@ -32,6 +32,7 @@ function App() {
   const [showAddSong, setShowAddSong] = useState(false)
   const [showAddVersion, setShowAddVersion] = useState(false)
   const [showAddRating, setShowAddRating] = useState(false)
+  const [showMenu, setShowMenu] = useState(false)
   const [username, setUsername] = useState(null)
   const [points, setPoints] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
@@ -43,7 +44,7 @@ function App() {
     setSession(supabase.auth.session())
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
-      if (session.user) {
+      if (session !== null) {
         setUser(session.user)
       }
     })
@@ -189,6 +190,7 @@ function App() {
     setShowAddRating(false)
     setShowProfile(false)
     setSongName(null)
+    setSongSearchTerm('')
   }
 
   function handleShowAddSong(songName) {
@@ -239,25 +241,6 @@ function App() {
         fetchProfile={fetchProfile}/>
       </div>
     )
-  } if (showProfile) {
-    return (
-      <div className="app">
-       <Header session={session}
-       showPleaseConfirm={showPleaseConfirm}
-        setShowSignIn={setShowSignIn}
-        setShowProfile={setShowProfile}
-        signOut={signOut}
-        showProfile={showProfile}
-        goHome={goHome}/>
-        <Account key={session.user.id}
-        session={session}
-        username={username}
-        points={points}
-        avatar={avatar_url}
-        user={user}
-        fetchProfile={fetchProfile}/>
-      </div>
-    )
   } return (
     <>
       <div className="app">
@@ -266,7 +249,14 @@ function App() {
         setShowSignIn={setShowSignIn}
         setShowProfile={setShowProfile}
         signOut={signOut}
-        goHome={goHome}/>
+        goHome={goHome}
+        username={username}
+        points={points}
+        avatar={avatar_url}
+        user={user}
+        fetchProfile={fetchProfile}
+        showMenu={showMenu}
+        setShowMenu={setShowMenu}/>
         <div className="back-buttons-div">
           {artist && !showAddSong && !showAddVersion && !showAddRating &&
           <>
@@ -287,7 +277,7 @@ function App() {
             setVersion(null)}}>Change Version</button>
           </>}
         </div>
-        {!artist &&
+        {!artist && !showMenu &&
         <p>Choose an artist:</p>}
         <br></br>
         <div className="current-selection-div">
@@ -298,6 +288,7 @@ function App() {
             setShowAddVersion(false)
             setShowAddRating(false)
             setSongName(null)
+            setSongSearchTerm('')
           }}>{artist}</h2>
           {!showAddVersion &&
           <h2 onClick={e => {
@@ -313,28 +304,29 @@ function App() {
             setShowAddRating(false)
           }}>{version.date}</h2>}
         </div>
-        {!artist && artists &&
+        {!artist && artists && !showMenu &&
           artists.map(artist => {
             return (
               <button className="button-in-list"
               onClick={() => handleArtistChange(artist.artist)}>{artist.artist}</button>
             )
           })}
-        {songs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
-        <>
-        <label htmlFor="song">Search: </label>
-        <input
-          className="inputField"
-          type="song"
-          placeholder=""
-          value={songSearchTerm}
-          onChange={(e) => {
-            filterSongs(e.target.value)}}></input>
-        {filteredSongs.length > 0 &&
+        {filteredSongs.length > 0 && artist && !song &&
         <>
         <p>Choose a song:</p>
         <br></br>
         </>}
+        {songs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
+        <>
+        <input
+          className="inputField"
+          type="song"
+          placeholder="Search for a song..."
+          value={songSearchTerm}
+          onChange={(e) => {
+            filterSongs(e.target.value)}}></input>
+            <br></br>
+            <br></br>
         </>}
         {songs && filteredSongs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
         filteredSongs.map(song => {

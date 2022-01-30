@@ -41,7 +41,7 @@ export default function Account(props) {
   return (
     <>
     <div>
-      <h2>Hi {props.username ? props.username : userName}</h2>
+      <h2>Hi, {props.username ? props.username : userName}!</h2>
     </div>
     <div className="form-widget">
       <div>

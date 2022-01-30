@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../supabaseClient'
 
-function Menu(props) {
+function Menu (props) {
 
   return (
     <div>
