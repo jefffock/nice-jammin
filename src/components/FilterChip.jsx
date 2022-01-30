@@ -1,21 +1,19 @@
-import { useState, useEffect, useRef } from 'react'
-import { supabase } from './../supabaseClient'
+import { useState, useEffect } from 'react'
 
 function FilterChip (props) {
-  let [classNameEmpty, setClassNameEmpty] = useState('filter-chip empty')
-  let [classNameFull, setClassNameFull] = useState('filter-chip full')
-  let [classNameToUse, setClassNameToUse] = useState(classNameEmpty)
+
+  let [className, setClassName] = useState('filter-chip empty')
 
   useEffect(() => {
     if (props.currentFilterState) {
-      setClassNameToUse(classNameFull)
+      setClassName('filter-chip full')
     } else {
-      setClassNameToUse(classNameEmpty)
+      setClassName('filter-chip empty')
     }
-  }, [props, classNameEmpty, classNameFull])
+  }, [props, setClassName])
 
   return (
-      <button className={classNameToUse}
+      <button className={className}
       onClick={e => props.setFilter(!props.currentFilterState)}>{props.text}</button>
   )
 }

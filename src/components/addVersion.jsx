@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from './../supabaseClient'
 import FilterChip from './FilterChip'
 
 function AddVersion (props) {
-  const [song, setSong] = useState(props.song)
   const [songExists, setSongExists] = useState(true)
   const [songName, setSongName] = useState(props.songName)
   const [filteredSongs, setFilteredSongs] = useState('')
@@ -142,7 +141,6 @@ function AddVersion (props) {
   }
 
   function handleSongChange(song) {
-    setSong(song)
     setSongId(song.id)
     setSongExists(true)
     setSongName(song.song)

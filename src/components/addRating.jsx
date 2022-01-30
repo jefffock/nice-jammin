@@ -6,13 +6,33 @@ function AddRating(props) {
   const [comment, setComment] = useState('');
   const [charCount, setCharCount] = useState(0)
   const [loading, setLoading] = useState(false);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [userAlreadyRated, setUserAlreadyRated] = useState(false)
   const [submitRatingButtonText, setSubmitRatingButtonText] = useState('Add your rating')
   const [addRatingStatus, setAddRatingStatus] = useState('')
 
   useEffect(() => {
     console.log('props in add review', props)
+    async function checkUserAlreadyRated() {
+      let id = props.user.id
+      const { data, error } = await supabase
+        .from('ratings')
+        .select('*')
+        .eq('rating_submitter_user_id', id)
+        .eq('version_id', props.version.id)
+      if (error) {
+        console.log('error in checkUserAlreadyRated', error)
+      } else {
+        console.log('data in check user already rated', data)
+        if (data.length > 0) {
+          setComment(data[0].comment)
+          setRating(data[0].rating)
+          setUserAlreadyRated(true)
+          setSubmitRatingButtonText('Update your comments')
+
+          console.log('we have data')
+        }
+      }
+    }
     checkUserAlreadyRated()
   }, [props])
 
@@ -36,46 +56,24 @@ function AddRating(props) {
     }
   }
 
-  async function checkUserAlreadyRated() {
-    let id = props.user.id
-    const { data, error } = await supabase
-      .from('ratings')
-      .select('*')
-      .eq('rating_submitter_user_id', id)
-      .eq('version_id', props.version.id)
-    if (error) {
-      console.log('error in checkUserAlreadyRated', error)
-    } else {
-      console.log('data in check user already rated', data)
-      if (data.length > 0) {
-        setComment(data[0].comment)
-        setRating(data[0].rating)
-        setUserAlreadyRated(true)
-        setSubmitRatingButtonText('Update your rating')
-        console.log('we have data')
-      }
-    }
-  }
-
   async function updateRating() {
     setAddRatingStatus('Updating Rating')
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('ratings')
       .update({
-        rating: rating,
         comment: comment
       })
       .match({rating_submitter_user_id: props.user.id})
     if (error) {
-      console.log('error updating rating')
+      console.log('error updating comment')
     } else {
-      setAddRatingStatus('Updated your rating and comment')
+      setAddRatingStatus('Updated your comments')
     }
   }
 
   async function insertRating() {
     setAddRatingStatus('Adding your rating')
-    const { data, error } = await supabase
+    const {  error } = await supabase
       .from('ratings')
       .insert(
         {
@@ -110,6 +108,7 @@ function AddRating(props) {
         className="inputField"
         placeholder=""
         value={rating}
+        disabled={userAlreadyRated}
         onChange={e => setRating(JSON.parse(e.target.value))}>
           <option value="10">10</option>
           <option value="9">9</option>
@@ -143,8 +142,6 @@ function AddRating(props) {
         disabled={loading}>{submitRatingButtonText}</button>
         <br></br>
         <p>{addRatingStatus}</p>
-        {showSuccessMessage &&
-        <p>Added your rating to the {props.date} version of {props.song}. Thank you for contributing!</p>}
         <br></br>
         <br></br>
       <button className="small-button" onClick={e => handleBackClick()}>Back</button>

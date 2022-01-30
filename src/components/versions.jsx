@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
-import { supabase } from '../supabaseClient'
+import { useState, useEffect } from 'react'
 import Version from './version'
 import FilterChip from './FilterChip'
 

@@ -1,9 +1,8 @@
 
 import './index.css'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
 import Auth from './Auth'
-import Account from './components/Account'
 import './App.css';
 import Versions from './components/versions'
 import Reviews from './components/reviews'
@@ -65,7 +64,7 @@ function App() {
     if (!artists) {
       fetchArtists()
     }
-  }, [])
+  })
 
   useEffect(() => {
     console.log('artist changed to ', artist, 'fetching songs')
@@ -77,7 +76,7 @@ function App() {
     if (user) {
       let id = user.id
       console.log('id', id)
-      let { data, error, status } = await supabase
+      let { data, error } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', id)
@@ -99,7 +98,6 @@ function App() {
       .order('ratings', {ascending: false})
     if (error) {
       console.log(error)
-      alert(error)
     } else {
       setArtists(data)
     }
@@ -112,6 +110,9 @@ function App() {
         .select('*, artists!inner(*)')
         .eq('artists.artist', artist)
         .order('ratings', {ascending: false})
+      if (error) {
+        console.log('error fetching songs, error')
+      }
       setSongs(data)
       setFilteredSongs(data)
     }
@@ -137,6 +138,9 @@ function App() {
       .select('*, versions!inner(*)')
       .eq('versions.id', versionId)
       .order('helpful', {ascending: false})
+    if (error) {
+      console.log(error)
+    }
     setReviews(data)
     console.log('review data', data)
   }
@@ -248,8 +252,10 @@ function App() {
         showPleaseConfirm={showPleaseConfirm}
         setShowSignIn={setShowSignIn}
         setShowProfile={setShowProfile}
+        showProfile={showProfile}
         signOut={signOut}
         goHome={goHome}
+        setSession={setSession}
         username={username}
         points={points}
         avatar={avatar_url}

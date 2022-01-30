@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
-import { supabase } from '../supabaseClient'
+import { useState, useEffect } from 'react'
 import Menu from './Menu'
 import Account from './Account'
 import Ideas from './Ideas'
@@ -63,6 +62,7 @@ function Header(props) {
           onClick={e => {props.goHome();
           setShowIdeas(true);
           setShowAccount(false)}}>Ideas</button>
+
           <button className={accountButtonClasses}
           onClick={e => {props.goHome();
           setShowIdeas(false);
@@ -70,6 +70,7 @@ function Header(props) {
           <br></br>
           <br></br>
         </>}
+        <Menu />
         {props.showMenu && showAccount &&
         <Account key={props.session.user.id}
         session={props.session}

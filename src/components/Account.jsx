@@ -5,23 +5,12 @@ import Avatar from './Avatar'
 export default function Account(props) {
   const [loading, setLoading] = useState(false)
   const [newAvatarUrl, setNewAvatarUrl] = useState(props.avatar)
-  const [userName, setUsername] = useState(props.username)
 
   useEffect(() => {
-    if (!userName) {
+    if (!props.username) {
       props.fetchProfile()
     }
-  }, [props])
-
-  async function getUserName(id) {
-    let { data, error } = await supabase
-      .from('profiles')
-      .select('name')
-      .eq('id', id)
-    if (error) {
-      console.log('error')
-    }
-  }
+  })
 
   async function updateProfile() {
     console.log('props in account', props)
@@ -41,7 +30,7 @@ export default function Account(props) {
   return (
     <>
     <div>
-      <h2>Hi, {props.username ? props.username : userName}!</h2>
+      <h2>Hi, {props.username}!</h2>
     </div>
     <div className="form-widget">
       <div>

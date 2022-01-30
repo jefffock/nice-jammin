@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from '../supabaseClient'
 
 function Version(props) {
@@ -52,24 +52,23 @@ function Version(props) {
     } let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
     setTags(finalTags)
     if (!props.versionData.name || !props.versionData.points) {
-      getNameAndPoints()
+      async function getNameAndPoints() {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('points, name')
+          .eq('id', props.versionData.version_user_id)
+        if (error) {
+          alert('error getting name and points')
+        } else {
+          // console.log('data', data)
+          setName(data[0].name)
+          setPoints(data[0].points)
+          props.addNameAndPointsToVersion(props.versionData.id, data[0].name, data[0].points)
+        }
+      } getNameAndPoints()
     }
   }, [props])
 
-  async function getNameAndPoints() {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('points, name')
-      .eq('id', props.versionData.version_user_id)
-    if (error) {
-      alert('error getting name and points')
-    } else {
-      // console.log('data', data)
-      setName(data[0].name)
-      setPoints(data[0].points)
-      props.addNameAndPointsToVersion(props.versionData.id, data[0].name, data[0].points)
-    }
-  }
 
   function handleClick() {
     props.handleVersionChange(props.versionData)

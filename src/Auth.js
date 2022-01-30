@@ -41,7 +41,9 @@ export default function Auth(props) {
         .from('profiles')
         .select('name')
         .eq('name', displayName)
-      console.log('data', data)
+      if (error) {
+        console.log(error)
+      }
       if (data.length > 0) {
         setStatus('Great minds think alike! Someone else already has that username. Please choose another.')
         setLoading(false)
@@ -56,13 +58,14 @@ export default function Auth(props) {
           createProfile(displayName, user)
           props.handleShowSignIn(false)
           props.handleNotConfirmedYet()
+          props.setSession(session)
         }
       }
     }
   }
 
   async function createProfile(displayName, user) {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('profiles')
       .insert([
     { name: displayName, id: user.id }

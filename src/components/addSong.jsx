@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from './../supabaseClient'
 import FilterChip from './FilterChip'
 
@@ -34,7 +34,7 @@ function AddSong(props) {
       .eq('song', song)
       .eq('artist', artist)
     if (error) {
-      alert(error)
+      console.log(error)
     } else if (data.length === 0) {
       console.log('song doesn\'t exist yet')
       addSong(artist, song)
@@ -43,15 +43,15 @@ function AddSong(props) {
     }
     setLoading(false)
   }
-
+                
   async function addSong(artist, song) {
     setLoading(true)
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('songs')
       .insert(
         { song: song, artist: artist, cover: cover, user_id: props.user.id }, {returning: 'minimal'})
     if (error) {
-      alert(error)
+      console.log(error)
     } else {
       setShowSuccessMessage(true)
     }

@@ -1,18 +1,10 @@
-import { useState, useEffect, useRef } from 'react'
-import { supabase } from '../supabaseClient'
+import { useEffect } from 'react'
 import Review from './review'
 
 function Reviews(props) {
-  const [reviews, setReviews] = useState([])
-  const [sortedReviews, setSortedReviews] = useState([])
-  const [sort, setSort] = useState('helpful')
 
   useEffect(() => {
     console.log('props in reviews', props)
-    if (props.reviews) {
-      setReviews(props.reviews)
-      setSortedReviews(props.reviews)
-    }
   }, [props])
 
   return (
