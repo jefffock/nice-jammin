@@ -223,15 +223,12 @@ function App() {
   async function addRatingCountToArtist(artistId) {
     console.log('in add rating count to artist', artistId, typeof artistId)
     const { data, error } = await supabase.rpc( 'add_rating_count_artist', { artistid: artistId })
-    console.log(error)
     if (error) {
       console.log('error adding rating count to artist', error)
     } if (data) {
       console.log('data from adding rating count to artist', data)
     }
   }
-
-  //increment_rating_count_song
 
     async function addRatingCountToSong(songId) {
       let song_id = parseInt(songId)
@@ -242,6 +239,17 @@ function App() {
     } if (data) {
       console.log('data from adding song rating count', data)
     }
+  }
+
+  async function calcAverageForVersion(versionId) {
+    let version = parseInt(versionId)
+    const { data, error } = await supabase.rpc( 'calc_average', { versionid: version })
+    if (error) {
+      console.log('error calculating average', error)
+    } if (data) {
+      console.log('data from calcing average', data)
+    }
+
   }
 
   function handleNotConfirmedYet() {
@@ -423,7 +431,8 @@ function App() {
         addTenPoints={addTenPoints}
         addRatingCountToArtist={addRatingCountToArtist}
         addRatingCountToSong={addRatingCountToSong}
-        artist={artist}/>}
+        artist={artist}
+        calcAverageForVersion={calcAverageForVersion}/>}
       </div>
     </>
   )

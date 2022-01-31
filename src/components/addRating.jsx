@@ -110,6 +110,7 @@ function AddRating(props) {
         props.addTenPoints(props.username)
         props.addRatingCountToSong(props.songData.id)
         props.addRatingCountToArtist(props.artist.id)
+        props.calcAverageForVersion(props.version.id)
         console.log('success adding rating. now time to add update average')
       }
   }

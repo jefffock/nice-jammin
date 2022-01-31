@@ -97,7 +97,7 @@ function AddSong(props) {
       </div>
       <br></br>
       <button className="primary-button"
-      onClick={e => testSong(props.artist, song)}
+      onClick={e => testSong(props.artist.artist, song)}
       disabled={loading}>Add this song</button>
       {showSuccessMessage &&
       <p>Successfully added {song}. Thank you for contributing!</p>}
