@@ -9,7 +9,7 @@ function ArtistPicker(props) {
           props.artists.map(artist => {
             return (
               <button className="button-in-list-large"
-              onClick={() => props.setArtist(artist.artist)}>{artist.artist}</button>
+              onClick={() => props.setArtist(artist)}>{artist.artist}</button>
             )
           })}
     </>

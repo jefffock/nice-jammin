@@ -58,7 +58,7 @@ function Menu (props) {
     <>
         {props.showMenu &&
           <>
-          <div className="bottom-row">
+          <div className="header-bottom-row">
           <button className={ideasButtonClasses}
           onClick={e => {props.goHome();
             setShowAccount(false);

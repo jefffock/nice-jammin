@@ -24,7 +24,7 @@ function App() {
   const [songData, setSongData] = useState(null)
   const [songName, setSongName] = useState(null)
   const [filteredSongs, setFilteredSongs] = useState([])
-  const [songSearchTerm, setSongSearchTerm] = useState(null)
+  const [songSearchTerm, setSongSearchTerm] = useState('')
   const [versions, setVersions] = useState(null)
   const [version, setVersion] = useState(null)
   const [reviews, setReviews] = useState(null)
@@ -42,8 +42,6 @@ function App() {
   const [showArtistPicker, setShowArtistPicker] = useState(true)
   const [showSongPicker, setShowSongPicker] = useState(false)
   const [showVersions, setShowVersions] = useState(false)
-
-  handleVersionChange.bind(this)
 
   useEffect(() => {
     console.log('in the set session hook')
@@ -73,11 +71,12 @@ function App() {
   })
 
   useEffect(() => {
-    fetchSongs(artist)
-    setArtist(artist);
     setSong(null);
     setVersions(null);
     setShowSongPicker(true)
+    if (artist) {
+    fetchSongs(artist.artist)
+    }
   }, [artist])
 
   useEffect(() => {
@@ -100,6 +99,12 @@ function App() {
       fetchVersions(song.id)
     }
   }, [song])
+
+  useEffect(() => {
+    if (version) {
+      fetchRatings(version.id)
+    }
+  }, [version])
 
   async function fetchProfile() {
     const user = supabase.auth.user()
@@ -184,12 +189,6 @@ function App() {
     console.log('review data', data)
   }
 
-  function handleVersionChange(version) {
-    console.log('version in handle version change', version)
-    setVersion(version)
-    fetchRatings(version.id)
-  }
-
   async function signOut() {
     setShowProfile(false)
     const { error } = await supabase.auth.signOut()
@@ -243,12 +242,11 @@ function App() {
     }
   }
 
-  function addNameAndPointsToVersion(id, name, points) {
-    console.log('in addNameAndPointsToVersion')
+  function addPointsToVersion(id, points) {
+    console.log('in addPointsToVersion')
     for (var i = 0; i < versions.length; i++) {
       if (versions[i].id === id) {
         console.log('in the if block')
-        versions[i].name = name;
         versions[i].points = points;
         break;
       }
@@ -295,6 +293,7 @@ function App() {
           showAddSong={showAddSong}
           showAddRating={showAddRating}
           showAddVersion={showAddVersion}
+          setArtist={setArtist}
           setSong={setSong}
           setSongName={setSongName}
           setVersion={setVersion}
@@ -341,9 +340,10 @@ function App() {
         }
         {(showVersions || (artist && song && !version)) &&
         <Versions versions={versions}
-        handleVersionChange={handleVersionChange}
         setShowAddVersion={setShowAddVersion}
-        addNameAndPointsToVersion={addNameAndPointsToVersion}/>
+        showAddVersion={showAddVersion}
+        addPointsToVersion={addPointsToVersion}
+        setVersion={setVersion}/>
         }
         {showAddVersion && !showAddRating && !showAddSong &&
         <AddVersion setShowAddVersion={setShowAddVersion}

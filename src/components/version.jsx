@@ -3,8 +3,11 @@ import { supabase } from '../supabaseClient'
 
 function Version(props) {
   let [tags, setTags] = useState('')
-  let [name, setName] = useState(props.versionData.name || '')
   let [points, setPoints] = useState(props.versionData.points || null)
+
+  useEffect(() => {
+    console.log('props in version', props)
+  })
 
   useEffect(() => {
     // console.log('props.data in version', props.versionData)
@@ -55,39 +58,34 @@ function Version(props) {
       async function getNameAndPoints() {
         const { data, error } = await supabase
           .from('profiles')
-          .select('points, name')
-          .eq('id', props.versionData.version_user_id)
+          .select('points')
+          .eq('name', props.versionData.submitter_name)
         if (error) {
-          alert('error getting name and points')
+          console.log('error getting points', error)
         } else {
-          // console.log('data', data)
-          setName(data[0].name)
+          console.log('data', data)
           setPoints(data[0].points)
-          props.addNameAndPointsToVersion(props.versionData.id, data[0].name, data[0].points)
+          props.addPointsToVersion(props.versionData.id, data[0].points)
         }
       } getNameAndPoints()
     }
   }, [props])
 
 
-  function handleClick() {
-    props.handleVersionChange(props.versionData)
-  }
-
   if (props) {
   return (
     <>
-      <div className="version-col1" onClick={e => handleClick()}>
+      <div className="version-col1" onClick={e => props.setVersion(props.versionData)}>
         <p className="version-date">{props.versionData.date}</p>
       </div>
       <div className="version-col2">
-        <p>{props.versionData.avg_rating}</p>
+        <p>{props.versionData.location}</p>
       </div>
       <div className="version-col3">
         <p>{tags}</p>
       </div>
       <div className="version-col4">
-        <p>{name}, {points}</p>
+        <p>{props.versionData.avg_rating}</p>
       </div>
       <div className="line"></div>
     </>

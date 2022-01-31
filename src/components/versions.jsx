@@ -29,6 +29,7 @@ function Versions(props) {
   const [soulful, setSoulful] = useState(false)
   const [officialRelease, setOfficialRelease] = useState(false)
   const [sloppy, setSloppy] = useState(false)
+  const [tease, setTease] = useState(false)
   const [filterText, setFilterText] = useState('Show filters')
 
   useEffect(() => {
@@ -115,15 +116,18 @@ function Versions(props) {
 
   return (
     <>
-      {(!props.versions || props.versions.length === 0) &&
+      {(!props.versions || props.versions.length === 0) && !props.showAddVersion &&
       <>
       <p>No versions submitted yet!</p>
       <br></br>
       </>}
+      {!props.showAddVersion &&
+      <>
       <button className="primary-button"
       onClick={e => props.setShowAddVersion(true)}>Add a great version</button>
       <br></br>
       <br></br>
+      </>}
       {(props.versions && props.versions.length > 0) &&
       <button className="small-button"
       onClick={e => setShowFilters(!showFilters)}>{filterText}</button>}
@@ -151,6 +155,7 @@ function Versions(props) {
         <FilterChip currentFilterState={soaring} text='Soaring' setFilter={setSoaring}/>
         <FilterChip currentFilterState={soulful} text='Soulful' setFilter={setSoulful}/>
         <FilterChip currentFilterState={sloppy} text='Sloppy' setFilter={setSloppy}/>
+        <FilterChip currentFilterState={tease} text='Teases' setFilter={setTease}/>
         <FilterChip currentFilterState={trippy} text='Trippy' setFilter={setTrippy}/>
         <FilterChip currentFilterState={type2} text='Type II' setFilter={setType2}/>
       </>}
@@ -164,17 +169,17 @@ function Versions(props) {
         <p>Choose a date to add or view comments</p>
         <br></br>
         <div className="versions">
-          <p className="version-col1">Date</p>
-          <p className="version-col2">Average</p>
+          {/* <p className="version-col1">When</p>
+          <p className="version-col2">Where</p>
           <p className="version-col3">Tags</p>
-          <p className="version-col4">Added by</p>
+          <p className="version-col4">Score</p> */}
           <div className="line"></div>
           {filteredVersions &&
           filteredVersions.map((data) => {
             return (
                 <Version versionData={data}
-                handleVersionChange={props.handleVersionChange}
-                addNameAndPointsToVersion={props.addNameAndPointsToVersion}/>)
+                setVersion={props.setVersion}
+                addPointsToVersion={props.addPointsToVersion}/>)
           })}
         </div>
       </>

@@ -7,10 +7,12 @@ function AddVersion (props) {
   const [songName, setSongName] = useState(props.songName)
   const [filteredSongs, setFilteredSongs] = useState('')
   const [date, setDate] = useState('')
+  const [year, setYear] = useState(null)
   const [loading, setLoading] = useState(false)
   const [songId, setSongId] = useState('')
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [showAlreadyExistsMessage, setShowAlreadyExistsMessage] = useState(false)
+  const [location, setLocation] = useState('')
   const [funky, setFunky] = useState(false)
   const [ambient, setAmbient] = useState(false)
   const [fast, setFast] = useState(false)
@@ -34,9 +36,10 @@ function AddVersion (props) {
   const [soulful, setSoulful] = useState(false)
   const [officialRelease, setOfficialRelease] = useState(false)
   const [sloppy, setSloppy] = useState(false)
+  const [tease, setTease] = useState(false)
 
   useEffect(() => {
-    console.log('props in addVersions', props)
+    console.log('props in addVersion', props)
     setSongId(props.songData.id)
   }, [props])
 
@@ -46,13 +49,30 @@ function AddVersion (props) {
 
   useEffect(() => {
     console.log('date', date)
+    let yearString = date.slice(0,4)
+    console.log('yearString', yearString)
+    setYear(parseInt(yearString))
   }, [date])
 
 
   async function testVersion(date) {
+    let locationValid = true
+    let dateValid = true
+    if ((props.artist.start_year && year < props.artist.start_year) || (props.artist.end_year && year > props.artist.end_year)) {
+        dateValid = false
+        alert(`I don't think ${props.artist.artist} played in ${year}. Imagine if they did, though!`)
+    }
+    if (location === '') {
+      alert('Please enter a location')
+      locationValid = false
+    } if (location.length > 20) {
+      locationValid = false
+      alert('Please make the location shorter (20 characters max.)')
+    }
     if (date === '') {
+      dateValid = false
       alert('Please enter a date')
-    } else {
+    } if (dateValid && locationValid) {
       setLoading(true)
       setShowSuccessMessage(false)
       const { data, error } = await supabase
@@ -62,7 +82,6 @@ function AddVersion (props) {
         .eq('date', date)
       if (error) {
         console.log('error', error)
-        alert('error:', error)
       } else if (data.length === 0) {
         console.log('song doesn\'t exist yet')
         insertVersion(date)
@@ -81,10 +100,9 @@ function AddVersion (props) {
       .from('versions')
       .insert(
         [{ song_id: songId,
-          submitter_name: '',
-          num_ratings: 0,
-          sum_ratings: 0,
-          avg_rating: 0,
+          submitter_name: props.username,
+          location: location,
+          artist: props.artist.artist,
           date: date,
           funky: funky,
           ambient: ambient,
@@ -108,7 +126,8 @@ function AddVersion (props) {
           acoustic: acoustic,
           soulful: soulful,
           official_release: officialRelease,
-          sloppy: sloppy
+          sloppy: sloppy,
+          tease: tease
         }])
     if (error) {
       console.log('error', error)
@@ -178,7 +197,7 @@ function AddVersion (props) {
         {filteredSongs.length > 0 &&
         filteredSongs.map(song => {
           return (
-            <button className="button-in-list song-select"
+            <button className="button-in-list-large song-select"
             onClick={() => handleSongChange(song)}>{song.song}</button>
           )
         })}
@@ -195,13 +214,17 @@ function AddVersion (props) {
           setShowSuccessMessage(false);
           setShowAlreadyExistsMessage(false)}
         }/>
-        {songExists && (date !== '') &&
-        <>
         <br></br>
         <br></br>
-        <p>Please make sure {props.artist} played {songName} on {date} &#x263A;</p>
+        <label htmlFor="location">Location: </label>
+        <input
+        className="inputField"
+        type="text"
+        placeholder="City or Venue"
+        value={location}
+        onChange={(e) => setLocation(e.target.value)}/>
         <br></br>
-        </>}
+        <br></br>
         {!songExists && (songName !== '') &&
         <>
         <br></br>
@@ -238,6 +261,7 @@ function AddVersion (props) {
           <FilterChip currentFilterState={soaring} text='Soaring' setFilter={setSoaring}/>
           <FilterChip currentFilterState={soulful} text='Soulful' setFilter={setSoulful}/>
           <FilterChip currentFilterState={sloppy} text='Sloppy' setFilter={setSloppy}/>
+          <FilterChip currentFilterState={tease} text='Teases' setFilter={setTease}/>
           <FilterChip currentFilterState={trippy} text='Trippy' setFilter={setTrippy}/>
           <FilterChip currentFilterState={type2} text='Type II' setFilter={setType2}/>
           </div>

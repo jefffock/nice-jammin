@@ -14,8 +14,8 @@ function Header(props) {
   }, [props.showMenu])
 
   return (
-    <div>
-      <div className="header top-row">
+    <div className="header">
+      <div className="header-top-row">
         <h1 className="title" onClick={e => props.goHome()}>Nice Jammin</h1>
         <div className="top-row-buttons">
           <button className={menuButtonClasses}
@@ -25,6 +25,7 @@ function Header(props) {
         <br></br>
         <br></br>
         <h3 className="subheading">Discover and share great jams</h3>
+        <div className="log-in-out-buttons-div">
         {!props.session && !props.showPleaseConfirm &&
           <>
           <button className="header-button small-button"
@@ -37,7 +38,7 @@ function Header(props) {
           onClick={e => props.setShowSignUp(true)}>Sign&nbsp;Up</button>
           <br></br>
           </>}
-      <br></br>
+        </div>
       {props.showMenu &&
       <br></br>}
         <Menu

@@ -3,15 +3,16 @@ function CurrentSelection(props) {
   return (
     <>
     <div className="current-selection-div">
-          <h2 onClick={e => {
-            props.setSong(null)
-            props.setVersion(null)
-            props.setShowAddSong(false)
-            props.setShowAddVersion(false)
-            props.setShowAddRating(false)
-            props.setSongName(null)
-            props.setSongSearchTerm('')
-          }}>{props.artist}</h2>
+      {props.artist &&
+      <h2 onClick={e => {
+        props.setSong(null)
+        props.setVersion(null)
+        props.setShowAddSong(false)
+        props.setShowAddVersion(false)
+        props.setShowAddRating(false)
+        props.setSongName(null)
+        props.setSongSearchTerm('')
+      }}>{props.artist.artist}</h2>}
           {!props.showAddVersion &&
           <h2 onClick={e => {
             props.setVersion(null)
