@@ -10,6 +10,7 @@ import AddVersion from './components/addVersion'
 import AddRating from './components/addRating'
 import Header from './components/header'
 import SongPicker from './components/SongPicker'
+import BackButtons from './components/BackButtons'
 
 function App() {
   const [session, setSession] = useState(null)
@@ -255,40 +256,30 @@ function App() {
     <>
       <div className="app">
         <Header session={session}
-        showPleaseConfirm={showPleaseConfirm}
-        setShowSignIn={setShowSignIn}
-        setShowProfile={setShowProfile}
-        showProfile={showProfile}
-        signOut={signOut}
-        goHome={goHome}
-        setSession={setSession}
-        username={username}
-        points={points}
-        avatar={avatar_url}
-        user={user}
-        fetchProfile={fetchProfile}
-        showMenu={showMenu}
-        setShowMenu={setShowMenu}/>
-        <div className="back-buttons-div">
-          {artist && !showAddSong && !showAddVersion && !showAddRating &&
-          <>
-          <button className="back small-button" onClick={e => goHome()}>Change Artist</button>
-            <br></br>
-          </>}
-          {song && !showAddSong && !showAddVersion && !showAddRating &&
-          <>
-          <button className="back small-button" onClick={e => {
-            setSong(null);
-            setSongName(null)
-            setVersion(null)}}>Change Song</button>
-            <br></br>
-          </>}
-          {version && !showAddSong && !showAddVersion && !showAddRating &&
-          <>
-          <button className="back small-button" onClick={e => {
-            setVersion(null)}}>Change Version</button>
-          </>}
-        </div>
+          showPleaseConfirm={showPleaseConfirm}
+          setShowSignIn={setShowSignIn}
+          setShowProfile={setShowProfile}
+          showProfile={showProfile}
+          signOut={signOut}
+          goHome={goHome}
+          setSession={setSession}
+          username={username}
+          points={points}
+          avatar={avatar_url}
+          user={user}
+          fetchProfile={fetchProfile}
+          showMenu={showMenu}
+          setShowMenu={setShowMenu}/>
+        <BackButtons artist={artist}
+          song={song}
+          version={version}
+          showAddSong={showAddSong}
+          showAddRating={showAddRating}
+          showAddVersion={showAddVersion}
+          setSong={setSong}
+          setSongName={setSongName}
+          setVersion={setVersion}
+          goHome={goHome}/>
         {!artist &&
         <p>Choose an artist:</p>}
         <br></br>
