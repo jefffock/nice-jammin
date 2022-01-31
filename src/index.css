@@ -129,6 +129,7 @@ button:hover {
 
 .header-button {
   height: min-content;
+  min-width: min-content;
 }
 
 .top-row {
@@ -136,7 +137,10 @@ button:hover {
 }
 
 .bottom-row {
-  margin-top: -25px
+  margin-top: -25px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .current-selection-div {
