@@ -38,6 +38,7 @@ function App() {
   const [username, setUsername] = useState(null)
   const [points, setPoints] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
+  const [showSignUp, setShowSignUp] = useState(false)
 
   handleVersionChange.bind(this)
 
@@ -186,10 +187,6 @@ function App() {
     }
   }
 
-  function handleShowSignIn(show) {
-    setShowSignIn(show)
-  }
-
   function handleNotConfirmedYet() {
     setShowPleaseConfirm(true)
   }
@@ -204,6 +201,7 @@ function App() {
     setShowProfile(false)
     setSongName(null)
     setSongSearchTerm('')
+    setShowSignUp(false)
   }
 
   function handleShowAddSong(songName) {
@@ -244,14 +242,18 @@ function App() {
     } console.log('versions[i]', versions[i])
   }
 
-  if (showSignIn) {
+  if (showSignIn || showSignUp) {
     return (
       <div className="app">
         <h1>Nice Jammin</h1>
-        <Auth handleShowSignIn={handleShowSignIn}
+        <Auth
         handleNotConfirmedYet={handleNotConfirmedYet}
         setUser={setUser}
-        fetchProfile={fetchProfile}/>
+        fetchProfile={fetchProfile}
+        showSignIn={showSignIn}
+        setShowSignIn={setShowSignIn}
+        setShowSignUp={setShowSignUp}
+        showSignUp={showSignUp}/>
       </div>
     )
   } return (
@@ -260,6 +262,7 @@ function App() {
         <Header session={session}
           showPleaseConfirm={showPleaseConfirm}
           setShowSignIn={setShowSignIn}
+          setShowSignUp={setShowSignUp}
           setShowProfile={setShowProfile}
           showProfile={showProfile}
           signOut={signOut}

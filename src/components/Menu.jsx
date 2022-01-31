@@ -80,6 +80,7 @@ function Menu (props) {
             setShowSupport(false);
             setShowBugReport(true)}}>Report a bug</button>
 
+            <br></br>
 
         {props.session &&
         <button className="header-button small-button"
@@ -102,9 +103,6 @@ function Menu (props) {
         <BugReport />}
         {props.showMenu && showSupport &&
         <Support />}
-        {!props.showMenu && !showAccount && !showIdeas &&
-        <h3 className="subheading">Discover and share great jams</h3>
-      }
       </>
   )
 }

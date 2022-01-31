@@ -20,6 +20,12 @@ function BackButtons(props) {
       <button className="back small-button" onClick={e => {
         props.setVersion(null)}}>Change Version</button>
       </>}
+      {props.artist &&
+      <>
+      <br></br>
+      <br></br>
+      <br></br>
+      </>}
     </div>
     )
 }

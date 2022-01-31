@@ -6,7 +6,7 @@ export default function Auth(props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
-  const [showCreateAccount, setShowCreateAccount] = useState(false)
+  const [showCreateAccount, setShowCreateAccount] = useState(props.showSignUp)
   const [status, setStatus] = useState('')
 
   async function signInWithEmail(email, password) {
@@ -20,7 +20,7 @@ export default function Auth(props) {
     } else {
       console.log('user after sign in', user)
     setLoading(false)
-    props.handleShowSignIn(false)
+    props.setShowSignIn(false)
     props.setUser(user)
     props.fetchProfile()
     }
@@ -77,10 +77,6 @@ export default function Auth(props) {
     }
   }
 
-  function handleShowSignInClick(show) {
-    props.handleShowSignIn(show)
-  }
-
   return (
     <div className="row flex flex-center">
       <div className="col-6 form-widget">
@@ -125,10 +121,13 @@ export default function Auth(props) {
         <br></br>
         <br></br>
         <br></br>
-        <p className="link" onClick={e => setShowCreateAccount(true)}>Create an account</p>
+        <p className="link" onClick={e => {
+          props.setShowSignUp(true);
+          props.setShowSignIn(false)}}>Create an account
+        </p>
         <br></br>
         <br></br>
-        <p className="link" onClick={e => handleShowSignInClick(false)}>Nevermind, I just want to browse</p>
+        <p className="link" onClick={e => props.setShowSignIn(false)}>Nevermind, I just want to browse</p>
         </>
         }
         {showCreateAccount &&
@@ -183,12 +182,15 @@ export default function Auth(props) {
         <br></br>
         <br></br>
         <div>
-          <p className="link" onClick={e => setShowCreateAccount(false)}>I already have an account</p>
+          <p className="link" onClick={e => {
+            props.setShowSignUp(false);
+            props.setShowSignIn(true)}}>I already have an account
+          </p>
         </div>
         <br></br>
         <br></br>
         </div>
-          <p className="link" onClick={e => handleShowSignInClick(false)}>Nevermind, I just want to browse</p>
+          <p className="link" onClick={e => props.setShowSignUp(false)}>Nevermind, I just want to browse</p>
         </>}
       </div>
     </div>

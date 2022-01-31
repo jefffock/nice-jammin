@@ -17,19 +17,26 @@ function Header(props) {
     <div>
       <div className="header top-row">
         <h1 className="title" onClick={e => props.goHome()}>Nice Jammin</h1>
-
+        <div className="top-row-buttons">
+          <button className={menuButtonClasses}
+          onClick={e => { props.goHome(); props.setShowMenu(!props.showMenu)}}>Menu</button>
+          </div>
+        </div>
+        <br></br>
+        <br></br>
+        <h3 className="subheading">Discover and share great jams</h3>
         {!props.session && !props.showPleaseConfirm &&
-        <button className="header-button small-button"
-        onClick={e => props.setShowSignIn(true)}>Sign&nbsp;In</button>}
+          <>
+          <button className="header-button small-button"
+          onClick={e => props.setShowSignIn(true)}>Log&nbsp;In</button>
+          </>}
 
-{!props.session && !props.showPleaseConfirm &&
-        <button className="header-button small-button"
-        onClick={e => props.setShowSignIn(true)}>Sign&nbsp;Up</button>}
-
-        <button className={menuButtonClasses}
-        onClick={e => { props.goHome(); props.setShowMenu(!props.showMenu)}}>Menu</button>
-
-      </div>
+          {!props.session && !props.showPleaseConfirm &&
+          <>
+          <button className="header-button small-button"
+          onClick={e => props.setShowSignUp(true)}>Sign&nbsp;Up</button><br>
+          </br>
+          </>}
       <br></br>
       <br></br>
         <Menu

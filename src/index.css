@@ -134,6 +134,8 @@ button:hover {
 
 .top-row {
   margin-bottom: 0px;
+  display: flex;
+  align-content: space-between;
 }
 
 .bottom-row {
