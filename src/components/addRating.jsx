@@ -12,12 +12,13 @@ function AddRating(props) {
 
   useEffect(() => {
     console.log('props in add review', props)
+    if (props.user) {
     async function checkUserAlreadyRated() {
       let id = props.user.id
       const { data, error } = await supabase
         .from('ratings')
         .select('*')
-        .eq('rating_submitter_user_id', id)
+        .eq('submitter_name', props.username)
         .eq('version_id', props.version.id)
       if (error) {
         console.log('error in checkUserAlreadyRated', error)
@@ -34,23 +35,40 @@ function AddRating(props) {
       }
     }
     checkUserAlreadyRated()
+    }
   }, [props])
+
+  useEffect(() => {
+    if (!props.user) {
+      setAddRatingStatus('Please log in to add your comments and rating')
+    }
+  })
 
   useEffect(() => {
     setCharCount(comment.length)
   }, [comment])
 
   async function testRating() {
+    let ratingValid = true
+    if (!props.user) {
+      ratingValid = false
+    } if (rating < 1 || rating > 10) {
+      ratingValid = false
+    }
     setLoading(true)
     setAddRatingStatus('Checking your rating')
     console.log('rating:', rating, 'comment', comment)
     if (charCount > 10000) {
+      ratingValid = false
       alert(`Your enthusiasm is commendable! Also, character limit exceeded`)
       setAddRatingStatus('')
-    } else {
+    } if (ratingValid) {
+      console.log('rating valid')
       if (userAlreadyRated) {
+        console.log('user already rated')
         updateRating()
       } else {
+        console.log('user hasnt yet rated')
         insertRating()
       }
     }
@@ -61,13 +79,14 @@ function AddRating(props) {
     const { error } = await supabase
       .from('ratings')
       .update({
-        comment: comment
+        comment: comment,
+        rating: rating
       })
-      .match({rating_submitter_user_id: props.user.id})
+      .match({submitter_name: props.username})
     if (error) {
       console.log('error updating comment')
     } else {
-      setAddRatingStatus('Updated your comments')
+      setAddRatingStatus('Updated your comments and rating')
     }
   }
 
@@ -78,12 +97,9 @@ function AddRating(props) {
       .insert(
         {
           version_id: props.version.id,
-          rating_submitter_user_id: props.user.id,
-          song_submitter_user_id: props.songData.user_id,
+          submitter_name: props.username,
           rating: rating,
-          version_date: props.date,
           comment: comment,
-          profiles_username: props.username
         }, {returning: 'minimal'})
       if (error) {
         console.log('error adding rating: ', error)

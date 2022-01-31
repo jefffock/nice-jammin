@@ -169,10 +169,6 @@ function Versions(props) {
         <p>Choose a date to add or view comments</p>
         <br></br>
         <div className="versions">
-          {/* <p className="version-col1">When</p>
-          <p className="version-col2">Where</p>
-          <p className="version-col3">Tags</p>
-          <p className="version-col4">Score</p> */}
           <div className="line"></div>
           {filteredVersions &&
           filteredVersions.map((data) => {

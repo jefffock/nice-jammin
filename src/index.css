@@ -238,6 +238,8 @@ button:hover {
   justify-items: center;
   align-items: center;
   align-content: start;
+  grid-row-gap: 10px;
+  row-gap: 10px;
 }
 
 .review-comment {

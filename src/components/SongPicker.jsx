@@ -7,7 +7,7 @@ function SongPicker (props) {
       <p>Choose a song:</p>
       <br></br>
       </>}
-      {props.songs && props.songs.length > 0 && !props.song && props.artist.artist && !props.showAddSong && !props.showAddVersion && !props.showAddRating &&
+      {props.songs && props.songs.length > 0 && !props.song && props.artist && props.artist.artist && !props.showAddSong && !props.showAddVersion && !props.showAddRating &&
       <>
       <input
         className="inputField"
