@@ -11,6 +11,7 @@ import AddRating from './components/addRating'
 import Header from './components/header'
 import SongPicker from './components/SongPicker'
 import BackButtons from './components/BackButtons'
+import CurrentSelection from './components/CurrentSelection'
 
 function App() {
   const [session, setSession] = useState(null)
@@ -280,33 +281,20 @@ function App() {
           setSongName={setSongName}
           setVersion={setVersion}
           goHome={goHome}/>
+        <CurrentSelection
+          artist={artist}
+          songName={songName}
+          version={version}
+          setSong={setSong}
+          setVersion={setVersion}
+          setShowAddSong={setShowAddSong}
+          setShowAddVersion={setShowAddVersion}
+          setShowAddRating={setShowAddRating}
+          setSongName={setSongName}
+          setSongSearchTerm={setSongSearchTerm}/>
         {!artist &&
         <p>Choose an artist:</p>}
         <br></br>
-        <div className="current-selection-div">
-          <h2 onClick={e => {
-            setSong(null)
-            setVersion(null)
-            setShowAddSong(false)
-            setShowAddVersion(false)
-            setShowAddRating(false)
-            setSongName(null)
-            setSongSearchTerm('')
-          }}>{artist}</h2>
-          {!showAddVersion &&
-          <h2 onClick={e => {
-            setVersion(null)
-            setShowAddSong(false)
-            setShowAddVersion(false)
-            setShowAddRating(false)
-          }}>{songName}</h2>}
-          {version &&
-          <h2 onClick={e => {
-            setShowAddSong(false)
-            setShowAddVersion(false)
-            setShowAddRating(false)
-          }}>{version.date}</h2>}
-        </div>
         {!artist && artists &&
           artists.map(artist => {
             return (
