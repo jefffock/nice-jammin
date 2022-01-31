@@ -39,6 +39,9 @@ function App() {
   const [points, setPoints] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
   const [showSignUp, setShowSignUp] = useState(false)
+  const [showArtistPicker, setShowArtistPicker] = useState(true)
+  const [showSongPicker, setShowSongPicker] = useState(false)
+  const [showVersions, setShowVersions] = useState(false)
 
   handleVersionChange.bind(this)
 
@@ -70,9 +73,33 @@ function App() {
   })
 
   useEffect(() => {
-    console.log('artist changed to ', artist, 'fetching songs')
     fetchSongs(artist)
+    setArtist(artist);
+    setSong(null);
+    setVersions(null);
+    setShowSongPicker(true)
   }, [artist])
+
+  useEffect(() => {
+    if (showArtistPicker) {
+      setShowSongPicker(false)
+      setShowVersions(false)
+    } if (showSongPicker) {
+      setShowArtistPicker(false)
+      setShowVersions(false)
+    } if (showVersions) {
+      setShowSongPicker(false)
+      setShowArtistPicker(false)
+    }
+  }, [showSongPicker, showArtistPicker, showVersions])
+
+  useEffect(() => {
+    if (song) {
+      setSongData(song)
+      setSongName(song.song)
+      fetchVersions(song.id)
+    }
+  }, [song])
 
   async function fetchProfile() {
     const user = supabase.auth.user()
@@ -110,23 +137,25 @@ function App() {
     if (artist) {
       const { data, error } = await supabase
         .from('songs')
-        .select('*, artists!inner(*)')
-        .eq('artists.artist', artist)
+        .select('*')
+        .eq('artist', artist)
         .order('ratings', {ascending: false})
       if (error) {
         console.log('error fetching songs', error)
       }
       if (data) {
         console.log('data', data)
-      // } if (data.length > 0) {
-      //   setSongs(data)
-      //   setFilteredSongs(data)
-      // } else {
-      //   setSongs([])
-      //   setFilteredSongs([])
+        if (data.length > 0) {
+        console.log('data length > 0')
+        setSongs(data)
+        setFilteredSongs(data)
+      } else {
+        setSongs([])
+        setFilteredSongs([])
       }
     }
   }
+}
 
   async function fetchVersions(songId) {
     console.log('currentSongid in fetch Versions', songId)
@@ -153,22 +182,6 @@ function App() {
     }
     setReviews(data)
     console.log('review data', data)
-  }
-
-  function handleArtistChange(artist) {
-    console.log('artist', artist)
-    setArtist(artist);
-    fetchSongs(artist);
-    setSong(null);
-    setVersions(null);
-  }
-
-  function handleSongChange(song) {
-    console.log('song in handleSongChange', song)
-    setSongData(song)
-    setSong(song)
-    setSongName(song.song)
-    fetchVersions(song.id)
   }
 
   function handleVersionChange(version) {
@@ -274,7 +287,8 @@ function App() {
           user={user}
           fetchProfile={fetchProfile}
           showMenu={showMenu}
-          setShowMenu={setShowMenu}/>
+          setShowMenu={setShowMenu}
+          setShowArtistPicker={setShowArtistPicker}/>
         <BackButtons artist={artist}
           song={song}
           version={version}
@@ -296,28 +310,36 @@ function App() {
           setShowAddRating={setShowAddRating}
           setSongName={setSongName}
           setSongSearchTerm={setSongSearchTerm}/>
-        {!artist &&
+        {!artist && showArtistPicker &&
           <ArtistPicker artist={artist}
             artists={artists}
-            handleArtistChange={handleArtistChange}/>}
-        {artist && !song &&
-        <SongPicker artist={artist} filteredSongs={filteredSongs}
+            setArtist={setArtist}/>}
+        {(showSongPicker || (artist && !song)) &&
+        <>
+        <SongPicker artist={artist}
+        filteredSongs={filteredSongs}
         song={song}
+        songs={songs}
         showAddSong={showAddSong}
         showAddVersion={showAddVersion}
         showAddRating={showAddRating}
-        handleSongChange={handleSongChange}
+        setSong={setSong}
         handleShowAddSong={handleShowAddSong}
         filterSongs={filterSongs}
-        songSearchTerm={songSearchTerm}/>}
+        songSearchTerm={songSearchTerm}
+        showSongPicker={showSongPicker}
+        setShowSongPicker={setShowSongPicker}/>
+        </>
+        }
         {showAddSong && !showAddRating &&!showAddVersion &&
         <AddSong setShowAddSong={setShowAddSong}
         artist={artist}
         user={user}
         fetchSongs={fetchSongs}
-        nameToAdd={songSearchTerm}/>
+        nameToAdd={songSearchTerm}
+        username={username}/>
         }
-        {song && versions && !version && !showAddVersion && !showAddRating && !showAddSong &&
+        {(showVersions || (artist && song && !version)) &&
         <Versions versions={versions}
         handleVersionChange={handleVersionChange}
         setShowAddVersion={setShowAddVersion}

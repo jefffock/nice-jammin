@@ -1,4 +1,3 @@
-
 function SongPicker (props) {
 
   return (
@@ -23,8 +22,8 @@ function SongPicker (props) {
       {props.songs && props.filteredSongs && !props.song && props.artist && !props.showAddSong && !props.showAddVersion && !props.showAddRating &&
       props.filteredSongs.map(song => {
         return (
-          <button className="button-in-list"
-          onClick={() => props.handleSongChange(song)}>{song.song}</button>
+          <button className="button-in-list-large"
+          onClick={() => props.setSong(song)}>{song.song}</button>
           )
         })}
       {!props.song && props.artist && !props.showAddSong && !props.showAddVersion && !props.showAddRating &&

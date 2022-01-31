@@ -6,7 +6,6 @@ export default function Auth(props) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
-  const [showCreateAccount, setShowCreateAccount] = useState(props.showSignUp)
   const [status, setStatus] = useState('')
 
   async function signInWithEmail(email, password) {
@@ -80,7 +79,7 @@ export default function Auth(props) {
   return (
     <div className="row flex flex-center">
       <div className="col-6 form-widget">
-        {!showCreateAccount &&
+        {props.showSignIn &&
         <>
         <h2 className="header">Sign In</h2>
         <br></br>
@@ -130,7 +129,7 @@ export default function Auth(props) {
         <p className="link" onClick={e => props.setShowSignIn(false)}>Nevermind, I just want to browse</p>
         </>
         }
-        {showCreateAccount &&
+        {props.showSignUp &&
         <>
         <h2>Create an account</h2>
         <div>

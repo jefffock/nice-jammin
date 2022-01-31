@@ -43,13 +43,13 @@ function AddSong(props) {
     }
     setLoading(false)
   }
-                
+
   async function addSong(artist, song) {
     setLoading(true)
     const { error } = await supabase
       .from('songs')
       .insert(
-        { song: song, artist: artist, cover: cover, user_id: props.user.id }, {returning: 'minimal'})
+        { song: song, artist: artist, cover: cover, submitter_name: props.username }, {returning: 'minimal'})
     if (error) {
       console.log(error)
     } else {

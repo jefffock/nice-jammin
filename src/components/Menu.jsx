@@ -22,28 +22,37 @@ function Menu (props) {
       setShowIdeas(false)
       setShowBugReport(false)
       setShowSupport(false)
+      props.setShowArtistPicker(true)
+      setIdeasButtonClasses(props.buttonClassesEmpty)
+      setAccountButtonClasses(props.buttonClassesEmpty)
+      setBugReportButtonClasses(props.buttonClassesEmpty)
+      setSupportButtonClasses(props.buttonClassesEmpty)
     }  if (showIdeas) {
       setIdeasButtonClasses(props.buttonClassesFull)
       setAccountButtonClasses(props.buttonClassesEmpty)
       setBugReportButtonClasses(props.buttonClassesEmpty)
       setSupportButtonClasses(props.buttonClassesEmpty)
+      props.setShowArtistPicker(false)
     } if (showAccount) {
       setIdeasButtonClasses(props.buttonClassesEmpty)
       setAccountButtonClasses(props.buttonClassesFull)
       setBugReportButtonClasses(props.buttonClassesEmpty)
       setSupportButtonClasses(props.buttonClassesEmpty)
+      props.setShowArtistPicker(false)
     } if (showBugReport) {
       setBugReportButtonClasses(props.buttonClassesFull)
       setIdeasButtonClasses(props.buttonClassesEmpty)
       setAccountButtonClasses(props.buttonClassesEmpty)
       setSupportButtonClasses(props.buttonClassesEmpty)
+      props.setShowArtistPicker(false)
     } if (showSupport) {
       setIdeasButtonClasses(props.buttonClassesEmpty)
       setSupportButtonClasses(props.buttonClassesFull)
       setAccountButtonClasses(props.buttonClassesEmpty)
       setBugReportButtonClasses(props.buttonClassesEmpty)
+      props.setShowArtistPicker(false)
     }
-  }, [props.showMenu, showIdeas, showAccount, showBugReport, showSupport, props.buttonClassesFull, props.buttonClassesEmpty])
+  }, [props, showIdeas, showAccount, showBugReport, showSupport])
 
   return (
     <>

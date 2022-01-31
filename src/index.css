@@ -59,13 +59,14 @@ button {
   padding-right: 10px;
 }
 
-.button-in-list {
+.button-in-list-large {
   border: 1px solid var(--primary-color);
   background-color: white;
-  color: var(--primary-color)
+  color: var(--primary-color);
+  min-height: min-content;
 }
 
-.button-in-list:hover {
+.button-in-list-large:hover {
   background-color: var(--primary-color);
   color: white;
 }

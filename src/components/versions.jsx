@@ -115,7 +115,7 @@ function Versions(props) {
 
   return (
     <>
-      {props.versions.length === 0 &&
+      {(!props.versions || props.versions.length === 0) &&
       <>
       <p>No versions submitted yet!</p>
       <br></br>
@@ -124,7 +124,7 @@ function Versions(props) {
       onClick={e => props.setShowAddVersion(true)}>Add a great version</button>
       <br></br>
       <br></br>
-      {props.versions.length > 0 &&
+      {(props.versions && props.versions.length > 0) &&
       <button className="small-button"
       onClick={e => setShowFilters(!showFilters)}>{filterText}</button>}
       {showFilters &&
@@ -154,10 +154,10 @@ function Versions(props) {
         <FilterChip currentFilterState={trippy} text='Trippy' setFilter={setTrippy}/>
         <FilterChip currentFilterState={type2} text='Type II' setFilter={setType2}/>
       </>}
-      {filters.length > 0 && filteredVersions.length === 0 &&
+      {(filters && filters.length > 0) && filteredVersions.length === 0 &&
         <p>Sorry, no submitted versions match those filters. It'd be a lot cooler if some did.</p>
       }
-      {filteredVersions.length > 0 &&
+      {(filteredVersions && filteredVersions.length > 0) &&
       <>
       <br></br>
       <br></br>

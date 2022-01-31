@@ -19,7 +19,7 @@ function Header(props) {
         <h1 className="title" onClick={e => props.goHome()}>Nice Jammin</h1>
         <div className="top-row-buttons">
           <button className={menuButtonClasses}
-          onClick={e => { props.goHome(); props.setShowMenu(!props.showMenu)}}>Menu</button>
+          onClick={e => {props.setShowMenu(!props.showMenu)}}>Menu</button>
           </div>
         </div>
         <br></br>
@@ -34,11 +34,12 @@ function Header(props) {
           {!props.session && !props.showPleaseConfirm &&
           <>
           <button className="header-button small-button"
-          onClick={e => props.setShowSignUp(true)}>Sign&nbsp;Up</button><br>
-          </br>
+          onClick={e => props.setShowSignUp(true)}>Sign&nbsp;Up</button>
+          <br></br>
           </>}
       <br></br>
-      <br></br>
+      {props.showMenu &&
+      <br></br>}
         <Menu
         showMenu={props.showMenu}
         session={props.session}
@@ -50,7 +51,8 @@ function Header(props) {
         goHome={props.goHome}
         buttonClassesEmpty={'header-button small-button'}
         buttonClassesFull={'header-button small-button-full'}
-        signOut={props.signOut}/>
+        signOut={props.signOut}
+        setShowArtistPicker={props.setShowArtistPicker}/>
         {props.showPleaseConfirm &&
         <h3>Welcome! Please confirm your email address to start contributing. Thank you!</h3>}
     </div>
