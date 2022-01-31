@@ -7,21 +7,17 @@ import BugReport from './BugReport'
 function Menu (props) {
 
   const [showAccount, setShowAccount] = useState(false)
-  const [showIdeas, setShowIdeas] = useState(true)
+  const [showIdeas, setShowIdeas] = useState(false)
   const [showBugReport, setShowBugReport] = useState(false)
   const [showSupport, setShowSupport] = useState(false)
-  const [ideasButtonClasses, setIdeasButtonClasses] = useState(props.buttonClassesFull)
+  const [ideasButtonClasses, setIdeasButtonClasses] = useState(props.buttonClassesEmpty)
   const [accountButtonClasses, setAccountButtonClasses] = useState(props.buttonClassesEmpty)
   const [bugReportButtonClasses, setBugReportButtonClasses] = useState(props.buttonClassesEmpty)
   const [supportButtonClasses, setSupportButtonClasses] = useState(props.buttonClassesEmpty)
 
 
   useEffect(() => {
-    if (props.showMenu) {
-      if (!showIdeas && !showAccount && !showBugReport && !showSupport) {
-        setShowIdeas(true)
-      }
-    } if (!props.showMenu) {
+   if (!props.showMenu) {
       setShowAccount(false)
       setShowIdeas(false)
       setShowBugReport(false)

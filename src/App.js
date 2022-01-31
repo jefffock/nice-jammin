@@ -1,4 +1,3 @@
-
 import './index.css'
 import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
@@ -10,6 +9,7 @@ import AddSong from './components/addSong'
 import AddVersion from './components/addVersion'
 import AddRating from './components/addRating'
 import Header from './components/header'
+import SongPicker from './components/SongPicker'
 
 function App() {
   const [session, setSession] = useState(null)
@@ -50,7 +50,6 @@ function App() {
   }, [])
 
   useEffect(() => {
-    console.log('in the set user hook')
     setUser(supabase.auth.user())
   }, [])
 
@@ -111,10 +110,17 @@ function App() {
         .eq('artists.artist', artist)
         .order('ratings', {ascending: false})
       if (error) {
-        console.log('error fetching songs, error')
+        console.log('error fetching songs', error)
       }
-      setSongs(data)
-      setFilteredSongs(data)
+      if (data) {
+        console.log('data', data)
+      // } if (data.length > 0) {
+      //   setSongs(data)
+      //   setFilteredSongs(data)
+      // } else {
+      //   setSongs([])
+      //   setFilteredSongs([])
+      }
     }
   }
 
@@ -283,7 +289,7 @@ function App() {
             setVersion(null)}}>Change Version</button>
           </>}
         </div>
-        {!artist && !showMenu &&
+        {!artist &&
         <p>Choose an artist:</p>}
         <br></br>
         <div className="current-selection-div">
@@ -310,46 +316,23 @@ function App() {
             setShowAddRating(false)
           }}>{version.date}</h2>}
         </div>
-        {!artist && artists && !showMenu &&
+        {!artist && artists &&
           artists.map(artist => {
             return (
               <button className="button-in-list"
               onClick={() => handleArtistChange(artist.artist)}>{artist.artist}</button>
             )
           })}
-        {filteredSongs.length > 0 && artist && !song &&
-        <>
-        <p>Choose a song:</p>
-        <br></br>
-        </>}
-        {songs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
-        <>
-        <input
-          className="inputField"
-          type="song"
-          placeholder="Search for a song..."
-          value={songSearchTerm}
-          onChange={(e) => {
-            filterSongs(e.target.value)}}></input>
-            <br></br>
-            <br></br>
-        </>}
-        {songs && filteredSongs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
-        filteredSongs.map(song => {
-          return (
-            <button className="button-in-list"
-            onClick={() => handleSongChange(song)}>{song.song}</button>
-            )
-          })}
-        {songs && !song && artist && !showAddSong && !showAddVersion && !showAddRating &&
-        <>
-        <br></br>
-        <br></br>
-        <p>Not seeing the song you're looking for?</p>
-        <br></br>
-        <button className="small-button"
-        onClick={e => handleShowAddSong(songSearchTerm)}>Add a Song</button>
-        </>}
+        {artist && !song &&
+        <SongPicker artist={artist} filteredSongs={filteredSongs}
+        song={song}
+        showAddSong={showAddSong}
+        showAddVersion={showAddVersion}
+        showAddRating={showAddRating}
+        handleSongChange={handleSongChange}
+        handleShowAddSong={handleShowAddSong}
+        filterSongs={filterSongs}
+        songSearchTerm={songSearchTerm}/>}
         {showAddSong && !showAddRating &&!showAddVersion &&
         <AddSong setShowAddSong={setShowAddSong}
         artist={artist}
@@ -371,6 +354,7 @@ function App() {
         user={user}
         fetchVersions={fetchVersions}
         songs={songs}
+        username={username}
         handleShowAddSong={handleShowAddSong}/>
         }
         {version &&  !showAddVersion && !showAddRating && !showAddSong &&

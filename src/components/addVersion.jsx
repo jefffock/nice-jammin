@@ -81,8 +81,7 @@ function AddVersion (props) {
       .from('versions')
       .insert(
         [{ song_id: songId,
-          version_user_id: props.user.id,
-          song_user_id: props.songData.user_id,
+          submitter_name: '',
           num_ratings: 0,
           sum_ratings: 0,
           avg_rating: 0,
