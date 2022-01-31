@@ -12,6 +12,7 @@ import Header from './components/header'
 import SongPicker from './components/SongPicker'
 import BackButtons from './components/BackButtons'
 import CurrentSelection from './components/CurrentSelection'
+import ArtistPicker from './components/ArtistPicker'
 
 function App() {
   const [session, setSession] = useState(null)
@@ -293,15 +294,9 @@ function App() {
           setSongName={setSongName}
           setSongSearchTerm={setSongSearchTerm}/>
         {!artist &&
-        <p>Choose an artist:</p>}
-        <br></br>
-        {!artist && artists &&
-          artists.map(artist => {
-            return (
-              <button className="button-in-list"
-              onClick={() => handleArtistChange(artist.artist)}>{artist.artist}</button>
-            )
-          })}
+          <ArtistPicker artist={artist}
+            artists={artists}
+            handleArtistChange={handleArtistChange}/>}
         {artist && !song &&
         <SongPicker artist={artist} filteredSongs={filteredSongs}
         song={song}
