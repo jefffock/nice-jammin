@@ -210,6 +210,18 @@ button:hover {
   cursor: pointer;
 }
 
+.tags-version-div {
+  display: flex;
+  align-items: center;
+  margin: auto auto;
+}
+
+.tags-version {
+  text-align: center;
+  justify-self: center;
+  align-self: center;
+}
+
 .line {
   height: 1px;
   background-color: rgb(107, 107, 107);

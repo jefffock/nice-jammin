@@ -166,7 +166,7 @@ function Versions(props) {
       <>
       <br></br>
       <br></br>
-        <p>Choose a date to add or view comments</p>
+        <p>Choose a date to rate it or view comments</p>
         <br></br>
         <div className="versions">
           <div className="line"></div>

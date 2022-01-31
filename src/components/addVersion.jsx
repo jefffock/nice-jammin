@@ -133,7 +133,9 @@ function AddVersion (props) {
       console.log('error', error)
     } else {
       setShowSuccessMessage(true)
-    }
+      props.addOnePoint(props.songData.submitter_name)
+      props.addTenPoints(props.username)
+      }
   }
 
   function filterSongs(searchTerm) {
@@ -169,6 +171,7 @@ function AddVersion (props) {
 
 
   function handleBackClick() {
+    props.fetchVersions(props.songData.id)
     props.setShowAddVersion(false)
   }
 

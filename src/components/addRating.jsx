@@ -105,6 +105,11 @@ function AddRating(props) {
         console.log('error adding rating: ', error)
       } else {
         setAddRatingStatus('Added your rating. Thanks for contributing!')
+        props.addOnePoint(props.version.submitter_name)
+        props.addOnePoint(props.songData.submitter_name)
+        props.addTenPoints(props.username)
+        props.addRatingCountToSong(props.songData.id)
+        props.addRatingCountToArtist(props.artist.id)
         console.log('success adding rating. now time to add update average')
       }
   }

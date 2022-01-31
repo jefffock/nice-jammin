@@ -54,6 +54,7 @@ function AddSong(props) {
       console.log(error)
     } else {
       setShowSuccessMessage(true)
+      props.addTenPoints(props.username)
     }
   }
 

@@ -71,32 +71,28 @@ function App() {
   })
 
   useEffect(() => {
+    if (artist) {
+      fetchSongs(artist.artist)
+      setShowArtistPicker(false)
+      setShowSongPicker(true)
+    } else {
+      setShowSongPicker(false)
+      setShowVersions(false)
+    }
     setSong(null);
     setVersions(null);
-    setShowSongPicker(true)
-    if (artist) {
-    fetchSongs(artist.artist)
-    }
   }, [artist])
-
-  useEffect(() => {
-    if (showArtistPicker) {
-      setShowSongPicker(false)
-      setShowVersions(false)
-    } if (showSongPicker) {
-      setShowArtistPicker(false)
-      setShowVersions(false)
-    } if (showVersions) {
-      setShowSongPicker(false)
-      setShowArtistPicker(false)
-    }
-  }, [showSongPicker, showArtistPicker, showVersions])
 
   useEffect(() => {
     if (song) {
       setSongData(song)
       setSongName(song.song)
       fetchVersions(song.id)
+      setShowSongPicker(false)
+    } else {
+      if (artist) {
+        setShowSongPicker(true)
+      }
     }
   }, [song])
 
@@ -105,6 +101,13 @@ function App() {
       fetchRatings(version.id)
     }
   }, [version])
+
+  useEffect(() => {
+    if (versions) {
+      setShowArtistPicker(false)
+      setShowSongPicker(false)
+    }
+  }, [versions])
 
   async function fetchProfile() {
     const user = supabase.auth.user()
@@ -196,6 +199,48 @@ function App() {
       console.log('error,', error)
     } else {
       console.log('signed out')
+    }
+  }
+
+  async function addOnePoint(profileName) {
+    const { data, error } = await supabase.rpc( 'add_one_point', { username: profileName })
+    if (error) {
+      console.log('error adding one point', error)
+    } if (data) {
+      console.log('data from adding one point', data)
+    }
+  }
+
+  async function addTenPoints(profileName) {
+    const { data, error } = await supabase.rpc( 'add_ten_points', { username: profileName })
+    if (error) {
+      console.log('error adding ten points', error)
+    } if (data) {
+      console.log('data from adding ten points', data)
+    }
+  }
+
+  async function addRatingCountToArtist(artistId) {
+    console.log('in add rating count to artist', artistId, typeof artistId)
+    const { data, error } = await supabase.rpc( 'add_rating_count_artist', { artistid: artistId })
+    console.log(error)
+    if (error) {
+      console.log('error adding rating count to artist', error)
+    } if (data) {
+      console.log('data from adding rating count to artist', data)
+    }
+  }
+
+  //increment_rating_count_song
+
+    async function addRatingCountToSong(songId) {
+      let song_id = parseInt(songId)
+      console.log('song_id', song_id, typeof song_id)
+    const { data, error } = await supabase.rpc( 'increment_rating_count_song', { songid: song_id })
+    if (error) {
+      console.log('error adding incrementing song rating count', error)
+    } if (data) {
+      console.log('data from adding song rating count', data)
     }
   }
 
@@ -313,7 +358,7 @@ function App() {
           <ArtistPicker artist={artist}
             artists={artists}
             setArtist={setArtist}/>}
-        {(showSongPicker || (artist && !song)) &&
+        {(showSongPicker || (artist && !song)) && !showAddVersion && !showAddSong && !showAddRating &&
         <>
         <SongPicker artist={artist}
         filteredSongs={filteredSongs}
@@ -336,9 +381,10 @@ function App() {
         user={user}
         fetchSongs={fetchSongs}
         nameToAdd={songSearchTerm}
-        username={username}/>
+        username={username}
+        addTenPoints={addTenPoints}/>
         }
-        {(showVersions || (artist && song && !version)) &&
+        {(showVersions || (artist && song && !version)) && !showAddVersion &&
         <Versions versions={versions}
         setShowAddVersion={setShowAddVersion}
         showAddVersion={showAddVersion}
@@ -354,14 +400,17 @@ function App() {
         fetchVersions={fetchVersions}
         songs={songs}
         username={username}
-        handleShowAddSong={handleShowAddSong}/>
+        handleShowAddSong={handleShowAddSong}
+        addOnePoint={addOnePoint}
+        addTenPoints={addTenPoints}/>
         }
         {version &&  !showAddVersion && !showAddRating && !showAddSong &&
         <Reviews
         reviews={reviews}
         songData={songData}
         date={version.date}
-        setShowAddRating={setShowAddRating}/>}
+        setShowAddRating={setShowAddRating}
+        addOnePoint={addOnePoint}/>}
         {showAddRating && version &&
         <AddRating
         songData={songData}
@@ -369,7 +418,12 @@ function App() {
         user={user}
         setShowAddRating={setShowAddRating}
         fetchRatings={fetchRatings}
-        username={username}/>}
+        username={username}
+        addOnePoint={addOnePoint}
+        addTenPoints={addTenPoints}
+        addRatingCountToArtist={addRatingCountToArtist}
+        addRatingCountToSong={addRatingCountToSong}
+        artist={artist}/>}
       </div>
     </>
   )
