@@ -53,7 +53,17 @@ function Header(props) {
         buttonClassesEmpty={'header-button small-button'}
         buttonClassesFull={'header-button small-button-full'}
         signOut={props.signOut}
-        setShowArtistPicker={props.setShowArtistPicker}/>
+        setShowArtistPicker={props.setShowArtistPicker}
+        fetchIdeas={props.fetchIdeas}
+        showIdeas={props.showIdeas}
+        setShowIdeas={props.setShowIdeas}
+        showBugReport={props.showBugReport}
+        setShowBugReport={props.setShowBugReport}
+        showSupport={props.showSupport}
+        setShowSupport={props.setShowSupport}
+        setShowAccount={props.setShowAccount}
+        showAccount={props.showAccount}
+        ideas={props.ideas}/>
         {props.showPleaseConfirm &&
         <h3>Welcome! Please confirm your email address to start contributing. Thank you!</h3>}
     </div>

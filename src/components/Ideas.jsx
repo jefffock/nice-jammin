@@ -1,25 +1,70 @@
-// import AddIdea from './AddIdea'
+import AddIdea from './AddIdea'
+import { useState, useEffect } from 'react'
+import FilterChip from './FilterChip'
+import Idea from './Idea'
 
-// function Ideas() {
-//   const [showAddIdea, setShowAddIdea] = useState(false)
+function Ideas(props) {
+  const [showAddIdea, setShowAddIdea] = useState(false)
+  const [ideasToShow, setIdeasToShow] = useState(null)
+  const [artistIdeas, setArtistIdeas] = useState(null)
+  const [featureIdeas, setFeatureIdeas] = useState(null)
+  const [tagIdeas, setTagIdeas] = useState(null)
+  const [otherIdeas, setOtherIdeas] = useState(null)
 
-// return (
-//   <div>
-//     <h1>Ideas</h1>
-//     <br></br>
-//     <p>Have an idea for how something could be improved? Please share!</p>
-//     <br></br>
-//     <AddIdea setShowAddIdea={setShowAddIdea}/>
-//     {}
-//     <button className="small-button"
-//     onClick={e => setShowAddIdea(true)}>Add An Idea</button>
-//     <br></br>
-//     <br></br>
-//     <p>Filter chips to tag idea with artist request, tag request, feature request</p>
-//     <br></br>
-//     <p>Current Requests</p>
-//   </div>
-// )
-// }
+    useEffect(() => {
+    let newOtherIdeas = []
+    let newArtistIdeas = []
+    let newFeatureIdeas = []
+    let newTagIdeas = []
+    console.log('in the use effect block for ideas')
+    if (props.ideas) {
+      setIdeasToShow(props.ideas)
+      console.log('in the if block', props.ideas)
+      for (var i = 0; i < props.ideas.length; i++) {
+        if (props.ideas[i].artist_idea) {
+          newArtistIdeas.push(props.ideas[i])
+        } else if (props.ideas[i].feature_idea) {
+          newFeatureIdeas.push(props.ideas[i])
+        } else if (props.ideas[i].other_idea) {
+          newOtherIdeas.push(props.ideas[i])
+        } else if (props.ideas[i].tag_idea) {
+          newTagIdeas.push(props.ideas[i])
+        }
+      }
+    } else {
+      props.fetchIdeas()
+    } console.log('ideas: artist', newArtistIdeas, 'other', newOtherIdeas, 'feature',
+    newFeatureIdeas, 'tag', newTagIdeas)
+    setArtistIdeas(newArtistIdeas)
+    setOtherIdeas(newOtherIdeas)
+    setFeatureIdeas(newFeatureIdeas)
+    setTagIdeas(newTagIdeas)
+    console.log('ideas to show', ideasToShow)
+    }, [props])
 
-// export default Ideas
+return (
+  <div>
+    <h1>Ideas</h1>
+    <br></br>
+    <p>Have an idea for this site? Please share!</p>
+    <br></br>
+    {showAddIdea &&
+    <AddIdea setShowAddIdea={setShowAddIdea}
+    username={props.username}/>}
+    {!showAddIdea && <button className="small-button"
+    onClick={e => setShowAddIdea(true)}>Add An Idea</button>}
+    <br></br>
+    <br></br>
+    <br></br>
+    {ideasToShow &&
+    ideasToShow.map((idea) => {
+      return (
+      <Idea ideaData={idea}/>
+      )
+    })
+    }
+  </div>
+)
+}
+
+export default Ideas

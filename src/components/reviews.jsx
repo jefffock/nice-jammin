@@ -21,7 +21,7 @@ function Reviews(props) {
       props.reviews.map(review => {
           if (review.comment) {
             return (
-              <Review data={review} />
+              <Review data={review} username={props.username}/>
             )
           } return <></>
         })}

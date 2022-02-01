@@ -304,3 +304,25 @@ button:hover {
   display: flex;
   flex-wrap: wrap;
 }
+
+.idea-item {
+  display: grid;
+  grid-template-rows: auto auto;
+  grid-template-columns: 50% 50%
+}
+
+.idea-body {
+  grid-row-start: 1;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.idea-name {
+  grid-row-start: 2;
+  grid-column-start: 1;
+}
+
+.idea-votes {
+  grid-row-start: 2;
+  grid-column-start: 2;
+}

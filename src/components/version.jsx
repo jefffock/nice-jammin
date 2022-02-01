@@ -48,10 +48,12 @@ function Version(props) {
       tagBuilder+='Slow, '
     } if (props.versionData.soaring) {
       tagBuilder+='Soaring, '
+    } if (props.versionData.tease) {
+      tagBuilder+='Teases, '
     } if (props.versionData.trippy) {
       tagBuilder+='Trippy, '
     } if (props.versionData.type2) {
-      tagBuilder+='Type II, '
+      tagBuilder+='Type\u00A0II, '
     } let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
     setTags(finalTags)
     if (!props.versionData.name || !props.versionData.points) {
@@ -87,7 +89,7 @@ function Version(props) {
       </div>
       </div>
       <div className="version-col4">
-        <p>{props.versionData.avg_rating}</p>
+        <p>{(props.versionData.avg_rating).toFixed(3)}</p>
       </div>
       <div className="line"></div>
     </>

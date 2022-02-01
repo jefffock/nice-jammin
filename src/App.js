@@ -42,6 +42,11 @@ function App() {
   const [showArtistPicker, setShowArtistPicker] = useState(true)
   const [showSongPicker, setShowSongPicker] = useState(false)
   const [showVersions, setShowVersions] = useState(false)
+  const [ideas, setIdeas] = useState(null)
+  const [showIdeas, setShowIdeas] = useState(null)
+  const [showAccount, setShowAccount] = useState(false)
+  const [showBugReport, setShowBugReport] = useState(false)
+  const [showSupport, setShowSupport] = useState(false)
 
   useEffect(() => {
     console.log('in the set session hook')
@@ -174,8 +179,9 @@ function App() {
       .order('avg_rating', {ascending: false})
     if (error) {
       console.log('error fetching versions', error)
+    } else if (data) {
+      setVersions(data)
     }
-    setVersions(data)
     console.log('version data', data)
   }
 
@@ -187,9 +193,23 @@ function App() {
       .order('helpful', {ascending: false})
     if (error) {
       console.log(error)
+    } else if (data) {
+      setReviews(data)
     }
-    setReviews(data)
     console.log('review data', data)
+  }
+
+  async function fetchIdeas() {
+    const { data, error } = await supabase
+      .from('ideas')
+      .select('*')
+      .order('votes', { ascending: false})
+    if (error) {
+      console.log('error fetching ideas', error)
+    } else {
+      console.log('data in fetchIdeas', data)
+      setIdeas(data)
+    }
   }
 
   async function signOut() {
@@ -249,7 +269,6 @@ function App() {
     } if (data) {
       console.log('data from calcing average', data)
     }
-
   }
 
   function handleNotConfirmedYet() {
@@ -257,6 +276,7 @@ function App() {
   }
 
   function goHome() {
+    console.log('in go home')
     setArtist(null)
     setSong(null)
     setVersion(null)
@@ -267,6 +287,8 @@ function App() {
     setSongName(null)
     setSongSearchTerm('')
     setShowSignUp(false)
+    setShowMenu(false)
+    setShowArtistPicker(true)
   }
 
   function handleShowAddSong(songName) {
@@ -339,7 +361,17 @@ function App() {
           fetchProfile={fetchProfile}
           showMenu={showMenu}
           setShowMenu={setShowMenu}
-          setShowArtistPicker={setShowArtistPicker}/>
+          setShowArtistPicker={setShowArtistPicker}
+          fetchIdeas={fetchIdeas}
+          ideas={ideas}
+          showAccount={showAccount}
+          setShowAccount={setShowAccount}
+          showIdeas={showIdeas}
+          setShowIdeas={setShowIdeas}
+          showBugReport={showBugReport}
+          setShowBugReport={setShowBugReport}
+          showSupport={showSupport}
+          setShowSupport={setShowSupport}/>
         <BackButtons artist={artist}
           song={song}
           version={version}
@@ -350,7 +382,10 @@ function App() {
           setSong={setSong}
           setSongName={setSongName}
           setVersion={setVersion}
-          goHome={goHome}/>
+          goHome={goHome}
+          setShowVersions={setShowVersions}
+          setShowSongPicker={setShowSongPicker}
+          setShowArtistPicker={setShowArtistPicker}/>
         <CurrentSelection
           artist={artist}
           songName={songName}
@@ -366,7 +401,7 @@ function App() {
           <ArtistPicker artist={artist}
             artists={artists}
             setArtist={setArtist}/>}
-        {(showSongPicker || (artist && !song)) && !showAddVersion && !showAddSong && !showAddRating &&
+        {(showSongPicker && (artist && !song)) && !showAddVersion && !showAddSong && !showAddRating &&
         <>
         <SongPicker artist={artist}
         filteredSongs={filteredSongs}
@@ -418,7 +453,8 @@ function App() {
         songData={songData}
         date={version.date}
         setShowAddRating={setShowAddRating}
-        addOnePoint={addOnePoint}/>}
+        addOnePoint={addOnePoint}
+        username={username}/>}
         {showAddRating && version &&
         <AddRating
         songData={songData}

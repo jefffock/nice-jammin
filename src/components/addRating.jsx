@@ -95,7 +95,7 @@ function AddRating(props) {
     const {  error } = await supabase
       .from('ratings')
       .insert(
-        {
+        { user_id: props.user.id,
           version_id: props.version.id,
           submitter_name: props.username,
           rating: rating,
@@ -145,10 +145,11 @@ function AddRating(props) {
         </select>
         <br></br>
         <br></br>
-        <label htmlFor="review">Comments (optional): </label>
+        <label htmlFor="comment">Comments (optional): </label>
         <br></br>
         <textarea
         type="text-area"
+        name="comment"
         className="inputField"
         placeholder="Face = melted"
         cols="40"
