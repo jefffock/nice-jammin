@@ -7,7 +7,8 @@ function BackButtons(props) {
       <button className="back small-button" onClick={e => { props.setArtist(null);
       props.setSong(null);
       props.setSongName(null)
-      props.setVersion(null);}}>Change Artist</button>
+      props.setVersion(null);
+      props.setShowArtistPicker(true)}}>Change Artist</button>
         <br></br>
       </>}
       {props.song && !props.showAddSong && !props.showAddVersion && !props.showAddRating &&
@@ -25,8 +26,6 @@ function BackButtons(props) {
       </>}
       {props.artist &&
       <>
-      <br></br>
-      <br></br>
       <br></br>
       </>}
     </div>

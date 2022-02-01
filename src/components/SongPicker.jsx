@@ -2,9 +2,12 @@ function SongPicker (props) {
 
   return (
     <>
-    {props.showSongPicker &&
+      <div className="song-picker-container">
+        <div className="song-picker-wrapper">
+
+      {props.showSongPicker &&
       <>
-      <p>Choose a song:</p>
+      <h3>Choose a song:</h3>
       <br></br>
       </>}
       {props.showSongPicker &&
@@ -35,6 +38,8 @@ function SongPicker (props) {
       <button className="small-button"
       onClick={e => props.handleShowAddSong(props.songSearchTerm)}>Add a Song</button>
       </>}
+        </div>
+      </div>
     </>
   )
 }

@@ -1,3 +1,16 @@
+#root {
+  --background-color: rgb(206, 206, 206);
+  --primary-color: #115A92;
+  --primary-color-darker: #0d446e;
+  --secondary-color: #338a59;
+  --secondary-color-darker: #215839;
+  --background-color-lighter-one: rgb(236, 236, 236);
+  --background-color-lighter-two: rgb(247, 247, 247);
+  background-color: var(--background-color);
+  height: 100vh;
+  width: 98vw;
+}
+
 body {
   font-family: 'Helvetica Neue';
   /* -apple-system, BlinkMacSystemFont, 'Roboto'; */
@@ -18,10 +31,12 @@ code {
   --primary-color-darker: #0d446e;
   --secondary-color: #338a59;
   --secondary-color-darker: #215839;
+  --background-color: rgb(207, 207, 207);
   max-width: 1000px;
   justify-self: center;
   margin: auto;
 }
+
 
 h1 {
   color: var(--primary-color);
@@ -75,11 +90,21 @@ button {
   background-color: var(--primary-color);
   color: white;
   height: 32px;
+  margin-top: 20px;
+  justify-self: center;
+  align-self: center;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 10px 30px 0 rgba(0,0,0,0.19);
+
 }
 
 .primary-button:hover {
   background: var(--primary-color-darker);
+}
 
+.action-button-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button:hover {
@@ -90,6 +115,8 @@ button:hover {
 
 .back-buttons-div {
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .small-button {
@@ -97,7 +124,7 @@ button:hover {
   border: 1px solid var(--secondary-color);
   font-size: 16px;
   height: min-content;
-  background-color: white
+  background-color: var(--background-color-lighter-one)
 }
 
 .small-button:hover {
@@ -113,6 +140,8 @@ button:hover {
   color: white;
 }
 
+
+
 .header-top-row {
   display: flex;
   justify-content: space-between;
@@ -124,8 +153,17 @@ button:hover {
   cursor: pointer;
 }
 
+.header-and-subheading {
+  background-color: var(--background-color-lighter-one);
+  border-radius: 0 0 2em 2em;
+  /* margin-top: 1em; */
+  padding-top: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 1px;
+}
+
 .subheading {
-  margin-top: -30px;
 }
 
 .header-button {
@@ -144,10 +182,46 @@ button:hover {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
+}
+
+.log-in-out-buttons-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.current-selection-wrapper {
+  margin-top: 2em;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  margin-bottom: 2em;
+}
+
+.hidden {
+  display:none
 }
 
 .current-selection-div {
-  /* margin-top: -30px; */
+  /* box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 10px 30px 0 rgba(0,0,0,0.19); */
+  border-radius: 20px;
+  background-color: var(--background-color-lighter-one);
+  width: fit-content;
+  align-self: center;
+  justify-self: center;
+}
+
+.current-selection-item {
+  padding-left: 10px;
+  padding-right: 10px;
+  align-self: center;
+  text-align: center;
+}
+
+.current-selection-name-points {
+  padding-bottom: 1.5em;
+  color: var(--secondary-color)
 }
 
 .link {
@@ -163,63 +237,83 @@ button:hover {
   margin: 10px
 }
 
+.complete-versions-container {
+  background-color: var(--background-color-lighter-one);
+  text-align: center;
+  border-radius: 2em;
+}
+
+.versions-container {
+  padding-bottom: 1em;
+}
+
 .versions {
   display: grid;
-  grid-template-columns: repeat(auto, 4);
+  grid-template-columns: 1fr 1.5fr 3fr 1fr;
   column-gap: 15px;
   max-height: 80vh;
   overflow: auto;
+  background-color: var(--background-color-lighter-two);
+  margin-bottom: 1em;
+  border-radius: .5em;
+  margin-left: .5em;
+  margin-right: 0.5em;
+  padding-right: 0.25em;
+  border: 1px solid var(--primary-color-darker)
 }
 
 .version-col1 {
   grid-column-start: 1;
   align-self: center;
-  justify-self: center;
+  justify-self: left;
+  padding-left: 5px;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
 
 .version-col2 {
   grid-column-start: 2;
   align-self: center;
-  justify-self: center;
+  justify-self: left;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
 
 .version-col3 {
   grid-column-start: 3;
   align-self: center;
-  justify-self: center;
+  justify-self: left;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
 
 .version-col4 {
   grid-column-start: 4;
   align-self: center;
-  justify-self: center;
-}
-
-.version-date {
-  border-radius: 16px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-
+  justify-self: right;
 }
 
 .version-date:hover {
   background: var(--primary-color);
   color: white;
   cursor: pointer;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 10px 30px 0 rgba(0,0,0,0.19);
 }
 
-.tags-version-div {
-  display: flex;
-  align-items: center;
-  margin: auto auto;
+.rating-in-version {
+  border-radius: 1em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  color: var(--secondary-color);
+  font-weight: 600;
 }
 
-.tags-version {
-  text-align: center;
-  justify-self: center;
-  align-self: center;
+.rating-in-version:hover {
+  background: var(--primary-color);
+  color: white;
+  cursor: pointer;
 }
 
 .line {
@@ -325,4 +419,34 @@ button:hover {
 .idea-votes {
   grid-row-start: 2;
   grid-column-start: 2;
+}
+
+.song-picker-container {
+  margin-top: 2em;
+  display: flex;
+  justify-content: center;
+}
+
+.song-picker-wrapper {
+  width: fit-content;
+  background-color: var(--background-color-lighter-one);
+  padding: .2em;
+  border-radius: 1em;
+  max-width: 100vw;
+  text-align: center;
+}
+
+.artist-picker-container {
+  margin-top: 2em;
+  display: flex;
+  justify-content: center;
+}
+
+.artist-picker-wrapper {
+  width: fit-content;
+  background-color: var(--background-color-lighter-one);
+  padding: .2em;
+  border-radius: 1em;
+  max-width: 100vw;
+  text-align: center;
 }

@@ -390,6 +390,8 @@ function App() {
           artist={artist}
           songName={songName}
           version={version}
+          setShowArtistPicker={setShowArtistPicker}
+          setArtist={setArtist}
           setSong={setSong}
           setVersion={setVersion}
           setShowAddSong={setShowAddSong}

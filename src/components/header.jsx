@@ -15,6 +15,7 @@ function Header(props) {
 
   return (
     <div className="header">
+      <div className="header-and-subheading">
       <div className="header-top-row">
         <h1 className="title" onClick={e => props.goHome()}>Nice Jammin</h1>
         <div className="top-row-buttons">
@@ -22,25 +23,27 @@ function Header(props) {
           onClick={e => {props.setShowMenu(!props.showMenu)}}>Menu</button>
           </div>
         </div>
-        <br></br>
-        <br></br>
         <h3 className="subheading">Discover and share great jams</h3>
+        </div>
+        <br></br>
+        <br></br>
         <div className="log-in-out-buttons-div">
-        {!props.session && !props.showPleaseConfirm &&
-          <>
-          <button className="header-button small-button"
-          onClick={e => props.setShowSignIn(true)}>Log&nbsp;In</button>
-          </>}
-
           {!props.session && !props.showPleaseConfirm &&
           <>
-          <button className="header-button small-button"
+          <button className="header-button small-button-full"
           onClick={e => props.setShowSignUp(true)}>Sign&nbsp;Up</button>
           <br></br>
           </>}
+
+        {!props.session && !props.showPleaseConfirm &&
+          <>
+          <button className="header-button small-button"
+          onClick={e => props.setShowSignIn(true)}>Sign&nbsp;In</button>
+          </>}
+
         </div>
-      {props.showMenu &&
-      <br></br>}
+      {/* {props.showMenu &&
+      <br></br>} */}
         <Menu
         showMenu={props.showMenu}
         session={props.session}

@@ -87,9 +87,8 @@ function Version(props) {
       </div>
       </div>
       <div className="version-col4">
-        <p>{(props.versionData.avg_rating).toFixed(3)}</p>
+        <p className="rating-in-version">{(props.versionData.avg_rating).toFixed(2)}</p>
       </div>
-      <div className="line"></div>
     </>
     )
   }

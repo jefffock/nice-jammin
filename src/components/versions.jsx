@@ -116,6 +116,7 @@ function Versions(props) {
 
   return (
     <>
+    <div className="complete-versions-container">
       {(!props.versions || props.versions.length === 0) && !props.showAddVersion &&
       <>
       <p>No versions submitted yet!</p>
@@ -166,20 +167,24 @@ function Versions(props) {
       <>
       <br></br>
       <br></br>
-        <p>Choose a date to rate it or view comments</p>
+        <h3>Click a rating to add or view comments</h3>
         <br></br>
-        <div className="versions">
-          <div className="line"></div>
+        <div className="versions-container">
           {filteredVersions &&
           filteredVersions.map((data) => {
             return (
+              <>
+              <div className="versions">
                 <Version versionData={data}
                 setVersion={props.setVersion}
-                addPointsToVersion={props.addPointsToVersion}/>)
+                addPointsToVersion={props.addPointsToVersion}/>
+              </div>
+              </>)
           })}
         </div>
       </>
       }
+    </div>
     </>
   )
 }
