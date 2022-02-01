@@ -48,7 +48,7 @@ function Menu (props) {
       setAccountButtonClasses(props.buttonClassesEmpty)
       setBugReportButtonClasses(props.buttonClassesEmpty)
     }
-  })
+  }, [props])
 
   return (
     <>

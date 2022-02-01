@@ -14,7 +14,6 @@ function AddRating(props) {
     console.log('props in add review', props)
     if (props.user) {
     async function checkUserAlreadyRated() {
-      let id = props.user.id
       const { data, error } = await supabase
         .from('ratings')
         .select('*')
@@ -29,7 +28,6 @@ function AddRating(props) {
           setRating(data[0].rating)
           setUserAlreadyRated(true)
           setSubmitRatingButtonText('Update your comments')
-
           console.log('we have data')
         }
       }
@@ -42,7 +40,7 @@ function AddRating(props) {
     if (!props.user) {
       setAddRatingStatus('Please log in to add your comments and rating')
     }
-  })
+  }, [props.user])
 
   useEffect(() => {
     setCharCount(comment.length)

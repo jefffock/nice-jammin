@@ -3,7 +3,6 @@ import { supabase } from '../supabaseClient'
 
 function Version(props) {
   let [tags, setTags] = useState('')
-  let [points, setPoints] = useState(props.versionData.points || null)
 
   useEffect(() => {
     console.log('props in version', props)
@@ -66,7 +65,6 @@ function Version(props) {
           console.log('error getting points', error)
         } else {
           console.log('data', data)
-          setPoints(data[0].points)
           props.addPointsToVersion(props.versionData.id, data[0].points)
         }
       } getNameAndPoints()

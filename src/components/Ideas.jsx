@@ -10,6 +10,10 @@ function Ideas(props) {
   const [featureIdeas, setFeatureIdeas] = useState(null)
   const [tagIdeas, setTagIdeas] = useState(null)
   const [otherIdeas, setOtherIdeas] = useState(null)
+  const [fillFeature, setFillFeature] = useState(false)
+  const [fillArtist, setFillArtist] = useState(false)
+  const [fillTag, setFillTag] = useState(false)
+  const [fillOther, setFillOther] = useState(false)
 
     useEffect(() => {
     let newOtherIdeas = []
@@ -40,7 +44,59 @@ function Ideas(props) {
     setFeatureIdeas(newFeatureIdeas)
     setTagIdeas(newTagIdeas)
     console.log('ideas to show', ideasToShow)
-    }, [props])
+    }, [props, ideasToShow])
+
+    function handleArtistIdeaClick() {
+    if (!fillArtist) {
+    setFillArtist(true)
+    setIdeasToShow(artistIdeas)
+    setFillFeature(false)
+    setFillTag(false)
+    setFillOther(false)
+    } else {
+      setFillArtist(false)
+      setIdeasToShow(props.ideas)
+    }
+  }
+
+  function handleFeatureClick() {
+  if (!fillFeature) {
+    setFillArtist(false)
+    setIdeasToShow(featureIdeas)
+    setFillFeature(true)
+    setFillTag(false)
+    setFillOther(false)
+    } else {
+      setFillFeature(false)
+      setIdeasToShow(props.ideas)
+    }
+  }
+
+  function handleTagIdeaClick() {
+    if (!fillTag) {
+    setFillTag(true)
+    setFillArtist(false)
+    setIdeasToShow(tagIdeas)
+    setFillFeature(false)
+    setFillOther(false)
+    } else {
+      setFillTag(false)
+      setIdeasToShow(props.ideas)
+    }
+  }
+
+  function handleOtherClick() {
+    if (!fillOther) {
+    setFillOther(true)
+    setFillArtist(false)
+    setIdeasToShow(otherIdeas)
+    setFillFeature(false)
+    setFillTag(false)
+    } else {
+      setFillOther(false)
+      setIdeasToShow(props.ideas)
+    }
+  }
 
 return (
   <div>
@@ -55,6 +111,10 @@ return (
     onClick={e => setShowAddIdea(true)}>Add An Idea</button>}
     <br></br>
     <br></br>
+    <FilterChip currentFilterState={fillFeature} text='Feature' setFilter={handleFeatureClick}/>
+    <FilterChip currentFilterState={fillArtist} text='Artist to add' setFilter={handleArtistIdeaClick}/>
+    <FilterChip currentFilterState={fillTag} text='Tag Idea' setFilter={handleTagIdeaClick}/>
+    <FilterChip currentFilterState={fillOther} text='Other' setFilter={handleOtherClick}/>
     <br></br>
     {ideasToShow &&
     ideasToShow.map((idea) => {

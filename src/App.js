@@ -99,7 +99,7 @@ function App() {
         setShowSongPicker(true)
       }
     }
-  }, [song])
+  }, [song, artist])
 
   useEffect(() => {
     if (version) {
