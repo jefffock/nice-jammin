@@ -15,7 +15,6 @@ function Reviews(props) {
         >Rate this {props.songData.song}</button>
       </div>
       <br></br>
-      <br></br>
       {props.reviews && (props.reviews.length === 0) &&
       <p>No reviews yet!</p>}
       <br></br>

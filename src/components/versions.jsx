@@ -174,7 +174,7 @@ function Versions(props) {
           filteredVersions.map((data) => {
             return (
               <>
-              <div className="versions">
+              <div className="version" onClick={e => props.setVersion(data)}>
                 <Version versionData={data}
                 setVersion={props.setVersion}
                 addPointsToVersion={props.addPointsToVersion}/>

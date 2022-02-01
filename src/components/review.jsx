@@ -75,7 +75,7 @@ function Review(props) {
   }
 
   return (
-    <div>
+    <div className="review">
       <div className="review-comment">
       <span>{props.data.comment}</span>
       </div>
@@ -87,7 +87,6 @@ function Review(props) {
         <p className="review-funny link"
         onClick={e => checkAlreadyVotedFunny()}>Funny? {funnyToShow}</p>
       </div>
-      <div className="line"></div>
     </div>
   )
 }
