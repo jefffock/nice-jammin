@@ -529,7 +529,8 @@ button:hover {
 .ideas-container,
 .account-container,
 .bug-container,
-.support-container {
+.support-container,
+.auth-container {
   margin-top: 2em;
   display: flex;
   justify-content: center;
@@ -544,7 +545,8 @@ button:hover {
 .ideas-wrapper,
 .account-wrapper,
 .bug-wrapper,
-.support-wrapper {
+.support-wrapper,
+.auth-wrapper {
   box-shadow: var(--small-shadow);
   width: fit-content;
   background-color: var(--background-color-lighter-one);
@@ -559,8 +561,20 @@ button:hover {
   border: 1px solid var(--section-border);
 }
 
+.auth-fields-container {
+  text-align: left;
+}
+
 .search-bar {
+  margin-top: 0.5em;
+  height: 30px;
+  display: inline-block;
+  border: 1px solid var(--card-border);
   padding-left: 1em;
+  padding-right: 1em;
+  margin-right: 1em;
   border-radius: 0.5em;
-  box-shadow: var(--tiny-shadow)
+  box-shadow: var(--tiny-shadow);
+  box-sizing: border-box;
+  width: 100%;
 }

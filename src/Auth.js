@@ -77,16 +77,18 @@ export default function Auth(props) {
   }
 
   return (
-    <div className="row flex flex-center">
-      <div className="col-6 form-widget">
+    <div className="auth-container">
+      <div className="auth-wrapper">
         {props.showSignIn &&
         <>
         <h2 className="header">Sign In</h2>
         <br></br>
-        <div>
+        <div className="auth-fields-container">
+          <div className="auth-fields-wrapper">
           <label htmlFor="email">Email: </label>
+          <br></br>
           <input
-            className="inputField"
+            className="inputField search-bar text"
             type="email"
             placeholder="Your email"
             value={email}
@@ -95,13 +97,15 @@ export default function Auth(props) {
           <br></br>
           <br></br>
           <label htmlFor="password">Password: </label>
+          <br></br>
           <input
-          className="inputField"
+          className="inputField search-bar text"
           type="password"
           placeholder="Your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           />
+          </div>
         </div>
         <br></br>
         <div>
@@ -127,15 +131,18 @@ export default function Auth(props) {
         <br></br>
         <br></br>
         <p className="link" onClick={e => props.setShowSignIn(false)}>Nevermind, I just want to browse</p>
+        <br></br>
         </>
         }
         {props.showSignUp &&
         <>
         <h2>Create an account</h2>
-        <div>
-          <label htmlFor="email">Email: </label>
+        <br></br>
+        <div className="auth-fields-container">
+          <div className="auth-fields-wrapper">
+            <label htmlFor="email">Email: </label>
           <input
-            className="inputField"
+            className="inputField search-bar text"
             type="email"
             placeholder="Your email"
             value={email}
@@ -145,17 +152,18 @@ export default function Auth(props) {
           <br></br>
           <label htmlFor="password">Password: </label>
            <input
-            className="inputField"
+            className="inputField search-bar text"
             type="password"
             placeholder="Your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          </div>
           <br></br>
           <br></br>
           <label htmlFor="display-name">Display name: </label>
            <input
-            className="inputField"
+            className="inputField search-bar text"
             type="display-name"
             placeholder="TroyPistachio"
             value={displayName}
@@ -190,6 +198,7 @@ export default function Auth(props) {
         <br></br>
         </div>
           <p className="link" onClick={e => props.setShowSignUp(false)}>Nevermind, I just want to browse</p>
+          <br></br>
         </>}
       </div>
     </div>

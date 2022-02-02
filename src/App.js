@@ -338,7 +338,10 @@ function App() {
   if (showSignIn || showSignUp) {
     return (
       <div className="app">
+        <div className="header-and-subheading">
         <h1>Nice Jammin</h1>
+        <h3>Discover and share great jams</h3>
+        </div>
         <Auth
         handleNotConfirmedYet={handleNotConfirmedYet}
         setUser={setUser}
