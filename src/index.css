@@ -690,3 +690,7 @@ input[type=text] {
 .center-text {
   text-align: center;
 }
+
+.support-list-item {
+  text-align: left;
+}
