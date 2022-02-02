@@ -65,7 +65,9 @@ function Header(props) {
         {props.showPleaseConfirm &&
         <>
         <div className="please-confirm">
-          <h3>Welcome! Please confirm your email address to start contributing. Thank you!</h3>
+          <h3>Welcome aboard!<br></br> <br></br>
+          Please confirm your email address to start contributing.<br></br><br></br>
+          Thank you!</h3>
         </div>
         </>}
     </div>

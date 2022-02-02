@@ -27,15 +27,18 @@ export default function Auth(props) {
 
   async function signUpWithEmail(email, password, displayName) {
     setLoading(true)
+    let valid = true;
     setStatus('Creating your account')
     if (displayName.length < 1) {
+      valid = false;
       setStatus('Although a blank username would be super cool, it needs to be at least 1 character. Thank you for understanding.')
       setLoading(false)
     }
     if (displayName.length > 20) {
+      valid = false;
       setStatus('Maximum username length: 20 characters')
       setLoading(false)
-    } else {
+    } if (valid) {
       const { data, error } = await supabase
         .from('profiles')
         .select('name')
@@ -184,6 +187,7 @@ export default function Auth(props) {
         >
           {loading ? <span>Loading</span> : <span>Create Account</span>}
         </button>
+        <br></br>
         <br></br>
         <p className="error-message">{status}</p>
         <br></br>

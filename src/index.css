@@ -596,5 +596,10 @@ input[type=text] {
 }
 
 .please-confirm {
+  padding: 1em;
+  border-radius: 1em;
+  background-color: var(--background-color-lighter-one);
   text-align: center;
+  box-shadow: var(--small-shadow);
+  margin: 0.5em;
 }

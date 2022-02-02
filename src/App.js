@@ -409,7 +409,7 @@ function App() {
           setSongName={setSongName}
           setSongSearchTerm={setSongSearchTerm}
           songData={songData}/>
-        {!artist && showArtistPicker &&
+        {!artist && showArtistPicker && !showPleaseConfirm &&
           <ArtistPicker artist={artist}
             artists={artists}
             setArtist={setArtist}/>}
