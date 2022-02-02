@@ -80,12 +80,12 @@ function AddRating(props) {
         comment: comment,
         rating: rating
       })
-      .match({submitter_name: props.username})
+      .match({submitter_name: props.username, version_id: props.version.id})
     if (error) {
       console.log('error updating comment')
     } else {
-      setAddRatingStatus('Updated your comments and rating')
       props.calcAverageForVersion(props.version.id)
+      setAddRatingStatus('Updated your comments and rating')
     }
   }
 

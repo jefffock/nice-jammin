@@ -11,7 +11,7 @@ function Review(props) {
   })
 
   async function checkAlreadyVotedHelpful() {
-    if (props.username) {
+    if (props.username && props.username !== props.data.submitter_name) {
       const { data, error } = await supabase
         .from('helpful_votes_ratings')
         .select('*')
@@ -45,6 +45,7 @@ function Review(props) {
   }
 
   async function checkAlreadyVotedFunny() {
+    if (props.username && props.username !== props.data.submitter_name) {
       const { data, error } = await supabase
         .from('funny_votes_ratings')
         .select('*')
@@ -58,6 +59,7 @@ function Review(props) {
           voteFunny()
         }
       }
+    }
   }
 
   async function voteFunny() {
