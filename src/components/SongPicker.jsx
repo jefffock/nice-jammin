@@ -13,7 +13,7 @@ function SongPicker (props) {
         placeholder="Search for a song..."
         value={props.songSearchTerm}
         onChange={(e) => {
-          props.filterSongs(e.target.value)}}></input>
+          props.setSongSearchTerm(e.target.value)}}></input>
           <br></br>
           <br></br>
       </>}

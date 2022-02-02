@@ -178,6 +178,25 @@ function App() {
   }
 }
 
+useEffect(() => {
+  function filterSongs() {
+    console.log('searchTerm', songSearchTerm)
+    if (songSearchTerm === '') {
+      setFilteredSongs(songs)
+    } else {
+      let newFilteredSongs = []
+      let myRegex = new RegExp(songSearchTerm, "i")
+      for (var i = 0; i < songs.length; i++) {
+        if (myRegex.test(songs[i].song)) {
+          newFilteredSongs.push(songs[i])
+        }
+      } console.log('newFiltered songs', newFilteredSongs, 'search term', songSearchTerm)
+      console.log('all songs', songs)
+      setFilteredSongs(newFilteredSongs)
+    }
+  } filterSongs()
+}, [songs, songSearchTerm])
+
   async function fetchVersions(songId) {
     console.log('currentSongid in fetch Versions', songId)
     const { data, error } = await supabase
@@ -307,24 +326,6 @@ function App() {
     setSongName('')
   }
 
-  function filterSongs(searchTerm) {
-    console.log('searchTerm', searchTerm)
-    setSongSearchTerm(searchTerm)
-    if (searchTerm === '') {
-      setFilteredSongs(songs)
-    } else {
-      let newFilteredSongs = []
-      let myRegex = new RegExp(searchTerm, "ig")
-      for (var i = 0; i < songs.length; i++) {
-        if (myRegex.test(songs[i].song)) {
-          newFilteredSongs.push(songs[i])
-        }
-      } console.log('newFiltered songs', newFilteredSongs, 'search term', searchTerm)
-      console.log('all songs', songs)
-      setFilteredSongs(newFilteredSongs)
-    }
-  }
-
   function addPointsToVersion(id, points) {
     console.log('in addPointsToVersion')
     for (var i = 0; i < versions.length; i++) {
@@ -425,8 +426,8 @@ function App() {
         showAddRating={showAddRating}
         setSong={setSong}
         handleShowAddSong={handleShowAddSong}
-        filterSongs={filterSongs}
         songSearchTerm={songSearchTerm}
+        setSongSearchTerm={setSongSearchTerm}
         showSongPicker={showSongPicker}
         setShowSongPicker={setShowSongPicker}/>
         </>
