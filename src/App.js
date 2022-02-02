@@ -115,12 +115,22 @@ function App() {
 
   useEffect(() => {
     if (showAccount || showIdeas || showSupport) {
-      goHome()
+      setArtist(null)
+      setSong(null)
+      setVersion(null)
+      setShowAddSong(false)
+      setShowAddVersion(false)
+      setShowAddRating(false)
+      setShowProfile(false)
+      setSongName(null)
+      setSongSearchTerm('')
+      setShowSignUp(false)
       setShowArtistPicker(false)
     } if (!showAccount && !showIdeas && !showSupport) {
       setShowArtistPicker(true)
     }
   }, [showAccount, showIdeas, showSupport])
+
 
   async function fetchProfile() {
     const user = supabase.auth.user()
@@ -332,6 +342,7 @@ useEffect(() => {
 
   function goHome() {
     console.log('in go home')
+    setShowMenu(false)
     setArtist(null)
     setSong(null)
     setVersion(null)
