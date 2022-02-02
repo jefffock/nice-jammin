@@ -19,13 +19,12 @@ function Header(props) {
       <div className="header-top-row">
         <h1 className="title" onClick={e => props.goHome()}>Nice Jammin</h1>
         <div className="top-row-buttons">
-          <button className={menuButtonClasses}
+          <button id="menu-button" className={menuButtonClasses}
           onClick={e => {props.setShowMenu(!props.showMenu)}}>Menu</button>
           </div>
         </div>
         <h3 className="subheading">Discover and share great jams</h3>
         </div>
-        <br></br>
         <br></br>
         <div className="log-in-out-buttons-div">
           {!props.session && !props.showPleaseConfirm &&
@@ -42,8 +41,6 @@ function Header(props) {
           </>}
 
         </div>
-      {/* {props.showMenu &&
-      <br></br>} */}
         <Menu
         showMenu={props.showMenu}
         session={props.session}
@@ -60,8 +57,6 @@ function Header(props) {
         fetchIdeas={props.fetchIdeas}
         showIdeas={props.showIdeas}
         setShowIdeas={props.setShowIdeas}
-        showBugReport={props.showBugReport}
-        setShowBugReport={props.setShowBugReport}
         showSupport={props.showSupport}
         setShowSupport={props.setShowSupport}
         setShowAccount={props.setShowAccount}

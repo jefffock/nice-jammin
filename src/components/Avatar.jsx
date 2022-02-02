@@ -5,6 +5,26 @@ export default function Avatar({ url, size, onUpload }) {
   const [avatarUrl, setAvatarUrl] = useState(null)
   const [uploading, setUploading] = useState(false)
 
+  /*
+  from account
+        <Avatar
+      url={newAvatarUrl}
+      size={150}
+      onUpload={(url) => {
+        console.log('in on upload', url)
+        setNewAvatarUrl(url)
+        updateProfile()
+      }}
+
+              <button
+          className="button primary-button"
+          onClick={() => updateProfile()}
+          disabled={loading}
+        >
+          {loading ? 'Loading ...' : 'Update Profile'}
+        </button>
+      */
+
   useEffect(() => {
     if (url) downloadImage(url)
   }, [url])
@@ -55,7 +75,7 @@ export default function Avatar({ url, size, onUpload }) {
   }
 
   return (
-    <div>
+    <div className="avatar">
       {avatarUrl ? (
         <img
           src={avatarUrl}
@@ -67,8 +87,9 @@ export default function Avatar({ url, size, onUpload }) {
         <p>No Avatar yet</p>
       )}
       <br></br>
-      <div style={{ width: size }}>
-        <label className="avatar-upload" htmlFor="single">
+      <div className="avatar-upload-container" style={{ width: size }}>
+        <div className="avatar-upload-wrapper">
+        <label htmlFor="single">
           {uploading ? 'Uploading ...' : 'Upload an avatar'}
         </label>
         <input
@@ -82,6 +103,7 @@ export default function Avatar({ url, size, onUpload }) {
           onChange={uploadAvatar}
           disabled={uploading}
         />
+        </div>
       </div>
     </div>
   )

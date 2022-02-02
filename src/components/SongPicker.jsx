@@ -1,3 +1,4 @@
+
 function SongPicker (props) {
 
   return (
@@ -8,12 +9,11 @@ function SongPicker (props) {
       {props.showSongPicker &&
       <>
       <h3>Choose a song:</h3>
-      <br></br>
       </>}
       {props.showSongPicker &&
       <>
       <input
-        className="inputField"
+        className="inputField search-bar"
         type="song"
         placeholder="Search for a song..."
         value={props.songSearchTerm}
@@ -22,7 +22,7 @@ function SongPicker (props) {
           <br></br>
           <br></br>
       </>}
-      {props.songs && props.showSongPicker &&
+      {props.filteredSongs && props.showSongPicker &&
       props.filteredSongs.map(song => {
         return (
           <button className="button-in-list-large"
@@ -33,11 +33,11 @@ function SongPicker (props) {
       <>
       <br></br>
       <br></br>
-      <p>Not seeing the song you're looking for?</p>
-      <br></br>
       <button className="small-button"
       onClick={e => props.handleShowAddSong(props.songSearchTerm)}>Add a Song</button>
       </>}
+      <br></br>
+      <br></br>
         </div>
       </div>
     </>

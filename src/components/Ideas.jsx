@@ -99,8 +99,9 @@ function Ideas(props) {
   }
 
 return (
-  <div>
-    <h1>Ideas</h1>
+  <div className="ideas-container">
+    <div className="ideas-wrapper">
+    <h3>Ideas</h3>
     <br></br>
     <p>Have an idea for this site? Please share!</p>
     <br></br>
@@ -123,6 +124,7 @@ return (
       )
     })
     }
+    </div>
   </div>
 )
 }

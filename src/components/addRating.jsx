@@ -119,7 +119,8 @@ function AddRating(props) {
   }
 
   return (
-    <div>
+    <div className="add-rating-container">
+      <div className="add-rating-wrapper">
       <h2>Add Rating</h2>
         <label htmlFor="rating">Rating: </label>
         <select
@@ -166,6 +167,7 @@ function AddRating(props) {
         <br></br>
         <br></br>
       <button className="small-button" onClick={e => handleBackClick()}>Back</button>
+      </div>
     </div>
   )
 }

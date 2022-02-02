@@ -9,11 +9,6 @@ function Reviews(props) {
 
   return (
     <div className="reviews">
-      <div className="action-button-wrapper">
-        <button className="primary-button action-button"
-        onClick={e => props.setShowAddRating(true)}
-        >Rate this {props.songData.song}</button>
-      </div>
       <br></br>
       {props.reviews && (props.reviews.length === 0) &&
       <p>No reviews yet!</p>}

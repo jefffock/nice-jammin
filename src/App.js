@@ -45,7 +45,6 @@ function App() {
   const [ideas, setIdeas] = useState(null)
   const [showIdeas, setShowIdeas] = useState(null)
   const [showAccount, setShowAccount] = useState(false)
-  const [showBugReport, setShowBugReport] = useState(false)
   const [showSupport, setShowSupport] = useState(false)
 
   useEffect(() => {
@@ -113,6 +112,15 @@ function App() {
       setShowSongPicker(false)
     }
   }, [versions])
+
+  useEffect(() => {
+    if (showAccount || showIdeas || showSupport) {
+      goHome()
+      setShowArtistPicker(false)
+    } if (!showAccount && !showIdeas && !showSupport) {
+      setShowArtistPicker(true)
+    }
+  }, [showAccount, showIdeas, showSupport])
 
   async function fetchProfile() {
     const user = supabase.auth.user()
@@ -287,7 +295,6 @@ function App() {
     setSongName(null)
     setSongSearchTerm('')
     setShowSignUp(false)
-    setShowMenu(false)
     setShowArtistPicker(true)
   }
 
@@ -368,8 +375,6 @@ function App() {
           setShowAccount={setShowAccount}
           showIdeas={showIdeas}
           setShowIdeas={setShowIdeas}
-          showBugReport={showBugReport}
-          setShowBugReport={setShowBugReport}
           showSupport={showSupport}
           setShowSupport={setShowSupport}/>
         <BackButtons artist={artist}
@@ -398,7 +403,8 @@ function App() {
           setShowAddVersion={setShowAddVersion}
           setShowAddRating={setShowAddRating}
           setSongName={setSongName}
-          setSongSearchTerm={setSongSearchTerm}/>
+          setSongSearchTerm={setSongSearchTerm}
+          songData={songData}/>
         {!artist && showArtistPicker &&
           <ArtistPicker artist={artist}
             artists={artists}

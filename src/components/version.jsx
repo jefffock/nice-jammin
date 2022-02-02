@@ -82,12 +82,12 @@ function Version(props) {
         <p>{props.versionData.location}</p>
       </div>
       <div className="version-col3">
+        <p className="rating-in-version">{(props.versionData.avg_rating).toFixed(2)}</p>
+      </div>
+      <div className="version-col4">
       <div className="tags-version-div">
         <p className="tags-version">{tags}</p>
       </div>
-      </div>
-      <div className="version-col4">
-        <p className="rating-in-version">{(props.versionData.avg_rating).toFixed(2)}</p>
       </div>
     </>
     )

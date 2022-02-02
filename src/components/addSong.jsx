@@ -55,6 +55,7 @@ function AddSong(props) {
     } else {
       setShowSuccessMessage(true)
       props.addTenPoints(props.username)
+      props.fetchSongs(artist)
     }
   }
 
@@ -70,11 +71,11 @@ function AddSong(props) {
 
   function handleBackClick() {
     props.setShowAddSong(false)
-    props.fetchSongs(props.artist)
   }
 
   return (
-    <div>
+    <div className="add-song-container">
+      <div className="add-song-wrapper">
       <h3>Add Song</h3>
       <div>
           {/* <label htmlFor="song">Song: </label> */}
@@ -95,20 +96,30 @@ function AddSong(props) {
           <FilterChip currentFilterState={original} text='Original' setFilter={handleOriginalClick}/>
           <FilterChip currentFilterState={cover} text='Cover' setFilter={handleCoverClick}/>
       </div>
-      <br></br>
       <button className="primary-button"
       onClick={e => testSong(props.artist.artist, song)}
       disabled={loading}>Add this song</button>
+      <br></br>
       {showSuccessMessage &&
-      <p>Successfully added {song}. Thank you for contributing!</p>}
+      <>
       <br></br>
       <br></br>
+      <p>Successfully added {song}.</p>
+      <br></br>
+      <p>Thank you for contributing!</p>
+      <br></br>
+      </>}
       {showAlreadyExistsMessage &&
-      <p>{song} by {props.artist} has already been added.</p>}
+      <>
       <br></br>
+      <br></br>
+      <p>{song} by {props.artist} has already been added.</p>
+      </>
+      }
       <br></br>
       <button className="small-button"
         onClick={e => handleBackClick()}>Back</button>
+      </div>
     </div>
   )
 }

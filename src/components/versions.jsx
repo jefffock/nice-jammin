@@ -167,7 +167,6 @@ function Versions(props) {
       <>
       <br></br>
       <br></br>
-        <h3>Click a rating to add or view comments</h3>
         <br></br>
         <div className="versions-container">
           {filteredVersions &&

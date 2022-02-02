@@ -1,10 +1,6 @@
-import { useState, useEffect } from 'react'
-import { supabase } from './../supabaseClient'
-import Avatar from './Avatar'
+import { useEffect } from 'react'
 
 export default function Account(props) {
-  const [loading, setLoading] = useState(false)
-  const [newAvatarUrl, setNewAvatarUrl] = useState(props.avatar)
 
   useEffect(() => {
     if (!props.username) {
@@ -12,60 +8,13 @@ export default function Account(props) {
     }
   })
 
-  async function updateProfile() {
-    console.log('props in account', props)
-    setLoading(true)
-    let { error } = await supabase
-    .from('profiles')
-    .update({avatar_url: newAvatarUrl,
-      updated_at: new Date()})
-    .match({id: props.user.id})
-    if (error) {
-      console.log(error)
-    }
-    setLoading(false)
-    props.fetchProfile()
-  }
-
   return (
     <>
-    <div>
+    <div className="account-container">
+      <div className="account-wrapper">
       <h2>Hi, {props.username}!</h2>
-    </div>
-    <div className="form-widget">
-      <div>
-        <label htmlFor="email">Email: </label>
-        <input id="email" type="text" value={props.session.user.email} disabled />
-      </div>
-      {/* <br></br>
-      <div>
-        <label htmlFor="username">Username: </label>
-        <input
-          id="username"
-          type="text"
-          value={props.username}/>
-      </div> */}
-      <br></br>
-      <Avatar
-      url={newAvatarUrl}
-      size={150}
-      onUpload={(url) => {
-        console.log('in on upload', url)
-        setNewAvatarUrl(url)
-        updateProfile()
-      }}
-    />
-    <br></br>
-    <br></br>
-    <br></br>
-      <div>
-        <button
-          className="button primary-button"
-          onClick={() => updateProfile()}
-          disabled={loading}
-        >
-          {loading ? 'Loading ...' : 'Update Profile'}
-        </button>
+      <h3>Contributor score: {props.points}</h3>
+      <h3>Thank you!</h3>
       </div>
     </div>
     </>

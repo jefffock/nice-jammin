@@ -52,11 +52,18 @@ function CurrentSelection(props) {
           </>}
          </div>
           {props.version && props.version.submitter_name &&
+            <>
           <div className="current-selection-item current-selection-name-points">
             <p>Added by</p>
             <p className="name">{props.version.submitter_name}</p>
             <p className="points">{props.version.points}</p>
           </div>
+          <div className="action-button-wrapper">
+          <button className="primary-button action-button"
+          onClick={e => props.setShowAddRating(true)}
+          >Rate this {props.songData.song}</button>
+        </div>
+        </>
           }
         </div>
     </div>
