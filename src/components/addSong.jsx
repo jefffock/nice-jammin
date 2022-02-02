@@ -80,7 +80,7 @@ function AddSong(props) {
       <div>
           {/* <label htmlFor="song">Song: </label> */}
           <input
-          className="inputField"
+          className="inputField search-bar"
           type="song"
           placeholder="Song name..."
           value={song}

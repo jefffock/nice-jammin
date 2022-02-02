@@ -5,11 +5,6 @@ function SongPicker (props) {
     <>
       <div className="song-picker-container">
         <div className="song-picker-wrapper">
-
-      {props.showSongPicker &&
-      <>
-      <h3>Choose a song:</h3>
-      </>}
       {props.showSongPicker &&
       <>
       <input

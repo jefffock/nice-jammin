@@ -19,7 +19,7 @@ function Header(props) {
       <div className="header-top-row">
         <h1 className="title" onClick={e => props.goHome()}>Nice Jammin</h1>
         <div className="top-row-buttons">
-          <button id="menu-button" className={menuButtonClasses}
+          <button id="menu-button" className={menuButtonClasses} disabled={props.showPleaseConfirm}
           onClick={e => {props.setShowMenu(!props.showMenu)}}>Menu</button>
           </div>
         </div>

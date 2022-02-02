@@ -73,6 +73,7 @@ function Ideas(props) {
   }
 
   function handleTagIdeaClick() {
+    console.log('in handle tag idea click')
     if (!fillTag) {
     setFillTag(true)
     setFillArtist(false)
@@ -101,23 +102,27 @@ function Ideas(props) {
 return (
   <div className="ideas-container">
     <div className="ideas-wrapper">
-    <h3>Ideas</h3>
-    <br></br>
-    <p>Have an idea for this site? Please share!</p>
+      {!showAddIdea &&
+      <h3>Ideas</h3>
+      }
     <br></br>
     {showAddIdea &&
     <AddIdea setShowAddIdea={setShowAddIdea}
     username={props.username}/>}
-    {!showAddIdea && <button className="small-button"
+    {!showAddIdea && <button className="small-button header-button"
     onClick={e => setShowAddIdea(true)}>Add An Idea</button>}
+    {! showAddIdea &&
+    <>
     <br></br>
     <br></br>
     <FilterChip currentFilterState={fillFeature} text='Feature' setFilter={handleFeatureClick}/>
     <FilterChip currentFilterState={fillArtist} text='Artist to add' setFilter={handleArtistIdeaClick}/>
-    <FilterChip currentFilterState={fillTag} text='Tag Idea' setFilter={handleTagIdeaClick}/>
+    <FilterChip currentFilterState={fillTag} text='Tag' setFilter={handleTagIdeaClick}/>
     <FilterChip currentFilterState={fillOther} text='Other' setFilter={handleOtherClick}/>
     <br></br>
-    {ideasToShow &&
+    <br></br>
+    </>    }
+    {ideasToShow && !showAddIdea &&
     ideasToShow.map((idea) => {
       return (
       <Idea ideaData={idea}/>

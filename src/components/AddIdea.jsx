@@ -81,19 +81,20 @@ function AddIdea(props) {
 
   return (
     <div className="add-idea">
+      <h3>Add Idea</h3>
       <div className="tags">
           <FilterChip currentFilterState={feature} text='Feature' setFilter={handleFeatureClick}/>
           <FilterChip currentFilterState={artistIdea} text='Artist to add' setFilter={handleArtistIdeaClick}/>
-          <FilterChip currentFilterState={tagIdea} text='Tag Idea' setFilter={handleTagIdeaClick}/>
+          <FilterChip currentFilterState={tagIdea} text='Tag' setFilter={handleTagIdeaClick}/>
           <FilterChip currentFilterState={other} text='Other' setFilter={handleOtherClick}/>
         </div>
         <br></br>
-      <label htmlFor="idea">Idea: </label>
+      <label htmlFor="idea" className="hidden">Idea: </label>
         <br></br>
         <textarea
         type="text-area"
         name="idea"
-        className="inputField"
+        className="inputField text-input"
         placeholder="Your idea..."
         cols="40"
         rows="5"

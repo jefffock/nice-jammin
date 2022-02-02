@@ -10,7 +10,7 @@ function FilterChip (props) {
     } else {
       setClassName('filter-chip empty')
     }
-  }, [props, setClassName])
+  }, [props.currentFilterState])
 
   return (
       <button className={className}

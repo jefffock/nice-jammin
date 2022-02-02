@@ -11,7 +11,7 @@ function Reviews(props) {
     <div className="reviews">
       <br></br>
       {props.reviews && (props.reviews.length === 0) &&
-      <p>No reviews yet!</p>}
+      <h3 className="center-text">No reviews yet. Will you do the honors?</h3>}
       <br></br>
       {props.reviews && (props.reviews.length > 0) &&
       props.reviews.map(review => {
