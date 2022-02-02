@@ -145,10 +145,12 @@ function AddVersion (props) {
     if (searchTerm === '') {
       setFilteredSongs([])
     } else {
+      console.log('starting to filter songs')
       let newFilteredSongs = []
       let myRegex = new RegExp(searchTerm, "ig")
       for (var i = 0; i < props.songs.length; i++) {
         if (myRegex.test(props.songs[i].song)) {
+          console.log('found a song that passes the filters')
           newFilteredSongs.push(props.songs[i])
         }
       }
@@ -181,9 +183,10 @@ function AddVersion (props) {
     <div className="add-version-container">
       <div className="add-version-wrapper">
       <h3>Add Version</h3>
+      <div className="add-version-inputs">
       <label htmlFor="song">Song: </label>
       <input
-        className="inputField text-bar bar"
+        className="inputField search-bar bar"
         type="song"
         placeholder=""
         value={songName}
@@ -209,7 +212,7 @@ function AddVersion (props) {
         <br></br>
         <label htmlFor="version">Date: </label>
         <input
-        className="inputField text-bar bar"
+        className="inputField search-bar bar"
         type="date"
         placeholder=""
         value={date}
@@ -222,11 +225,12 @@ function AddVersion (props) {
         <br></br>
         <label htmlFor="location">Location: </label>
         <input
-        className="inputField text-bar bar"
+        className="inputField search-bar bar"
         type="text"
         placeholder="City or Venue"
         value={location}
         onChange={(e) => setLocation(e.target.value)}/>
+      </div>
         <br></br>
         <br></br>
         {!songExists && (songName !== '') &&

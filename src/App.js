@@ -345,6 +345,7 @@ function App() {
         <Auth
         handleNotConfirmedYet={handleNotConfirmedYet}
         setUser={setUser}
+        setSession={setSession}
         fetchProfile={fetchProfile}
         showSignIn={showSignIn}
         setShowSignIn={setShowSignIn}

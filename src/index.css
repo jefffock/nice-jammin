@@ -138,6 +138,10 @@ button:hover {
   background-color: var(--background-color-lighter-one)
 }
 
+.show-filters-button {
+  background-color: var(--background-color-lighter-two);
+}
+
 
 .header-button {
   background-color: var(--background-color-lighter-two);
@@ -565,6 +569,10 @@ button:hover {
   text-align: left;
 }
 
+.add-version-inputs {
+  text-align: left;
+}
+
 .search-bar {
   margin-top: 0.5em;
   height: 30px;
@@ -577,4 +585,16 @@ button:hover {
   box-shadow: var(--tiny-shadow);
   box-sizing: border-box;
   width: 100%;
+}
+
+input[type=date] {
+  background-color: var(--background-color-lighter-two)
+}
+
+input[type=text] {
+  background-color: var(--background-color-lighter-two);
+}
+
+.please-confirm {
+  text-align: center;
 }

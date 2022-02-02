@@ -55,7 +55,8 @@ export default function Auth(props) {
           alert(error.error_description || error.message)
         } else {
           createProfile(displayName, user)
-          props.handleShowSignIn(false)
+          props.setShowSignIn(false)
+          props.setShowSignUp(false)
           props.handleNotConfirmedYet()
           props.setSession(session)
         }
@@ -73,6 +74,7 @@ export default function Auth(props) {
       alert (error)
     } else {
       setLoading(false)
+      setStatus('Created your account! Please check your email to confirm!')
     }
   }
 

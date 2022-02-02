@@ -119,8 +119,9 @@ function Versions(props) {
     <div className="complete-versions-container">
       {(!props.versions || props.versions.length === 0) && !props.showAddVersion &&
       <>
-      <p>No versions submitted yet!</p>
+      <p>Loading...</p>
       <br></br>
+      <p>Or maybe no versions have been added yet!</p>
       </>}
       {!props.showAddVersion &&
       <>
@@ -130,7 +131,7 @@ function Versions(props) {
       <br></br>
       </>}
       {(props.versions && props.versions.length > 0) &&
-      <button className="small-button"
+      <button className="small-button show-filters-button"
       onClick={e => setShowFilters(!showFilters)}>{filterText}</button>}
       {showFilters &&
       <>

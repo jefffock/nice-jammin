@@ -63,7 +63,11 @@ function Header(props) {
         showAccount={props.showAccount}
         ideas={props.ideas}/>
         {props.showPleaseConfirm &&
-        <h3>Welcome! Please confirm your email address to start contributing. Thank you!</h3>}
+        <>
+        <div className="please-confirm">
+          <h3>Welcome! Please confirm your email address to start contributing. Thank you!</h3>
+        </div>
+        </>}
     </div>
   )
 }
