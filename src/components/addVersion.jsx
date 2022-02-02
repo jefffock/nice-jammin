@@ -140,6 +140,7 @@ function AddVersion (props) {
       setShowSuccessMessage(true)
       props.addOnePoint(props.songData.submitter_name)
       props.addTenPoints(props.username)
+      props.fetchVersions(props.songData.id)
       }
   }
 
