@@ -17,7 +17,7 @@ function CurrentSelection(props) {
       <div className="current-selection-div">
         <div className="current-selection-item">
         {props.artist &&
-        <h2 onClick={e => {
+        <h2 className="current-selection-text" onClick={e => {
           props.setShowArtistPicker(true)
           props.setArtist(null)
           props.setSong(null)
@@ -31,7 +31,7 @@ function CurrentSelection(props) {
         </div>
         <div className="current-selection-item">
           {!props.showAddVersion &&
-          <h2 onClick={e => {
+          <h2 className="current-selection-text" onClick={e => {
             props.setSong(null)
             props.setSongName(null)
             props.setVersion(null)
@@ -43,7 +43,7 @@ function CurrentSelection(props) {
         <div className="current-selection-item">
           {props.version &&
           <>
-          <h2 onClick={e => {
+          <h2 className="current-selection-text" onClick={e => {
             props.setVersion(null)
             props.setShowAddSong(false)
             props.setShowAddVersion(false)

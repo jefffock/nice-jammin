@@ -126,7 +126,7 @@ function AddRating(props) {
         <select
         name="rating"
         id="rating"
-        className="inputField"
+        className="inputField rating-select"
         placeholder=""
         value={rating}
         disabled={userAlreadyRated}
@@ -144,12 +144,12 @@ function AddRating(props) {
         </select>
         <br></br>
         <br></br>
-        <label htmlFor="comment">Comments (optional): </label>
+        <label htmlFor="comment" className="comment-box-label">Comments (optional): </label>
         <br></br>
         <textarea
         type="text-area"
         name="comment"
-        className="inputField"
+        className="inputField comment-box"
         placeholder="Face = melted"
         cols="40"
         rows="10"

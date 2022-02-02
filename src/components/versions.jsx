@@ -162,7 +162,11 @@ function Versions(props) {
         <FilterChip currentFilterState={type2} text='Type II' setFilter={setType2}/>
       </>}
       {(filters && filters.length > 0) && filteredVersions.length === 0 &&
+      <>
+      <br></br><br></br>
         <p>Sorry, no submitted versions match those filters. It'd be a lot cooler if some did.</p>
+      <br></br><br></br>
+      </>
       }
       {(filteredVersions && filteredVersions.length > 0) &&
       <>

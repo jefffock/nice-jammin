@@ -14,6 +14,8 @@ function Header(props) {
   }, [props.showMenu])
 
   return (
+    <>
+    <div className="header-spacer"></div>
     <div className="header">
       <div className="header-and-subheading">
       <div className="header-top-row">
@@ -71,6 +73,7 @@ function Header(props) {
         </div>
         </>}
     </div>
+    </>
   )
 }
 

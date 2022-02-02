@@ -319,7 +319,8 @@ function App() {
         if (myRegex.test(songs[i].song)) {
           newFilteredSongs.push(songs[i])
         }
-      }
+      } console.log('newFiltered songs', newFilteredSongs, 'search term', searchTerm)
+      console.log('all songs', songs)
       setFilteredSongs(newFilteredSongs)
     }
   }
@@ -481,6 +482,7 @@ function App() {
         addRatingCountToSong={addRatingCountToSong}
         artist={artist}
         calcAverageForVersion={calcAverageForVersion}/>}
+        <div className="header-spacer"></div>
       </div>
     </>
   )
