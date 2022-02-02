@@ -287,7 +287,8 @@ button:hover {
 }
 
 .link {
-  color: var(--secondary-color)
+  color: var(--secondary-color);
+  font-weight: 600;
 }
 
 .link:hover {

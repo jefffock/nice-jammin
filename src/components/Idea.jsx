@@ -12,7 +12,7 @@ function Idea(props) {
   async function checkAlreadyVotedHelpful() {
     console.log('in check already voted')
     if (props.username) {
-      
+
       const { data, error } = await supabase
         .from('helpful_votes_ideas')
         .select('*')
@@ -52,7 +52,7 @@ function Idea(props) {
       <p className="idea-body">{props.ideaData.idea_body}</p>
       <p className="idea-name">{props.ideaData.user_name}</p>
       <p className="idea-votes link"
-      onClick={e => checkAlreadyVotedHelpful()}>Helpful? {helpfulToShow}</p>
+      onClick={e => checkAlreadyVotedHelpful()}>Support: {helpfulToShow}</p>
       </div>
     </div>
     <br></br>
