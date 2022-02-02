@@ -16,6 +16,7 @@ export default function Auth(props) {
     })
     if (error) {
       alert(error.error_description || error.message)
+      setLoading(false)
     } else {
       console.log('user after sign in', user)
     setLoading(false)
@@ -45,6 +46,7 @@ export default function Auth(props) {
         .eq('name', displayName)
       if (error) {
         console.log(error)
+        setLoading(false)
       }
       if (data.length > 0) {
         setStatus('Great minds think alike! Someone else already has that username. Please choose another.')
@@ -56,12 +58,14 @@ export default function Auth(props) {
         })
         if (error) {
           alert(error.error_description || error.message)
+          setLoading(false)
         } else {
           createProfile(displayName, user)
           props.setShowSignIn(false)
           props.setShowSignUp(false)
           props.handleNotConfirmedYet()
           props.setSession(session)
+          setLoading(false)
         }
       }
     }

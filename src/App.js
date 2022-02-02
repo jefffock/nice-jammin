@@ -143,7 +143,7 @@ function App() {
         .eq('id', id)
       if (error) {
         console.log('error getting profile')
-      } if (data) {
+      } if (data[0]) {
         console.log('data in fetchProfile', data)
         setUsername(data[0].name)
         setPoints(data[0].points)
