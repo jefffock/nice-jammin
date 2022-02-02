@@ -133,6 +133,14 @@ function App() {
     }
   }, [showAccount, showIdeas, showSupport])
 
+  useEffect(() => {
+    if (showAddSong) {
+      setShowAddVersion(false)
+      setShowVersions(false)
+      setSong(null)
+      setSongName('')
+    }
+  }, [showAddSong])
 
   async function fetchProfile() {
     const user = supabase.auth.user()

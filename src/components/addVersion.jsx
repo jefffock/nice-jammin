@@ -5,7 +5,7 @@ import FilterChip from './FilterChip'
 function AddVersion (props) {
   const [songExists, setSongExists] = useState(true)
   const [songName, setSongName] = useState(props.songName)
-  const [filteredSongs, setFilteredSongs] = useState('')
+  const [filteredSongs, setFilteredSongs] = useState(null)
   const [date, setDate] = useState('')
   const [year, setYear] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -154,12 +154,13 @@ function AddVersion (props) {
       let myRegex = new RegExp(searchTerm, "ig")
       for (var i = 0; i < props.songs.length; i++) {
         if (myRegex.test(props.songs[i].song)) {
-          console.log('found a song that passes the filters')
+          console.log('found a song that passes the filters', props.songs[i])
           newFilteredSongs.push(props.songs[i])
         }
       }
+      console.log('newFilteredSongs', newFilteredSongs)
       setFilteredSongs(newFilteredSongs)
-      if (newFilteredSongs.length === 1 && searchTerm === newFilteredSongs[0].song) {
+      if ((newFilteredSongs.length === 1 ) && (searchTerm === newFilteredSongs[0].song)) {
         setSongExists(true)
       } else {
         setSongExists(false)
@@ -167,10 +168,10 @@ function AddVersion (props) {
     }
   }
 
-  function handleSongChange(song) {
-    setSongId(song.id)
+  function handleSongChange(songid, songName) {
+    setSongId(songid)
     setSongExists(true)
-    setSongName(song.song)
+    setSongName(songName)
     setFilteredSongs([])
     setSongExists(true)
   }
@@ -199,17 +200,17 @@ function AddVersion (props) {
           setShowSuccessMessage(false);
           setShowAlreadyExistsMessage(false);}
         }/>
-        {filteredSongs.length > 0 &&
+        {filteredSongs && filteredSongs.length > 0 &&
         <>
         <br></br>
         <br></br>
         </>
         }
-        {filteredSongs.length > 0 &&
+        {filteredSongs && filteredSongs.length > 0 &&
         filteredSongs.map(song => {
           return (
             <button className="button-in-list-large song-select"
-            onClick={() => handleSongChange(song)}>{song.song}</button>
+            onClick={() => handleSongChange(song.id, song.song)}>{song.song}</button>
           )
         })}
         <br></br>
@@ -241,7 +242,7 @@ function AddVersion (props) {
         <>
         <br></br>
         <br></br>
-        <p>If "{songName}" is a song played by {props.artist}, please add it!</p>
+        <p>If "{songName}" is a song played by {props.artist.artist}, please add it!</p>
         <br></br>
         <button className="small-button"
         onClick={e => props.handleShowAddSong(songName)}>Go to 'Add A Song'</button>
