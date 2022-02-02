@@ -150,7 +150,7 @@ export default function Auth(props) {
         <br></br>
         <div className="auth-fields-container">
           <div className="auth-fields-wrapper">
-            <label htmlFor="email">Email: </label>
+            <label htmlFor="email">Email: </label><br></br>
           <input
             className="inputField search-bar text"
             type="email"
@@ -160,7 +160,7 @@ export default function Auth(props) {
           />
           <br></br>
           <br></br>
-          <label htmlFor="password">Password: </label>
+          <label htmlFor="password">Password: </label><br></br>
            <input
             className="inputField search-bar text"
             type="password"
@@ -171,7 +171,7 @@ export default function Auth(props) {
           </div>
           <br></br>
           <br></br>
-          <label htmlFor="display-name">Display name: </label>
+          <label htmlFor="display-name">Display name: </label><br></br>
            <input
             className="inputField search-bar text"
             type="display-name"
