@@ -8,6 +8,7 @@ function AddIdea(props) {
   const [artistIdea, setArtistIdea] = useState(null)
   const [tagIdea, setTagIdea] = useState(null)
   const [other, setOther] = useState(null)
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 
   function handleArtistIdeaClick() {
     setArtistIdea(true)
@@ -99,10 +100,14 @@ function AddIdea(props) {
         cols="40"
         rows="5"
         value={idea}
-        onChange={e => setIdea(e.target.value)}></textarea>
+        onChange={e => {setIdea(e.target.value); setShowSuccessMessage(false);}}></textarea>
         <br></br>
-        <button className="primary-button large"
+        <button className="primary-button large" disabled={showSuccessMessage}
         onClick={e => testIdea()}>Add this idea</button>
+        <br></br>
+        <br></br>
+        {showSuccessMessage &&
+        <p>Successfully added this idea. Thank you!</p>}
         <br></br>
         <br></br>
         <button className="small-button back"
