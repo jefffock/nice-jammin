@@ -43,8 +43,7 @@ function Ideas(props) {
     setOtherIdeas(newOtherIdeas)
     setFeatureIdeas(newFeatureIdeas)
     setTagIdeas(newTagIdeas)
-    console.log('ideas to show', ideasToShow)
-    }, [props, ideasToShow])
+    }, [props])
 
     function handleArtistIdeaClick() {
     if (!fillArtist) {

@@ -10,7 +10,6 @@ function Idea(props) {
       <p className="idea-votes">Helpful? {props.ideaData.votes}</p>
       </div>
     </div>
-    {/* <br></br> */}
     <br></br>
     </>
   )
