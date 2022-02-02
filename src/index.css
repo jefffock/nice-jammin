@@ -448,6 +448,7 @@ button:hover {
 .comment-box {
   border-radius: 1em;
   box-shadow: var(--tiny-shadow);
+  padding: 0.5em;
 }
 
 .review-comment {
@@ -572,7 +573,7 @@ button:hover {
   /* background-color: var(--background-color-lighter-one); */
   background: var(--cloud-two-gradient);
   padding: .2em;
-  border-radius: 1em;
+  border-radius: 2em;
   max-width: 100vw;
   text-align: center;
   box-shadow: var(--small-shadow);
@@ -585,7 +586,7 @@ button:hover {
   /* background-color: var(--background-color-lighter-one); */
   background: var(--cloud-two-gradient);
   padding: .2em;
-  border-radius: 1em;
+  border-radius: 2em;
   max-width: 100vw;
   text-align: center;
   border: 1px solid var(--section-border);

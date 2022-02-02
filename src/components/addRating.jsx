@@ -85,6 +85,7 @@ function AddRating(props) {
       console.log('error updating comment')
     } else {
       setAddRatingStatus('Updated your comments and rating')
+      props.calcAverageForVersion(props.version.id)
     }
   }
 
@@ -129,7 +130,6 @@ function AddRating(props) {
         className="inputField rating-select"
         placeholder=""
         value={rating}
-        disabled={userAlreadyRated}
         onChange={e => setRating(JSON.parse(e.target.value))}>
           <option value="10">10</option>
           <option value="9">9</option>
