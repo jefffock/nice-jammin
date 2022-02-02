@@ -63,7 +63,8 @@ function Header(props) {
         setShowSupport={props.setShowSupport}
         setShowAccount={props.setShowAccount}
         showAccount={props.showAccount}
-        ideas={props.ideas}/>
+        ideas={props.ideas}
+        countHelpfulVotesIdeas={props.countHelpfulVotesIdeas}/>
         {props.showPleaseConfirm &&
         <>
         <div className="please-confirm">

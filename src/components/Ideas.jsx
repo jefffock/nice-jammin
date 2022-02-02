@@ -124,7 +124,8 @@ return (
     {ideasToShow && !showAddIdea &&
     ideasToShow.map((idea) => {
       return (
-      <Idea ideaData={idea}/>
+      <Idea ideaData={idea} countHelpfulVotesIdeas={props.countHelpfulVotesIdeas}
+      username={props.username}/>
       )
     })
     }

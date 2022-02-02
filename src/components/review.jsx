@@ -40,6 +40,7 @@ function Review(props) {
       console.log('current', current)
       setHelpfulToShow(current + 1)
       console.log('data voting helpful', data)
+      props.countHelpfulVotesRatings(props.data.id)
     }
   }
 
@@ -70,6 +71,7 @@ function Review(props) {
     } else {
       setFunnyToShow(funnyToShow + 1)
       console.log('data voting funny', data)
+      props.countFunnyVotesRatings(props.data.id)
     }
 
   }

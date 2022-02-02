@@ -298,6 +298,34 @@ useEffect(() => {
     }
   }
 
+  async function countHelpfulVotesRatings(ratingId) {
+    const { data, error } = await supabase.rpc( 'count_helpful_votes_ratings', {ratingid: ratingId})
+      if (error) {
+        console.log('error counting helpful votes', error)
+      } else {
+        console.log('data from counting helpful votes', data)
+      }
+  }
+
+  async function countFunnyVotesRatings(ratingId) {
+    const { data, error } = await supabase.rpc( 'count_funny_votes_ratings', {ratingid: ratingId})
+      if (error) {
+        console.log('error counting funny votes', error)
+      } else {
+        console.log('data from counting funny votes', data)
+      }
+  }
+
+  async function countHelpfulVotesIdeas(ideaId) {
+    console.log('in count helpful votes ideas')
+    const { data, error } = await supabase.rpc( 'count_helpful_votes_ideas', {ideaid: ideaId})
+      if (error) {
+        console.log('error counting helpful votes ideas', error)
+      } else {
+        console.log('data from counting helpful votes idea', data)
+      }
+  }
+
   function handleNotConfirmedYet() {
     setShowPleaseConfirm(true)
   }
@@ -382,7 +410,8 @@ useEffect(() => {
           showIdeas={showIdeas}
           setShowIdeas={setShowIdeas}
           showSupport={showSupport}
-          setShowSupport={setShowSupport}/>
+          setShowSupport={setShowSupport}
+          countHelpfulVotesIdeas={countHelpfulVotesIdeas}/>
         <BackButtons artist={artist}
           song={song}
           version={version}
@@ -468,7 +497,9 @@ useEffect(() => {
         date={version.date}
         setShowAddRating={setShowAddRating}
         addOnePoint={addOnePoint}
-        username={username}/>}
+        username={username}
+        countHelpfulVotesRatings={countHelpfulVotesRatings}
+        countFunnyVotesRatings={countFunnyVotesRatings}/>}
         {showAddRating && version &&
         <AddRating
         songData={songData}

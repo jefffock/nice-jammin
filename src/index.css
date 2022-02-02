@@ -667,7 +667,7 @@ button:hover {
   box-shadow: var(--tiny-shadow);
   box-sizing: border-box;
   width: 100%;
-  background-color: pink;
+  background-color: white;
 }
 
 input[type=date] {

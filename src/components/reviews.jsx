@@ -17,7 +17,9 @@ function Reviews(props) {
       props.reviews.map(review => {
           if (review.comment) {
             return (
-              <Review data={review} username={props.username}/>
+              <Review data={review} username={props.username}
+              countHelpfulVotesRatings={props.countHelpfulVotesRatings}
+              countFunnyVotesRatings={props.countFunnyVotesRatings}/>
             )
           } return <></>
         })}

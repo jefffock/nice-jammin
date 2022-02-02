@@ -90,7 +90,8 @@ function Menu (props) {
         showBugReport={props.showBugReport}
         setShowBugReport={props.setShowBugReport}
         showSupport={props.showSupport}
-        setShowSupport={props.setShowSupport}/>}
+        setShowSupport={props.setShowSupport}
+        countHelpfulVotesIdeas={props.countHelpfulVotesIdeas}/>}
         {props.showMenu && props.showSupport &&
         <Support />}
       </>
