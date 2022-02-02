@@ -47,6 +47,7 @@ function App() {
   const [showAccount, setShowAccount] = useState(false)
   const [showSupport, setShowSupport] = useState(false)
   const [emailToConfirm, setEmailToConfirm] = useState('')
+  const [canWrite, setCanWrite] = useState(true)
 
   useEffect(() => {
     console.log('in the set session hook')
@@ -149,6 +150,7 @@ function App() {
         setUsername(data[0].name)
         setPoints(data[0].points)
         setAvatarUrl(data[0].avatar_url)
+        setCanWrite(data[0].can_write)
       }
     }
   }
@@ -425,7 +427,8 @@ useEffect(() => {
           showSupport={showSupport}
           setShowSupport={setShowSupport}
           countHelpfulVotesIdeas={countHelpfulVotesIdeas}
-          emailToConfirm={emailToConfirm}/>
+          emailToConfirm={emailToConfirm}
+          canWrite={canWrite}/>
         <BackButtons artist={artist}
           song={song}
           version={version}
@@ -482,7 +485,8 @@ useEffect(() => {
         fetchSongs={fetchSongs}
         nameToAdd={songSearchTerm}
         username={username}
-        addTenPoints={addTenPoints}/>
+        addTenPoints={addTenPoints}
+        canWrite={canWrite}/>
         }
         {(showVersions || (artist && song && !version)) && !showAddVersion &&
         <Versions versions={versions}
@@ -502,7 +506,8 @@ useEffect(() => {
         username={username}
         handleShowAddSong={handleShowAddSong}
         addOnePoint={addOnePoint}
-        addTenPoints={addTenPoints}/>
+        addTenPoints={addTenPoints}
+        canWrite={canWrite}/>
         }
         {version &&  !showAddVersion && !showAddRating && !showAddSong &&
         <Reviews
@@ -527,7 +532,8 @@ useEffect(() => {
         addRatingCountToArtist={addRatingCountToArtist}
         addRatingCountToSong={addRatingCountToSong}
         artist={artist}
-        calcAverageForVersion={calcAverageForVersion}/>}
+        calcAverageForVersion={calcAverageForVersion}
+        canWrite={canWrite}/>}
         <div className="header-spacer"></div>
       </div>
     </>

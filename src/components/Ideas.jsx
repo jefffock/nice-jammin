@@ -107,7 +107,8 @@ return (
     <br></br>
     {showAddIdea &&
     <AddIdea setShowAddIdea={setShowAddIdea}
-    username={props.username}/>}
+    username={props.username}
+    canWrite={props.canWrite}/>}
     {!showAddIdea && <button className="small-button header-button"
     onClick={e => setShowAddIdea(true)}>Add An Idea</button>}
     {! showAddIdea &&

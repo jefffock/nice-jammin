@@ -48,7 +48,7 @@ function AddRating(props) {
 
   async function testRating() {
     let ratingValid = true
-    if (!props.user) {
+    if (!props.user || !props.canWrite) {
       ratingValid = false
     } if (rating < 1 || rating > 10) {
       ratingValid = false

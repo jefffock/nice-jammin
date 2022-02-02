@@ -64,6 +64,7 @@ function Header(props) {
         setShowAccount={props.setShowAccount}
         showAccount={props.showAccount}
         ideas={props.ideas}
+        canWrite={props.canWrite}
         countHelpfulVotesIdeas={props.countHelpfulVotesIdeas}/>
         {props.showPleaseConfirm &&
         <>

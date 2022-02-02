@@ -58,6 +58,10 @@ function AddVersion (props) {
   async function testVersion(date) {
     let locationValid = true
     let dateValid = true
+    if (!props.canWrite) {
+      locationValid = false;
+      dateValid = false;
+    }
     if ((props.artist.start_year && year < props.artist.start_year) || (props.artist.end_year && year > props.artist.end_year)) {
         dateValid = false
         alert(`I don't think ${props.artist.artist} played in ${year}. Imagine if they did, though!`)

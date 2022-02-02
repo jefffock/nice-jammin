@@ -91,6 +91,7 @@ function Menu (props) {
         setShowBugReport={props.setShowBugReport}
         showSupport={props.showSupport}
         setShowSupport={props.setShowSupport}
+        canWrite={props.canWrite}
         countHelpfulVotesIdeas={props.countHelpfulVotesIdeas}/>}
         {props.showMenu && props.showSupport &&
         <Support />}

@@ -40,7 +40,7 @@ function AddIdea(props) {
 
   function testIdea() {
     let valid = true
-    if (!props.username) {
+    if (!props.username || !props.canWrite) {
       valid = false;
       alert('Please log in to add your idea')
     }

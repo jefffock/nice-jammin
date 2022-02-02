@@ -38,7 +38,9 @@ function AddSong(props) {
       console.log(error)
     } else if (data.length === 0) {
       console.log('song doesn\'t exist yet')
-      addSong(artistname, song)
+      if (props.canWrite) {
+        addSong(artistname, song)
+      }
     } else {
       setShowAlreadyExistsMessage(true)
     }
