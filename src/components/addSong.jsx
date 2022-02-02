@@ -24,38 +24,39 @@ function AddSong(props) {
     }
   }, [cover, original])
 
-  async function testSong(artist, song) {
+  async function testSong(artistname, song) {
+    console.log('artist in test song', artistname)
     setLoading(true)
     setShowSuccessMessage(false)
-    console.log('in add song', artist, song)
+    console.log('in add song', artistname, song)
     const { data, error } = await supabase
       .from('songs')
       .select('song, artist')
       .eq('song', song)
-      .eq('artist', artist)
+      .eq('artist', artistname)
     if (error) {
       console.log(error)
     } else if (data.length === 0) {
       console.log('song doesn\'t exist yet')
-      addSong(artist, song)
+      addSong(artistname, song)
     } else {
       setShowAlreadyExistsMessage(true)
     }
     setLoading(false)
   }
 
-  async function addSong(artist, song) {
+  async function addSong(artistname, song) {
     setLoading(true)
     const { error } = await supabase
       .from('songs')
       .insert(
-        { song: song, artist: artist, cover: cover, submitter_name: props.username }, {returning: 'minimal'})
+        { song: song, artist: artistname, cover: cover, submitter_name: props.username }, {returning: 'minimal'})
     if (error) {
       console.log(error)
     } else {
       setShowSuccessMessage(true)
       props.addTenPoints(props.username)
-      props.fetchSongs(artist)
+      props.fetchSongs(artistname)
     }
   }
 
@@ -113,7 +114,7 @@ function AddSong(props) {
       <>
       <br></br>
       <br></br>
-      <p>{song} by {props.artist} has already been added.</p>
+      <p>{song} by {props.artist.artist} has already been added.</p>
       </>
       }
       <br></br>
