@@ -284,7 +284,10 @@ function AddVersion (props) {
       onClick={e => testVersion(date)}
       disabled={loading}>Add this version</button>}
       {showSuccessMessage &&
-      <p>Added the {date} version of {songName}. Thank you for contributing!</p>}
+      <>
+      <br></br><br></br><p>Added the {date} version of {songName}. Thank you for contributing!</p>
+      </>
+      }
       {showAlreadyExistsMessage &&
       <>
       <p>You have good taste: the {date} version of {songName} has already been added.</p>

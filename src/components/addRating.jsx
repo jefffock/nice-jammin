@@ -163,6 +163,7 @@ function AddRating(props) {
         onClick={e => testRating()}
         disabled={loading}>{submitRatingButtonText}</button>
         <br></br>
+        <br></br>
         <p>{addRatingStatus}</p>
         <br></br>
         <br></br>
