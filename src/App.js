@@ -46,6 +46,7 @@ function App() {
   const [showIdeas, setShowIdeas] = useState(null)
   const [showAccount, setShowAccount] = useState(false)
   const [showSupport, setShowSupport] = useState(false)
+  const [emailToConfirm, setEmailToConfirm] = useState('')
 
   useEffect(() => {
     console.log('in the set session hook')
@@ -391,7 +392,8 @@ useEffect(() => {
         showSignIn={showSignIn}
         setShowSignIn={setShowSignIn}
         setShowSignUp={setShowSignUp}
-        showSignUp={showSignUp}/>
+        showSignUp={showSignUp}
+        setEmailToConfirm={setEmailToConfirm}/>
       </div>
     )
   } return (
@@ -422,7 +424,8 @@ useEffect(() => {
           setShowIdeas={setShowIdeas}
           showSupport={showSupport}
           setShowSupport={setShowSupport}
-          countHelpfulVotesIdeas={countHelpfulVotesIdeas}/>
+          countHelpfulVotesIdeas={countHelpfulVotesIdeas}
+          emailToConfirm={emailToConfirm}/>
         <BackButtons artist={artist}
           song={song}
           version={version}

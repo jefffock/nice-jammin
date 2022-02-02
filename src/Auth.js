@@ -60,6 +60,7 @@ export default function Auth(props) {
           alert(error.error_description || error.message)
           setLoading(false)
         } else {
+          props.setEmailToConfirm(email)
           createProfile(displayName, user)
           props.setShowSignIn(false)
           props.setShowSignUp(false)
