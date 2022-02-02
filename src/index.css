@@ -624,6 +624,7 @@ button:hover {
   padding-top: 1em;
   padding-bottom: 1em;
   border-radius: 2em;
+  min-width: 300px;
   max-width: 100vw;
   text-align: center;
   padding-left: 1em;
