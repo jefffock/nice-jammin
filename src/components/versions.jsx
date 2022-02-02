@@ -121,7 +121,7 @@ function Versions(props) {
       <>
       <p>Loading...</p>
       <br></br>
-      <p>Or maybe no versions have been added yet!</p>
+      <p>Or maybe no versions have been added yet!<br></br><br></br>If you know a good one, please add it!</p>
       </>}
       {!props.showAddVersion &&
       <>

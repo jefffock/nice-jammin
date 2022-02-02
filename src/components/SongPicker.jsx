@@ -17,6 +17,8 @@ function SongPicker (props) {
           <br></br>
           <br></br>
       </>}
+      {!props.filteredSongs &&
+      <h3>Loading Songs...</h3>}
       {props.filteredSongs && props.showSongPicker &&
       props.filteredSongs.map(song => {
         return (

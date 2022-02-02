@@ -188,7 +188,7 @@ function AddVersion (props) {
       <div className="add-version-wrapper">
       <h3>Add Version</h3>
       <div className="add-version-inputs">
-      <label htmlFor="song">Song: </label>
+      <label htmlFor="song">Song: </label><br></br>
       <input
         className="inputField search-bar bar"
         type="song"
@@ -214,7 +214,7 @@ function AddVersion (props) {
         })}
         <br></br>
         <br></br>
-        <label htmlFor="version">Date: </label>
+        <label htmlFor="version">Date: </label><br></br>
         <input
         className="inputField search-bar bar"
         type="date"
