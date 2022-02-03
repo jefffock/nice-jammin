@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import Review from './review'
 
 function Reviews(props) {

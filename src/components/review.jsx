@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { supabase } from './../supabaseClient'
 
 function Review(props) {
@@ -25,7 +25,7 @@ function Review(props) {
   }
 
   async function voteHelpful() {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('helpful_votes_ratings')
       .insert({ rating_id: props.data.id, user_name: props.username })
     if (error) {
@@ -56,7 +56,7 @@ function Review(props) {
   }
 
   async function voteFunny() {
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('funny_votes_ratings')
       .insert({ rating_id: props.data.id, user_name: props.username })
     if (error) {
