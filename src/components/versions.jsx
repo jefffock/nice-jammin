@@ -35,6 +35,13 @@ function Versions(props) {
   const [fillNewest, setFillNewest] = useState(false)
   const [fillOldest, setFillOldest] = useState(false)
   const [fillLocation, setFillLocation] = useState(false)
+  const [afterDate, setAfterDate] = useState('')
+  const [beforeDate, setBeforeDate] = useState('')
+
+
+useEffect(() => {
+  console.log('props in versions', props)
+})
 
   useEffect(() => {
     let newFilters = []
@@ -90,25 +97,39 @@ function Versions(props) {
   }, [funky, ambient, fast, slow, bliss, shred, dark, silly, guest, type2, groovy, peaks,reggae,
     heavy, jazzy, trippy, soaring, crunchy, happy, acoustic, soulful, officialRelease, sloppy])
 
+
   useEffect(() => {
-    if (filters.length === 0) {
-      setFilteredVersions(props.versions)
+    if (filters.length === 0 && !afterDate && !beforeDate) {
+    setFilteredVersions(props.versions)
     } else {
-      let newFilteredVersions = []
-      for (var i = 0; i < props.versions.length; i++) {
-        let passesFilters = true
-        for (var j = 0; j < filters.length; j++) {
-          let currentFilter = filters[j]
-          if (!props.versions[i][currentFilter]) {
+      let afterTime, beforeTime
+      if (afterDate) {
+        afterTime = Date.parse(afterDate)
+      } if (beforeDate) {
+        beforeTime = Date.parse(beforeDate)
+      }
+        let newFilteredVersions = []
+        for (var i = 0; i < props.versions.length; i++) {
+          let passesFilters = true
+          if (afterDate && (Date.parse(props.versions[i].date) < afterTime)) {
             passesFilters = false;
-            break;
+          } if (beforeDate && (Date.parse(props.versions[i].date) > beforeTime)) {
+            passesFilters = false
+          } if (passesFilters) {
+            for (var j = 0; j < filters.length; j++) {
+              let currentFilter = filters[j]
+              if (!props.versions[i][currentFilter]) {
+                passesFilters = false;
+              }
+            } if (passesFilters) {
+              newFilteredVersions.push(props.versions[i])
           }
-        } if (passesFilters) {
-          newFilteredVersions.push(props.versions[i])
-        }
-      } setFilteredVersions(newFilteredVersions)
+          }
+        } 
+        setFilteredVersions(newFilteredVersions)
     }
-  }, [filters, props.versions])
+  }, [filters, props.versions, afterDate, beforeDate])
+
 
   useEffect(() => {
     if (showFilters) {
@@ -228,6 +249,26 @@ function Versions(props) {
         <FilterChip currentFilterState={tease} text='Teases' setFilter={setTease}/>
         <FilterChip currentFilterState={trippy} text='Trippy' setFilter={setTrippy}/>
         <FilterChip currentFilterState={type2} text='Type II' setFilter={setType2}/>
+        <br></br><br></br>
+        <label htmlFor="version">Played after this date: </label><br></br>
+        <input
+        className="inputField search-bar bar"
+        type="date"
+        placeholder=""
+        value={afterDate}
+        onChange={(e) => {
+          setAfterDate(e.target.value)}
+        }/><br></br><br></br>
+        <label htmlFor="version">Played before this date: </label><br></br>
+        <input
+        className="inputField search-bar bar"
+        type="date"
+        placeholder=""
+        value={beforeDate}
+        onChange={(e) => {
+          setBeforeDate(e.target.value)}
+        }/><br></br><br></br>
+        <button className="small-button" onClick={e => { setAfterDate(''); setBeforeDate('')}}>Clear date filters</button>
       </>}
       {filteredVersions && filteredVersions.length > 0 &&
       <><br></br><br></br>
