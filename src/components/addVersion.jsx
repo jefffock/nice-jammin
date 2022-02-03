@@ -216,18 +216,18 @@ function AddVersion (props) {
         }/>
         <br></br>
         <br></br>
-        <label htmlFor="location">Location: </label>
+        <label htmlFor="location">Location: </label><br></br>
         <input
         className="inputField search-bar bar"
         type="text"
         placeholder="City or Venue"
         value={location}
         onChange={(e) => setLocation(e.target.value)}/><br></br><br></br>
-        <label htmlFor="listen">Link to listen: </label>
+        <label htmlFor="listen">Link to listen (optional): </label><br></br>
         <input
         className="inputField search-bar bar"
         type="text"
-        placeholder="Link to listen at YouTube, Archive.org, etc..."
+        placeholder="YouTube, Archive.org, etc..."
         value={listenLink}
         onChange={(e) => setListenLink(e.target.value)}/>
       </div>
