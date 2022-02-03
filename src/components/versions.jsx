@@ -31,6 +31,10 @@ function Versions(props) {
   const [sloppy, setSloppy] = useState(false)
   const [tease, setTease] = useState(false)
   const [filterText, setFilterText] = useState('Show filters')
+  const [fillRating, setFillRating] = useState(true)
+  const [fillNewest, setFillNewest] = useState(false)
+  const [fillOldest, setFillOldest] = useState(false)
+  const [fillLocation, setFillLocation] = useState(false)
 
   useEffect(() => {
     let newFilters = []
@@ -114,6 +118,70 @@ function Versions(props) {
     }
   }, [showFilters])
 
+  function handleRatingClick() {
+    setFillRating(true)
+    setFillNewest(false)
+    setFillOldest(false)
+    setFillLocation(false)
+    function compareRating(a, b) {
+      return (b.avg_rating - a.avg_rating)
+    }
+    let sortedVersions = filteredVersions.sort(compareRating);
+    console.log('sortedVersions', sortedVersions)
+    setFilteredVersions(sortedVersions)
+  }
+
+  function handleNewestClick() {
+    setFillNewest(true)
+    setFillRating(false)
+    setFillOldest(false)
+    setFillLocation(false)
+    function sortNewest(a, b) {
+      if (a.date > b.date) {
+        return -1
+      } if (a.date < b.date) {
+        return 1
+      } return 0
+    }
+    let sortedVersions = filteredVersions.sort(sortNewest);
+    console.log('sortedVersions', sortedVersions)
+    setFilteredVersions(sortedVersions)
+  }
+
+  function handleOldestClick() {
+    setFillNewest(false)
+    setFillRating(false)
+    setFillOldest(true)
+    setFillLocation(false)
+    function sortOldest(a, b) {
+      if (a.date > b.date) {
+        return 1
+      } if (a.date < b.date) {
+        return -1
+      } return 0
+    }
+    let sortedVersions = filteredVersions.sort(sortOldest);
+    console.log('sortedVersions', sortedVersions)
+    setFilteredVersions(sortedVersions)
+  }
+
+  function handleLocationClick() {
+    setFillNewest(false)
+    setFillRating(false)
+    setFillOldest(false)
+    setFillLocation(true)
+    function sortLocation(a, b) {
+      if (a.location > b.location) {
+        return 1
+      } if (a.location < b.location) {
+        return -1
+      } return 0
+    }
+    let sortedVersions = filteredVersions.sort(sortLocation);
+    console.log('sortedVersions', sortedVersions)
+    setFilteredVersions(sortedVersions)
+  }
+
   return (
     <>
     <div className="complete-versions-container">
@@ -160,6 +228,14 @@ function Versions(props) {
         <FilterChip currentFilterState={tease} text='Teases' setFilter={setTease}/>
         <FilterChip currentFilterState={trippy} text='Trippy' setFilter={setTrippy}/>
         <FilterChip currentFilterState={type2} text='Type II' setFilter={setType2}/>
+      </>}
+      {filteredVersions && filteredVersions.length > 0 &&
+      <><br></br><br></br>
+      <h3>Sort by:</h3>
+      <FilterChip currentFilterState={fillRating} text='Rating' setFilter={handleRatingClick}/>
+      <FilterChip currentFilterState={fillNewest} text='Newest' setFilter={handleNewestClick}/>
+      <FilterChip currentFilterState={fillOldest} text='Oldest' setFilter={handleOldestClick}/>
+      <FilterChip currentFilterState={fillLocation} text='Location' setFilter={handleLocationClick}/>
       </>}
       {(filters && filters.length > 0) && filteredVersions.length === 0 &&
       <>
