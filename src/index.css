@@ -696,3 +696,7 @@ input[type=text] {
 .support-list-item {
   text-align: left;
 }
+
+.listen-link {
+  text-align: center;
+}

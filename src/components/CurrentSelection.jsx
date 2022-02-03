@@ -65,6 +65,14 @@ function CurrentSelection(props) {
         </div>
         </>
           }
+          {props.version && props.version.listen_link &&
+           <>
+             <div className="listen-link">
+               <br></br>
+               <a className="listen-link link" href={props.version.listen_link}>Listen Here</a><br></br><br></br>
+             </div>
+           </>
+          }
         </div>
     </div>
         </>

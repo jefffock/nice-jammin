@@ -13,6 +13,7 @@ function AddVersion (props) {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [showAlreadyExistsMessage, setShowAlreadyExistsMessage] = useState(false)
   const [location, setLocation] = useState('')
+  const [listenLink, setListenLink] = useState('')
   const [funky, setFunky] = useState(false)
   const [ambient, setAmbient] = useState(false)
   const [fast, setFast] = useState(false)
@@ -122,7 +123,8 @@ function AddVersion (props) {
           soulful: soulful,
           official_release: officialRelease,
           sloppy: sloppy,
-          tease: tease
+          tease: tease,
+          listen_link: listenLink
         }])
     if (error) {
     } else {
@@ -220,7 +222,14 @@ function AddVersion (props) {
         type="text"
         placeholder="City or Venue"
         value={location}
-        onChange={(e) => setLocation(e.target.value)}/>
+        onChange={(e) => setLocation(e.target.value)}/><br></br><br></br>
+        <label htmlFor="listen">Link to listen: </label>
+        <input
+        className="inputField search-bar bar"
+        type="text"
+        placeholder="Link to listen at YouTube, Archive.org, etc..."
+        value={listenLink}
+        onChange={(e) => setListenLink(e.target.value)}/>
       </div>
         <br></br>
         <br></br>
