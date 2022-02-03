@@ -19,7 +19,8 @@ function Reviews(props) {
             return (
               <Review data={review} username={props.username}
               countHelpfulVotesRatings={props.countHelpfulVotesRatings}
-              countFunnyVotesRatings={props.countFunnyVotesRatings}/>
+              countFunnyVotesRatings={props.countFunnyVotesRatings}
+              addOnePoint={props.addOnePoint}/>
             )
           } return <></>
         })}

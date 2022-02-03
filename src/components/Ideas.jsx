@@ -108,7 +108,8 @@ return (
     {showAddIdea &&
     <AddIdea setShowAddIdea={setShowAddIdea}
     username={props.username}
-    canWrite={props.canWrite}/>}
+    canWrite={props.canWrite}
+    addTenPoints={props.addTenPoints}/>}
     {!showAddIdea && <button className="small-button header-button"
     onClick={e => setShowAddIdea(true)}>Add An Idea</button>}
     {! showAddIdea &&
@@ -126,7 +127,7 @@ return (
     ideasToShow.map((idea) => {
       return (
       <Idea ideaData={idea} countHelpfulVotesIdeas={props.countHelpfulVotesIdeas}
-      username={props.username}/>
+      username={props.username} addOnePoint={props.addOnePoint}/>
       )
     })
     }

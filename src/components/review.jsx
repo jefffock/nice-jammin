@@ -22,6 +22,7 @@ function Review(props) {
       } else {
         console.log('data checking voted', data)
         if (data.length === 0) {
+          props.addOnePoint(props.data.submitter_name)
           voteHelpful()
         }
       }
@@ -37,7 +38,6 @@ function Review(props) {
       console.log('error voting helpful', error)
     } else {
       let current = helpfulToShow
-      console.log('current', current)
       setHelpfulToShow(current + 1)
       console.log('data voting helpful', data)
       props.countHelpfulVotesRatings(props.data.id)
@@ -56,6 +56,7 @@ function Review(props) {
       } else {
         console.log('data checking voted', data)
         if (data.length === 0) {
+          props.addOnePoint(props.data.submitter_name)
           voteFunny()
         }
       }

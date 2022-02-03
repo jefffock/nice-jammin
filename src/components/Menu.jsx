@@ -92,7 +92,9 @@ function Menu (props) {
         showSupport={props.showSupport}
         setShowSupport={props.setShowSupport}
         canWrite={props.canWrite}
-        countHelpfulVotesIdeas={props.countHelpfulVotesIdeas}/>}
+        countHelpfulVotesIdeas={props.countHelpfulVotesIdeas}
+        addTenPoints={props.addTenPoints}
+        addOnePoint={props.addOnePoint}/>}
         {props.showMenu && props.showSupport &&
         <Support />}
       </>

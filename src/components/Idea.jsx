@@ -11,8 +11,7 @@ function Idea(props) {
 
   async function checkAlreadyVotedHelpful() {
     console.log('in check already voted')
-    if (props.username) {
-
+    if (props.username && (props.ideaData.user_name !== props.username)) {
       const { data, error } = await supabase
         .from('helpful_votes_ideas')
         .select('*')
@@ -23,6 +22,7 @@ function Idea(props) {
       } else {
         console.log('data checking voted', data)
         if (data.length === 0) {
+          props.addOnePoint(props.ideaData.user_name)
           voteHelpful()
         }
       }
@@ -31,17 +31,16 @@ function Idea(props) {
 
   async function voteHelpful() {
     console.log('in vote helpful')
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('helpful_votes_ideas')
       .insert({ idea_id: props.ideaData.id, user_name: props.username })
     if (error) {
       console.log('error voting helpful', error)
     } else {
       let current = helpfulToShow
-      console.log('current', current)
       setHelpfulToShow(current + 1)
-      console.log('data voting helpful', data)
       props.countHelpfulVotesIdeas(props.ideaData.id)
+      console.log('just voted, now going to add a point to props.ideaData.user_name', props.ideaData.user_name)
     }
   }
 

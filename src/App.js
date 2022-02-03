@@ -271,11 +271,10 @@ useEffect(() => {
   }
 
   async function addOnePoint(profileName) {
-    const { data, error } = await supabase.rpc( 'add_one_point', { username: profileName })
+    console.log('going to add a point to', profileName, typeof profileName)
+    const { error } = await supabase.rpc( 'add_one_point', { username: profileName })
     if (error) {
       console.log('error adding one point', error)
-    } if (data) {
-      console.log('data from adding one point', data)
     }
   }
 
@@ -436,7 +435,9 @@ useEffect(() => {
           setShowSupport={setShowSupport}
           countHelpfulVotesIdeas={countHelpfulVotesIdeas}
           emailToConfirm={emailToConfirm}
-          canWrite={canWrite}/>
+          canWrite={canWrite}
+          addTenPoints={addTenPoints}
+          addOnePoint={addOnePoint}/>
         <BackButtons artist={artist}
           song={song}
           version={version}
