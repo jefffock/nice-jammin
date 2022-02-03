@@ -5,11 +5,6 @@ function Version(props) {
   let [tags, setTags] = useState('')
 
   useEffect(() => {
-    console.log('props in version', props)
-  })
-
-  useEffect(() => {
-    // console.log('props.data in version', props.versionData)
     let tagBuilder = '';
     if (props.versionData.acoustic) {
       tagBuilder+='Acoustic, '
@@ -64,7 +59,6 @@ function Version(props) {
         if (error) {
           console.log('error getting points', error)
         } else {
-          console.log('data', data)
           props.addPointsToVersion(props.versionData.id, data[0].points)
         }
       } getNameAndPoints()

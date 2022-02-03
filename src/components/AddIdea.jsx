@@ -74,7 +74,6 @@ function AddIdea(props) {
     if (error) {
       console.log('error adding idea', error)
     } else {
-      console.log('successfully added idea')
       props.addTenPoints(props.username)
       setShowSuccessMessage(true)
     }

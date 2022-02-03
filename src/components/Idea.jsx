@@ -1,16 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { supabase } from './../supabaseClient'
 
 function Idea(props) {
 
-  useEffect(() => {
-    console.log('props in idea', props)
-  })
-
   const [helpfulToShow, setHelpfulToShow] = useState(props.ideaData.votes)
 
   async function checkAlreadyVotedHelpful() {
-    console.log('in check already voted')
     if (props.username && (props.ideaData.user_name !== props.username)) {
       const { data, error } = await supabase
         .from('helpful_votes_ideas')
@@ -20,7 +15,6 @@ function Idea(props) {
       if (error) {
         console.log('error checking already voted helpful', error)
       } else {
-        console.log('data checking voted', data)
         if (data.length === 0) {
           props.addOnePoint(props.ideaData.user_name)
           voteHelpful()
@@ -30,7 +24,6 @@ function Idea(props) {
   }
 
   async function voteHelpful() {
-    console.log('in vote helpful')
     const { error } = await supabase
       .from('helpful_votes_ideas')
       .insert({ idea_id: props.ideaData.id, user_name: props.username })
@@ -40,7 +33,6 @@ function Idea(props) {
       let current = helpfulToShow
       setHelpfulToShow(current + 1)
       props.countHelpfulVotesIdeas(props.ideaData.id)
-      console.log('just voted, now going to add a point to props.ideaData.user_name', props.ideaData.user_name)
     }
   }
 

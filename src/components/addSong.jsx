@@ -11,7 +11,6 @@ function AddSong(props) {
   const [cover, setCover] = useState(false)
 
   useEffect(() => {
-    console.log('user', props.user)
   }, [props.user])
 
   useEffect(() => {
@@ -25,10 +24,8 @@ function AddSong(props) {
   }, [cover, original])
 
   async function testSong(artistname, song) {
-    console.log('artist in test song', artistname)
     setLoading(true)
     setShowSuccessMessage(false)
-    console.log('in add song', artistname, song)
     const { data, error } = await supabase
       .from('songs')
       .select('song, artist')
@@ -37,7 +34,6 @@ function AddSong(props) {
     if (error) {
       console.log(error)
     } else if (data.length === 0) {
-      console.log('song doesn\'t exist yet')
       if (props.canWrite) {
         addSong(artistname, song)
       }

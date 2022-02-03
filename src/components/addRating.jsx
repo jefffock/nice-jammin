@@ -11,7 +11,6 @@ function AddRating(props) {
   const [addRatingStatus, setAddRatingStatus] = useState('')
 
   useEffect(() => {
-    console.log('props in add review', props)
     if (props.user) {
     async function checkUserAlreadyRated() {
       const { data, error } = await supabase
@@ -22,13 +21,11 @@ function AddRating(props) {
       if (error) {
         console.log('error in checkUserAlreadyRated', error)
       } else {
-        console.log('data in check user already rated', data)
         if (data.length > 0) {
           setComment(data[0].comment)
           setRating(data[0].rating)
           setUserAlreadyRated(true)
           setSubmitRatingButtonText('Update your comments')
-          console.log('we have data')
         }
       }
     }
@@ -55,18 +52,14 @@ function AddRating(props) {
     }
     setLoading(true)
     setAddRatingStatus('Checking your rating')
-    console.log('rating:', rating, 'comment', comment)
     if (charCount > 10000) {
       ratingValid = false
       alert(`Your enthusiasm is commendable! Also, character limit exceeded`)
       setAddRatingStatus('')
     } if (ratingValid) {
-      console.log('rating valid')
       if (userAlreadyRated) {
-        console.log('user already rated')
         updateRating()
       } else {
-        console.log('user hasnt yet rated')
         insertRating()
       }
     }
@@ -110,7 +103,6 @@ function AddRating(props) {
         props.addRatingCountToSong(props.songData.id)
         props.addRatingCountToArtist(props.artist.id)
         props.calcAverageForVersion(props.version.id)
-        console.log('success adding rating. now time to add update average')
       }
   }
 

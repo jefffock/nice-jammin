@@ -20,10 +20,8 @@ function Ideas(props) {
     let newArtistIdeas = []
     let newFeatureIdeas = []
     let newTagIdeas = []
-    console.log('in the use effect block for ideas')
     if (props.ideas) {
       setIdeasToShow(props.ideas)
-      console.log('in the if block', props.ideas)
       for (var i = 0; i < props.ideas.length; i++) {
         if (props.ideas[i].artist_idea) {
           newArtistIdeas.push(props.ideas[i])
@@ -37,8 +35,7 @@ function Ideas(props) {
       }
     } else {
       props.fetchIdeas()
-    } console.log('ideas: artist', newArtistIdeas, 'other', newOtherIdeas, 'feature',
-    newFeatureIdeas, 'tag', newTagIdeas)
+    }
     setArtistIdeas(newArtistIdeas)
     setOtherIdeas(newOtherIdeas)
     setFeatureIdeas(newFeatureIdeas)
@@ -72,7 +69,6 @@ function Ideas(props) {
   }
 
   function handleTagIdeaClick() {
-    console.log('in handle tag idea click')
     if (!fillTag) {
     setFillTag(true)
     setFillArtist(false)

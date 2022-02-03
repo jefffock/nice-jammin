@@ -3,10 +3,6 @@ import Review from './review'
 
 function Reviews(props) {
 
-  useEffect(() => {
-    console.log('props in reviews', props)
-  }, [props])
-
   return (
     <div className="reviews">
       <br></br>

@@ -6,10 +6,6 @@ function Review(props) {
   const [helpfulToShow, setHelpfulToShow] = useState(props.data.helpful)
   const [funnyToShow, setFunnyToShow] = useState(props.data.funny)
 
-  useEffect(() => {
-    console.log('props in review', props)
-  })
-
   async function checkAlreadyVotedHelpful() {
     if (props.username && props.username !== props.data.submitter_name) {
       const { data, error } = await supabase
@@ -20,7 +16,6 @@ function Review(props) {
       if (error) {
         console.log('error checking already voted helpful', error)
       } else {
-        console.log('data checking voted', data)
         if (data.length === 0) {
           props.addOnePoint(props.data.submitter_name)
           voteHelpful()
@@ -30,7 +25,6 @@ function Review(props) {
   }
 
   async function voteHelpful() {
-    console.log('in vote helpful')
     const { data, error } = await supabase
       .from('helpful_votes_ratings')
       .insert({ rating_id: props.data.id, user_name: props.username })
@@ -39,7 +33,6 @@ function Review(props) {
     } else {
       let current = helpfulToShow
       setHelpfulToShow(current + 1)
-      console.log('data voting helpful', data)
       props.countHelpfulVotesRatings(props.data.id)
     }
   }
@@ -54,7 +47,6 @@ function Review(props) {
       if (error) {
         console.log('error checking already voted funny', error)
       } else {
-        console.log('data checking voted', data)
         if (data.length === 0) {
           props.addOnePoint(props.data.submitter_name)
           voteFunny()
@@ -64,8 +56,6 @@ function Review(props) {
   }
 
   async function voteFunny() {
-    console.log('in vote funny')
-    console.log('in vote funny')
     const { data, error } = await supabase
       .from('funny_votes_ratings')
       .insert({ rating_id: props.data.id, user_name: props.username })
@@ -73,7 +63,6 @@ function Review(props) {
       console.log('error voting funny', error)
     } else {
       setFunnyToShow(funnyToShow + 1)
-      console.log('data voting funny', data)
       props.countFunnyVotesRatings(props.data.id)
     }
 

@@ -39,18 +39,11 @@ function AddVersion (props) {
   const [tease, setTease] = useState(false)
 
   useEffect(() => {
-    console.log('props in addVersion', props)
     setSongId(props.songData.id)
   }, [props])
 
   useEffect(() => {
-    console.log('funky', funky)
-  }, [funky])
-
-  useEffect(() => {
-    console.log('date', date)
     let yearString = date.slice(0,4)
-    console.log('yearString', yearString)
     setYear(parseInt(yearString))
   }, [date])
 
@@ -87,10 +80,8 @@ function AddVersion (props) {
       if (error) {
         console.log('error', error)
       } else if (data.length === 0) {
-        console.log('song doesn\'t exist yet')
         insertVersion(date)
       } else {
-        console.log('version already exists')
         setShowAlreadyExistsMessage(true)
       }
       setLoading(false)
@@ -98,7 +89,6 @@ function AddVersion (props) {
   }
 
   async function insertVersion(date) {
-    console.log('in insert version', date)
     setLoading(true)
     const { error } = await supabase
       .from('versions')
@@ -135,7 +125,6 @@ function AddVersion (props) {
           tease: tease
         }])
     if (error) {
-      console.log('error', error)
     } else {
       setShowSuccessMessage(true)
       props.addOnePoint(props.songData.submitter_name)
@@ -145,21 +134,17 @@ function AddVersion (props) {
   }
 
   function filterSongs(searchTerm) {
-    console.log('searchTerm', searchTerm)
     setSongName(searchTerm)
     if (searchTerm === '') {
       setFilteredSongs([])
     } else {
-      console.log('starting to filter songs')
       let newFilteredSongs = []
       let myRegex = new RegExp(searchTerm, "ig")
       for (var i = 0; i < props.songs.length; i++) {
         if (myRegex.test(props.songs[i].song)) {
-          console.log('found a song that passes the filters', props.songs[i])
           newFilteredSongs.push(props.songs[i])
         }
       }
-      console.log('newFilteredSongs', newFilteredSongs)
       setFilteredSongs(newFilteredSongs)
       if ((newFilteredSongs.length === 1 ) && (searchTerm === newFilteredSongs[0].song)) {
         setSongExists(true)

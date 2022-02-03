@@ -50,7 +50,6 @@ function App() {
   const [canWrite, setCanWrite] = useState(true)
 
   useEffect(() => {
-    console.log('in the set session hook')
     setSession(supabase.auth.session())
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
@@ -146,15 +145,13 @@ function App() {
     const user = supabase.auth.user()
     if (user) {
       let id = user.id
-      console.log('id', id)
       let { data, error } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', id)
       if (error) {
-        console.log('error getting profile')
+        console.log('error getting profile', error)
       } if (data[0]) {
-        console.log('data in fetchProfile', data)
         setUsername(data[0].name)
         setPoints(data[0].points)
         setAvatarUrl(data[0].avatar_url)
@@ -186,9 +183,7 @@ function App() {
         console.log('error fetching songs', error)
       }
       if (data) {
-        console.log('data', data)
         if (data.length > 0) {
-        console.log('data length > 0')
         setSongs(data)
         setFilteredSongs(data)
       } else {
@@ -201,7 +196,6 @@ function App() {
 
 useEffect(() => {
   function filterSongs() {
-    console.log('searchTerm', songSearchTerm)
     if (songSearchTerm === '') {
       setFilteredSongs(songs)
     } else {
@@ -211,15 +205,13 @@ useEffect(() => {
         if (myRegex.test(songs[i].song)) {
           newFilteredSongs.push(songs[i])
         }
-      } console.log('newFiltered songs', newFilteredSongs, 'search term', songSearchTerm)
-      console.log('all songs', songs)
+      }
       setFilteredSongs(newFilteredSongs)
     }
   } filterSongs()
 }, [songs, songSearchTerm])
 
   async function fetchVersions(songId) {
-    console.log('currentSongid in fetch Versions', songId)
     const { data, error } = await supabase
       .from('versions')
       .select('*')
@@ -230,7 +222,6 @@ useEffect(() => {
     } else if (data) {
       setVersions(data)
     }
-    console.log('version data', data)
   }
 
   async function fetchRatings(versionId) {
@@ -244,7 +235,6 @@ useEffect(() => {
     } else if (data) {
       setReviews(data)
     }
-    console.log('review data', data)
   }
 
   async function fetchIdeas() {
@@ -255,7 +245,6 @@ useEffect(() => {
     if (error) {
       console.log('error fetching ideas', error)
     } else {
-      console.log('data in fetchIdeas', data)
       setIdeas(data)
     }
   }
@@ -271,7 +260,6 @@ useEffect(() => {
   }
 
   async function addOnePoint(profileName) {
-    console.log('going to add a point to', profileName, typeof profileName)
     const { error } = await supabase.rpc( 'add_one_point', { username: profileName })
     if (error) {
       console.log('error adding one point', error)
@@ -279,70 +267,54 @@ useEffect(() => {
   }
 
   async function addTenPoints(profileName) {
-    const { data, error } = await supabase.rpc( 'add_ten_points', { username: profileName })
+    const { error } = await supabase.rpc( 'add_ten_points', { username: profileName })
     if (error) {
       console.log('error adding ten points', error)
-    } if (data) {
-      console.log('data from adding ten points', data)
     }
   }
 
   async function addRatingCountToArtist(artistId) {
-    console.log('in add rating count to artist', artistId, typeof artistId)
-    const { data, error } = await supabase.rpc( 'add_rating_count_artist', { artistid: artistId })
+    const { error } = await supabase.rpc( 'add_rating_count_artist', { artistid: artistId })
     if (error) {
       console.log('error adding rating count to artist', error)
-    } if (data) {
-      console.log('data from adding rating count to artist', data)
     }
   }
 
     async function addRatingCountToSong(songId) {
       let song_id = parseInt(songId)
-      console.log('song_id', song_id, typeof song_id)
-    const { data, error } = await supabase.rpc( 'increment_rating_count_song', { songid: song_id })
+    const { error } = await supabase.rpc( 'increment_rating_count_song', { songid: song_id })
     if (error) {
       console.log('error adding incrementing song rating count', error)
-    } if (data) {
-      console.log('data from adding song rating count', data)
     }
   }
 
   async function calcAverageForVersion(versionId) {
     let version = parseInt(versionId)
-    const { data, error } = await supabase.rpc( 'calc_average', { versionid: version })
+    const { error } = await supabase.rpc( 'calc_average', { versionid: version })
     if (error) {
       console.log('error calculating average', error)
-    } if (data) {
-      console.log('data from calcing average', data)
     }
   }
 
   async function countHelpfulVotesRatings(ratingId) {
-    const { data, error } = await supabase.rpc( 'count_helpful_votes_ratings', {ratingid: ratingId})
+    const { error } = await supabase.rpc( 'count_helpful_votes_ratings', {ratingid: ratingId})
       if (error) {
         console.log('error counting helpful votes', error)
-      } else {
-        console.log('data from counting helpful votes', data)
       }
   }
 
   async function countFunnyVotesRatings(ratingId) {
-    const { data, error } = await supabase.rpc( 'count_funny_votes_ratings', {ratingid: ratingId})
+    const { error } = await supabase.rpc( 'count_funny_votes_ratings', {ratingid: ratingId})
       if (error) {
         console.log('error counting funny votes', error)
-      } else {
-        console.log('data from counting funny votes', data)
       }
   }
 
   async function countHelpfulVotesIdeas(ideaId) {
     console.log('in count helpful votes ideas')
-    const { data, error } = await supabase.rpc( 'count_helpful_votes_ideas', {ideaid: ideaId})
+    const { error } = await supabase.rpc( 'count_helpful_votes_ideas', {ideaid: ideaId})
       if (error) {
         console.log('error counting helpful votes ideas', error)
-      } else {
-        console.log('data from counting helpful votes idea', data)
       }
   }
 
@@ -351,7 +323,6 @@ useEffect(() => {
   }
 
   function goHome() {
-    console.log('in go home')
     setShowMenu(false)
     setArtist(null)
     setSong(null)
@@ -376,14 +347,12 @@ useEffect(() => {
   }
 
   function addPointsToVersion(id, points) {
-    console.log('in addPointsToVersion')
     for (var i = 0; i < versions.length; i++) {
       if (versions[i].id === id) {
-        console.log('in the if block')
         versions[i].points = points;
         break;
       }
-    } console.log('versions[i]', versions[i])
+    } 
   }
 
   if (showSignIn || showSignUp) {
