@@ -72,7 +72,7 @@ function Header(props) {
         <>
         <div className="please-confirm">
           <h3>Welcome aboard!<br></br> <br></br>
-          Please check {props.emailToConfirm} and click the link we sent start contributing!<br></br><br></br>
+          Please check {props.emailToConfirm} and click the link we sent to start contributing!<br></br><br></br>
           Thank you!</h3>
         </div>
         </>}
