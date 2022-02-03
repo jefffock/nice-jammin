@@ -9,7 +9,7 @@ function ArtistPicker(props) {
         {!props.artist && !props.artists &&
         <h3>Loading artists...</h3>}
         {!props.artist && props.artists &&
-          props.artists.map(artist => {
+          props.artists.map((artist, index) => {
             return (
               <button className="button-in-list-large"
               onClick={() => props.setArtist(artist)}>{artist.artist}</button>

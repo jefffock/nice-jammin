@@ -115,6 +115,10 @@ function App() {
   }, [versions])
 
   useEffect(() => {
+    console.log('reviews', reviews)
+  }, [reviews])
+
+  useEffect(() => {
     if (showAccount || showIdeas || showSupport) {
       setArtist(null)
       setSong(null)
@@ -233,6 +237,7 @@ useEffect(() => {
     if (error) {
       console.log(error)
     } else if (data) {
+      console.log('data in fetch ratings', data)
       setReviews(data)
     }
   }
@@ -352,7 +357,7 @@ useEffect(() => {
         versions[i].points = points;
         break;
       }
-    } 
+    }
   }
 
   if (showSignIn || showSignUp) {
@@ -487,7 +492,7 @@ useEffect(() => {
         addTenPoints={addTenPoints}
         canWrite={canWrite}/>
         }
-        {version &&  !showAddVersion && !showAddRating && !showAddSong &&
+        {version && !showAddVersion && !showAddRating && !showAddSong &&
         <Reviews
         reviews={reviews}
         songData={songData}
@@ -496,7 +501,9 @@ useEffect(() => {
         addOnePoint={addOnePoint}
         username={username}
         countHelpfulVotesRatings={countHelpfulVotesRatings}
-        countFunnyVotesRatings={countFunnyVotesRatings}/>}
+        countFunnyVotesRatings={countFunnyVotesRatings}
+        version={version}
+        fetchRatings={fetchRatings}/>}
         {showAddRating && version &&
         <AddRating
         songData={songData}

@@ -84,6 +84,7 @@ function AddRating(props) {
 
   async function insertRating() {
     setAddRatingStatus('Adding your rating')
+    let newComment = JSON.stringify(comment)
     const {  error } = await supabase
       .from('ratings')
       .insert(
@@ -91,7 +92,7 @@ function AddRating(props) {
           version_id: props.version.id,
           submitter_name: props.username,
           rating: rating,
-          comment: comment,
+          comment: newComment
         }, {returning: 'minimal'})
       if (error) {
         console.log('error adding rating: ', error)

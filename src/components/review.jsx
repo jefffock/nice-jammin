@@ -1,10 +1,14 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from './../supabaseClient'
 
 function Review(props) {
 
   const [helpfulToShow, setHelpfulToShow] = useState(props.data.helpful)
   const [funnyToShow, setFunnyToShow] = useState(props.data.funny)
+
+  useEffect(() => {
+    console.log('props in review', props)
+  })
 
   async function checkAlreadyVotedHelpful() {
     if (props.username && props.username !== props.data.submitter_name) {
