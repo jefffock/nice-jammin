@@ -53,6 +53,7 @@ function CurrentSelection(props) {
          </div>
           {props.version && props.version.submitter_name &&
             <>
+            <p className="location">{props.version.location}</p><br></br>
           <div className="current-selection-item current-selection-name-points">
             <p>Added by</p>
             <p className="name">{props.version.submitter_name}</p>
