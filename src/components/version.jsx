@@ -8,47 +8,110 @@ function Version(props) {
     let tagBuilder = '';
     if (props.versionData.acoustic) {
       tagBuilder+='Acoustic, '
-    } if (props.versionData.ambient) {
+    }
+     if (props.versionData.ambient) {
       tagBuilder+='Ambient, '
-    } if (props.versionData.bliss) {
+    }
+    if (props.versionData.bliss) {
       tagBuilder+='Bliss, '
-    } if (props.versionData.crunchy) {
+    }
+    if (props.versionData.bluesy) {
+      tagBuilder+='Bluesy, '
+    }
+    if (props.versionData.chaotic) {
+      tagBuilder+='Chaotic, '
+    }
+     if (props.versionData.crunchy) {
       tagBuilder+='Crunchy, '
-    } if (props.versionData.dark) {
+    }
+    if (props.versionData.dark) {
       tagBuilder+='Dark, '
-    } if (props.versionData.fast) {
+    }
+    if (props.versionData.dissonant) {
+      tagBuilder+='Dissonant, '
+    }
+     if (props.versionData.fast) {
       tagBuilder+='Fast, '
-    } if (props.versionData.funky) {
+    }
+     if (props.versionData.funky) {
       tagBuilder+='Funky, '
-    } if (props.versionData.groovy) {
+    }
+     if (props.versionData.groovy) {
       tagBuilder+='Groovy, '
-    } if (props.versionData.guest) {
+    }
+     if (props.versionData.guest) {
       tagBuilder+='Guest, '
-    } if (props.versionData.happy) {
+    }
+     if (props.versionData.happy) {
       tagBuilder+='Happy, '
-    } if (props.versionData.heavy) {
+    }
+     if (props.versionData.heavy) {
       tagBuilder+='Heavy, '
-    } if (props.versionData.jazzy) {
+    }
+     if (props.versionData.jazzy) {
       tagBuilder+='Jazzy, '
-    } if (props.versionData.peaks) {
+    }
+    if (props.versionData.long) {
+      tagBuilder+='Long, '
+    }
+    if (props.versionData.multi_part) {
+      tagBuilder+='Multi-part, '
+    }
+    if (props.versionData.official_release) {
+      tagBuilder+='Official release, '
+    }
+     if (props.versionData.peaks) {
       tagBuilder+='Peaks, '
-    } if (props.versionData.reggae) {
+    }
+     if (props.versionData.reggae) {
       tagBuilder+='Reggae, '
-    } if (props.versionData.shred) {
+    }
+    if (props.versionData.segue) {
+      tagBuilder+='Segue, '
+    }
+     if (props.versionData.shred) {
       tagBuilder+='Shred, '
-    } if (props.versionData.silly) {
-      tagBuilder+='Silly, '
-    } if (props.versionData.slow) {
-      tagBuilder+='Slow, '
-    } if (props.versionData.soaring) {
+    }
+    if (props.versionData.silly) {
+     tagBuilder+='Silly, '
+   }
+    if (props.versionData.sloppy) {
+      tagBuilder+='Sloppy, '
+    }
+    if (props.versionData.slow) {
+     tagBuilder+='Slow, '
+   }
+    if (props.versionData.sludgy) {
+      tagBuilder+='Sludgy, '
+    }
+    if (props.versionData.soaring) {
       tagBuilder+='Soaring, '
-    } if (props.versionData.tease) {
+    }
+    if (props.versionData.soulful) {
+      tagBuilder+='Soulful, '
+    }
+    if (props.versionData.stop_start) {
+      tagBuilder+='Stop-start, '
+    }
+    if (props.versionData.synthy) {
+      tagBuilder+='Synthy, '
+    }
+     if (props.versionData.tease) {
       tagBuilder+='Teases, '
-    } if (props.versionData.trippy) {
+    }
+    if (props.versionData.that_years_style) {
+      tagBuilder+='That year\'s style, '
+    }
+     if (props.versionData.trippy) {
       tagBuilder+='Trippy, '
-    } if (props.versionData.type2) {
+    }
+     if (props.versionData.type2) {
       tagBuilder+='Type\u00A0II, '
-    } let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
+    }
+    if (props.versionData.unusual) {
+      tagBuilder+='Unusual, '
+    }
+    let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
     setTags(finalTags)
     if (!props.versionData.name || !props.versionData.points) {
       async function getNameAndPoints() {

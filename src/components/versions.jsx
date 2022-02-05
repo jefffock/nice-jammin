@@ -30,6 +30,17 @@ function Versions(props) {
   const [officialRelease, setOfficialRelease] = useState(false)
   const [sloppy, setSloppy] = useState(false)
   const [tease, setTease] = useState(false)
+  const [multiPart, setMultiPart] = useState(false)
+  const [sludgy, setSludgy] = useState(false)
+  const [synthy, setSynthy] = useState(false)
+  const [chaotic, setChaotic] = useState(false)
+  const [dissonant, setDissonant] = useState(false)
+  const [bluesy, setBluesy] = useState(false)
+  const [stopStart, setStopStart] = useState(false)
+  const [segue, setSegue] = useState(false)
+  const [unusual, setUnusual] = useState(false)
+  const [long, setLong] = useState(false)
+  const [thatYearsStyle, setThatYearsStyle] = useState(false)
   const [filterText, setFilterText] = useState('Show filters')
   const [fillRating, setFillRating] = useState(true)
   const [fillNewest, setFillNewest] = useState(false)
@@ -93,9 +104,32 @@ useEffect(() => {
       newFilters.push('official_release')
     } if (sloppy) {
       newFilters.push('sloppy')
+    } if (multiPart) {
+      newFilters.push('multi_part')
+    } if (sludgy) {
+      newFilters.push('sludgy')
+    } if (synthy) {
+      newFilters.push('synthy')
+    } if (chaotic) {
+      newFilters.push('chaotic')
+    } if (dissonant) {
+      newFilters.push('dissonant')
+    } if (bluesy) {
+      newFilters.push('bluesy')
+    } if (stopStart) {
+      newFilters.push('stop_start')
+    } if (segue) {
+      newFilters.push('segue')
+    } if (unusual) {
+      newFilters.push('unusual')
+    } if (long) {
+      newFilters.push('long')
+    } if (thatYearsStyle) {
+      newFilters.push('that_years_style')
     } setFilters(newFilters)
   }, [funky, ambient, fast, slow, bliss, shred, dark, silly, guest, type2, groovy, peaks,reggae,
-    heavy, jazzy, trippy, soaring, crunchy, happy, acoustic, soulful, officialRelease, sloppy])
+    heavy, jazzy, trippy, soaring, crunchy, happy, acoustic, soulful, officialRelease, sloppy,
+    multiPart, sludgy, synthy, chaotic, dissonant, bluesy, stopStart, segue, unusual, long, thatYearsStyle])
 
 
   useEffect(() => {
@@ -125,7 +159,7 @@ useEffect(() => {
               newFilteredVersions.push(props.versions[i])
           }
           }
-        } 
+        }
         setFilteredVersions(newFilteredVersions)
     }
   }, [filters, props.versions, afterDate, beforeDate])
@@ -225,30 +259,41 @@ useEffect(() => {
       {showFilters &&
       <>
       <br></br>
-        <FilterChip currentFilterState={acoustic} text='Acoustic' setFilter={setAcoustic}/>
-        <FilterChip currentFilterState={ambient} text='Ambient/Space' setFilter={setAmbient}/>
-        <FilterChip currentFilterState={bliss} text='Bliss' setFilter={setBliss}/>
-        <FilterChip currentFilterState={crunchy} text='Crunchy' setFilter={setCrunchy}/>
-        <FilterChip currentFilterState={dark} text='Dark' setFilter={setDark}/>
-        <FilterChip currentFilterState={fast} text='Fast' setFilter={setFast}/>
-        <FilterChip currentFilterState={funky} text='Funky' setFilter={setFunky}/>
-        <FilterChip currentFilterState={groovy} text='Groovy' setFilter={setGroovy}/>
-        <FilterChip currentFilterState={guest} text='Guest' setFilter={setGuest}/>
-        <FilterChip currentFilterState={happy} text='Happy' setFilter={setHappy}/>
-        <FilterChip currentFilterState={heavy} text='Heavy' setFilter={setHeavy}/>
-        <FilterChip currentFilterState={jazzy} text='Jazzy' setFilter={setJazzy}/>
-        <FilterChip currentFilterState={officialRelease} text='Official Release' setFilter={setOfficialRelease}/>
-        <FilterChip currentFilterState={peaks} text='Peaks' setFilter={setPeaks}/>
-        <FilterChip currentFilterState={reggae} text='Reggae' setFilter={setReggae}/>
-        <FilterChip currentFilterState={shred} text='Shred' setFilter={setShred}/>
-        <FilterChip currentFilterState={silly} text='Silly' setFilter={setSilly}/>
-        <FilterChip currentFilterState={slow} text='Slow' setFilter={setSlow}/>
-        <FilterChip currentFilterState={soaring} text='Soaring' setFilter={setSoaring}/>
-        <FilterChip currentFilterState={soulful} text='Soulful' setFilter={setSoulful}/>
-        <FilterChip currentFilterState={sloppy} text='Sloppy' setFilter={setSloppy}/>
-        <FilterChip currentFilterState={tease} text='Teases' setFilter={setTease}/>
-        <FilterChip currentFilterState={trippy} text='Trippy' setFilter={setTrippy}/>
-        <FilterChip currentFilterState={type2} text='Type II' setFilter={setType2}/>
+          <FilterChip currentFilterState={acoustic} text='Acoustic' setFilter={setAcoustic}/>
+          <FilterChip currentFilterState={ambient} text='Ambient/Space' setFilter={setAmbient}/>
+          <FilterChip currentFilterState={bliss} text='Bliss' setFilter={setBliss}/>
+          <FilterChip currentFilterState={bluesy} text='Bluesy' setFilter={setBluesy}/>
+          <FilterChip currentFilterState={chaotic} text='Chaotic' setFilter={setChaotic}/>
+          <FilterChip currentFilterState={crunchy} text='Crunchy' setFilter={setCrunchy}/>
+          <FilterChip currentFilterState={dark} text='Dark' setFilter={setDark}/>
+          <FilterChip currentFilterState={dissonant} text='Dissonant' setFilter={setDissonant}/>
+          <FilterChip currentFilterState={fast} text='Fast' setFilter={setFast}/>
+          <FilterChip currentFilterState={funky} text='Funky' setFilter={setFunky}/>
+          <FilterChip currentFilterState={groovy} text='Groovy' setFilter={setGroovy}/>
+          <FilterChip currentFilterState={guest} text='Guest' setFilter={setGuest}/>
+          <FilterChip currentFilterState={happy} text='Happy' setFilter={setHappy}/>
+          <FilterChip currentFilterState={heavy} text='Heavy' setFilter={setHeavy}/>
+          <FilterChip currentFilterState={jazzy} text='Jazzy' setFilter={setJazzy}/>
+          <FilterChip currentFilterState={long} text='Long' setFilter={setLong}/>
+          <FilterChip currentFilterState={multiPart} text='Multi-part' setFilter={setMultiPart}/>
+          <FilterChip currentFilterState={officialRelease} text='Official Release' setFilter={setOfficialRelease}/>
+          <FilterChip currentFilterState={peaks} text='Peaks' setFilter={setPeaks}/>
+          <FilterChip currentFilterState={reggae} text='Reggae' setFilter={setReggae}/>
+          <FilterChip currentFilterState={segue} text='Segue' setFilter={setSegue}/>
+          <FilterChip currentFilterState={shred} text='Shred' setFilter={setShred}/>
+          <FilterChip currentFilterState={silly} text='Silly' setFilter={setSilly}/>
+          <FilterChip currentFilterState={sloppy} text='Sloppy' setFilter={setSloppy}/>
+          <FilterChip currentFilterState={slow} text='Slow' setFilter={setSlow}/>
+          <FilterChip currentFilterState={sludgy} text='Sludgy' setFilter={setSludgy}/>
+          <FilterChip currentFilterState={soaring} text='Soaring' setFilter={setSoaring}/>
+          <FilterChip currentFilterState={soulful} text='Soulful' setFilter={setSoulful}/>
+          <FilterChip currentFilterState={stopStart} text='Stop-start' setFilter={setStopStart}/>
+          <FilterChip currentFilterState={synthy} text='Synthy' setFilter={setSynthy}/>
+          <FilterChip currentFilterState={tease} text='Teases' setFilter={setTease}/>
+          <FilterChip currentFilterState={thatYearsStyle} text="That Year's Style" setFilter={setThatYearsStyle}/>
+          <FilterChip currentFilterState={trippy} text='Trippy' setFilter={setTrippy}/>
+          <FilterChip currentFilterState={type2} text='Type II' setFilter={setType2}/>
+          <FilterChip currentFilterState={unusual} text='Unusual' setFilter={setUnusual}/>
         <br></br><br></br>
         <label htmlFor="version">Played after this date: </label><br></br>
         <input

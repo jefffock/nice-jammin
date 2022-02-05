@@ -38,6 +38,17 @@ function AddVersion (props) {
   const [officialRelease, setOfficialRelease] = useState(false)
   const [sloppy, setSloppy] = useState(false)
   const [tease, setTease] = useState(false)
+  const [multiPart, setMultiPart] = useState(false)
+  const [sludgy, setSludgy] = useState(false)
+  const [synthy, setSynthy] = useState(false)
+  const [chaotic, setChaotic] = useState(false)
+  const [dissonant, setDissonant] = useState(false)
+  const [bluesy, setBluesy] = useState(false)
+  const [stopStart, setStopStart] = useState(false)
+  const [segue, setSegue] = useState(false)
+  const [unusual, setUnusual] = useState(false)
+  const [long, setLong] = useState(false)
+  const [thatYearsStyle, setThatYearsStyle] = useState(false)
 
   useEffect(() => {
     setSongId(props.songData.id)
@@ -124,7 +135,18 @@ function AddVersion (props) {
           official_release: officialRelease,
           sloppy: sloppy,
           tease: tease,
-          listen_link: listenLink
+          listen_link: listenLink,
+          multi_part: multiPart,
+          sludgy: sludgy,
+          synthy: synthy,
+          chaotic: chaotic,
+          dissonant: dissonant,
+          bluesy: bluesy,
+          stop_start: stopStart,
+          segue: segue,
+          unusual: unusual,
+          long: long,
+          that_years_style: thatYearsStyle
         }])
     if (error) {
     } else {
@@ -251,8 +273,11 @@ function AddVersion (props) {
           <FilterChip currentFilterState={acoustic} text='Acoustic' setFilter={setAcoustic}/>
           <FilterChip currentFilterState={ambient} text='Ambient/Space' setFilter={setAmbient}/>
           <FilterChip currentFilterState={bliss} text='Bliss' setFilter={setBliss}/>
+          <FilterChip currentFilterState={bluesy} text='Bluesy' setFilter={setBluesy}/>
+          <FilterChip currentFilterState={chaotic} text='Chaotic' setFilter={setChaotic}/>
           <FilterChip currentFilterState={crunchy} text='Crunchy' setFilter={setCrunchy}/>
           <FilterChip currentFilterState={dark} text='Dark' setFilter={setDark}/>
+          <FilterChip currentFilterState={dissonant} text='Dissonant' setFilter={setDissonant}/>
           <FilterChip currentFilterState={fast} text='Fast' setFilter={setFast}/>
           <FilterChip currentFilterState={funky} text='Funky' setFilter={setFunky}/>
           <FilterChip currentFilterState={groovy} text='Groovy' setFilter={setGroovy}/>
@@ -260,18 +285,26 @@ function AddVersion (props) {
           <FilterChip currentFilterState={happy} text='Happy' setFilter={setHappy}/>
           <FilterChip currentFilterState={heavy} text='Heavy' setFilter={setHeavy}/>
           <FilterChip currentFilterState={jazzy} text='Jazzy' setFilter={setJazzy}/>
+          <FilterChip currentFilterState={long} text='Long' setFilter={setLong}/>
+          <FilterChip currentFilterState={multiPart} text='Multi-part' setFilter={setMultiPart}/>
           <FilterChip currentFilterState={officialRelease} text='Official Release' setFilter={setOfficialRelease}/>
           <FilterChip currentFilterState={peaks} text='Peaks' setFilter={setPeaks}/>
           <FilterChip currentFilterState={reggae} text='Reggae' setFilter={setReggae}/>
+          <FilterChip currentFilterState={segue} text='Segue' setFilter={setSegue}/>
           <FilterChip currentFilterState={shred} text='Shred' setFilter={setShred}/>
           <FilterChip currentFilterState={silly} text='Silly' setFilter={setSilly}/>
+          <FilterChip currentFilterState={sloppy} text='Sloppy' setFilter={setSloppy}/>
           <FilterChip currentFilterState={slow} text='Slow' setFilter={setSlow}/>
+          <FilterChip currentFilterState={sludgy} text='Sludgy' setFilter={setSludgy}/>
           <FilterChip currentFilterState={soaring} text='Soaring' setFilter={setSoaring}/>
           <FilterChip currentFilterState={soulful} text='Soulful' setFilter={setSoulful}/>
-          <FilterChip currentFilterState={sloppy} text='Sloppy' setFilter={setSloppy}/>
+          <FilterChip currentFilterState={stopStart} text='Stop-start' setFilter={setStopStart}/>
+          <FilterChip currentFilterState={synthy} text='Synthy' setFilter={setSynthy}/>
           <FilterChip currentFilterState={tease} text='Teases' setFilter={setTease}/>
+          <FilterChip currentFilterState={thatYearsStyle} text="That Year's Style" setFilter={setThatYearsStyle}/>
           <FilterChip currentFilterState={trippy} text='Trippy' setFilter={setTrippy}/>
           <FilterChip currentFilterState={type2} text='Type II' setFilter={setType2}/>
+          <FilterChip currentFilterState={unusual} text='Unusual' setFilter={setUnusual}/>
           </div>
           <br></br>
         </>}
