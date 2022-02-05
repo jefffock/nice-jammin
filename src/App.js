@@ -115,10 +115,6 @@ function App() {
   }, [versions])
 
   useEffect(() => {
-    console.log('reviews', reviews)
-  }, [reviews])
-
-  useEffect(() => {
     if (showAccount || showIdeas || showSupport) {
       setArtist(null)
       setSong(null)
@@ -237,7 +233,6 @@ useEffect(() => {
     if (error) {
       console.log(error)
     } else if (data) {
-      console.log('data in fetch ratings', data)
       setReviews(data)
     }
   }
@@ -258,7 +253,7 @@ useEffect(() => {
     setShowProfile(false)
     const { error } = await supabase.auth.signOut()
     if (error) {
-      console.log('error,', error)
+      console.log('error', error)
     } else {
       console.log('signed out')
     }
