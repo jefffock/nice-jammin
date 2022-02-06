@@ -48,6 +48,8 @@ function App() {
   const [showSupport, setShowSupport] = useState(false)
   const [emailToConfirm, setEmailToConfirm] = useState('')
   const [canWrite, setCanWrite] = useState(true)
+  const [showAddLink, setShowAddLink] = useState(false)
+  const [linkAdded, setLinkAdded] = useState(false)
 
   useEffect(() => {
     setSession(supabase.auth.session())
@@ -102,6 +104,8 @@ function App() {
   }, [song, artist])
 
   useEffect(() => {
+    setShowAddLink(false)
+    setLinkAdded(false)
     if (version) {
       fetchRatings(version.id)
     }
@@ -420,7 +424,8 @@ useEffect(() => {
           goHome={goHome}
           setShowVersions={setShowVersions}
           setShowSongPicker={setShowSongPicker}
-          setShowArtistPicker={setShowArtistPicker}/>
+          setShowArtistPicker={setShowArtistPicker}
+          />
         <CurrentSelection
           artist={artist}
           songName={songName}
@@ -435,7 +440,14 @@ useEffect(() => {
           setShowAddRating={setShowAddRating}
           setSongName={setSongName}
           setSongSearchTerm={setSongSearchTerm}
-          songData={songData}/>
+          songData={songData}
+          showAddLink={showAddLink}
+          setShowAddLink={setShowAddLink}
+          username={username}
+          addTenPoints={addTenPoints}
+          fetchVersions={fetchVersions}
+          linkAdded={linkAdded}
+          setLinkAdded={setLinkAdded}/>
         {!artist && showArtistPicker && !showPleaseConfirm &&
           <ArtistPicker artist={artist}
             artists={artists}
