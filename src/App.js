@@ -425,6 +425,7 @@ useEffect(() => {
           artist={artist}
           songName={songName}
           version={version}
+          showAddRating={showAddRating}
           setShowArtistPicker={setShowArtistPicker}
           setArtist={setArtist}
           setSong={setSong}

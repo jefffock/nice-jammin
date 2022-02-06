@@ -64,7 +64,7 @@ function AddRating(props) {
           setComment(data[0].comment)
           setRating(data[0].rating)
           setUserAlreadyRated(true)
-          setSubmitRatingButtonText('Update your comments')
+          setSubmitRatingButtonText('Update')
         }
       }
     }
