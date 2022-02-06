@@ -49,7 +49,7 @@ function AddRating(props) {
   const [tagText, setTagText] = useState('')
 
   useEffect(() => {
-    console.log('props.version', props.version)
+    console.log('props in add rating', props)
     if (props.user) {
     async function checkUserAlreadyRated() {
       const { data, error } = await supabase
@@ -438,6 +438,7 @@ function AddRating(props) {
       setAddRatingStatus('Unable to update tags at this time.')
     } else {
       setAddRatingStatus('Added/updated rating and added tags. Thanks for contributing!')
+      props.fetchVersions(props.songData.id)
     }
   }
 

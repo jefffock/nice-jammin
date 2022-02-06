@@ -105,7 +105,8 @@ return (
     <AddIdea setShowAddIdea={setShowAddIdea}
     username={props.username}
     canWrite={props.canWrite}
-    addTenPoints={props.addTenPoints}/>}
+    addTenPoints={props.addTenPoints}
+    fetchIdeas={props.fetchIdeas}/>}
     {!showAddIdea && <button className="small-button header-button"
     onClick={e => setShowAddIdea(true)}>Add An Idea</button>}
     {! showAddIdea &&

@@ -506,6 +506,7 @@ useEffect(() => {
         user={user}
         setShowAddRating={setShowAddRating}
         fetchRatings={fetchRatings}
+        fetchVersions={fetchVersions}
         username={username}
         addOnePoint={addOnePoint}
         addTenPoints={addTenPoints}

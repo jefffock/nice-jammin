@@ -76,6 +76,7 @@ function AddIdea(props) {
     } else {
       props.addTenPoints(props.username)
       setShowSuccessMessage(true)
+      props.fetchIdeas()
     }
   }
 
