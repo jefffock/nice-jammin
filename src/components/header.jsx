@@ -25,7 +25,7 @@ function Header(props) {
           onClick={e => {props.setShowMenu(!props.showMenu)}}>Menu</button>
           </div>
         </div>
-        <h3 className="subheading">Discover and share great jams</h3>
+        <h3 className="subheading">Helping fans find jams</h3>
         </div>
         <br></br>
         <div className="log-in-out-buttons-div">
