@@ -67,7 +67,11 @@ function Header(props) {
         canWrite={props.canWrite}
         countHelpfulVotesIdeas={props.countHelpfulVotesIdeas}
         addTenPoints={props.addTenPoints}
-        addOnePoint={props.addOnePoint}/>
+        addOnePoint={props.addOnePoint}
+        leaders={props.leaders}
+        fetchLeaders={props.fetchLeaders}
+        showLeaders={props.showLeaders}
+        setShowLeaders={props.setShowLeaders}/>
         {props.showPleaseConfirm &&
         <>
         <div className="please-confirm">

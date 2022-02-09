@@ -50,6 +50,8 @@ function App() {
   const [canWrite, setCanWrite] = useState(true)
   const [showAddLink, setShowAddLink] = useState(false)
   const [linkAdded, setLinkAdded] = useState(false)
+  const [leaders, setLeaders] = useState(null)
+  const [showLeaders, setShowLeaders] = useState(false)
 
   useEffect(() => {
     setSession(supabase.auth.session())
@@ -119,7 +121,7 @@ function App() {
   }, [versions])
 
   useEffect(() => {
-    if (showAccount || showIdeas || showSupport) {
+    if (showAccount || showIdeas || showSupport || showLeaders) {
       setArtist(null)
       setSong(null)
       setVersion(null)
@@ -131,10 +133,10 @@ function App() {
       setSongSearchTerm('')
       setShowSignUp(false)
       setShowArtistPicker(false)
-    } if (!showAccount && !showIdeas && !showSupport) {
+    } if (!showAccount && !showIdeas && !showSupport && !showLeaders) {
       setShowArtistPicker(true)
     }
-  }, [showAccount, showIdeas, showSupport])
+  }, [showAccount, showIdeas, showSupport, showLeaders])
 
   useEffect(() => {
     if (showAddSong) {
@@ -250,6 +252,21 @@ useEffect(() => {
       console.log('error fetching ideas', error)
     } else {
       setIdeas(data)
+    }
+  }
+
+  async function fetchLeaders() {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('name, points')
+      .not('name', 'eq', 'Henrietta')
+      .limit(10)
+      .order('points', {ascending: false})
+    if (error) {
+      console.log('error fetching top contributors', error)
+    } else {
+      console.log('top contributors', data)
+      setLeaders(data)
     }
   }
 
@@ -410,7 +427,11 @@ useEffect(() => {
           emailToConfirm={emailToConfirm}
           canWrite={canWrite}
           addTenPoints={addTenPoints}
-          addOnePoint={addOnePoint}/>
+          addOnePoint={addOnePoint}
+          leaders={leaders}
+          fetchLeaders={fetchLeaders}
+          showLeaders={showLeaders}
+          setShowLeaders={setShowLeaders}/>
         <BackButtons artist={artist}
           song={song}
           version={version}

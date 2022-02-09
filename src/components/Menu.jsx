@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react'
 import Account from './Account'
 import Ideas from './Ideas'
 import Support from './Support'
+import Leaderboard from './Leaderboard'
 
 function Menu (props) {
 
+  const [leadersButtonClasses, setLeadersButtonClasses] = useState(props.buttonClassesEmpty)
   const [ideasButtonClasses, setIdeasButtonClasses] = useState(props.buttonClassesEmpty)
   const [accountButtonClasses, setAccountButtonClasses] = useState(props.buttonClassesEmpty)
   const [supportButtonClasses, setSupportButtonClasses] = useState(props.buttonClassesEmpty)
@@ -15,29 +17,41 @@ function Menu (props) {
       props.setShowAccount(false)
       props.setShowIdeas(false)
       props.setShowSupport(false)
+      props.setShowLeaders(false)
       setIdeasButtonClasses(props.buttonClassesEmpty)
       setAccountButtonClasses(props.buttonClassesEmpty)
       setSupportButtonClasses(props.buttonClassesEmpty)
-   } if (!props.showAccount && !props.showIdeas && !props.showSupport) {
+      setLeadersButtonClasses(props.buttonClassesEmpty)
+   } if (!props.showAccount && !props.showIdeas && !props.showSupport && !props.showLeaders) {
       setIdeasButtonClasses(props.buttonClassesEmpty)
       setAccountButtonClasses(props.buttonClassesEmpty)
       setSupportButtonClasses(props.buttonClassesEmpty)
+      setLeadersButtonClasses(props.buttonClassesEmpty)
     } if (props.showIdeas) {
       setIdeasButtonClasses(props.buttonClassesFull)
       setAccountButtonClasses(props.buttonClassesEmpty)
       setSupportButtonClasses(props.buttonClassesEmpty)
+      setLeadersButtonClasses(props.buttonClassesEmpty)
     } else if (props.showAccount) {
       setIdeasButtonClasses(props.buttonClassesEmpty)
       setAccountButtonClasses(props.buttonClassesFull)
       setSupportButtonClasses(props.buttonClassesEmpty)
+      setLeadersButtonClasses(props.buttonClassesEmpty)
     } else if (props.showSupport) {
       setIdeasButtonClasses(props.buttonClassesEmpty)
       setSupportButtonClasses(props.buttonClassesFull)
       setAccountButtonClasses(props.buttonClassesEmpty)
+      setLeadersButtonClasses(props.buttonClassesEmpty)
+    } else if (props.showLeaders) {
+      setIdeasButtonClasses(props.buttonClassesEmpty)
+      setSupportButtonClasses(props.buttonClassesEmpty)
+      setAccountButtonClasses(props.buttonClassesEmpty)
+      setLeadersButtonClasses(props.buttonClassesFull)
     } else {
       setIdeasButtonClasses(props.buttonClassesEmpty)
       setSupportButtonClasses(props.buttonClassesEmpty)
       setAccountButtonClasses(props.buttonClassesEmpty)
+      setLeadersButtonClasses(props.buttonClassesEmpty)
     }
   }, [props])
 
@@ -46,9 +60,17 @@ function Menu (props) {
         {props.showMenu &&
           <>
           <div className="header-bottom-row">
+          <button className={leadersButtonClasses}
+          onClick={e => {props.setShowAccount(false);
+            props.setShowSupport(false);
+            props.setShowIdeas(false);
+            props.setShowLeaders(!props.showLeaders)
+          }}>Top Contributors</button>
+
           <button className={ideasButtonClasses}
           onClick={e => {props.setShowAccount(false);
             props.setShowSupport(false);
+            props.setShowLeaders(false);
             props.setShowIdeas(!props.showIdeas);
           }}>Ideas</button>
 
@@ -56,11 +78,13 @@ function Menu (props) {
           <button className={accountButtonClasses}
           onClick={e => {props.setShowIdeas(false);
             props.setShowSupport(false);
+            props.setShowLeaders(false);
             props.setShowAccount(!props.showAccount)}}>Account</button>}
 
           <button className={supportButtonClasses}
           onClick={e => {props.setShowIdeas(false);
             props.setShowAccount(false);
+            props.setShowLeaders(false);
             props.setShowSupport(!props.showSupport)}}>Support</button>
 
             <br></br>
@@ -95,8 +119,12 @@ function Menu (props) {
         countHelpfulVotesIdeas={props.countHelpfulVotesIdeas}
         addTenPoints={props.addTenPoints}
         addOnePoint={props.addOnePoint}/>}
+
         {props.showMenu && props.showSupport &&
         <Support />}
+
+        {props.showMenu && props.showLeaders &&
+        <Leaderboard leaders={props.leaders} fetchLeaders={props.fetchLeaders} />}
       </>
   )
 }

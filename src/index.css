@@ -603,7 +603,8 @@ button:hover {
 .account-container,
 .bug-container,
 .support-container,
-.auth-container {
+.auth-container,
+.leaderboard-container {
   margin-top: 2em;
   display: flex;
   justify-content: center;
@@ -619,7 +620,8 @@ button:hover {
 .account-wrapper,
 .bug-wrapper,
 .support-wrapper,
-.auth-wrapper {
+.auth-wrapper,
+.leaderboard-wrapper {
   box-shadow: var(--small-shadow);
   width: fit-content;
   /* background-color: var(--background-color-lighter-one); */
@@ -635,6 +637,21 @@ button:hover {
   margin-left: 0.5em;
   margin-right: 0.5em;
   border: 1px solid var(--section-border);
+}
+
+.leaders-container {
+  text-align: start;
+  /* display: flex;
+  justify-content: start; */
+}
+
+.leaderboard-card {
+  display: flex;
+  justify-content: space-between;
+}
+
+.leader-points {
+  align-self: flex-end;
 }
 
 .auth-fields-container {
