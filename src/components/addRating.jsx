@@ -249,12 +249,15 @@ function AddRating(props) {
       } else {
         setAddRatingStatus('Added your rating')
         insertUpdateTags()
+        props.fetchRatings(props.version.id)
+        props.fetchVersions()
         props.addOnePoint(props.version.submitter_name)
         props.addOnePoint(props.songData.submitter_name)
         props.addTenPoints(props.username)
         props.addRatingCountToSong(props.songData.id)
         props.addRatingCountToArtist(props.artist.id)
         props.calcAverageForVersion(props.version.id)
+        props.setShowAddRating(false)
       }
   }
 
@@ -264,7 +267,6 @@ function AddRating(props) {
     let tagBuilder = '';
     let tagsToUpdate = {}
     if (showAddTags) {
-
       if (acoustic) {
         tagBuilder+='Acoustic, ';
         tagsToUpdate.acoustic = true;
@@ -405,6 +407,9 @@ function AddRating(props) {
         tagBuilder+='Unusual, '
         tagsToUpdate.unusual = true;
       }
+    } else {
+      props.fetchVersions(props.songData.id)
+      setAddRatingStatus('Added your rating. Thanks for contributing!')
     }
     let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
     console.log('finalTags', finalTags)
@@ -426,6 +431,7 @@ function AddRating(props) {
       }
     } else {
       setAddRatingStatus('Added your rating. Thanks for contributing!')
+      props.fetchVersions(props.songData.id)
     }
   }
 
