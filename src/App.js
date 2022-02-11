@@ -1,6 +1,7 @@
 import './index.css'
 import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Auth from './Auth'
 import './App.css';
 import Versions from './components/versions'
@@ -13,6 +14,13 @@ import SongPicker from './components/SongPicker'
 import BackButtons from './components/BackButtons'
 import CurrentSelection from './components/CurrentSelection'
 import ArtistPicker from './components/ArtistPicker'
+import NavBar from './components/NavBar'
+import Home from './components/Home'
+import Ideas from './components/Ideas'
+import Leaderboard from './components/Leaderboard'
+import Account from './components/Account'
+import Support from './components/Support'
+
 
 function App() {
   const [session, setSession] = useState(null)
@@ -398,7 +406,28 @@ useEffect(() => {
   } return (
     <>
       <div className="app">
-        <Header session={session}
+        <Router>
+          <nav>
+            <Link to="/">Home</Link>
+            <Link to="/top-contributors">Top Contributors</Link>
+            <Link to="/ideas">Ideas</Link>
+            <Link to="/account">Account</Link>
+            <Link to="/support">Support</Link>
+            <Link to="/sign-up">Sign Up</Link>
+            <Link to="/sign-in">Sign In</Link>
+
+          </nav>
+          <Routes>
+            <Route path='/' element={Home}/>
+            <Route path='/top-contributors' element={<Leaderboard fetchLeaders={fetchLeaders} leaders={leaders}/>}/>
+            <Route path='/ideas' element={<Ideas fetchIdeas={fetchIdeas} ideas={ideas}/>}/>
+            <Route path='/account' element={<Account fetchProfile={fetchProfile} username={username} points={points}/>}/>
+            <Route path='/support' element={<Support />}/>
+            <Route path='/sign-up' element={<Auth />}/>
+            <Route path='/sign-in' element={<Auth />}/>
+            </Routes>
+        </Router>
+        {/* <Header session={session}
           showPleaseConfirm={showPleaseConfirm}
           setShowSignIn={setShowSignIn}
           setShowSignUp={setShowSignUp}
@@ -549,7 +578,7 @@ useEffect(() => {
         artist={artist}
         calcAverageForVersion={calcAverageForVersion}
         canWrite={canWrite}/>}
-        <div className="header-spacer"></div>
+        <div className="header-spacer"></div> */}
       </div>
     </>
   )
