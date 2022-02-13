@@ -407,15 +407,7 @@ useEffect(() => {
     <>
       <div className="app">
         <Router>
-          <nav>
-            <Link to="/artists">Home</Link>
-            <Link to="/top-contributors">Top Contributors</Link>
-            <Link to="/ideas">Ideas</Link>
-            <Link to="/account">Account</Link>
-            <Link to="/support">Support</Link>
-            <Link to="/sign-up">Sign Up</Link>
-            <Link to="/sign-in">Sign In</Link>
-          </nav>
+          <NavBar />
           <Routes>
             <Route path="/" element={<Navigate to="/artists"  />} />
             <Route path="/top-contributors" element={<Leaderboard fetchLeaders={fetchLeaders} leaders={leaders}/>}/>
@@ -425,10 +417,13 @@ useEffect(() => {
             <Route path="/sign-up" element={<Auth />}/>
             <Route path="/sign-in" element={<Auth />}/>
             <Route path="artists/*" element={<ArtistPicker artists={artists} setArtist={setArtist}/>}>
-              <Route path=":artistId/*" element={<SongPicker artist={artist} songs={songs}
-              filteredSongs={filteredSongs} setSong={setSong} song={song}/>}>
+              <Route path=":artistId/*" element={<SongPicker songs={songs} filteredSongs={filteredSongs}
+              artist={artist} song={song} version={version}
+              setArtist={setArtist} setSong={setSong} setVersion={setVersion}/>}>
                 <Route path="songs/:songId" element={<Versions versions={versions}
-                addPointsToVersion={addPointsToVersion} setVersion={setVersion}/>} />
+                addPointsToVersion={addPointsToVersion} setVersion={setVersion}/>}>
+                  <Route path="versions/:versionId" element={<Reviews reviews={reviews} fetchRatings={fetchRatings}/>} />
+                </Route>
               </Route>
             </Route>
           </Routes>

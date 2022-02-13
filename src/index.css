@@ -52,7 +52,7 @@ code {
   --secondary-color: #338a59;
   --secondary-color-darker: #215839;
   --background-color: rgb(207, 207, 207);
-  max-width: 1000px;
+  /* max-width: 1000px; */
   justify-self: center;
   margin: auto;
 }

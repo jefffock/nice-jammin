@@ -54,7 +54,7 @@ function CurrentSelection(props) {
     } else {
       setAddLinkStatus('Link added. Thanks for contributing!')
       props.addTenPoints(props.username)
-      props.fetchVersions(props.songData.id)
+      props.fetchVersions(props.song.id)
       props.setShowAddLink(false)
       setLinkToAdd('')
     }
@@ -64,8 +64,8 @@ function CurrentSelection(props) {
     <>
     <div className={wrapperClasses}>
       <div className="current-selection-div">
-        <div className="current-selection-item">
         {props.artist &&
+        <div className="current-selection-item">
         <h2 className="current-selection-text" onClick={e => {
           props.setShowArtistPicker(true)
           props.setArtist(null)
@@ -76,8 +76,9 @@ function CurrentSelection(props) {
           props.setShowAddRating(false)
           props.setSongName(null)
           props.setSongSearchTerm('')
-        }}>{props.artist.artist}</h2>}
-        </div>
+        }}>{props.artist.artist}</h2>
+        </div>}
+        {props.song &&
         <div className="current-selection-item">
           <h2 className="current-selection-text" onClick={e => {
             props.setSong(null)
@@ -87,7 +88,7 @@ function CurrentSelection(props) {
             props.setShowAddVersion(false)
             props.setShowAddRating(false)
           }}>{props.song.song}</h2>
-        </div>
+        </div>}
         <div className="current-selection-item">
           {props.version &&
           <>
@@ -112,7 +113,7 @@ function CurrentSelection(props) {
           <div className="action-button-wrapper">
           <button className="primary-button action-button"
           onClick={e => props.setShowAddRating(true)}
-          >Rate this {props.songData.song}</button>
+          >Rate this {props.song.song}</button>
         </div>
             </>
           }

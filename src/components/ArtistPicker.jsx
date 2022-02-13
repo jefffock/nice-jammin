@@ -17,7 +17,7 @@ function ArtistPicker(props) {
               <div className="artist" key={index}>
                 <Link to={JSON.stringify(artist.id)}>
                   <button className="button-in-list-large"
-                  onClick={() => props.setArtist(artist)}>{artist.artist}!</button>
+                  onClick={() => props.setArtist(artist)}>{artist.artist}</button>
                 </Link>
               </div>
             )

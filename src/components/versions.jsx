@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import Version from './version'
 import FilterChip from './FilterChip'
+import { Link, useParams, Outlet } from 'react-router-dom'
 
 function Versions(props) {
+  let params = useParams()
   const [filteredVersions, setFilteredVersions] = useState(props.versions)
   const [filters, setFilters] = useState([])
   const [showFilters, setShowFilters] = useState(false)
@@ -239,6 +241,7 @@ useEffect(() => {
 
   return (
     <>
+    {!params.versionId &&
     <div className="complete-versions-container">
       {(!props.versions || props.versions.length === 0) && !props.showAddVersion &&
       <>
@@ -337,13 +340,15 @@ useEffect(() => {
         <br></br>
         <div className="versions-container">
           {filteredVersions &&
-          filteredVersions.map((data) => {
+          filteredVersions.map((version, index) => {
             return (
               <>
-              <div className="version" onClick={e => props.setVersion(data)}>
-                <Version versionData={data}
-                setVersion={props.setVersion}
-                addPointsToVersion={props.addPointsToVersion}/>
+              <div className="version" key={index} onClick={e => props.setVersion(version)}>
+                <Link to={`versions/${version.id}`}>
+                  <Version versionData={version}
+                  setVersion={props.setVersion}
+                  addPointsToVersion={props.addPointsToVersion}/>
+                </Link>
               </div>
               </>)
           })}
@@ -351,6 +356,9 @@ useEffect(() => {
       </>
       }
     </div>
+    }
+    {params.versionId &&
+    <Outlet />}
     </>
   )
 }

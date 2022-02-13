@@ -1,0 +1,42 @@
+nav {
+  background: white;
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  color: blue;
+  position: relative;
+  z-index: 2;
+}
+
+.logo {
+  font-size: 32px;
+  color: navy;
+  font-weight: 400;
+}
+
+.menu-items {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-items li a {
+  text-decoration: none;
+  color: navy;
+  font-weight: 300;
+  font-size: 20px;
+  padding: 0.5em 1em;
+}
+
+.menu-items li:last-child a {
+  background-color: green;
+  color:white;
+}
+
+.menu-items li a:hover,
+.menu-items li a:active {
+  background-color: navy;
+  color:white;
+  transition: all 0.3s ease-in-out;
+}

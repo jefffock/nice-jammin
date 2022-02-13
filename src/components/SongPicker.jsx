@@ -7,7 +7,8 @@ function SongPicker (props) {
 
   return (
     <>
-    <CurrentSelection artist={props.artist} song={props.song}/>
+    <CurrentSelection artist={props.artist} song={props.song} version={props.version}
+    setArtist={props.setArtist} setSong={props.setSong} setVersion={props.setVersion}/>
     {!params.songId &&
       <div className="song-picker-container">
         <div className="song-picker-wrapper">
