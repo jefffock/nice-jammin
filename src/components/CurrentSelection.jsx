@@ -79,7 +79,6 @@ function CurrentSelection(props) {
         }}>{props.artist.artist}</h2>}
         </div>
         <div className="current-selection-item">
-          {!props.showAddVersion &&
           <h2 className="current-selection-text" onClick={e => {
             props.setSong(null)
             props.setSongName(null)
@@ -87,7 +86,7 @@ function CurrentSelection(props) {
             props.setShowAddSong(false)
             props.setShowAddVersion(false)
             props.setShowAddRating(false)
-          }}>{props.songName}</h2>}
+          }}>{props.song.song}</h2>
         </div>
         <div className="current-selection-item">
           {props.version &&

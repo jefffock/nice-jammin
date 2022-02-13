@@ -1,12 +1,16 @@
+import { Link, useParams, Outlet } from 'react-router-dom'
+import CurrentSelection from './CurrentSelection'
 
 function SongPicker (props) {
 
+  let params = useParams()
+
   return (
     <>
+    <CurrentSelection artist={props.artist} song={props.song}/>
+    {!params.songId &&
       <div className="song-picker-container">
         <div className="song-picker-wrapper">
-      {props.showSongPicker &&
-      <>
       <input
         className="inputField search-bar"
         type="song"
@@ -16,27 +20,33 @@ function SongPicker (props) {
           props.setSongSearchTerm(e.target.value)}}></input>
           <br></br>
           <br></br>
-      </>}
       {!props.filteredSongs &&
       <h3>Loading Songs...</h3>}
-      {props.filteredSongs && props.showSongPicker &&
-      props.filteredSongs.map(song => {
+      {props.filteredSongs &&
+      props.filteredSongs.map((song, index) => {
         return (
-          <button className="button-in-list-large"
-          onClick={() => props.setSong(song)}>{song.song}</button>
+          <div className="song" key={index}>
+            <Link to={`songs/${song.id}`}>
+              <button className="button-in-list-large"
+              onClick={() => props.setSong(song)}>{song.song}</button>
+            </Link>
+          </div>
           )
         })}
-      {props.showSongPicker &&
+
       <>
       <br></br>
       <br></br>
       <button className="small-button"
       onClick={e => props.handleShowAddSong(props.songSearchTerm)}>Add a Song</button>
-      </>}
+      </>
       <br></br>
       <br></br>
         </div>
       </div>
+    }
+    {params.songId &&
+    <Outlet />}
     </>
   )
 }

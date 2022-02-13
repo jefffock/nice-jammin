@@ -1,7 +1,7 @@
 import './index.css'
 import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom'
 import Auth from './Auth'
 import './App.css';
 import Versions from './components/versions'
@@ -47,8 +47,8 @@ function App() {
   const [points, setPoints] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
   const [showSignUp, setShowSignUp] = useState(false)
-  const [showArtistPicker, setShowArtistPicker] = useState(true)
-  const [showSongPicker, setShowSongPicker] = useState(false)
+  // const [showArtistPicker, setShowArtistPicker] = useState(true)
+  // const [showSongPicker, setShowSongPicker] = useState(false)
   const [showVersions, setShowVersions] = useState(false)
   const [ideas, setIdeas] = useState(null)
   const [showIdeas, setShowIdeas] = useState(null)
@@ -90,10 +90,10 @@ function App() {
   useEffect(() => {
     if (artist) {
       fetchSongs(artist.artist)
-      setShowArtistPicker(false)
-      setShowSongPicker(true)
+      // setShowArtistPicker(false)
+      // setShowSongPicker(true)
     } else {
-      setShowSongPicker(false)
+      // setShowSongPicker(false)
       setShowVersions(false)
     }
     setSong(null);
@@ -105,10 +105,10 @@ function App() {
       setSongData(song)
       setSongName(song.song)
       fetchVersions(song.id)
-      setShowSongPicker(false)
+      // setShowSongPicker(false)
     } else {
       if (artist) {
-        setShowSongPicker(true)
+        // setShowSongPicker(true)
       }
     }
   }, [song, artist])
@@ -123,8 +123,8 @@ function App() {
 
   useEffect(() => {
     if (versions) {
-      setShowArtistPicker(false)
-      setShowSongPicker(false)
+      // setShowArtistPicker(false)
+      // setShowSongPicker(false)
     }
   }, [versions])
 
@@ -140,9 +140,9 @@ function App() {
       setSongName(null)
       setSongSearchTerm('')
       setShowSignUp(false)
-      setShowArtistPicker(false)
+      // setShowArtistPicker(false)
     } if (!showAccount && !showIdeas && !showSupport && !showLeaders) {
-      setShowArtistPicker(true)
+      // setShowArtistPicker(true)
     }
   }, [showAccount, showIdeas, showSupport, showLeaders])
 
@@ -363,7 +363,7 @@ useEffect(() => {
     setSongName(null)
     setSongSearchTerm('')
     setShowSignUp(false)
-    setShowArtistPicker(true)
+    // setShowArtistPicker(true)
   }
 
   function handleShowAddSong(songName) {
@@ -408,24 +408,30 @@ useEffect(() => {
       <div className="app">
         <Router>
           <nav>
-            <Link to="/">Home</Link>
+            <Link to="/artists">Home</Link>
             <Link to="/top-contributors">Top Contributors</Link>
             <Link to="/ideas">Ideas</Link>
             <Link to="/account">Account</Link>
             <Link to="/support">Support</Link>
             <Link to="/sign-up">Sign Up</Link>
             <Link to="/sign-in">Sign In</Link>
-
           </nav>
           <Routes>
-            <Route path='/' element={Home}/>
-            <Route path='/top-contributors' element={<Leaderboard fetchLeaders={fetchLeaders} leaders={leaders}/>}/>
-            <Route path='/ideas' element={<Ideas fetchIdeas={fetchIdeas} ideas={ideas}/>}/>
-            <Route path='/account' element={<Account fetchProfile={fetchProfile} username={username} points={points}/>}/>
-            <Route path='/support' element={<Support />}/>
-            <Route path='/sign-up' element={<Auth />}/>
-            <Route path='/sign-in' element={<Auth />}/>
-            </Routes>
+            <Route path="/" element={<Navigate to="/artists"  />} />
+            <Route path="/top-contributors" element={<Leaderboard fetchLeaders={fetchLeaders} leaders={leaders}/>}/>
+            <Route path="/ideas" element={<Ideas fetchIdeas={fetchIdeas} ideas={ideas}/>}/>
+            <Route path="/account" element={<Account fetchProfile={fetchProfile} username={username} points={points}/>}/>
+            <Route path="/support" element={<Support />}/>
+            <Route path="/sign-up" element={<Auth />}/>
+            <Route path="/sign-in" element={<Auth />}/>
+            <Route path="artists/*" element={<ArtistPicker artists={artists} setArtist={setArtist}/>}>
+              <Route path=":artistId/*" element={<SongPicker artist={artist} songs={songs}
+              filteredSongs={filteredSongs} setSong={setSong} song={song}/>}>
+                <Route path="songs/:songId" element={<Versions versions={versions}
+                addPointsToVersion={addPointsToVersion} setVersion={setVersion}/>} />
+              </Route>
+            </Route>
+          </Routes>
         </Router>
         {/* <Header session={session}
           showPleaseConfirm={showPleaseConfirm}
