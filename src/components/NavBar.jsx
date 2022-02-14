@@ -16,6 +16,13 @@ function NavBar (props) {
     body.classList.toggle('disable-scroll')
   }
 
+  function handleMenuItemClick() {
+    if (menuIsOpen) {
+      let body = document.body;
+      body.classList.toggle('disable-scroll')
+    } setMenuIsOpen(false)
+  }
+
   return (
     <>
     <nav className={menuIsOpen ? "nav-open" : "nav-close"}>
@@ -25,43 +32,43 @@ function NavBar (props) {
         </Link>
       </div>
       <ul className={menuIsOpen ? "menu-items open" : "menu-items close"}>
-        <li>
+        <li onClick={handleMenuItemClick}>
           <NavLink to="artists" style={({ isActive }) =>
               isActive ? activeStyle : undefined
             } end>Home</NavLink>
         </li>
-        <li>
+        <li onClick={handleMenuItemClick}>
           <NavLink to="top-contributors" style={({ isActive }) =>
               isActive ? activeStyle : undefined
             }>Top&nbsp;Contributors</NavLink>
         </li>
-        <li>
+        <li onClick={handleMenuItemClick}>
           <NavLink to="ideas" style={({ isActive }) =>
               isActive ? activeStyle : undefined
             }>Ideas</NavLink>
         </li>
-        <li>
+        <li onClick={handleMenuItemClick}>
           <NavLink to="support" style={({ isActive }) =>
               isActive ? activeStyle : undefined
             }>Support</NavLink>
         </li>
         {props.user &&
         <>
-        <li>
+        <li onClick={handleMenuItemClick}>
           <NavLink to="account" style={({ isActive }) =>
               isActive ? activeStyle : undefined
             }>Account</NavLink>
         </li>
-        <li>
+        <li onClick={handleMenuItemClick}>
           <NavLink to="/logout" >Sign&nbsp;Out</NavLink>
         </li>
         </>}
         {!props.user &&
         <>
-          <li className="sign-up-nav-button">
+          <li className="sign-up-nav-button" onClick={handleMenuItemClick}>
             <NavLink to="sign-up">Sign&nbsp;Up</NavLink>
           </li>
-          <li className="sign-in-nav-button">
+          <li className="sign-in-nav-button" onClick={handleMenuItemClick}>
             <NavLink to="sign-in">Sign&nbsp;In</NavLink>
           </li>
         </>}

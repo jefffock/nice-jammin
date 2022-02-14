@@ -12,22 +12,23 @@ function SongPicker (props) {
     {!params.songId &&
       <div className="song-picker-container">
         <div className="song-picker-wrapper">
-      <input
-        className="inputField search-bar"
-        type="song"
-        placeholder="Search for a song..."
-        value={props.songSearchTerm}
-        onChange={(e) => {
-          props.setSongSearchTerm(e.target.value)}}></input>
-          <br></br>
-          <br></br>
+          <p className="title">Choose a song:</p>
+          <div className="title">
+            <input
+            className="inputField search-bar"
+            type="song"
+            placeholder="Search for a song..."
+            value={props.songSearchTerm}
+            onChange={(e) => {
+              props.setSongSearchTerm(e.target.value)}}></input>
+          </div>
       {!props.filteredSongs &&
       <h3>Loading Songs...</h3>}
       {props.filteredSongs &&
       props.filteredSongs.map((song, index) => {
         return (
           <div className="song" key={index}>
-            <Link to={`songs/${song.id}`}>
+            <Link to={`songs/${song.id}`} style={{ textDecoration: 'none' }}>
               <span className="item-in-list-large"
               onClick={() => props.setSong(song)}>{song.song}</span>
             </Link>
