@@ -38,7 +38,6 @@ html, body {
   padding: 0;
   font-family: 'system';
   font-family: 'Epilogue', sans-serif;
-  font-family: 'Capriola', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -68,10 +67,13 @@ code {
 
 .app-body {
   padding-left: calc(100vw - 100%);
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 
 h1 {
+  font-family: 'Capriola', sans-serif;
   color: var(--primary-color);
   margin-top: 0px;
   margin-bottom: 0px;
@@ -79,14 +81,16 @@ h1 {
 
 h2 {
   color: var(--primary-color);
+  font-family: 'Capriola', sans-serif;
   margin-top: 0;
   margin-bottom: 0.3em;
   padding: 0;
 }
 
 h3 {
+  font-family: 'Capriola', sans-serif;
   color: var(--secondary-color);
-  font-size: 30px;
+  font-size: 20px;
 }
 
 p {
@@ -657,7 +661,7 @@ button:hover {
 }
 
 .leaderboard-card h3 {
-  font-size: 24px;
+  font-size: 18px;
 }
 
 .leader-points {

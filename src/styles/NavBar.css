@@ -133,10 +133,6 @@ nav {
   box-shadow: none;
 }
 
-.menu-button.open {
-  right: 15px;
-}
-
 .menu-button.open .menu-button-burger::before {
   transform: rotate(-45deg)
 }
@@ -158,24 +154,23 @@ nav {
     height: 100vh;
     position: absolute;
     background-color: white;
-    justify-content: flex-start;
-    /* padding: 20px; */
+    justify-content: center;
     right: 0;
-    /* top: 59px; */
     transition: all .3s;
   }
   .menu-items li {
-    padding-bottom: 20px;
-    margin-bottom: 30px;
-    font-size: 40px;
+    padding-bottom: 1em;
+    /* margin-bottom: 30px; */
+    font-size: 20px;
     margin-top: 1.5em;
   }
 
   .menu-items li a {
-    font-size: 40px;
+    font-size: 20px;
   }
 
   .menu-items.open {
+    padding: 0;
     top: 0;
     right: 0;
     margin-top: 0;
@@ -183,6 +178,7 @@ nav {
 
   .menu-items.close {
     transform: translate(100%, -100%);
+    margin-top: 0;
   }
 }
 

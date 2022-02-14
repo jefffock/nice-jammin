@@ -23,16 +23,26 @@ function NavBar (props) {
     } setMenuIsOpen(false)
   }
 
+  function handleHomeClick() {
+    props.setArtist(null)
+    props.setSong(null)
+    props.setVersion(null)
+    if (menuIsOpen) {
+      let body = document.body;
+      body.classList.toggle('disable-scroll')
+    } setMenuIsOpen(false)
+  }
+
   return (
     <>
     <nav className={menuIsOpen ? "nav-open" : "nav-close"}>
-      <div className="logo">
+      <div className="logo" onClick={handleHomeClick}>
         <Link to="artists" style={{ textDecoration: 'none' }}>
           <h1>Nice&nbsp;Jammin</h1>
         </Link>
       </div>
       <ul className={menuIsOpen ? "menu-items open" : "menu-items close"}>
-        <li onClick={handleMenuItemClick}>
+        <li onClick={handleHomeClick}>
           <NavLink to="artists" style={({ isActive }) =>
               isActive ? activeStyle : undefined
             } end>Home</NavLink>

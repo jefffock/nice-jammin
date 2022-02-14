@@ -1,9 +1,33 @@
 import { Link, useParams, Outlet } from 'react-router-dom'
 import CurrentSelection from './CurrentSelection'
+import { useEffect } from 'react'
 
 function SongPicker (props) {
 
   let params = useParams()
+
+  function handleSongClick(song) {
+    props.setVersion(null)
+    props.setSong(song)
+  }
+
+  useEffect(() => {
+    let artists = props.artists
+    console.log('artists', artists)
+    if (!artists) {
+      props.fetchArtists()
+    } else {
+      let artist = props.artist
+      console.log('artist', artist)
+      if (!props.artist) {
+        if (params.artistId) {
+          let correctArtist = (artist) => JSON.stringify(artist.id) === params.artistId
+          let index = artists.findIndex(correctArtist)
+          props.setArtist(artists[index])
+        }
+      }
+    }
+  })
 
   return (
     <>
@@ -30,20 +54,16 @@ function SongPicker (props) {
           <div className="song" key={index}>
             <Link to={`songs/${song.id}`} style={{ textDecoration: 'none' }}>
               <span className="item-in-list-large"
-              onClick={() => props.setSong(song)}>{song.song}</span>
+              onClick={() => handleSongClick(song)}>{song.song}</span>
             </Link>
           </div>
           )
         })}
-
-      <>
-      <br></br>
-      <br></br>
-      <button className="small-button"
-      onClick={e => props.handleShowAddSong(props.songSearchTerm)}>Add a Song</button>
-      </>
-      <br></br>
-      <br></br>
+      <div className="title">
+        {/* <Link to="/add-song">Add a Song</Link> */}
+        <button className="small-button"><Link to="/add-song" style={{ textDecoration: 'none' }}>Add a Song</Link></button>
+        <br></br><br></br>
+      </div>
         </div>
       </div>
     }

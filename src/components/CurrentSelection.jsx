@@ -78,7 +78,7 @@ function CurrentSelection(props) {
           props.setSongSearchTerm('')
         }}>{props.artist.artist}</h2>
         </div>}
-        {props.song &&
+        {props.artist && props.song &&
         <div className="current-selection-item">
           <h2 className="current-selection-text" onClick={e => {
             props.setSong(null)
@@ -90,7 +90,7 @@ function CurrentSelection(props) {
           }}>{props.song.song}</h2>
         </div>}
         <div className="current-selection-item">
-          {props.version &&
+          {props.artist && props.song && props.version &&
           <>
           <h2 className="current-selection-text" onClick={e => {
             props.setVersion(null)

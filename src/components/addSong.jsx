@@ -75,7 +75,7 @@ function AddSong(props) {
   return (
     <div className="add-song-container">
       <div className="add-song-wrapper">
-      <h3>Add Song</h3>
+      <h3>Add a song by {props.artist.artist}</h3>
       <div>
           {/* <label htmlFor="song">Song: </label> */}
           <input
@@ -117,7 +117,7 @@ function AddSong(props) {
       }
       <br></br>
       <button className="small-button"
-        onClick={e => handleBackClick()}>Back</button>
+        onClick={e => handleBackClick()}>Back to songs</button>
       </div>
     </div>
   )

@@ -351,6 +351,7 @@ useEffect(() => {
   }
 
   function goHome() {
+    console.log('in go home')
     setShowMenu(false)
     setArtist(null)
     setSong(null)
@@ -406,20 +407,21 @@ useEffect(() => {
     <>
       <div className="app">
         <Router>
-          <NavBar user={user}/>
+          <NavBar user={user} setArtist={setArtist} setSong={setSong} setVersion={setVersion}/>
           <div className="app-body">
           <Routes>
-            <Route path="/" element={<Navigate to="/artists"  />} />
-            <Route path="/top-contributors" element={<Leaderboard fetchLeaders={fetchLeaders} leaders={leaders}/>}/>
-            <Route path="/ideas" element={<Ideas fetchIdeas={fetchIdeas} ideas={ideas}/>}/>
-            <Route path="/account" element={<Account fetchProfile={fetchProfile} username={username} points={points}/>}/>
-            <Route path="/support" element={<Support />}/>
-            <Route path="/sign-up" element={<Auth />}/>
-            <Route path="/sign-in" element={<Auth />}/>
-            <Route path="artists/*" element={<ArtistPicker artists={artists} setArtist={setArtist} />}>
+            <Route path="/" element={<Navigate to="/artists"/>}/>
+            <Route path="top-contributors" element={<Leaderboard fetchLeaders={fetchLeaders} leaders={leaders}/>}/>
+            <Route path="ideas" element={<Ideas fetchIdeas={fetchIdeas} ideas={ideas}/>}/>
+            <Route path="account" element={<Account fetchProfile={fetchProfile} username={username} points={points}/>}/>
+            <Route path="support" element={<Support />}/>
+            <Route path="sign-up" element={<Auth />}/>
+            <Route path="sign-in" element={<Auth />}/>
+            <Route path="add-song" element={<AddSong artist={artist} user={user} fetchSongs={fetchSongs} nameToAdd={songSearchTerm} username={username} addTenPoints={addTenPoints} canWrite={canWrite}/>}/>
+            <Route path="artists/*" element={<ArtistPicker artists={artists} setArtist={setArtist} setSong={setSong} setVersion={setVersion}/>}>
               <Route path=":artistId/*" element={<SongPicker songs={songs} filteredSongs={filteredSongs}
-              artist={artist} song={song} version={version} setSongSearchTerm={setSongSearchTerm}
-              setArtist={setArtist} setSong={setSong} setVersion={setVersion}/>}>
+              artist={artist} song={song} version={version} setSongSearchTerm={setSongSearchTerm} artists={artists}
+              setArtist={setArtist} setSong={setSong} setVersion={setVersion} fetchArtists={fetchArtists}/>}>
                 <Route path="songs/:songId" element={<Versions versions={versions}
                 addPointsToVersion={addPointsToVersion} setVersion={setVersion}/>}>
                   <Route path="versions/:versionId" element={<Reviews reviews={reviews} fetchRatings={fetchRatings}/>} />
