@@ -415,9 +415,9 @@ useEffect(() => {
             <Route path="/support" element={<Support />}/>
             <Route path="/sign-up" element={<Auth />}/>
             <Route path="/sign-in" element={<Auth />}/>
-            <Route path="artists/*" element={<ArtistPicker artists={artists} setArtist={setArtist}/>}>
+            <Route path="artists/*" element={<ArtistPicker artists={artists} setArtist={setArtist} />}>
               <Route path=":artistId/*" element={<SongPicker songs={songs} filteredSongs={filteredSongs}
-              artist={artist} song={song} version={version}
+              artist={artist} song={song} version={version} setSongSearchTerm={setSongSearchTerm}
               setArtist={setArtist} setSong={setSong} setVersion={setVersion}/>}>
                 <Route path="songs/:songId" element={<Versions versions={versions}
                 addPointsToVersion={addPointsToVersion} setVersion={setVersion}/>}>

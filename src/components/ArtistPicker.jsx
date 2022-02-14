@@ -5,10 +5,13 @@ function ArtistPicker(props) {
 
   return (
     <>
-    <div className="subheading-wrapper">
-      <h2 className="subheading">Fans&nbsp;helping&nbsp;fans&nbsp;find&nbsp;jams.<br></br>Thank&nbsp;you,&nbsp;contributors!</h2>
-    </div>
     {!params.artistId &&
+    <>
+    <div className="subheading-wrapper">
+      <h2 className="subheading">Fans&nbsp;helping&nbsp;fans&nbsp;find&nbsp;jams.<br></br>
+      Choose&nbsp;an&nbsp;artist&nbsp;to&nbsp;get&nbsp;started.<br></br>
+      Thank&nbsp;you,&nbsp;contributors!</h2>
+    </div>
     <div className={"artist-picker-container"}>
       <div className="artist-picker-wrapper">
         <h2 className="title">bands<br></br>beyond<br></br>description</h2>
@@ -27,7 +30,8 @@ function ArtistPicker(props) {
             )
           })}
       </div>
-    </div>}
+    </div>
+    </>}
     <Outlet />
     </>
   )
