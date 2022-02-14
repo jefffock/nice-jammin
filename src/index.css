@@ -13,30 +13,33 @@
   --card-border: rgb(199, 199, 199);
   --section-border: rgb(179, 179, 179);
   --cloud-one: linear-gradient(315deg, #b8c6db 74%%, #f5f7fa 74%);
- --cloud-one-simple: rgb(218,234,242);
---cloud-one-gradient: linear-gradient(135deg, rgba(218,234,242,1) 0%, rgba(188,212,223,1) 100%);
- --cloud-two-simple: rgb(255,255,255);
- --cloud-two-gradient: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(221,240,249,1) 100%);
+  --cloud-one-simple: rgb(218,234,242);
+  --cloud-one-gradient: linear-gradient(135deg, rgba(218,234,242,1) 0%, rgba(188,212,223,1) 100%);
+  --cloud-two-simple: rgb(255,255,255);
+  --cloud-two-gradient: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(221,240,249,1) 100%);
   --silver-blue-gradient: linear-gradient(180deg, #f3f6fc 0%, #d3d8df 74%);
   --gold-gradient: linear-gradient(90deg, rgba(159,158,6,1) 0%, rgba(199,192,89,1) 100%);
   background-color: var(--silver-blue-gradient);
   min-height: 100vh;
 
-
   background: #87c9ff;
-background: -webkit-linear-gradient(to right, #77c2ff, #5f9bcc);
-background: linear-gradient(to right, #9fdcff, #5f9bcc);
+  background: -webkit-linear-gradient(to right, #77c2ff, #5f9bcc);
+  background: linear-gradient(to right, #9fdcff, #5f9bcc);
+}
 
+@font-face {
+  font-family: system;
+  font-style: normal;
+  font-weight: 300;
+  src: local(".SFNSText-Light"), local(".HelveticaNeueDeskInterface-Light"), local(".LucidaGrandeUI"), local("Ubuntu Light"), local("Segoe UI Light"), local("Roboto-Light"), local("DroidSans"), local("Tahoma");
 }
 
 html, body {
   margin: 0;
   padding: 0;
-  font-family: 'Helvetica Neue';
-  /* -apple-system, BlinkMacSystemFont, 'Roboto'; */
-  /* 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif; */
+  font-family: 'system';
+  font-family: 'Epilogue', sans-serif;
+  font-family: 'Capriola', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -76,12 +79,15 @@ h3 {
 }
 
 p {
+  font-family: 'Epilogue', sans-serif;
   color: var(--primary-color-darker);
   font-size: 16px;
   margin: 0;
+
 }
 
 button {
+  font-family: 'Epilogue', sans-serif;
   margin: 3px;
   font-size: large;
   overflow: hidden;
@@ -98,12 +104,14 @@ button {
   box-shadow: var(--tiny-shadow);
 }
 
-.button-in-list-large {
-  border: 1px solid var(--primary-color);
-  background: white;
+.item-in-list-large {
+  font-family: 'Epilogue', sans-serif;
+  /* border: 1px solid var(--primary-color); */
+  /* background: white; */
   color: var(--primary-color);
   min-height: min-content;
-  font-weight: 300;
+  font-size: 20px;
+  /* font-weight: 300; */
 }
 
 .button-in-list-large:hover {
@@ -187,29 +195,13 @@ button:hover {
   margin-bottom: 0px;
 }
 
-.title:hover {
-  cursor: pointer;
+.title {
+  padding-top: 0.7em;
+  text-align: center;
 }
 
 .header-spacer {
   height: .5em;
-}
-
-.header-and-subheading {
-  background: var(--cloud-two-gradient);
-  /* background-color: background-color: #b8c6db; */
-    border-radius: 2em;
-  /* margin-top: 1em; */
-  padding-top: 1em;
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-bottom: 1px;
-  box-shadow: var(--small-shadow);
-  margin-left: 0.5em;
-  margin-right: 0.5em;
-}
-
-.subheading {
 }
 
 .header-button {
@@ -289,12 +281,12 @@ button:hover {
 }
 
 .link {
-  color: var(--secondary-color);
-  font-weight: 600;
+  /* color: var(--secondary-color); */
+  /* font-weight: 600; */
 }
 
 .link:hover {
-  color: var(--secondary-color-darker);
+  /* color: var(--secondary-color-darker); */
   cursor: pointer;
 }
 
@@ -384,7 +376,7 @@ button:hover {
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   color: var(--secondary-color);
-  font-weight: 600;
+  /* font-weight: 600; */
 }
 
 .line {
@@ -564,11 +556,10 @@ button:hover {
 }
 
 .song-picker-container, .artist-picker-container {
-  margin-top: 2em;
+  margin: 1em 0 0 0;
   display: flex;
   justify-content: center;
-  margin-left: 0.5em;
-  margin-right: 0.5em;
+  padding: 1em;
 }
 
 .song-picker-wrapper {
@@ -592,8 +583,12 @@ button:hover {
   padding: .2em;
   border-radius: 2em;
   max-width: 100vw;
-  text-align: center;
   border: 1px solid var(--section-border);
+}
+
+.artist {
+  align-self: left;
+  padding: 0.7em;
 }
 
 .add-song-container,

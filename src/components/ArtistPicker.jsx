@@ -8,6 +8,7 @@ function ArtistPicker(props) {
     {!params.artistId &&
     <div className={"artist-picker-container"}>
       <div className="artist-picker-wrapper">
+        <h2 className="title">bands<br></br>beyond<br></br>description</h2>
         <br></br>
         {!props.artist && !props.artists &&
         <h3>Loading artists...</h3>}
@@ -16,8 +17,8 @@ function ArtistPicker(props) {
             return (
               <div className="artist" key={index}>
                 <Link to={JSON.stringify(artist.id)}>
-                  <button className="button-in-list-large"
-                  onClick={() => props.setArtist(artist)}>{artist.artist}</button>
+                  <span className="item-in-list-large"
+                  onClick={() => props.setArtist(artist)}>{artist.artist}</span>
                 </Link>
               </div>
             )

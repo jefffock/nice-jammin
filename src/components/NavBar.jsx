@@ -6,9 +6,10 @@ import './../styles/NavBar.css'
 function NavBar (props) {
 
   return (
+    <>
     <nav>
       <div className="logo">
-        Nice&nbsp;Jammin
+        <h1>Nice&nbsp;Jammin</h1>
       </div>
       <ul className="menu-items">
         <li>
@@ -34,6 +35,10 @@ function NavBar (props) {
         </li>
       </ul>
     </nav>
+    <div className="subheading-wrapper">
+      <h2 className="subheading">Fans&nbsp;helping&nbsp;fans&nbsp;find&nbsp;jams. Thank&nbsp;you,&nbsp;contributors!</h2>
+    </div>
+    </>
   )
 }
 
