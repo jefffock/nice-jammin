@@ -5,8 +5,9 @@ nav {
   display: flex;
   justify-content: space-between;
   color: blue;
+  height: auto;
   position: relative;
-  z-index: 2;
+  z-index: 3;
   background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(221,240,249,1) 100%);
   box-shadow: var(--small-shadow);
 }
@@ -47,7 +48,6 @@ nav {
   font-weight: 400;
   font-size: 20px;
   padding: 0.5em;
-  transition: all 0.2s;
 }
 
 
@@ -96,6 +96,8 @@ nav {
   height: 2em;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
+  z-index: 10;
+  top: 7px;
 }
 
 .menu-button-burger {
@@ -131,6 +133,10 @@ nav {
   box-shadow: none;
 }
 
+.menu-button.open {
+  right: 15px;
+}
+
 .menu-button.open .menu-button-burger::before {
   transform: rotate(-45deg)
 }
@@ -148,17 +154,36 @@ nav {
   }
   .menu-items {
     flex-direction: column;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     position: absolute;
     background-color: white;
+    justify-content: flex-start;
     /* padding: 20px; */
     right: 0;
-    top: 59px;
+    /* top: 59px; */
+    transition: all 0.3s ease-in-out;
   }
-  .menu-items a {
-    /* padding-bottom: 20px; */
-    /* margin-bottom: 20px; */
+  .menu-items li {
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+    font-size: 40px;
+    margin-top: 1.5em;
+  }
+
+  .menu-items li a {
+    font-size: 40px;
+  }
+
+  .menu-items.open {
+    top: 0;
+    right: 0;
+    margin-top: 0;
+  }
+
+  .menu-items.close {
+    transform: translate(100%, -100%);
+    transition: all 0.3s ease-in;
   }
 }
 

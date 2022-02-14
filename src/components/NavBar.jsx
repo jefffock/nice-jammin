@@ -10,15 +10,21 @@ function NavBar (props) {
     textDecoration: "underline"
   };
 
+  function handleBurgerClick() {
+    setMenuIsOpen(!menuIsOpen)
+    let body = document.body;
+    body.classList.toggle('disable-scroll')
+  }
+
   return (
     <>
-    <nav>
+    <nav className={menuIsOpen ? "nav-open" : "nav-close"}>
       <div className="logo">
         <Link to="artists" style={{ textDecoration: 'none' }}>
           <h1>Nice&nbsp;Jammin</h1>
         </Link>
       </div>
-      <ul className="menu-items">
+      <ul className={menuIsOpen ? "menu-items open" : "menu-items close"}>
         <li>
           <NavLink to="artists" style={({ isActive }) =>
               isActive ? activeStyle : undefined
@@ -60,7 +66,7 @@ function NavBar (props) {
           </li>
         </>}
       </ul>
-        <div className={menuIsOpen ? "menu-button open" : "menu-button close"} onClick={() => {setMenuIsOpen(!menuIsOpen)}}>
+        <div className={menuIsOpen ? "menu-button open" : "menu-button close"} onClick={handleBurgerClick}>
           <div className={menuIsOpen ? "menu-button-burger open" : "menu-button-burger close"}></div>
         </div>
     </nav>

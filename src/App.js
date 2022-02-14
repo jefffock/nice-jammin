@@ -407,6 +407,7 @@ useEffect(() => {
       <div className="app">
         <Router>
           <NavBar user={user}/>
+          <div className="app-body">
           <Routes>
             <Route path="/" element={<Navigate to="/artists"  />} />
             <Route path="/top-contributors" element={<Leaderboard fetchLeaders={fetchLeaders} leaders={leaders}/>}/>
@@ -426,6 +427,7 @@ useEffect(() => {
               </Route>
             </Route>
           </Routes>
+          </div>
         </Router>
         {/* <Header session={session}
           showPleaseConfirm={showPleaseConfirm}
