@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom'
 import Auth from './Auth'
-import './App.css';
 import Versions from './components/versions'
 import Reviews from './components/reviews'
 import AddSong from './components/addSong'
@@ -407,7 +406,7 @@ useEffect(() => {
     <>
       <div className="app">
         <Router>
-          <NavBar />
+          <NavBar user={user}/>
           <Routes>
             <Route path="/" element={<Navigate to="/artists"  />} />
             <Route path="/top-contributors" element={<Leaderboard fetchLeaders={fetchLeaders} leaders={leaders}/>}/>

@@ -64,7 +64,6 @@ function CurrentSelection(props) {
     <>
     <div className={wrapperClasses}>
       <div className="current-selection-div">
-        <h2>Fans&nbsp;helping&nbsp;fans find&nbsp;jams</h2>
         {props.artist &&
         <div className="current-selection-item">
         <h2 className="current-selection-text" onClick={e => {

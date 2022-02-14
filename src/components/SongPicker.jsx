@@ -28,8 +28,8 @@ function SongPicker (props) {
         return (
           <div className="song" key={index}>
             <Link to={`songs/${song.id}`}>
-              <button className="button-in-list-large"
-              onClick={() => props.setSong(song)}>{song.song}</button>
+              <span className="item-in-list-large"
+              onClick={() => props.setSong(song)}>{song.song}</span>
             </Link>
           </div>
           )
