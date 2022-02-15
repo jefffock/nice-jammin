@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './../supabaseClient'
 import FilterChip from './FilterChip'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 
 function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint, addTenPoints,
   canWrite, setArtist, setSong, fetchVersions}) {
@@ -52,6 +52,7 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
   const [thatYearsStyle, setThatYearsStyle] = useState(false)
 
   let { artistId, songId } = useParams()
+  let navigate = useNavigate();
 
 
   useEffect(() => {
@@ -77,8 +78,13 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
   useEffect(() => {
     if (song) {
       setSongName(song.song)
-    }
-  }, [song])
+      if (songId !== JSON.stringify(song.id)) {
+        console.log('songId', songId, 'song.id')
+        console.log('about to navigate')
+        navigate(`../../songs/${song.id}/add-version`)
+      }
+   }
+  }, [song, songId, navigate])
 
   useEffect(() => {
     let yearString = date.slice(0,4)
@@ -231,10 +237,10 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
 
 
 
-  // function handleBackClick() {
-  //   fetchVersions(songData.id)
-  //   setShowAddVersion(false)
-  // }
+  function handleBackClick() {
+    fetchVersions(song.id)
+    navigate('../')
+  }
 
   return (
     <>
@@ -371,8 +377,8 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
       </>}
       <br></br>
       <br></br>
-      {/* <button className="small-button"
-        onClick={e => handleBackClick()}>Back</button> */}
+      <button className="small-button"
+        onClick={e => handleBackClick()}>Back</button>
       </div>
       </div>
     </>

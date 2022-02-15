@@ -114,7 +114,7 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
             <p className="name">{version.submitter_name}</p>
             <p className="points">{version.points}</p>
           </div>
-          {version &&
+          {version && song &&
             <>
           <div className="action-button-wrapper">
           <button className="primary-button action-button"

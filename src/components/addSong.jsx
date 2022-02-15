@@ -12,6 +12,7 @@ function AddSong({ artist, user, fetchSongs, nameToAdd, username, addTenPoints, 
   const [cover, setCover] = useState(false)
 
 
+
   useEffect(() => {
     if (cover || !original) {
       setCover(true)
