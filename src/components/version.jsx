@@ -113,19 +113,19 @@ function Version(props) {
     }
     let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
     setTags(finalTags)
-    if (!props.versionData.name || !props.versionData.points) {
-      async function getNameAndPoints() {
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('points')
-          .eq('name', props.versionData.submitter_name)
-        if (error) {
-          console.log('error getting points', error)
-        } else {
-          props.addPointsToVersion(props.versionData.id, data[0].points)
-        }
-      } getNameAndPoints()
-    }
+    // if (!props.versionData.name || !props.versionData.points) {
+    //   async function getNameAndPoints() {
+    //     const { data, error } = await supabase
+    //       .from('profiles')
+    //       .select('points')
+    //       .eq('name', props.versionData.submitter_name)
+    //     if (error) {
+    //       console.log('error getting points', error)
+    //     } else {
+    //       props.addPointsToVersion(props.versionData.id, data[0].points)
+    //     }
+    //   } getNameAndPoints()
+    // }
   }, [props])
 
 

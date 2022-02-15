@@ -59,6 +59,7 @@ function App() {
   const [linkAdded, setLinkAdded] = useState(false)
   const [leaders, setLeaders] = useState(null)
   const [showLeaders, setShowLeaders] = useState(false)
+  const [params, setParams] = useState(null)
 
   useEffect(() => {
     setSession(supabase.auth.session())
@@ -89,11 +90,6 @@ function App() {
   useEffect(() => {
     if (artist) {
       fetchSongs(artist.artist)
-      // setShowArtistPicker(false)
-      // setShowSongPicker(true)
-    } else {
-      // setShowSongPicker(false)
-      setShowVersions(false)
     }
     setSong(null);
     setVersions(null);
@@ -101,16 +97,9 @@ function App() {
 
   useEffect(() => {
     if (song) {
-      setSongData(song)
-      setSongName(song.song)
       fetchVersions(song.id)
-      // setShowSongPicker(false)
-    } else {
-      if (artist) {
-        // setShowSongPicker(true)
-      }
     }
-  }, [song, artist])
+  }, [song])
 
   useEffect(() => {
     setShowAddLink(false)
@@ -361,7 +350,7 @@ useEffect(() => {
     setShowAddRating(false)
     setShowProfile(false)
     setSongName(null)
-    setSongSearchTerm('')
+    // setSongSearchTerm('')
     setShowSignUp(false)
     // setShowArtistPicker(true)
   }
@@ -417,14 +406,26 @@ useEffect(() => {
             <Route path="support" element={<Support />}/>
             <Route path="sign-up" element={<Auth />}/>
             <Route path="sign-in" element={<Auth />}/>
-            <Route path="add-song" element={<AddSong artist={artist} user={user} fetchSongs={fetchSongs} nameToAdd={songSearchTerm} username={username} addTenPoints={addTenPoints} canWrite={canWrite}/>}/>
-            <Route path="artists/*" element={<ArtistPicker artists={artists} setArtist={setArtist} setSong={setSong} setVersion={setVersion}/>}>
-              <Route path=":artistId/*" element={<SongPicker songs={songs} filteredSongs={filteredSongs}
-              artist={artist} song={song} version={version} setSongSearchTerm={setSongSearchTerm} artists={artists}
-              setArtist={setArtist} setSong={setSong} setVersion={setVersion} fetchArtists={fetchArtists}/>}>
-                <Route path="songs/:songId" element={<Versions versions={versions}
-                addPointsToVersion={addPointsToVersion} setVersion={setVersion}/>}>
-                  <Route path="versions/:versionId" element={<Reviews reviews={reviews} fetchRatings={fetchRatings}/>} />
+            <Route path="artists/*" element={<ArtistPicker artists={artists} setArtist={setArtist} setSong={setSong}
+            setVersion={setVersion} />}>
+
+              <Route path=":artistId/*" element={<SongPicker artists={artists} artist={artist} songs={songs} filteredSongs={filteredSongs}
+               song={song} version={version} fetchArtists={fetchArtists} fetchSongs={fetchSongs} setSongSearchTerm={setSongSearchTerm}
+              songSearchTerm={songSearchTerm} setArtist={setArtist} setSong={setSong}
+              setVersion={setVersion} />}>
+
+                <Route path="add-song" element={<AddSong artist={artist} user={user} fetchSongs={fetchSongs}
+                nameToAdd={songSearchTerm} username={username} addTenPoints={addTenPoints} canWrite={canWrite}/>}/>
+
+                <Route path="songs/:songId" element={<Versions versions={versions} addPointsToVersion={addPointsToVersion}
+                setVersion={setVersion} artists={artists} fetchArtists={fetchArtists} artist={artist} setArtist={setArtist}
+                songs={songs} song={song} fetchSongs={fetchSongs} setSong={setSong} fetchVersions={fetchVersions}/>}>
+
+                  <Route path="add-version" element={<AddVersion artist={artist} song={song} user={user} fetchArtists={fetchArtists}
+                  fetchSongs={fetchSongs} fetchVersions={fetchVersions} username={username} addOnePoint={addOnePoint}
+                  addTenPoints={addTenPoints} canWrite={canWrite} songs={songs}/>}></Route>
+
+                  <Route path="versions/:versionId" element={<Reviews reviews={reviews} fetchRatings={fetchRatings} />} />
                 </Route>
               </Route>
             </Route>

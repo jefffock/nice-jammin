@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './../supabaseClient'
 import FilterChip from './FilterChip'
+import { Link } from 'react-router-dom'
 
 function AddSong(props) {
   const [song, setSong] = useState(props.nameToAdd || '')
@@ -68,10 +69,6 @@ function AddSong(props) {
     setCover(false)
   }
 
-  function handleBackClick() {
-    props.setShowAddSong(false)
-  }
-
   return (
     <div className="add-song-container">
       <div className="add-song-wrapper">
@@ -116,8 +113,9 @@ function AddSong(props) {
       </>
       }
       <br></br>
-      <button className="small-button"
-        onClick={e => handleBackClick()}>Back to songs</button>
+      <Link to ={`/artists/${props.artist.id}`} style={{textDecoration: 'none'}}>
+      <button className="small-button">Back to songs</button>
+      </Link>
       </div>
     </div>
   )

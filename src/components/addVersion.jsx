@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './../supabaseClient'
 import FilterChip from './FilterChip'
+import { Link, useParams } from 'react-router-dom'
 
-function AddVersion (props) {
+function AddVersion ({ artist, song, songs, user, fetchArtists, fetchSongs,
+  fetchVersions, username, addOnePoint, addTenPoints, canWrite}) {
   const [songExists, setSongExists] = useState(true)
-  const [songName, setSongName] = useState(props.songName)
+  const [songName, setSongName] = useState(song.song)
   const [filteredSongs, setFilteredSongs] = useState(null)
   const [date, setDate] = useState('')
   const [year, setYear] = useState(null)
@@ -50,9 +52,18 @@ function AddVersion (props) {
   const [long, setLong] = useState(false)
   const [thatYearsStyle, setThatYearsStyle] = useState(false)
 
-  useEffect(() => {
-    setSongId(props.songData.id)
-  }, [props])
+  // let params = useParams()
+
+  // useEffect(() => {
+  //   console.log('params in add version', params)
+  //   let split = params['*'].split('/')
+  //   console.log('split', split)
+  //   if (split[2] === 'add-version') {
+  //     setShowingAddVersion(true)
+  //   } else {
+  //     setShowingAddVersion(false)
+  //   }
+  // }, [song])
 
   useEffect(() => {
     let yearString = date.slice(0,4)
@@ -63,13 +74,14 @@ function AddVersion (props) {
   async function testVersion(date) {
     let locationValid = true
     let dateValid = true
-    if (!props.canWrite) {
+    if (!canWrite) {
       locationValid = false;
       dateValid = false;
     }
-    if ((props.artist.start_year && year < props.artist.start_year) || (props.artist.end_year && year > props.artist.end_year)) {
+    if ((artist.start_year && year < artist.start_year) ||
+    (artist.end_year && year > artist.end_year)) {
         dateValid = false
-        alert(`I don't think ${props.artist.artist} played in ${year}. Imagine if they did, though!`)
+        alert(`I don't think ${artist.artist} played in ${year}. Imagine if they did, though!`)
     }
     if (location === '') {
       alert('Please enter a location')
@@ -106,10 +118,10 @@ function AddVersion (props) {
       .from('versions')
       .insert(
         [{ song_id: songId,
-          user_id: props.user.id,
-          submitter_name: props.username,
+          user_id: user.id,
+          submitter_name: username,
           location: location,
-          artist: props.artist.artist,
+          artist: artist.artist,
           date: date,
           funky: funky,
           ambient: ambient,
@@ -151,9 +163,9 @@ function AddVersion (props) {
     if (error) {
     } else {
       setShowSuccessMessage(true)
-      props.addOnePoint(props.songData.submitter_name)
-      props.addTenPoints(props.username)
-      props.fetchVersions(props.songData.id)
+      addOnePoint(song.submitter_name)
+      addTenPoints(username)
+      fetchVersions(song.id)
       }
   }
 
@@ -164,9 +176,9 @@ function AddVersion (props) {
     } else {
       let newFilteredSongs = []
       let myRegex = new RegExp(searchTerm, "ig")
-      for (var i = 0; i < props.songs.length; i++) {
-        if (myRegex.test(props.songs[i].song)) {
-          newFilteredSongs.push(props.songs[i])
+      for (var i = 0; i < songs.length; i++) {
+        if (myRegex.test(songs[i].song)) {
+          newFilteredSongs.push(songs[i])
         }
       }
       setFilteredSongs(newFilteredSongs)
@@ -188,10 +200,10 @@ function AddVersion (props) {
 
 
 
-  function handleBackClick() {
-    props.fetchVersions(props.songData.id)
-    props.setShowAddVersion(false)
-  }
+  // function handleBackClick() {
+  //   fetchVersions(songData.id)
+  //   setShowAddVersion(false)
+  // }
 
   return (
     <>
@@ -204,7 +216,7 @@ function AddVersion (props) {
         className="inputField search-bar bar"
         type="song"
         placeholder=""
-        value={songName}
+        value={song.song}
         onChange={(e) => {
           filterSongs(e.target.value)
           setShowSuccessMessage(false);
@@ -259,10 +271,10 @@ function AddVersion (props) {
         <>
         <br></br>
         <br></br>
-        <p>If "{songName}" is a song played by {props.artist.artist}, please add it!</p>
+        <p>If "{songName}" is a song played by {artist.artist}, please add it!</p>
         <br></br>
-        <button className="small-button"
-        onClick={e => props.handleShowAddSong(songName)}>Go to 'Add A Song'</button>
+        {/* <button className="small-button"
+        onClick={e => handleShowAddSong(songName)}>Go to 'Add A Song'</button> */}
         </>
         }
         {songExists && (date !== '') &&
@@ -325,8 +337,8 @@ function AddVersion (props) {
       </>}
       <br></br>
       <br></br>
-      <button className="small-button"
-        onClick={e => handleBackClick()}>Back</button>
+      {/* <button className="small-button"
+        onClick={e => handleBackClick()}>Back</button> */}
       </div>
       </div>
     </>

@@ -3,9 +3,9 @@ import Version from './version'
 import FilterChip from './FilterChip'
 import { Link, useParams, Outlet } from 'react-router-dom'
 
-function Versions(props) {
-  let params = useParams()
-  const [filteredVersions, setFilteredVersions] = useState(props.versions)
+function Versions({ artists, artist, songs, song, versions, version, fetchArtists, fetchSongs, fetchVersions,
+  setArtist, setSong, setVersion, addPointsToVersion }) {
+  const [filteredVersions, setFilteredVersions] = useState(versions)
   const [filters, setFilters] = useState([])
   const [showFilters, setShowFilters] = useState(false)
   const [funky, setFunky] = useState(false)
@@ -50,11 +50,43 @@ function Versions(props) {
   const [fillLocation, setFillLocation] = useState(false)
   const [afterDate, setAfterDate] = useState('')
   const [beforeDate, setBeforeDate] = useState('')
+  const [showingAddVersion, setShowingAddVersion] = useState(false)
+  let { artistId, songId, versionId } = useParams()
 
+// useEffect(() => {
+//   console.log('params in versions', params)
+  // let split = params['*'].split('/')
+  //   console.log('split', split)
+  //   if (split[2] === 'add-version') {
+  //     setShowingAddVersion(true)
+  //   } else {
+  //     setShowingAddVersion(false)
+  //   }
+//   }
+// )
 
-useEffect(() => {
-  console.log('props in versions', props)
-})
+  // useEffect(() => {
+  //   if (!artists) {
+  //     fetchArtists()
+  //   }
+  // }, [artists, fetchArtists])
+
+  useEffect(() => {
+    if (artists) {
+      let correctArtist = (artist) => JSON.stringify(artist.id) === artistId
+      let index = artists.findIndex(correctArtist)
+      console.log('artist at index', artists[index])
+      setArtist(artists[index])
+    }
+  }, [artists, setArtist, artistId])
+
+  useEffect(() => {
+    if (songs && songId) {
+      let correctSong = (song) => JSON.stringify(song.id) === songId
+      let index = songs.findIndex(correctSong)
+      setSong(songs[index])
+    }
+  }, [songs, songId, setSong])
 
   useEffect(() => {
     let newFilters = []
@@ -136,7 +168,7 @@ useEffect(() => {
 
   useEffect(() => {
     if (filters.length === 0 && !afterDate && !beforeDate) {
-    setFilteredVersions(props.versions)
+    setFilteredVersions(versions)
     } else {
       let afterTime, beforeTime
       if (afterDate) {
@@ -145,26 +177,26 @@ useEffect(() => {
         beforeTime = Date.parse(beforeDate)
       }
         let newFilteredVersions = []
-        for (var i = 0; i < props.versions.length; i++) {
+        for (var i = 0; i < versions.length; i++) {
           let passesFilters = true
-          if (afterDate && (Date.parse(props.versions[i].date) < afterTime)) {
+          if (afterDate && (Date.parse(versions[i].date) < afterTime)) {
             passesFilters = false;
-          } if (beforeDate && (Date.parse(props.versions[i].date) > beforeTime)) {
+          } if (beforeDate && (Date.parse(versions[i].date) > beforeTime)) {
             passesFilters = false
           } if (passesFilters) {
             for (var j = 0; j < filters.length; j++) {
               let currentFilter = filters[j]
-              if (!props.versions[i][currentFilter]) {
+              if (!versions[i][currentFilter]) {
                 passesFilters = false;
               }
             } if (passesFilters) {
-              newFilteredVersions.push(props.versions[i])
+              newFilteredVersions.push(versions[i])
           }
           }
         }
         setFilteredVersions(newFilteredVersions)
     }
-  }, [filters, props.versions, afterDate, beforeDate])
+  }, [filters, versions, afterDate, beforeDate])
 
 
   useEffect(() => {
@@ -241,22 +273,23 @@ useEffect(() => {
 
   return (
     <>
-    {!params.versionId &&
+    <Outlet />
+    {!versionId && !showingAddVersion &&
     <div className="complete-versions-container">
-      {(!props.versions || props.versions.length === 0) && !props.showAddVersion &&
+      {(!versions || versions.length === 0) && !showingAddVersion &&
       <>
       <p>Loading...</p>
       <br></br>
       <p>Or maybe no versions have been added yet!<br></br><br></br>If you know a good one, please add it!</p>
       </>}
-      {!props.showAddVersion &&
-      <>
-      <button className="primary-button"
-      onClick={e => props.setShowAddVersion(true)}>Add a great version</button>
+      {!showingAddVersion &&
+      <div onClick={() => setShowingAddVersion(true)}><Link to="add-version" style={{ textDecoration: 'none' }}>
+        <button className="primary-button">Add a great version</button>
+      </Link>
       <br></br>
       <br></br>
-      </>}
-      {(props.versions && props.versions.length > 0) &&
+      </div>}
+      {(versions && versions.length > 0) &&
       <button className="small-button show-filters-button"
       onClick={e => setShowFilters(!showFilters)}>{filterText}</button>}
       {showFilters &&
@@ -342,21 +375,18 @@ useEffect(() => {
           {filteredVersions &&
           filteredVersions.map((version, index) => {
             return (
-              <>
-                <Link to={`versions/${version.id}`} className="version" key={index} onClick={e => props.setVersion(version)} style={{ textDecoration: 'none' }}>
+                <Link to={`versions/${version.id}`} className="version" key={index} onClick={e => setVersion(version)} style={{ textDecoration: 'none' }}>
                   <Version versionData={version}
-                  setVersion={props.setVersion}
-                  addPointsToVersion={props.addPointsToVersion}/>
-                </Link>
-              </>)
+                  setVersion={setVersion}
+                  addPointsToVersion={addPointsToVersion}
+                  />
+                </Link>)
           })}
         </div>
       </>
       }
     </div>
     }
-    {params.versionId &&
-    <Outlet />}
     </>
   )
 }

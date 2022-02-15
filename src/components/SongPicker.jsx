@@ -1,39 +1,31 @@
-import { Link, useParams, Outlet } from 'react-router-dom'
+import { Link, Outlet, useParams } from 'react-router-dom'
 import CurrentSelection from './CurrentSelection'
 import { useEffect } from 'react'
 
-function SongPicker (props) {
+function SongPicker ({ artists, artist, songs, filteredSongs, song, version, fetchArtists,
+  fetchSongs, songSearchTerm, setSongSearchTerm, setArtist, setSong, setVersion }) {
 
-  let params = useParams()
+    let params = useParams()
 
   function handleSongClick(song) {
-    props.setVersion(null)
-    props.setSong(song)
+    setVersion(null)
+    setSong(song)
   }
 
   useEffect(() => {
-    let artists = props.artists
-    console.log('artists', artists)
-    if (!artists) {
-      props.fetchArtists()
-    } else {
-      let artist = props.artist
-      console.log('artist', artist)
-      if (!props.artist) {
-        if (params.artistId) {
-          let correctArtist = (artist) => JSON.stringify(artist.id) === params.artistId
-          let index = artists.findIndex(correctArtist)
-          props.setArtist(artists[index])
-        }
-      }
+    if (artists) {
+      let correctArtist = (artist) => JSON.stringify(artist.id) === params.artistId
+      let index = artists.findIndex(correctArtist)
+      setArtist(artists[index])
     }
-  })
+  }, [artist, artists, params, setArtist])
 
   return (
     <>
-    <CurrentSelection artist={props.artist} song={props.song} version={props.version}
-    setArtist={props.setArtist} setSong={props.setSong} setVersion={props.setVersion}/>
-    {!params.songId &&
+    <CurrentSelection artist={artist} song={song} version={version}
+    setArtist={setArtist} setSong={setSong} setVersion={setVersion}/>
+    <Outlet />
+    {params && !params.songId && params['*'] !== 'add-song' &&
       <div className="song-picker-container">
         <div className="song-picker-wrapper">
           <p className="title">Choose a song:</p>
@@ -42,14 +34,14 @@ function SongPicker (props) {
             className="inputField search-bar"
             type="song"
             placeholder="Search for a song..."
-            value={props.songSearchTerm}
+            value={songSearchTerm}
             onChange={(e) => {
-              props.setSongSearchTerm(e.target.value)}}></input>
+              setSongSearchTerm(e.target.value)}}></input>
           </div>
-      {!props.filteredSongs &&
+      {!filteredSongs &&
       <h3>Loading Songs...</h3>}
-      {props.filteredSongs &&
-      props.filteredSongs.map((song, index) => {
+      {filteredSongs &&
+      filteredSongs.map((song, index) => {
         return (
           <div className="song" key={index}>
             <Link to={`songs/${song.id}`} style={{ textDecoration: 'none' }}>
@@ -61,14 +53,12 @@ function SongPicker (props) {
         })}
       <div className="title">
         {/* <Link to="/add-song">Add a Song</Link> */}
-        <button className="small-button"><Link to="/add-song" style={{ textDecoration: 'none' }}>Add a Song</Link></button>
+        <button className="small-button"><Link to="add-song" style={{ textDecoration: 'none' }}>Add a Song</Link></button>
         <br></br><br></br>
       </div>
         </div>
       </div>
     }
-    {params.songId &&
-    <Outlet />}
     </>
   )
 }
