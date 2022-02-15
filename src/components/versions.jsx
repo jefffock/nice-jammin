@@ -370,12 +370,13 @@ useEffect(() => {
           {filteredVersions &&
           filteredVersions.map((version, index) => {
             return (
-                <Link to={`versions/${version.id}`} className="version" key={index} onClick={e => setVersion(version)} style={{ textDecoration: 'none' }}>
+              <div onClick={() => setVersion(version)}>
+                <Link to={`versions/${version.id}`} className="version" key={index} style={{ textDecoration: 'none' }}>
                   <Version versionData={version}
                   setVersion={setVersion}
-                  addPointsToVersion={addPointsToVersion}
-                  />
-                </Link>)
+                  addPointsToVersion={addPointsToVersion}/>
+                </Link>
+              </div>)
           })}
         </div>
       </>

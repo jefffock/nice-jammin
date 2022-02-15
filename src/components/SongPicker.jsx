@@ -2,8 +2,8 @@ import { Link, Outlet, useParams } from 'react-router-dom'
 import CurrentSelection from './CurrentSelection'
 import { useEffect } from 'react'
 
-function SongPicker ({ artists, artist, songs, filteredSongs, song, version, fetchArtists,
-  fetchSongs, songSearchTerm, setSongSearchTerm, setArtist, setSong, setVersion }) {
+function SongPicker ({ artists, artist, songs, filteredSongs, song, version, fetchArtists, addTenPoints, fetchVersions, username, versions,
+  fetchSongs, songSearchTerm, setSongSearchTerm, setArtist, setSong, setVersion, showAddLink, setShowAddLink, linkAdded, setLinkAdded }) {
 
     let params = useParams()
 
@@ -22,8 +22,10 @@ function SongPicker ({ artists, artist, songs, filteredSongs, song, version, fet
 
   return (
     <>
-    <CurrentSelection artist={artist} song={song} version={version}
-    setArtist={setArtist} setSong={setSong} setVersion={setVersion}/>
+    <CurrentSelection artist={artist} song={song} version={version} versions={versions} username={username}
+    setArtist={setArtist} setSong={setSong} setVersion={setVersion}
+    showAddLink={showAddLink} setShowAddLink={setShowAddLink} linkAdded={linkAdded}
+    setLinkAdded={setLinkAdded} addTenPoints={addTenPoints} fetchVersions={fetchVersions}/>
     <Outlet />
     {params && !params.songId && params['*'] !== 'add-song' &&
       <div className="song-picker-container">

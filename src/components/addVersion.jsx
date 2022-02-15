@@ -3,8 +3,8 @@ import { supabase } from './../supabaseClient'
 import FilterChip from './FilterChip'
 import { Link, useParams } from 'react-router-dom'
 
-function AddVersion ({ artists, artist, song, songs, user, fetchArtists, fetchSongs,
-  fetchVersions, username, addOnePoint, addTenPoints, canWrite, setArtist, setSong}) {
+function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint, addTenPoints,
+  canWrite, setArtist, setSong, fetchVersions}) {
   const [songExists, setSongExists] = useState(true)
   const [songName, setSongName] = useState(() => getInitialSongName())
   const [filteredSongs, setFilteredSongs] = useState(null)

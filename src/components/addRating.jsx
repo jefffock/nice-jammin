@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import { supabase } from './../supabaseClient'
 import FilterChip from './FilterChip'
 
-function AddRating(props) {
+function AddRating({ artists, artist, songs, song, versions, version, user, username, addOnePoint,
+  addTenPoints, canWrite, setArtist, setSong, calcAverageForVersion, fetchRatings, fetchVersions, addRatingCountToArtist, addRatingCountToSong}) {
   const [rating, setRating] = useState(10);
   const [comment, setComment] = useState('');
   const [charCount, setCharCount] = useState(0)
@@ -49,14 +50,14 @@ function AddRating(props) {
   const [tagText, setTagText] = useState('')
 
   useEffect(() => {
-    console.log('props in add rating', props)
-    if (props.user) {
+    // console.log('props in add rating', props)
+    if (user) {
     async function checkUserAlreadyRated() {
       const { data, error } = await supabase
         .from('ratings')
         .select('*')
-        .eq('submitter_name', props.username)
-        .eq('version_id', props.version.id)
+        .eq('submitter_name', username)
+        .eq('version_id', version.id)
       if (error) {
         console.log('error in checkUserAlreadyRated', error)
       } else {
@@ -70,13 +71,13 @@ function AddRating(props) {
     }
     checkUserAlreadyRated()
     }
-  }, [props])
+  }, [user, username, version])
 
   useEffect(() => {
-    if (!props.user) {
+    if (!user) {
       setAddRatingStatus('Please log in to add your comments and rating')
     }
-  }, [props.user])
+  }, [user])
 
   useEffect(() => {
     setCharCount(comment.length)
@@ -84,118 +85,118 @@ function AddRating(props) {
 
   useEffect(() => {
     let tagBuilder = '';
-    if (props.version.acoustic) {
+    if (version.acoustic) {
       tagBuilder+='Acoustic, '
     }
-     if (props.version.ambient) {
+     if (version.ambient) {
       tagBuilder+='Ambient, '
     }
-    if (props.version.bliss) {
+    if (version.bliss) {
       tagBuilder+='Bliss, '
     }
-    if (props.version.bluesy) {
+    if (version.bluesy) {
       tagBuilder+='Bluesy, '
     }
-    if (props.version.chaotic) {
+    if (version.chaotic) {
       tagBuilder+='Chaotic, '
     }
-     if (props.version.crunchy) {
+     if (version.crunchy) {
       tagBuilder+='Crunchy, '
     }
-    if (props.version.dark) {
+    if (version.dark) {
       tagBuilder+='Dark, '
     }
-    if (props.version.dissonant) {
+    if (version.dissonant) {
       tagBuilder+='Dissonant, '
     }
-     if (props.version.fast) {
+     if (version.fast) {
       tagBuilder+='Fast, '
     }
-     if (props.version.funky) {
+     if (version.funky) {
       tagBuilder+='Funky, '
     }
-     if (props.version.groovy) {
+     if (version.groovy) {
       tagBuilder+='Groovy, '
     }
-     if (props.version.guest) {
+     if (version.guest) {
       tagBuilder+='Guest, '
     }
-     if (props.version.happy) {
+     if (version.happy) {
       tagBuilder+='Happy, '
     }
-     if (props.version.heavy) {
+     if (version.heavy) {
       tagBuilder+='Heavy, '
     }
-     if (props.version.jazzy) {
+     if (version.jazzy) {
       tagBuilder+='Jazzy, '
     }
-    if (props.version.long) {
+    if (version.long) {
       tagBuilder+='Long, '
     }
-    if (props.version.multi_part) {
+    if (version.multi_part) {
       tagBuilder+='Multi-part, '
     }
-    if (props.version.official_release) {
+    if (version.official_release) {
       tagBuilder+='Official release, '
     }
-     if (props.version.peaks) {
+     if (version.peaks) {
       tagBuilder+='Peaks, '
     }
-     if (props.version.reggae) {
+     if (version.reggae) {
       tagBuilder+='Reggae, '
     }
-    if (props.version.segue) {
+    if (version.segue) {
       tagBuilder+='Segue, '
     }
-     if (props.version.shred) {
+     if (version.shred) {
       tagBuilder+='Shred, '
     }
-    if (props.version.silly) {
+    if (version.silly) {
      tagBuilder+='Silly, '
    }
-    if (props.version.sloppy) {
+    if (version.sloppy) {
       tagBuilder+='Sloppy, '
     }
-    if (props.version.slow) {
+    if (version.slow) {
      tagBuilder+='Slow, '
    }
-    if (props.version.sludgy) {
+    if (version.sludgy) {
       tagBuilder+='Sludgy, '
     }
-    if (props.version.soaring) {
+    if (version.soaring) {
       tagBuilder+='Soaring, '
     }
-    if (props.version.soulful) {
+    if (version.soulful) {
       tagBuilder+='Soulful, '
     }
-    if (props.version.stop_start) {
+    if (version.stop_start) {
       tagBuilder+='Stop-start, '
     }
-    if (props.version.synthy) {
+    if (version.synthy) {
       tagBuilder+='Synthy, '
     }
-     if (props.version.tease) {
+     if (version.tease) {
       tagBuilder+='Teases, '
     }
-    if (props.version.that_years_style) {
+    if (version.that_years_style) {
       tagBuilder+='That year\'s style, '
     }
-     if (props.version.trippy) {
+     if (version.trippy) {
       tagBuilder+='Trippy, '
     }
-     if (props.version.type2) {
+     if (version.type2) {
       tagBuilder+='Type\u00A0II, '
     }
-    if (props.version.unusual) {
+    if (version.unusual) {
       tagBuilder+='Unusual, '
     }
     let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
     setTagText(finalTags)
-  }, [props])
+  }, [version])
 
   async function testRating() {
     let ratingValid = true
-    if (!props.user || !props.canWrite) {
+    if (!user || !canWrite) {
       ratingValid = false
     } if (rating < 1 || rating > 10) {
       ratingValid = false
@@ -223,12 +224,12 @@ function AddRating(props) {
         comment: comment,
         rating: rating
       })
-      .match({submitter_name: props.username, version_id: props.version.id})
+      .match({submitter_name: username, version_id: version.id})
     if (error) {
       setAddRatingStatus('Unable to update your comments and rating at this time')
     } else {
       setAddRatingStatus('Updated your comments and rating')
-      props.calcAverageForVersion(props.version.id)
+      calcAverageForVersion(version.id)
       insertUpdateTags()
     }
   }
@@ -238,9 +239,9 @@ function AddRating(props) {
     const {  error } = await supabase
       .from('ratings')
       .insert(
-        { user_id: props.user.id,
-          version_id: props.version.id,
-          submitter_name: props.username,
+        { user_id: user.id,
+          version_id: version.id,
+          submitter_name: username,
           rating: rating,
           comment: comment
         }, {returning: 'minimal'})
@@ -249,15 +250,15 @@ function AddRating(props) {
       } else {
         setAddRatingStatus('Added your rating')
         insertUpdateTags()
-        props.fetchRatings(props.version.id)
-        props.fetchVersions()
-        props.addOnePoint(props.version.submitter_name)
-        props.addOnePoint(props.songData.submitter_name)
-        props.addTenPoints(props.username)
-        props.addRatingCountToSong(props.songData.id)
-        props.addRatingCountToArtist(props.artist.id)
-        props.calcAverageForVersion(props.version.id)
-        props.setShowAddRating(false)
+        fetchRatings(version.id)
+        fetchVersions()
+        addOnePoint(version.submitter_name)
+        addOnePoint(song.submitter_name)
+        addTenPoints(username)
+        addRatingCountToSong(song.id)
+        addRatingCountToArtist(artist.id)
+        calcAverageForVersion(version.id)
+        // setShowAddRating(false)
       }
   }
 
@@ -408,7 +409,7 @@ function AddRating(props) {
         tagsToUpdate.unusual = true;
       }
     } else {
-      props.fetchVersions(props.songData.id)
+      fetchVersions(song.id)
       setAddRatingStatus('Added your rating. Thanks for contributing!')
     }
     let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
@@ -419,8 +420,8 @@ function AddRating(props) {
       const { error } = await supabase
         .from('update_tags')
         .insert({
-          version_id: props.version.id,
-          username: props.username,
+          version_id: version.id,
+          username: username,
           tags_added: finalTags,
           length: tagsLength
         })
@@ -431,7 +432,7 @@ function AddRating(props) {
       }
     } else {
       setAddRatingStatus('Added your rating. Thanks for contributing!')
-      props.fetchVersions(props.songData.id)
+      fetchVersions(song.id)
     }
   }
 
@@ -439,18 +440,18 @@ function AddRating(props) {
     const { error } = await supabase
       .from('versions')
       .update(tagsToUpdate)
-      .match({id: props.version.id})
+      .match({id:version.id})
     if (error) {
       setAddRatingStatus('Unable to update tags at this time.')
     } else {
       setAddRatingStatus('Added/updated rating and added tags. Thanks for contributing!')
-      props.fetchVersions(props.songData.id)
+      fetchVersions(song.id)
     }
   }
 
   function handleBackClick() {
-    props.fetchRatings(props.version.id)
-    props.setShowAddRating(false)
+    fetchRatings(version.id)
+    // setShowAddRating(false)
   }
 
   return (
@@ -502,109 +503,109 @@ function AddRating(props) {
         <p>Current tags: {tagText}.<br></br><br></br> Please select all other tags that apply to this version:</p>
         <br></br>
         <div className="tags">
-          {!props.version.acoustic &&
+          {!version.acoustic &&
           <FilterChip currentFilterState={acoustic} text='Acoustic' setFilter={setAcoustic}/>
           }
-          {!props.version.ambient &&
+          {!version.ambient &&
           <FilterChip currentFilterState={ambient} text='Ambient/Space' setFilter={setAmbient}/>
           }
-          {!props.version.bliss &&
+          {!version.bliss &&
           <FilterChip currentFilterState={bliss} text='Bliss' setFilter={setBliss}/>
         }
-        {!props.version.bluesy &&
+        {!version.bluesy &&
           <FilterChip currentFilterState={bluesy} text='Bluesy' setFilter={setBluesy}/>
         }
-        {!props.version.chaotic &&
+        {!version.chaotic &&
           <FilterChip currentFilterState={chaotic} text='Chaotic' setFilter={setChaotic}/>
         }
-        {!props.version.crunchy &&
+        {!version.crunchy &&
           <FilterChip currentFilterState={crunchy} text='Crunchy' setFilter={setCrunchy}/>
         }
-        {!props.version.dark &&
+        {!version.dark &&
           <FilterChip currentFilterState={dark} text='Dark' setFilter={setDark}/>
         }
-        {!props.version.dissonant &&
+        {!version.dissonant &&
           <FilterChip currentFilterState={dissonant} text='Dissonant' setFilter={setDissonant}/>
         }
-        {!props.version.fast &&
+        {!version.fast &&
           <FilterChip currentFilterState={fast} text='Fast' setFilter={setFast}/>
         }
-        {!props.version.funky &&
+        {!version.funky &&
           <FilterChip currentFilterState={funky} text='Funky' setFilter={setFunky}/>
         }
-        {!props.version.groovy &&
+        {!version.groovy &&
           <FilterChip currentFilterState={groovy} text='Groovy' setFilter={setGroovy}/>
         }
-        {!props.version.guest &&
+        {!version.guest &&
           <FilterChip currentFilterState={guest} text='Guest' setFilter={setGuest}/>
         }
-        {!props.version.happy &&
+        {!version.happy &&
           <FilterChip currentFilterState={happy} text='Happy' setFilter={setHappy}/>
         }
-        {!props.version.heavy &&
+        {!version.heavy &&
           <FilterChip currentFilterState={heavy} text='Heavy' setFilter={setHeavy}/>
         }
-        {!props.version.jazzy &&
+        {!version.jazzy &&
           <FilterChip currentFilterState={jazzy} text='Jazzy' setFilter={setJazzy}/>
         }
-        {!props.version.long &&
+        {!version.long &&
           <FilterChip currentFilterState={long} text='Long' setFilter={setLong}/>
         }
-        {!props.version.multi_part &&
+        {!version.multi_part &&
           <FilterChip currentFilterState={multiPart} text='Multi-part' setFilter={setMultiPart}/>
         }
-        {!props.version.official_release &&
+        {!version.official_release &&
           <FilterChip currentFilterState={officialRelease} text='Official Release' setFilter={setOfficialRelease}/>
         }
-        {!props.version.peaks &&
+        {!version.peaks &&
           <FilterChip currentFilterState={peaks} text='Peaks' setFilter={setPeaks}/>
         }
-        {!props.version.reggae &&
+        {!version.reggae &&
           <FilterChip currentFilterState={reggae} text='Reggae' setFilter={setReggae}/>
         }
-        {!props.version.segue &&
+        {!version.segue &&
           <FilterChip currentFilterState={segue} text='Segue' setFilter={setSegue}/>
         }
-        {!props.version.shred &&
+        {!version.shred &&
           <FilterChip currentFilterState={shred} text='Shred' setFilter={setShred}/>
         }
-        {!props.version.silly &&
+        {!version.silly &&
           <FilterChip currentFilterState={silly} text='Silly' setFilter={setSilly}/>
         }
-        {!props.version.sloppy &&
+        {!version.sloppy &&
           <FilterChip currentFilterState={sloppy} text='Sloppy' setFilter={setSloppy}/>
         }
-        {!props.version.slow &&
+        {!version.slow &&
           <FilterChip currentFilterState={slow} text='Slow' setFilter={setSlow}/>
         }
-        {!props.version.sludgy &&
+        {!version.sludgy &&
           <FilterChip currentFilterState={sludgy} text='Sludgy' setFilter={setSludgy}/>
         }
-        {!props.version.soaring &&
+        {!version.soaring &&
           <FilterChip currentFilterState={soaring} text='Soaring' setFilter={setSoaring}/>
         }
-        {!props.version.soulful &&
+        {!version.soulful &&
           <FilterChip currentFilterState={soulful} text='Soulful' setFilter={setSoulful}/>
         }
-        {!props.version.stop_start &&
+        {!version.stop_start &&
           <FilterChip currentFilterState={stopStart} text='Stop-start' setFilter={setStopStart}/>
         }
-        {!props.version.synthy &&
+        {!version.synthy &&
           <FilterChip currentFilterState={synthy} text='Synthy' setFilter={setSynthy}/>
         }
-        {!props.version.tease &&
+        {!version.tease &&
           <FilterChip currentFilterState={tease} text='Teases' setFilter={setTease}/>
         }
-        {!props.version.this_years_style &&
+        {!version.this_years_style &&
           <FilterChip currentFilterState={thatYearsStyle} text="That Year's Style" setFilter={setThatYearsStyle}/>
         }
-        {!props.version.trippy &&
+        {!version.trippy &&
           <FilterChip currentFilterState={trippy} text='Trippy' setFilter={setTrippy}/>
         }
-        {!props.version.type2 &&
+        {!version.type2 &&
           <FilterChip currentFilterState={type2} text='Type II' setFilter={setType2}/>
         }
-        {!props.version.unusual &&
+        {!version.unusual &&
           <FilterChip currentFilterState={unusual} text='Unusual' setFilter={setUnusual}/>
         }
           </div>

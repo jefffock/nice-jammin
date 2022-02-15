@@ -410,9 +410,9 @@ useEffect(() => {
             setVersion={setVersion} />}>
 
               <Route path=":artistId/*" element={<SongPicker artists={artists} artist={artist} songs={songs} filteredSongs={filteredSongs}
-               song={song} version={version} fetchArtists={fetchArtists} fetchSongs={fetchSongs} setSongSearchTerm={setSongSearchTerm}
-              songSearchTerm={songSearchTerm} setArtist={setArtist} setSong={setSong}
-              setVersion={setVersion} />}>
+               song={song} version={version} versions={versions} fetchArtists={fetchArtists} fetchSongs={fetchSongs} setSongSearchTerm={setSongSearchTerm}
+              songSearchTerm={songSearchTerm} setArtist={setArtist} setSong={setSong} setVersion={setVersion}  showAddLink={showAddLink} username={username}
+              setShowAddLink={setShowAddLink} linkAdded={linkAdded} setLinkAdded={setLinkAdded} addTenPoints={addTenPoints} fetchVersions={fetchVersions}/>}>
 
                 <Route path="add-song" element={<AddSong artist={artist} user={user} fetchSongs={fetchSongs}
                 nameToAdd={songSearchTerm} username={username} addTenPoints={addTenPoints} canWrite={canWrite}/>}/>
@@ -425,7 +425,16 @@ useEffect(() => {
                   fetchSongs={fetchSongs} setArtist={setArtist} setSong={setSong} fetchVersions={fetchVersions} username={username} addOnePoint={addOnePoint}
                   addTenPoints={addTenPoints} canWrite={canWrite} />}></Route>
 
-                  <Route path="versions/:versionId" element={<Reviews reviews={reviews} fetchRatings={fetchRatings} />} />
+                  <Route path="versions/:versionId" element={<Reviews reviews={reviews} fetchRatings={fetchRatings} artist={artist} setArtist={setArtist} songs={songs}
+                  song={song} setSong={setSong} versions={versions} version={version} setVersion={setVersion} username={username}
+                  countHelpfulVotesRatings={countHelpfulVotesRatings} countFunnyVotesRatings={countFunnyVotesRatings} addOnePoint={addOnePoint}/>}>
+
+                  <Route path="add-rating" element={<AddRating artists={artists} artist={artist} songs={songs} song={song} user={user} fetchArtists={fetchArtists}
+                  setArtist={setArtist} setSong={setSong} fetchVersions={fetchVersions} username={username} addOnePoint={addOnePoint}
+                  addTenPoints={addTenPoints} canWrite={canWrite} calcAverageForVersion={calcAverageForVersion}
+                  fetchRatings={fetchRatings} addRatingCountToSong={addRatingCountToSong} addRatingCountToArtist={addRatingCountToArtist}
+                  />}></Route>
+                  </Route>
                 </Route>
               </Route>
             </Route>
@@ -496,10 +505,10 @@ useEffect(() => {
           setSongName={setSongName}
           setSongSearchTerm={setSongSearchTerm}
           songData={songData}
-          showAddLink={showAddLink}
-          setShowAddLink={setShowAddLink}
           username={username}
           addTenPoints={addTenPoints}
+          showAddLink={showAddLink}
+          setShowAddLink={setShowAddLink}
           fetchVersions={fetchVersions}
           linkAdded={linkAdded}
           setLinkAdded={setLinkAdded}/>

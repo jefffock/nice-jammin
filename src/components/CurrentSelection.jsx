@@ -1,33 +1,39 @@
 import { useEffect, useState } from 'react'
 import { supabase } from './../supabaseClient'
 
-function CurrentSelection(props) {
-  const [wrapperClasses, setWrapperClasses] = useState('current-selection-wrapper hidden')
+function CurrentSelection({ artist, song, version, versions, setArtist, setSong, setVersion, showAddLink,
+  setShowAddLink, linkAdded, setLinkAdded, addTenPoints, fetchVersions, username}) {
+  // const [wrapperClasses, setWrapperClasses] = useState('current-selection-wrapper hidden')
   const [linkToAdd, setLinkToAdd] = useState('')
   const [addLinkStatus, setAddLinkStatus] = useState('')
   const [buttonDisabled, setButtonDisabled] = useState(false)
 
+  // useEffect(() => {
+  //   if (props.artist) {
+  //     setWrapperClasses('current-selection-wrapper')
+  //   } else {
+  //     setWrapperClasses('current-selection-wrapper hidden')
+  //   }
+  // }, [props])
+
   useEffect(() => {
-    if (props.artist) {
-      setWrapperClasses('current-selection-wrapper')
-    } else {
-      setWrapperClasses('current-selection-wrapper hidden')
-    }
-  }, [props])
+    console.log('versions in currentSelection', versions)
+    console.log('version in currentSelection', version)
+  })
 
   async function insertAddLink() {
-    props.setLinkAdded(true)
+    setLinkAdded(true)
     setButtonDisabled(true)
     setAddLinkStatus('Adding link...')
-    if (!props.username) {
+    if (!username) {
       setAddLinkStatus('Please log in to contribute')
     } else {
       const { data, error } = await supabase
         .from('add_link')
         .insert({
           link: linkToAdd,
-          version_id: props.version.id,
-          username: props.username
+          version_id: version.id,
+          username: username
         })
       if (error) {
         console.log('error inserting add link', error)
@@ -46,96 +52,96 @@ function CurrentSelection(props) {
       .update({
         listen_link: linkToAdd
       })
-      .match({id: props.version.id})
+      .match({id: version.id})
     if (error) {
       console.log('error adding link', error)
       setAddLinkStatus('Unable to add a link at this time.')
       setButtonDisabled(false)
     } else {
       setAddLinkStatus('Link added. Thanks for contributing!')
-      props.addTenPoints(props.username)
-      props.fetchVersions(props.song.id)
-      props.setShowAddLink(false)
+      addTenPoints(username)
+      fetchVersions(song.id)
+      setShowAddLink(false)
       setLinkToAdd('')
     }
   }
 
   return (
     <>
-    <div className={wrapperClasses}>
+    <div className={artist ? 'current-selection-wrapper' : 'current-selection-wrapper hidden'}>
       <div className="current-selection-div">
-        {props.artist &&
+        {artist &&
         <div className="current-selection-item">
         <h2 className="current-selection-text" onClick={e => {
-          props.setShowArtistPicker(true)
-          props.setArtist(null)
-          props.setSong(null)
-          props.setVersion(null)
-          props.setShowAddSong(false)
-          props.setShowAddVersion(false)
-          props.setShowAddRating(false)
-          props.setSongName(null)
-          props.setSongSearchTerm('')
-        }}>{props.artist.artist}</h2>
+          // setShowArtistPicker(true)
+          setArtist(null)
+          setSong(null)
+          setVersion(null)
+          // setShowAddSong(false)
+          // setShowAddVersion(false)
+          // setShowAddRating(false)
+          // setSongName(null)
+          // setSongSearchTerm('')
+        }}>{artist.artist}</h2>
         </div>}
-        {props.artist && props.song &&
+        {artist && song &&
         <div className="current-selection-item">
           <h2 className="current-selection-text" onClick={e => {
-            props.setSong(null)
-            props.setSongName(null)
-            props.setVersion(null)
-            props.setShowAddSong(false)
-            props.setShowAddVersion(false)
-            props.setShowAddRating(false)
-          }}>{props.song.song}</h2>
+           setSong(null)
+            // setSongName(null)
+            setVersion(null)
+            // props.setShowAddSong(false)
+            // props.setShowAddVersion(false)
+            // props.setShowAddRating(false)
+          }}>{song.song}</h2>
         </div>}
         <div className="current-selection-item">
-          {props.artist && props.song && props.version &&
+          {artist && song && version &&
           <>
-          <h2 className="current-selection-text" onClick={e => {
-            props.setVersion(null)
-            props.setShowAddSong(false)
-            props.setShowAddVersion(false)
-            props.setShowAddRating(false)
-          }}>{props.version.date}</h2>
+          <h2 className="current-selection-text" onClick={() => {
+            setVersion(null)
+            // setShowAddSong(false)
+            // setShowAddVersion(false)
+            // setShowAddRating(false)
+          }}>{version.date}</h2>
           </>}
          </div>
-          {props.version && props.version.submitter_name &&
+          {version && version.submitter_name &&
             <>
-            <p className="location">{props.version.location}</p><br></br>
+            <p className="location">{version.location}</p><br></br>
           <div className="current-selection-item current-selection-name-points">
             <p>Added by</p>
-            <p className="name">{props.version.submitter_name}</p>
-            <p className="points">{props.version.points}</p>
+            <p className="name">{version.submitter_name}</p>
+            <p className="points">{version.points}</p>
           </div>
-          {!props.showAddRating &&
+          {version &&
             <>
           <div className="action-button-wrapper">
           <button className="primary-button action-button"
-          onClick={e => props.setShowAddRating(true)}
-          >Rate this {props.song.song}</button>
+          // onClick={e => setShowAddRating(true)}
+          >Rate this {song.song}</button>
         </div>
             </>
           }
         </>
           }
-          {props.version && props.version.listen_link &&
+          {version && version.listen_link &&
            <>
              <div className="listen-link">
                <br></br>
-               <a className="listen-link link" href={props.version.listen_link}>Listen Here</a><br></br><br></br>
+               <a className="listen-link link" href={version.listen_link}>Listen Here</a><br></br><br></br>
              </div>
            </>
           }
-          {props.version && !props.version.listen_link && !props.showAddLink && !props.linkAdded &&
+          {version && !version.listen_link && !showAddLink && !linkAdded &&
           <>
           <br></br>
           <div className="center-content">
           <button className="small-button"
-          onClick={e => props.setShowAddLink(true)}>Add a 'Listen Here' link</button>
+          onClick={e => setShowAddLink(true)}>Add a 'Listen Here' link</button>
           </div>
           </>}
-          {props.version && props.showAddLink &&
+          {version && showAddLink &&
           <>
           <br></br><br></br>
           <div className="center-content">
@@ -156,7 +162,7 @@ function CurrentSelection(props) {
             onClick={e => insertAddLink()}>Add this link</button>
           </div>
           </>}
-          {props.linkAdded &&
+          {linkAdded &&
           <div className="center-content">
             <p className="status">{addLinkStatus}</p>
           </div>
