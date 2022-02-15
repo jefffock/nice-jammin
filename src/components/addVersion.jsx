@@ -3,15 +3,14 @@ import { supabase } from './../supabaseClient'
 import FilterChip from './FilterChip'
 import { Link, useParams } from 'react-router-dom'
 
-function AddVersion ({ artist, song, songs, user, fetchArtists, fetchSongs,
-  fetchVersions, username, addOnePoint, addTenPoints, canWrite}) {
+function AddVersion ({ artists, artist, song, songs, user, fetchArtists, fetchSongs,
+  fetchVersions, username, addOnePoint, addTenPoints, canWrite, setArtist, setSong}) {
   const [songExists, setSongExists] = useState(true)
-  const [songName, setSongName] = useState(song.song)
+  const [songName, setSongName] = useState(() => getInitialSongName())
   const [filteredSongs, setFilteredSongs] = useState(null)
   const [date, setDate] = useState('')
   const [year, setYear] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [songId, setSongId] = useState('')
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [showAlreadyExistsMessage, setShowAlreadyExistsMessage] = useState(false)
   const [location, setLocation] = useState('')
@@ -52,23 +51,47 @@ function AddVersion ({ artist, song, songs, user, fetchArtists, fetchSongs,
   const [long, setLong] = useState(false)
   const [thatYearsStyle, setThatYearsStyle] = useState(false)
 
-  // let params = useParams()
+  let { artistId, songId } = useParams()
 
-  // useEffect(() => {
-  //   console.log('params in add version', params)
-  //   let split = params['*'].split('/')
-  //   console.log('split', split)
-  //   if (split[2] === 'add-version') {
-  //     setShowingAddVersion(true)
-  //   } else {
-  //     setShowingAddVersion(false)
-  //   }
-  // }, [song])
+
+  useEffect(() => {
+    if (artists) {
+      let correctArtist = (artist) => JSON.stringify(artist.id) === artistId
+      let index = artists.findIndex(correctArtist)
+      setArtist(artists[index])
+    }
+  }, [artistId, artist, setArtist])
+
+  useEffect(() => {
+    console.log('songId', songId)
+    console.log('songs', songs)
+    if (songs) {
+      let correctSong = (song) => JSON.stringify(song.id) === songId
+      let index = songs.findIndex(correctSong)
+      console.log('index', index)
+      console.log('songs[index]', songs[index])
+      setSong(songs[index])
+    }
+  }, [songs, songId, setSong])
+
+  useEffect(() => {
+    if (song) {
+      setSongName(song.song)
+    }
+  }, [song])
 
   useEffect(() => {
     let yearString = date.slice(0,4)
     setYear(parseInt(yearString))
   }, [date])
+
+  function getInitialSongName() {
+    if (song) {
+      return song.song
+    } else {
+      return ''
+    }
+  }
 
 
   async function testVersion(date) {
@@ -99,7 +122,7 @@ function AddVersion ({ artist, song, songs, user, fetchArtists, fetchSongs,
       const { data, error } = await supabase
         .from('versions')
         .select('id')
-        .eq('song_id', songId)
+        .eq('song_id', Number.parse(songId))
         .eq('date', date)
       if (error) {
         console.log('error', error)
@@ -181,6 +204,7 @@ function AddVersion ({ artist, song, songs, user, fetchArtists, fetchSongs,
           newFilteredSongs.push(songs[i])
         }
       }
+      console.log('new filtered songs', newFilteredSongs)
       setFilteredSongs(newFilteredSongs)
       if ((newFilteredSongs.length === 1 ) && (searchTerm === newFilteredSongs[0].song)) {
         setSongExists(true)
@@ -190,12 +214,19 @@ function AddVersion ({ artist, song, songs, user, fetchArtists, fetchSongs,
     }
   }
 
-  function handleSongChange(songid, songName) {
-    setSongId(songid)
-    setSongExists(true)
-    setSongName(songName)
+  function handleSongClick(song) {
+    setSongName(song.song)
     setFilteredSongs([])
     setSongExists(true)
+    setSong(song)
+  }
+
+  function handleDateChange(e) {
+    console.log('date', e.target.value)
+    console.log('first char', e.target.value.charAt(0))
+    setDate(e.target.value);
+    setShowSuccessMessage(false);
+    setShowAlreadyExistsMessage(false)
   }
 
 
@@ -216,25 +247,28 @@ function AddVersion ({ artist, song, songs, user, fetchArtists, fetchSongs,
         className="inputField search-bar bar"
         type="song"
         placeholder=""
-        value={song.song}
+        value={songName}
         onChange={(e) => {
           filterSongs(e.target.value)
           setShowSuccessMessage(false);
           setShowAlreadyExistsMessage(false);}
         }/>
-        {filteredSongs && filteredSongs.length > 0 &&
+        {/* {filteredSongs && filteredSongs.length > 0 &&
         <>
         <br></br>
         <br></br>
         </>
-        }
-        {filteredSongs && filteredSongs.length > 0 &&
+        } */}
+        {filteredSongs && filteredSongs.length > 0 && songName !== song.song &&
         filteredSongs.map(song => {
           return (
-            <button className="button-in-list-large song-select"
-            onClick={() => handleSongChange(song.id, song.song)}>{song.song}</button>
+            <div onClick={() => handleSongClick(song)}>
+              <span className="item-in-list-large">{song.song}</span>
+            </div>
           )
         })}
+        {songExists &&
+        <>
         <br></br>
         <br></br>
         <label htmlFor="version">Date: </label><br></br>
@@ -243,28 +277,29 @@ function AddVersion ({ artist, song, songs, user, fetchArtists, fetchSongs,
         type="date"
         placeholder=""
         value={date}
-        onChange={(e) => {
-          setDate(e.target.value);
-          setShowSuccessMessage(false);
-          setShowAlreadyExistsMessage(false)}
-        }/>
-        <br></br>
-        <br></br>
-        <label htmlFor="location">Location: </label><br></br>
-        <input
-        className="inputField search-bar bar"
-        type="text"
-        placeholder="City or Venue"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}/><br></br><br></br>
-        <label htmlFor="listen">Link to listen (optional): </label><br></br>
-        <input
-        className="inputField search-bar bar"
-        type="text"
-        placeholder="YouTube, Archive.org, etc..."
-        value={listenLink}
-        onChange={(e) => setListenLink(e.target.value)}/>
-      </div>
+        onChange={(e) => handleDateChange(e)}/>
+        </>
+        }
+        {songExists && date.length > 9 && (date.charAt(0) === '1' || date.charAt(0) === '2') &&
+        <>
+          <br></br>
+          <br></br>
+          <label htmlFor="location">Location: </label><br></br>
+          <input
+          className="inputField search-bar bar"
+          type="text"
+          placeholder="City or Venue"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}/><br></br><br></br>
+          <label htmlFor="listen">Link to listen (optional): </label><br></br>
+          <input
+          className="inputField search-bar bar"
+          type="text"
+          placeholder="YouTube, Archive.org, etc..."
+          value={listenLink}
+          onChange={(e) => setListenLink(e.target.value)}/>
+        </>}
+        </div>
         <br></br>
         <br></br>
         {!songExists && (songName !== '') &&
@@ -273,13 +308,12 @@ function AddVersion ({ artist, song, songs, user, fetchArtists, fetchSongs,
         <br></br>
         <p>If "{songName}" is a song played by {artist.artist}, please add it!</p>
         <br></br>
-        {/* <button className="small-button"
-        onClick={e => handleShowAddSong(songName)}>Go to 'Add A Song'</button> */}
+        <Link to="../../add-song" >Go to 'Add A Song'</Link>
         </>
         }
-        {songExists && (date !== '') &&
+        {songExists && date.length > 9 && (date.charAt(0) === '1' || date.charAt(0) === '2') &&
         <>
-        <p>Please select all that apply to this version:</p>
+        <p>Please select the tags that you feel apply to this version:</p>
         <br></br>
         <div className="tags">
           <FilterChip currentFilterState={acoustic} text='Acoustic' setFilter={setAcoustic}/>
@@ -320,7 +354,7 @@ function AddVersion ({ artist, song, songs, user, fetchArtists, fetchSongs,
           </div>
           <br></br>
         </>}
-      {songExists && date &&
+      {songExists && date.length > 9 && (date.charAt(0) === '1' || date.charAt(0) === '2') &&
       <button className="primary-button"
       onClick={e => testVersion(date)}
       disabled={loading}>Add this version</button>}

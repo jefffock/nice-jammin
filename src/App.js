@@ -421,9 +421,9 @@ useEffect(() => {
                 setVersion={setVersion} artists={artists} fetchArtists={fetchArtists} artist={artist} setArtist={setArtist}
                 songs={songs} song={song} fetchSongs={fetchSongs} setSong={setSong} fetchVersions={fetchVersions}/>}>
 
-                  <Route path="add-version" element={<AddVersion artist={artist} song={song} user={user} fetchArtists={fetchArtists}
-                  fetchSongs={fetchSongs} fetchVersions={fetchVersions} username={username} addOnePoint={addOnePoint}
-                  addTenPoints={addTenPoints} canWrite={canWrite} songs={songs}/>}></Route>
+                  <Route path="add-version" element={<AddVersion artists={artists} artist={artist} songs={songs} song={song} user={user} fetchArtists={fetchArtists}
+                  fetchSongs={fetchSongs} setArtist={setArtist} setSong={setSong} fetchVersions={fetchVersions} username={username} addOnePoint={addOnePoint}
+                  addTenPoints={addTenPoints} canWrite={canWrite} />}></Route>
 
                   <Route path="versions/:versionId" element={<Reviews reviews={reviews} fetchRatings={fetchRatings} />} />
                 </Route>

@@ -52,24 +52,19 @@ function Versions({ artists, artist, songs, song, versions, version, fetchArtist
   const [beforeDate, setBeforeDate] = useState('')
   const [showingAddVersion, setShowingAddVersion] = useState(false)
   let { artistId, songId, versionId } = useParams()
+  let params = useParams()
 
-// useEffect(() => {
-//   console.log('params in versions', params)
-  // let split = params['*'].split('/')
-  //   console.log('split', split)
-  //   if (split[2] === 'add-version') {
-  //     setShowingAddVersion(true)
-  //   } else {
-  //     setShowingAddVersion(false)
-  //   }
-//   }
-// )
-
-  // useEffect(() => {
-  //   if (!artists) {
-  //     fetchArtists()
-  //   }
-  // }, [artists, fetchArtists])
+useEffect(() => {
+  console.log('params in versions', params)
+  let split = params['*'].split('/')
+    console.log('split', split)
+    if (split[2] === 'add-version') {
+      setShowingAddVersion(true)
+    } else {
+      setShowingAddVersion(false)
+    }
+  }, [params]
+)
 
   useEffect(() => {
     if (artists) {
