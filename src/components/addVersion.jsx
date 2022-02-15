@@ -262,8 +262,8 @@ function AddVersion ({ artists, artist, song, songs, user, fetchArtists, fetchSo
         {filteredSongs && filteredSongs.length > 0 && songName !== song.song &&
         filteredSongs.map(song => {
           return (
-            <div onClick={() => handleSongClick(song)}>
-              <span className="item-in-list-large">{song.song}</span>
+            <div className="item-in-list-large" onClick={() => handleSongClick(song)}>
+              <span>{song.song}</span>
             </div>
           )
         })}

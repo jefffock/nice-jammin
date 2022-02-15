@@ -122,6 +122,8 @@ button {
   font-family: 'Epilogue', sans-serif;
   /* border: 1px solid var(--primary-color); */
   /* background: white; */
+  margin-top: 10px;
+  padding-top: 10px;
   color: var(--primary-color);
   min-height: min-content;
   font-size: 20px;
