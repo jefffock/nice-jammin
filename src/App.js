@@ -287,7 +287,7 @@ useEffect(() => {
             <Route path="sign-up" element={<Auth setUser={setUser} setSession={setSession} fetchProfile={fetchProfile} showSignIn={false} showSignUp={true}/>}/>
             <Route path="sign-in" element={<Auth setUser={setUser} setSession={setSession} fetchProfile={fetchProfile} showSignIn={true} showSignUp={false}/>}/>
             <Route path="artists/*" element={<ArtistPicker artists={artists} setArtist={setArtist} setSong={setSong} artist={artist}
-            setVersion={setVersion} />}>
+            setVersion={setVersion} fetchArtists={fetchArtists}/>}>
 
               <Route path=":artistId/*" element={<SongPicker artists={artists} artist={artist} songs={songs} filteredSongs={filteredSongs}
                song={song} version={version} versions={versions} fetchArtists={fetchArtists} fetchSongs={fetchSongs} setSongSearchTerm={setSongSearchTerm}
