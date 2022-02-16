@@ -273,9 +273,11 @@ useEffect(() => {
     <div className="complete-versions-container">
       {(!versions || versions.length === 0) && !showingAddVersion &&
       <>
-      <p>Loading...</p>
-      <br></br>
-      <p>Or maybe no versions have been added yet!<br></br><br></br>If you know a good one, please add it!</p>
+      <div className="loading">
+        <p>Loading...</p>
+        <br></br>
+        <p>Or maybe no versions have been added yet!<br></br><br></br>If you know a good one, please add it!</p>
+      </div>
       </>}
       {!showingAddVersion &&
       <div onClick={() => setShowingAddVersion(true)}><Link to="add-version" style={{ textDecoration: 'none' }}>

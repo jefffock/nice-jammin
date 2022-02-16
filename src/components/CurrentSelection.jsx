@@ -1,5 +1,7 @@
+import BackButtons from './BackButtons'
 import { useEffect, useState } from 'react'
 import { supabase } from './../supabaseClient'
+import { Link } from 'react-router-dom'
 
 function CurrentSelection({ artist, song, version, versions, setArtist, setSong, setVersion, showAddLink,
   setShowAddLink, linkAdded, setLinkAdded, addTenPoints, fetchVersions, username}) {
@@ -68,42 +70,22 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
 
   return (
     <>
+    <BackButtons artist={artist} song={song} version={version} setArtist={setArtist} setSong={setSong} setVersion={setVersion}
+    />
     <div className={artist ? 'current-selection-wrapper' : 'current-selection-wrapper hidden'}>
       <div className="current-selection-div">
         {artist &&
         <div className="current-selection-item">
-        <h2 className="current-selection-text" onClick={e => {
-          // setShowArtistPicker(true)
-          setArtist(null)
-          setSong(null)
-          setVersion(null)
-          // setShowAddSong(false)
-          // setShowAddVersion(false)
-          // setShowAddRating(false)
-          // setSongName(null)
-          // setSongSearchTerm('')
-        }}>{artist.artist}</h2>
+        <h2 className="current-selection-text">{artist.artist}</h2>
         </div>}
         {artist && song &&
         <div className="current-selection-item">
-          <h2 className="current-selection-text" onClick={e => {
-           setSong(null)
-            // setSongName(null)
-            setVersion(null)
-            // props.setShowAddSong(false)
-            // props.setShowAddVersion(false)
-            // props.setShowAddRating(false)
-          }}>{song.song}</h2>
+          <h2 className="current-selection-text">{song.song}</h2>
         </div>}
         <div className="current-selection-item">
           {artist && song && version &&
           <>
-          <h2 className="current-selection-text" onClick={() => {
-            setVersion(null)
-            // setShowAddSong(false)
-            // setShowAddVersion(false)
-            // setShowAddRating(false)
-          }}>{version.date}</h2>
+          <h2 className="current-selection-text">{version.date}</h2>
           </>}
          </div>
           {version && version.submitter_name &&
@@ -115,12 +97,13 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
             <p className="points">{version.points}</p>
           </div>
           {version && song &&
-            <>
+            <><Link to="add-rating">
           <div className="action-button-wrapper">
           <button className="primary-button action-button"
           // onClick={e => setShowAddRating(true)}
           >Rate this {song.song}</button>
         </div>
+            </Link>
             </>
           }
         </>

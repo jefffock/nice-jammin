@@ -35,19 +35,17 @@ function App() {
   const [versions, setVersions] = useState(null)
   const [version, setVersion] = useState(null)
   const [reviews, setReviews] = useState(null)
-  const [showSignIn, setShowSignIn] = useState(false)
   const [showProfile, setShowProfile] = useState(false)
   const [showPleaseConfirm, setShowPleaseConfirm] = useState(false)
-  const [showAddSong, setShowAddSong] = useState(false)
-  const [showAddVersion, setShowAddVersion] = useState(false)
-  const [showAddRating, setShowAddRating] = useState(false)
+  const [showingAddSong, setShowingAddSong] = useState(false)
+  const [showingAddVersion, setShowingAddVersion] = useState(false)
+  const [showingAddRating, setShowingAddRating] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
   const [username, setUsername] = useState(null)
   const [points, setPoints] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
-  const [showSignUp, setShowSignUp] = useState(false)
-  // const [showArtistPicker, setShowArtistPicker] = useState(true)
-  // const [showSongPicker, setShowSongPicker] = useState(false)
+  const [showSignIn, setShowSignIn] = useState(true)
+  const [showSignUp, setShowSignUp] = useState(true)
   const [showVersions, setShowVersions] = useState(false)
   const [ideas, setIdeas] = useState(null)
   const [showIdeas, setShowIdeas] = useState(null)
@@ -116,32 +114,32 @@ function App() {
     }
   }, [versions])
 
-  useEffect(() => {
-    if (showAccount || showIdeas || showSupport || showLeaders) {
-      setArtist(null)
-      setSong(null)
-      setVersion(null)
-      setShowAddSong(false)
-      setShowAddVersion(false)
-      setShowAddRating(false)
-      setShowProfile(false)
-      setSongName(null)
-      setSongSearchTerm('')
-      setShowSignUp(false)
-      // setShowArtistPicker(false)
-    } if (!showAccount && !showIdeas && !showSupport && !showLeaders) {
-      // setShowArtistPicker(true)
-    }
-  }, [showAccount, showIdeas, showSupport, showLeaders])
+  // useEffect(() => {
+  //   if (showAccount || showIdeas || showSupport || showLeaders) {
+  //     setArtist(null)
+  //     setSong(null)
+  //     setVersion(null)
+  //     setShowAddSong(false)
+  //     setShowAddVersion(false)
+  //     setShowAddRating(false)
+  //     setShowProfile(false)
+  //     setSongName(null)
+  //     setSongSearchTerm('')
+  //     setShowSignUp(false)
+  //     // setShowArtistPicker(false)
+  //   } if (!showAccount && !showIdeas && !showSupport && !showLeaders) {
+  //     // setShowArtistPicker(true)
+  //   }
+  // }, [showAccount, showIdeas, showSupport, showLeaders])
 
-  useEffect(() => {
-    if (showAddSong) {
-      setShowAddVersion(false)
-      setShowVersions(false)
-      setSong(null)
-      setSongName('')
-    }
-  }, [showAddSong])
+  // useEffect(() => {
+  //   if (showAddSong) {
+  //     setShowAddVersion(false)
+  //     setShowVersions(false)
+  //     setSong(null)
+  //     setSongName('')
+  //   }
+  // }, [showAddSong])
 
   async function fetchProfile() {
     const user = supabase.auth.user()
@@ -339,30 +337,30 @@ useEffect(() => {
     setShowPleaseConfirm(true)
   }
 
-  function goHome() {
-    console.log('in go home')
-    setShowMenu(false)
-    setArtist(null)
-    setSong(null)
-    setVersion(null)
-    setShowAddSong(false)
-    setShowAddVersion(false)
-    setShowAddRating(false)
-    setShowProfile(false)
-    setSongName(null)
-    // setSongSearchTerm('')
-    setShowSignUp(false)
-    // setShowArtistPicker(true)
-  }
+  // function goHome() {
+  //   console.log('in go home')
+  //   setShowMenu(false)
+  //   setArtist(null)
+  //   setSong(null)
+  //   setVersion(null)
+  //   setShowAddSong(false)
+  //   setShowAddVersion(false)
+  //   setShowAddRating(false)
+  //   setShowProfile(false)
+  //   setSongName(null)
+  //   // setSongSearchTerm('')
+  //   setShowSignUp(false)
+  //   // setShowArtistPicker(true)
+  // }
 
-  function handleShowAddSong(songName) {
-    if (songName) {
-      setSongSearchTerm(songName)
-    }
-    setShowAddVersion(false)
-    setShowAddSong(true)
-    setSongName('')
-  }
+  // function handleShowAddSong(songName) {
+  //   if (songName) {
+  //     setSongSearchTerm(songName)
+  //   }
+  //   setShowAddVersion(false)
+  //   setShowAddSong(true)
+  //   setSongName('')
+  // }
 
   function addPointsToVersion(id, points) {
     for (var i = 0; i < versions.length; i++) {
@@ -373,26 +371,7 @@ useEffect(() => {
     }
   }
 
-  if (showSignIn || showSignUp) {
-    return (
-      <div className="app">
-        <div className="header-and-subheading">
-        <h1>Nice Jammin</h1>
-        <h3>Helping fans find jams</h3>
-        </div>
-        <Auth
-        handleNotConfirmedYet={handleNotConfirmedYet}
-        setUser={setUser}
-        setSession={setSession}
-        fetchProfile={fetchProfile}
-        showSignIn={showSignIn}
-        setShowSignIn={setShowSignIn}
-        setShowSignUp={setShowSignUp}
-        showSignUp={showSignUp}
-        setEmailToConfirm={setEmailToConfirm}/>
-      </div>
-    )
-  } return (
+  return (
     <>
       <div className="app">
         <Router>
@@ -404,8 +383,24 @@ useEffect(() => {
             <Route path="ideas" element={<Ideas fetchIdeas={fetchIdeas} ideas={ideas}/>}/>
             <Route path="account" element={<Account fetchProfile={fetchProfile} username={username} points={points}/>}/>
             <Route path="support" element={<Support />}/>
-            <Route path="sign-up" element={<Auth />}/>
-            <Route path="sign-in" element={<Auth />}/>
+            <Route path="sign-up" element={<Auth handleNotConfirmedYet={handleNotConfirmedYet}
+              setUser={setUser}
+              setSession={setSession}
+              fetchProfile={fetchProfile}
+              showSignIn={false}
+              setShowSignIn={setShowSignIn}
+              setShowSignUp={setShowSignUp}
+              showSignUp={showSignUp}
+              setEmailToConfirm={setEmailToConfirm}/>}/>
+            <Route path="sign-in" element={<Auth handleNotConfirmedYet={handleNotConfirmedYet}
+              setUser={setUser}
+              setSession={setSession}
+              fetchProfile={fetchProfile}
+              showSignIn={showSignIn}
+              setShowSignIn={setShowSignIn}
+              setShowSignUp={setShowSignUp}
+              showSignUp={false}
+              setEmailToConfirm={setEmailToConfirm}/>}/>
             <Route path="artists/*" element={<ArtistPicker artists={artists} setArtist={setArtist} setSong={setSong}
             setVersion={setVersion} />}>
 

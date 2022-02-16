@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { supabase } from './supabaseClient'
+import { useNavigate } from 'react-router-dom'
 
 export default function Auth(props) {
   const [loading, setLoading] = useState(false)
@@ -7,6 +8,8 @@ export default function Auth(props) {
   const [password, setPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [status, setStatus] = useState('')
+
+  let navigate = useNavigate();
 
   async function signInWithEmail(email, password) {
     setLoading(true)
@@ -19,10 +22,11 @@ export default function Auth(props) {
       setLoading(false)
     } else {
       console.log('user after sign in', user)
-    setLoading(false)
-    props.setShowSignIn(false)
-    props.setUser(user)
-    props.fetchProfile()
+      setLoading(false)
+      props.setShowSignIn(false)
+      props.setUser(user)
+      props.fetchProfile()
+      navigate('/')
     }
   }
 
@@ -67,6 +71,7 @@ export default function Auth(props) {
           props.handleNotConfirmedYet()
           props.setSession(session)
           setLoading(false)
+
         }
       }
     }
@@ -84,6 +89,10 @@ export default function Auth(props) {
       setLoading(false)
       setStatus('Created your account! Please check your email to confirm!')
     }
+  }
+
+  function handleBackClick () {
+    navigate('/')
   }
 
   return (
@@ -140,7 +149,7 @@ export default function Auth(props) {
         </p>
         <br></br>
         <br></br>
-        <p className="link" onClick={e => props.setShowSignIn(false)}>Nevermind, I just want to browse</p>
+        <p className="link" onClick={() => {handleBackClick()}}>Nevermind, I just want to browse</p>
         <br></br>
         </>
         }
@@ -208,7 +217,7 @@ export default function Auth(props) {
         <br></br>
         <br></br>
         </div>
-          <p className="link" onClick={e => props.setShowSignUp(false)}>Nevermind, I just want to browse</p>
+          <p className="link" onClick={() => handleBackClick()}>Nevermind, I just want to browse</p>
           <br></br>
         </>}
       </div>

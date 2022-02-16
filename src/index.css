@@ -159,6 +159,7 @@ button:hover {
 }
 
 .back-buttons-div {
+  padding-top: 1em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -322,6 +323,10 @@ button:hover {
   padding-bottom: 1em;
 }
 
+.loading {
+  padding: 1em;
+}
+
 .version {
   display: grid;
   grid-template-columns: 1fr 1.3fr 0.5fr 3fr;
@@ -333,7 +338,7 @@ button:hover {
   border-radius: 1em;
   margin-left: .5em;
   margin-right: 0.5em;
-  padding-right: 0.25em;
+  padding: 0.25em 0.25em 0.25em 0;
   border: 1px solid var(--card-border);
   box-shadow: var(--tiny-shadow);
 }
@@ -664,6 +669,7 @@ button:hover {
 
 .leaderboard-card h3 {
   font-size: 18px;
+  margin: 0.5em;
 }
 
 .leader-points {

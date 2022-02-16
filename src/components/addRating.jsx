@@ -71,13 +71,13 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
     }
     checkUserAlreadyRated()
     }
-  }, [user, username, version])
+  }, [user, username,])
 
-  useEffect(() => {
-    if (!user) {
-      setAddRatingStatus('Please log in to add your comments and rating')
-    }
-  }, [user])
+  // useEffect(() => {
+  //   if (!user) {
+  //     setAddRatingStatus('Please log in to add your comments and rating')
+  //   }
+  // }, [user])
 
   useEffect(() => {
     setCharCount(comment.length)
