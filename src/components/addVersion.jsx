@@ -247,7 +247,7 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
         <h3>please sign in to contribute</h3>}
         {user &&
         <>
-      <h3>Add Version</h3>
+      <h3>add version</h3>
       <div className="add-version-inputs">
       <label htmlFor="song">song: </label><br></br>
       <input
@@ -315,7 +315,7 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
         <br></br>
         <p>if "{songName}" is a song played by {artist.artist}, please add it!</p>
         <br></br>
-        <Link to="../../add-song" >go to 'Add A Song'</Link>
+        <Link to="../../add-song" >go to 'add a song'</Link>
         </>
         }
         {songExists && date.length > 9 && (date.charAt(0) === '1' || date.charAt(0) === '2') &&

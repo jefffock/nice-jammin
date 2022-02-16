@@ -72,10 +72,10 @@ function AddSong({ artist, user, fetchSongs, nameToAdd, username, addTenPoints, 
     <div className="add-song-container">
       <div className="add-song-wrapper">
       {!user &&
-      <h3>Please sign in to contribute</h3>}
+      <h3>please sign in to contribute</h3>}
         {artist && user &&
         <>
-      <h3>Add a song by {artist.artist}</h3>
+      <h3>add a song by {artist.artist}</h3>
       <div>
           {/* <label htmlFor="song">Song: </label> */}
           <input
@@ -90,23 +90,23 @@ function AddSong({ artist, user, fetchSongs, nameToAdd, username, addTenPoints, 
           }/>
           <br></br>
           <br></br>
-          <p>Please check for typos &#x263A;</p>
+          <p>please check for typos &#x263A;</p>
           <br></br>
           <FilterChip currentFilterState={original} text='Original' setFilter={handleOriginalClick}/>
           <FilterChip currentFilterState={cover} text='Cover' setFilter={handleCoverClick}/>
       </div>
       <button className="primary-button"
       onClick={e => testSong(artist.artist, song)}
-      disabled={loading}>Add this song</button>
+      disabled={loading}>add this song</button>
       <br></br>
         </>}
       {showSuccessMessage &&
       <>
       <br></br>
       <br></br>
-      <p>Successfully added {song}.</p>
+      <p>successfully added {song}.</p>
       <br></br>
-      <p>Thank you for contributing!</p>
+      <p>thank you for contributing!</p>
       <br></br>
       </>}
       {showAlreadyExistsMessage &&
@@ -119,7 +119,7 @@ function AddSong({ artist, user, fetchSongs, nameToAdd, username, addTenPoints, 
       <br></br>
       {artist &&
       <Link to ={`/artists/${artist.id}`} style={{textDecoration: 'none'}}>
-        <button className="small-button">Back to songs</button>
+        <button className="small-button">back to songs</button>
       </Link>
       }
       </div>

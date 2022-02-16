@@ -135,7 +135,7 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
             <input
               className="inputField search-bar audio-input"
               type="link"
-              placeholder="YouTube, Archive.org, etc."
+              placeholder="youtube, archive.org, etc."
               value={linkToAdd}
               onChange={(e) => {
             setLinkToAdd(e.target.value);

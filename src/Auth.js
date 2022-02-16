@@ -94,27 +94,27 @@ export default function Auth(props) {
       <div className="auth-wrapper">
         {props.showSignIn &&
         <>
-        <h2 className="header">Sign In</h2>
+        <h2 className="header">sign in</h2>
         <br></br>
         <div className="auth-fields-container">
           <div className="auth-fields-wrapper">
-          <label htmlFor="email">Email: </label>
+          <label htmlFor="email">email: </label>
           <br></br>
           <input
             className="inputField search-bar text"
             type="email"
-            placeholder="Your email"
+            placeholder="your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <br></br>
           <br></br>
-          <label htmlFor="password">Password: </label>
+          <label htmlFor="password">password: </label>
           <br></br>
           <input
           className="inputField search-bar text"
           type="password"
-          placeholder="Your password"
+          placeholder="your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           />
@@ -130,13 +130,13 @@ export default function Auth(props) {
             className='primary-button'
             disabled={loading}
           >
-            {loading ? <span>Loading</span> : <span>Sign In</span>}
+            {loading ? <span className="white">loading</span> : <span className="white">sign in</span>}
           </button>
           <p className="error-message">{status}</p>
         </div>
         <br></br>
         <br></br>
-        <p className="link" onClick={() => navigate('/sign-up')}>Create an account</p>
+        <p className="link" onClick={() => navigate('/sign-up')}>create an account</p>
         <br></br>
         <br></br>
         {/* <p className="link" onClick={() => {handleBackClick()}}>Nevermind, I just want to browse</p> */}
@@ -145,31 +145,31 @@ export default function Auth(props) {
         }
         {props.showSignUp &&
         <>
-        <h2>Create an account</h2>
+        <h2>create an account</h2>
         <br></br>
         <div className="auth-fields-container">
           <div className="auth-fields-wrapper">
-            <label htmlFor="email">Email: </label><br></br>
+            <label htmlFor="email">email: </label><br></br>
           <input
             className="inputField search-bar text"
             type="email"
-            placeholder="Your email"
+            placeholder="your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <br></br>
           <br></br>
-          <label htmlFor="password">Password: </label><br></br>
+          <label htmlFor="password">password: </label><br></br>
            <input
             className="inputField search-bar text"
             type="password"
-            placeholder="Your password"
+            placeholder="your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <br></br>
           <br></br>
-          <label htmlFor="display-name">Display name: </label><br></br>
+          <label htmlFor="display-name">display name: </label><br></br>
            <input
             className="inputField search-bar text"
             type="display-name"
@@ -189,7 +189,7 @@ export default function Auth(props) {
           className='primary-button'
           disabled={loading}
         >
-          {loading ? <span>Loading</span> : <span>Create Account</span>}
+          {loading ? <span className="white">loading</span> : <span className="white">create account</span>}
         </button>
         <br></br>
         <br></br>
@@ -197,7 +197,7 @@ export default function Auth(props) {
         <br></br>
         <br></br>
         <div>
-          <p className="link" onClick={() => navigate('/sign-in')}>I already have an account
+          <p className="link" onClick={() => navigate('/sign-in')}>i already have an account
           </p>
         </div>
         <br></br>

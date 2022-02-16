@@ -104,6 +104,10 @@ span {
   color: var(--primary-color)
 }
 
+.white {
+  color: white;
+}
+
 button {
   font-family: 'Epilogue', sans-serif;
   margin: 3px;
@@ -684,7 +688,7 @@ h2.current-selection-text {
 }
 
 .auth-fields-container {
-  text-align: left;
+  text-align: center
 }
 
 .add-version-inputs {

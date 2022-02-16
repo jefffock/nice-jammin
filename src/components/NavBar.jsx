@@ -94,10 +94,10 @@ function NavBar (props) {
         {!props.user &&
         <>
           <li className="sign-up-nav-button" onClick={handleMenuItemClick}>
-            <NavLink to="sign-up">sign&nbsp;Up</NavLink>
+            <NavLink to="sign-up">sign&nbsp;up</NavLink>
           </li>
           <li className="sign-in-nav-button" onClick={handleMenuItemClick}>
-            <NavLink to="sign-in">sign&nbsp;In</NavLink>
+            <NavLink to="sign-in">sign&nbsp;in</NavLink>
           </li>
         </>}
       </ul>

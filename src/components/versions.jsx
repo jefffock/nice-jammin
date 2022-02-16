@@ -269,7 +269,7 @@ useEffect(() => {
       <div className="loading">
         <p>loading...</p>
         <br></br>
-        <p>...or, if you have time to read this, maybe no versions have been added yet!<br></br><br></br>if you know a great one, please add it!</p>
+        <p>...or, since you have time to read this, maybe no versions have been added yet!<br></br><br></br>if you know a great one, please add it!</p>
       </div>
       </>}
       {!showingAddVersion &&
