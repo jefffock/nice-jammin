@@ -13,7 +13,7 @@ export default function Auth(props) {
 
   async function signInWithEmail(email, password) {
     setLoading(true)
-    const { user, error } = await supabase.auth.signIn({
+    const {error } = await supabase.auth.signIn({
       email: email,
       password: password,
     })
@@ -22,9 +22,6 @@ export default function Auth(props) {
       setStatus(error.error_description || error.message)
     } else {
       setLoading(false)
-      props.setShowSignIn(false)
-      props.setUser(user)
-      props.fetchProfile()
       navigate('/')
     }
   }
@@ -64,11 +61,7 @@ export default function Auth(props) {
           setStatus('Something went wrong signing up. Please refresh the page and try again')
           setLoading(false)
         } else {
-          props.setEmailToConfirm(email)
           createProfile(displayName, user)
-          props.setShowSignIn(false)
-          props.setShowSignUp(false)
-          props.handleNotConfirmedYet()
           props.setSession(session)
           setLoading(false)
         }
@@ -92,9 +85,9 @@ export default function Auth(props) {
     }
   }
 
-  function handleBackClick () {
-    navigate('/')
-  }
+  // function handleBackClick () {
+  //   navigate('/')
+  // }
 
   return (
     <div className="auth-container">
@@ -146,7 +139,7 @@ export default function Auth(props) {
         <p className="link" onClick={() => navigate('/sign-up')}>Create an account</p>
         <br></br>
         <br></br>
-        <p className="link" onClick={() => {handleBackClick()}}>Nevermind, I just want to browse</p>
+        {/* <p className="link" onClick={() => {handleBackClick()}}>Nevermind, I just want to browse</p> */}
         <br></br>
         </>
         }
@@ -210,7 +203,7 @@ export default function Auth(props) {
         <br></br>
         <br></br>
         </div>
-          <p className="link" onClick={() => handleBackClick()}>Nevermind, I just want to browse</p>
+          {/* <p className="link" onClick={() => handleBackClick()}>Nevermind, I just want to browse</p> */}
           <br></br>
         </>}
       </div>

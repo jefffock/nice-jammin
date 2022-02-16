@@ -43,7 +43,7 @@ function Versions({ artists, artist, songs, song, versions, version, fetchArtist
   const [unusual, setUnusual] = useState(false)
   const [long, setLong] = useState(false)
   const [thatYearsStyle, setThatYearsStyle] = useState(false)
-  const [filterText, setFilterText] = useState('Show filters')
+  const [filterText, setFilterText] = useState('show filters')
   const [fillRating, setFillRating] = useState(true)
   const [fillNewest, setFillNewest] = useState(false)
   const [fillOldest, setFillOldest] = useState(false)
@@ -193,9 +193,9 @@ useEffect(() => {
 
   useEffect(() => {
     if (showFilters) {
-      setFilterText('Hide filters')
+      setFilterText('hide filters')
     } else {
-      setFilterText('Show filters')
+      setFilterText('show filters')
     }
   }, [showFilters])
 
@@ -267,14 +267,14 @@ useEffect(() => {
       {(!versions || versions.length === 0) && !showingAddVersion &&
       <>
       <div className="loading">
-        <p>Loading...</p>
+        <p>loading...</p>
         <br></br>
-        <p>...Or, if you have time to read this, maybe no versions have been added yet!<br></br><br></br>If you know a great one, please add it!</p>
+        <p>...or, if you have time to read this, maybe no versions have been added yet!<br></br><br></br>if you know a great one, please add it!</p>
       </div>
       </>}
       {!showingAddVersion &&
       <div onClick={() => setShowingAddVersion(true)}><Link to="add-version" style={{ textDecoration: 'none' }}>
-        <button className="primary-button">Add a great version</button>
+        <button className="primary-button">add a great version</button>
       </Link>
       <br></br>
       <br></br>
@@ -285,43 +285,43 @@ useEffect(() => {
       {showFilters &&
       <>
       <br></br>
-          <FilterChip currentFilterState={acoustic} text='Acoustic' setFilter={setAcoustic}/>
-          <FilterChip currentFilterState={ambient} text='Ambient/Space' setFilter={setAmbient}/>
-          <FilterChip currentFilterState={bliss} text='Bliss' setFilter={setBliss}/>
-          <FilterChip currentFilterState={bluesy} text='Bluesy' setFilter={setBluesy}/>
-          <FilterChip currentFilterState={chaotic} text='Chaotic' setFilter={setChaotic}/>
-          <FilterChip currentFilterState={crunchy} text='Crunchy' setFilter={setCrunchy}/>
-          <FilterChip currentFilterState={dark} text='Dark' setFilter={setDark}/>
-          <FilterChip currentFilterState={dissonant} text='Dissonant' setFilter={setDissonant}/>
-          <FilterChip currentFilterState={fast} text='Fast' setFilter={setFast}/>
-          <FilterChip currentFilterState={funky} text='Funky' setFilter={setFunky}/>
-          <FilterChip currentFilterState={groovy} text='Groovy' setFilter={setGroovy}/>
-          <FilterChip currentFilterState={guest} text='Guest' setFilter={setGuest}/>
-          <FilterChip currentFilterState={happy} text='Happy' setFilter={setHappy}/>
-          <FilterChip currentFilterState={heavy} text='Heavy' setFilter={setHeavy}/>
-          <FilterChip currentFilterState={jazzy} text='Jazzy' setFilter={setJazzy}/>
-          <FilterChip currentFilterState={long} text='Long' setFilter={setLong}/>
-          <FilterChip currentFilterState={multiPart} text='Multi-part' setFilter={setMultiPart}/>
-          <FilterChip currentFilterState={officialRelease} text='Official Release' setFilter={setOfficialRelease}/>
-          <FilterChip currentFilterState={peaks} text='Peaks' setFilter={setPeaks}/>
-          <FilterChip currentFilterState={reggae} text='Reggae' setFilter={setReggae}/>
-          <FilterChip currentFilterState={segue} text='Segue' setFilter={setSegue}/>
-          <FilterChip currentFilterState={shred} text='Shred' setFilter={setShred}/>
-          <FilterChip currentFilterState={silly} text='Silly' setFilter={setSilly}/>
-          <FilterChip currentFilterState={sloppy} text='Sloppy' setFilter={setSloppy}/>
-          <FilterChip currentFilterState={slow} text='Slow' setFilter={setSlow}/>
-          <FilterChip currentFilterState={sludgy} text='Sludgy' setFilter={setSludgy}/>
-          <FilterChip currentFilterState={soaring} text='Soaring' setFilter={setSoaring}/>
-          <FilterChip currentFilterState={soulful} text='Soulful' setFilter={setSoulful}/>
-          <FilterChip currentFilterState={stopStart} text='Stop-start' setFilter={setStopStart}/>
-          <FilterChip currentFilterState={synthy} text='Synthy' setFilter={setSynthy}/>
-          <FilterChip currentFilterState={tease} text='Teases' setFilter={setTease}/>
-          <FilterChip currentFilterState={thatYearsStyle} text="That Year's Style" setFilter={setThatYearsStyle}/>
-          <FilterChip currentFilterState={trippy} text='Trippy' setFilter={setTrippy}/>
-          <FilterChip currentFilterState={type2} text='Type II' setFilter={setType2}/>
-          <FilterChip currentFilterState={unusual} text='Unusual' setFilter={setUnusual}/>
+          <FilterChip currentFilterState={acoustic} text='acoustic' setFilter={setAcoustic}/>
+          <FilterChip currentFilterState={ambient} text='ambient/space' setFilter={setAmbient}/>
+          <FilterChip currentFilterState={bliss} text='bliss' setFilter={setBliss}/>
+          <FilterChip currentFilterState={bluesy} text='bluesy' setFilter={setBluesy}/>
+          <FilterChip currentFilterState={chaotic} text='chaotic' setFilter={setChaotic}/>
+          <FilterChip currentFilterState={crunchy} text='crunchy' setFilter={setCrunchy}/>
+          <FilterChip currentFilterState={dark} text='dark' setFilter={setDark}/>
+          <FilterChip currentFilterState={dissonant} text='dissonant' setFilter={setDissonant}/>
+          <FilterChip currentFilterState={fast} text='fast' setFilter={setFast}/>
+          <FilterChip currentFilterState={funky} text='funky' setFilter={setFunky}/>
+          <FilterChip currentFilterState={groovy} text='groovy' setFilter={setGroovy}/>
+          <FilterChip currentFilterState={guest} text='guest' setFilter={setGuest}/>
+          <FilterChip currentFilterState={happy} text='happy' setFilter={setHappy}/>
+          <FilterChip currentFilterState={heavy} text='heavy' setFilter={setHeavy}/>
+          <FilterChip currentFilterState={jazzy} text='jazzy' setFilter={setJazzy}/>
+          <FilterChip currentFilterState={long} text='long' setFilter={setLong}/>
+          <FilterChip currentFilterState={multiPart} text='multi-part' setFilter={setMultiPart}/>
+          <FilterChip currentFilterState={officialRelease} text='official release' setFilter={setOfficialRelease}/>
+          <FilterChip currentFilterState={peaks} text='peaks' setFilter={setPeaks}/>
+          <FilterChip currentFilterState={reggae} text='reggae' setFilter={setReggae}/>
+          <FilterChip currentFilterState={segue} text='segue' setFilter={setSegue}/>
+          <FilterChip currentFilterState={shred} text='shred' setFilter={setShred}/>
+          <FilterChip currentFilterState={silly} text='silly' setFilter={setSilly}/>
+          <FilterChip currentFilterState={sloppy} text='sloppy' setFilter={setSloppy}/>
+          <FilterChip currentFilterState={slow} text='slow' setFilter={setSlow}/>
+          <FilterChip currentFilterState={sludgy} text='sludgy' setFilter={setSludgy}/>
+          <FilterChip currentFilterState={soaring} text='soaring' setFilter={setSoaring}/>
+          <FilterChip currentFilterState={soulful} text='soulful' setFilter={setSoulful}/>
+          <FilterChip currentFilterState={stopStart} text='stop-start' setFilter={setStopStart}/>
+          <FilterChip currentFilterState={synthy} text='synthy' setFilter={setSynthy}/>
+          <FilterChip currentFilterState={tease} text='teases' setFilter={setTease}/>
+          <FilterChip currentFilterState={thatYearsStyle} text="that year's style" setFilter={setThatYearsStyle}/>
+          <FilterChip currentFilterState={trippy} text='trippy' setFilter={setTrippy}/>
+          <FilterChip currentFilterState={type2} text='type II' setFilter={setType2}/>
+          <FilterChip currentFilterState={unusual} text='unusual' setFilter={setUnusual}/>
         <br></br><br></br>
-        <label htmlFor="version">Played after this date: </label><br></br>
+        <label htmlFor="version">played after this date: </label><br></br>
         <input
         className="inputField search-bar bar"
         type="date"
@@ -330,7 +330,7 @@ useEffect(() => {
         onChange={(e) => {
           setAfterDate(e.target.value)}
         }/><br></br><br></br>
-        <label htmlFor="version">Played before this date: </label><br></br>
+        <label htmlFor="version">played before this date: </label><br></br>
         <input
         className="inputField search-bar bar"
         type="date"
@@ -339,20 +339,20 @@ useEffect(() => {
         onChange={(e) => {
           setBeforeDate(e.target.value)}
         }/><br></br><br></br>
-        <button className="small-button" onClick={e => { setAfterDate(''); setBeforeDate('')}}>Clear date filters</button>
+        <button className="small-button" onClick={e => { setAfterDate(''); setBeforeDate('')}}>clear date filters</button>
       </>}
       {filteredVersions && filteredVersions.length > 0 &&
       <><br></br><br></br>
-      <h3>Sort by:</h3>
-      <FilterChip currentFilterState={fillRating} text='Rating' setFilter={handleRatingClick}/>
-      <FilterChip currentFilterState={fillNewest} text='Newest' setFilter={handleNewestClick}/>
-      <FilterChip currentFilterState={fillOldest} text='Oldest' setFilter={handleOldestClick}/>
-      <FilterChip currentFilterState={fillLocation} text='Location' setFilter={handleLocationClick}/>
+      <h3>sort by:</h3>
+      <FilterChip currentFilterState={fillRating} text='rating' setFilter={handleRatingClick}/>
+      <FilterChip currentFilterState={fillNewest} text='newest' setFilter={handleNewestClick}/>
+      <FilterChip currentFilterState={fillOldest} text='oldest' setFilter={handleOldestClick}/>
+      <FilterChip currentFilterState={fillLocation} text='location' setFilter={handleLocationClick}/>
       </>}
       {(filters && filters.length > 0) && filteredVersions.length === 0 &&
       <>
       <br></br><br></br>
-        <p>Sorry, no submitted versions match those filters. It'd be a lot cooler if some did.</p>
+        <p>sorry, no submitted versions match those filters. it'd be a lot cooler if some did.</p>
       <br></br><br></br>
       </>
       }

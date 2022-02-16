@@ -95,10 +95,13 @@ h3 {
 
 p, label {
   font-family: 'Epilogue', sans-serif;
-  color: var(--primary-color-darker);
+  color: var(--primary-color);
   font-size: 16px;
   margin: 0;
+}
 
+span {
+  color: var(--primary-color)
 }
 
 button {
@@ -245,7 +248,7 @@ button:hover {
   margin-top: 1em;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   justify-items: center;
   margin-bottom: 1em;
 }
@@ -257,11 +260,7 @@ button:hover {
 .current-selection-div {
   box-shadow: var(--small-shadow);
   border-radius: 20px;
-  /* background-color: var(--background-color-lighter-two); */
   background: var(--cloud-two-gradient);
-  /* background: #1A2980;
-  background: -webkit-linear-gradient(to right, #26D0CE, #1A2980);
-  background: linear-gradient(to right, #26D0CE, #1A2980); */
   border: 1px solid var(--section-border);
   width: fit-content;
   align-self: center;
@@ -272,19 +271,15 @@ button:hover {
 }
 
 .current-selection-item {
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-top: 0;
-  padding-top: 0;
+  padding: 0.5em;
   padding-bottom: 0;
   align-self: center;
   text-align: center;
 }
 
-.current-selection-text:hover {
-  color: var(--primary-color-darker);
-
-  cursor: pointer;
+h2.current-selection-text {
+  padding:0;
+  margin: 0;
 }
 
 .current-selection-name-points {
@@ -578,6 +573,10 @@ button:hover {
   padding: 1em;
 }
 
+.artist-picker-container {
+  padding-top: 0;
+}
+
 .song-picker-wrapper {
   padding-bottom: 1em;
   width: fit-content;
@@ -751,6 +750,7 @@ input[type=text] {
 }
 
 .location {
+  padding-top: 0.5em;
   text-align: center;
 }
 

@@ -244,12 +244,12 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
     <div className="add-version-container">
       <div className="add-version-wrapper">
         {!user &&
-        <h3>Please sign in to contribute</h3>}
+        <h3>please sign in to contribute</h3>}
         {user &&
         <>
       <h3>Add Version</h3>
       <div className="add-version-inputs">
-      <label htmlFor="song">Song: </label><br></br>
+      <label htmlFor="song">song: </label><br></br>
       <input
         className="inputField search-bar bar"
         type="song"
@@ -278,7 +278,7 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
         <>
         <br></br>
         <br></br>
-        <label htmlFor="version">Date: </label><br></br>
+        <label htmlFor="version">date: </label><br></br>
         <input
         className="inputField search-bar bar"
         type="date"
@@ -291,18 +291,18 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
         <>
           <br></br>
           <br></br>
-          <label htmlFor="location">Location: </label><br></br>
+          <label htmlFor="location">location: </label><br></br>
           <input
           className="inputField search-bar bar"
           type="text"
-          placeholder="City or Venue"
+          placeholder="city or venue"
           value={location}
           onChange={(e) => setLocation(e.target.value)}/><br></br><br></br>
-          <label htmlFor="listen">Link to listen (optional): </label><br></br>
+          <label htmlFor="listen">link to listen (optional): </label><br></br>
           <input
           className="inputField search-bar bar"
           type="text"
-          placeholder="YouTube, Archive.org, etc..."
+          placeholder="youtube, archive.org..."
           value={listenLink}
           onChange={(e) => setListenLink(e.target.value)}/>
         </>}
@@ -313,66 +313,66 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
         <>
         <br></br>
         <br></br>
-        <p>If "{songName}" is a song played by {artist.artist}, please add it!</p>
+        <p>if "{songName}" is a song played by {artist.artist}, please add it!</p>
         <br></br>
-        <Link to="../../add-song" >Go to 'Add A Song'</Link>
+        <Link to="../../add-song" >go to 'Add A Song'</Link>
         </>
         }
         {songExists && date.length > 9 && (date.charAt(0) === '1' || date.charAt(0) === '2') &&
         <>
-        <p>Please select the tags that you feel apply to this version:</p>
+        <p>please select the tags that you feel apply to this version:</p>
         <br></br>
         <div className="tags">
-          <FilterChip currentFilterState={acoustic} text='Acoustic' setFilter={setAcoustic}/>
-          <FilterChip currentFilterState={ambient} text='Ambient/Space' setFilter={setAmbient}/>
-          <FilterChip currentFilterState={bliss} text='Bliss' setFilter={setBliss}/>
-          <FilterChip currentFilterState={bluesy} text='Bluesy' setFilter={setBluesy}/>
-          <FilterChip currentFilterState={chaotic} text='Chaotic' setFilter={setChaotic}/>
-          <FilterChip currentFilterState={crunchy} text='Crunchy' setFilter={setCrunchy}/>
-          <FilterChip currentFilterState={dark} text='Dark' setFilter={setDark}/>
-          <FilterChip currentFilterState={dissonant} text='Dissonant' setFilter={setDissonant}/>
-          <FilterChip currentFilterState={fast} text='Fast' setFilter={setFast}/>
-          <FilterChip currentFilterState={funky} text='Funky' setFilter={setFunky}/>
-          <FilterChip currentFilterState={groovy} text='Groovy' setFilter={setGroovy}/>
-          <FilterChip currentFilterState={guest} text='Guest' setFilter={setGuest}/>
-          <FilterChip currentFilterState={happy} text='Happy' setFilter={setHappy}/>
-          <FilterChip currentFilterState={heavy} text='Heavy' setFilter={setHeavy}/>
-          <FilterChip currentFilterState={jazzy} text='Jazzy' setFilter={setJazzy}/>
-          <FilterChip currentFilterState={long} text='Long' setFilter={setLong}/>
-          <FilterChip currentFilterState={multiPart} text='Multi-part' setFilter={setMultiPart}/>
-          <FilterChip currentFilterState={officialRelease} text='Official Release' setFilter={setOfficialRelease}/>
-          <FilterChip currentFilterState={peaks} text='Peaks' setFilter={setPeaks}/>
-          <FilterChip currentFilterState={reggae} text='Reggae' setFilter={setReggae}/>
-          <FilterChip currentFilterState={segue} text='Segue' setFilter={setSegue}/>
-          <FilterChip currentFilterState={shred} text='Shred' setFilter={setShred}/>
-          <FilterChip currentFilterState={silly} text='Silly' setFilter={setSilly}/>
-          <FilterChip currentFilterState={sloppy} text='Sloppy' setFilter={setSloppy}/>
-          <FilterChip currentFilterState={slow} text='Slow' setFilter={setSlow}/>
-          <FilterChip currentFilterState={sludgy} text='Sludgy' setFilter={setSludgy}/>
-          <FilterChip currentFilterState={soaring} text='Soaring' setFilter={setSoaring}/>
-          <FilterChip currentFilterState={soulful} text='Soulful' setFilter={setSoulful}/>
-          <FilterChip currentFilterState={stopStart} text='Stop-start' setFilter={setStopStart}/>
-          <FilterChip currentFilterState={synthy} text='Synthy' setFilter={setSynthy}/>
-          <FilterChip currentFilterState={tease} text='Teases' setFilter={setTease}/>
-          <FilterChip currentFilterState={thatYearsStyle} text="That Year's Style" setFilter={setThatYearsStyle}/>
-          <FilterChip currentFilterState={trippy} text='Trippy' setFilter={setTrippy}/>
-          <FilterChip currentFilterState={type2} text='Type II' setFilter={setType2}/>
-          <FilterChip currentFilterState={unusual} text='Unusual' setFilter={setUnusual}/>
+          <FilterChip currentFilterState={acoustic} text='acoustic' setFilter={setAcoustic}/>
+          <FilterChip currentFilterState={ambient} text='ambient/space' setFilter={setAmbient}/>
+          <FilterChip currentFilterState={bliss} text='bliss' setFilter={setBliss}/>
+          <FilterChip currentFilterState={bluesy} text='bluesy' setFilter={setBluesy}/>
+          <FilterChip currentFilterState={chaotic} text='chaotic' setFilter={setChaotic}/>
+          <FilterChip currentFilterState={crunchy} text='crunchy' setFilter={setCrunchy}/>
+          <FilterChip currentFilterState={dark} text='dark' setFilter={setDark}/>
+          <FilterChip currentFilterState={dissonant} text='dissonant' setFilter={setDissonant}/>
+          <FilterChip currentFilterState={fast} text='fast' setFilter={setFast}/>
+          <FilterChip currentFilterState={funky} text='funky' setFilter={setFunky}/>
+          <FilterChip currentFilterState={groovy} text='groovy' setFilter={setGroovy}/>
+          <FilterChip currentFilterState={guest} text='guest' setFilter={setGuest}/>
+          <FilterChip currentFilterState={happy} text='happy' setFilter={setHappy}/>
+          <FilterChip currentFilterState={heavy} text='heavy' setFilter={setHeavy}/>
+          <FilterChip currentFilterState={jazzy} text='jazzy' setFilter={setJazzy}/>
+          <FilterChip currentFilterState={long} text='long' setFilter={setLong}/>
+          <FilterChip currentFilterState={multiPart} text='multi-part' setFilter={setMultiPart}/>
+          <FilterChip currentFilterState={officialRelease} text='official release' setFilter={setOfficialRelease}/>
+          <FilterChip currentFilterState={peaks} text='peaks' setFilter={setPeaks}/>
+          <FilterChip currentFilterState={reggae} text='reggae' setFilter={setReggae}/>
+          <FilterChip currentFilterState={segue} text='segue' setFilter={setSegue}/>
+          <FilterChip currentFilterState={shred} text='shred' setFilter={setShred}/>
+          <FilterChip currentFilterState={silly} text='silly' setFilter={setSilly}/>
+          <FilterChip currentFilterState={sloppy} text='sloppy' setFilter={setSloppy}/>
+          <FilterChip currentFilterState={slow} text='slow' setFilter={setSlow}/>
+          <FilterChip currentFilterState={sludgy} text='sludgy' setFilter={setSludgy}/>
+          <FilterChip currentFilterState={soaring} text='soaring' setFilter={setSoaring}/>
+          <FilterChip currentFilterState={soulful} text='soulful' setFilter={setSoulful}/>
+          <FilterChip currentFilterState={stopStart} text='stop-start' setFilter={setStopStart}/>
+          <FilterChip currentFilterState={synthy} text='synthy' setFilter={setSynthy}/>
+          <FilterChip currentFilterState={tease} text='teases' setFilter={setTease}/>
+          <FilterChip currentFilterState={thatYearsStyle} text="that year's style" setFilter={setThatYearsStyle}/>
+          <FilterChip currentFilterState={trippy} text='trippy' setFilter={setTrippy}/>
+          <FilterChip currentFilterState={type2} text='type II' setFilter={setType2}/>
+          <FilterChip currentFilterState={unusual} text='unusual' setFilter={setUnusual}/>
           </div>
           <br></br>
         </>}
       {songExists && date.length > 9 && (date.charAt(0) === '1' || date.charAt(0) === '2') &&
       <button className="primary-button"
       onClick={e => testVersion(date)}
-      disabled={loading}>Add this version</button>}
+      disabled={loading}>add this version</button>}
       {showSuccessMessage &&
       <>
-      <br></br><br></br><p>Added the {date} version of {songName}. Thank you for contributing!</p>
+      <br></br><br></br><p>added the {date} version of {songName}. thank you for contributing!</p>
       </>
       }
       {showAlreadyExistsMessage &&
       <>
-      <p>You have good taste: the {date} version of {songName} has already been added.</p>
+      <p>you have good taste: the {date} version of {songName} has already been added.</p>
       <br></br>
       <br></br>
       </>}
@@ -380,7 +380,7 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
       <br></br>
         </>}
       <button className="small-button"
-        onClick={e => handleBackClick()}>Back</button>
+        onClick={e => handleBackClick()}>back</button>
       </div>
       </div>
     </>

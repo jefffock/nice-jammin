@@ -19,13 +19,13 @@ function ArtistPicker({ artists, setArtist, setSong, setVersion, artist }) {
     {!params.artistId &&
     <>
     <div className="subheading-wrapper">
-      <h2 className="subheading">Fans&nbsp;helping&nbsp;fans&nbsp;find&nbsp;jams</h2>
+      <h2 className="subheading">fans&nbsp;helping&nbsp;fans&nbsp;find&nbsp;jams</h2>
     </div>
     <div className={"artist-picker-container"}>
       <div className="artist-picker-wrapper">
         <h2 className="title">bands<br></br>beyond<br></br>description</h2>
         <br></br>
-        <p className="title">Choose&nbsp;one&nbsp;to&nbsp;get&nbsp;started:<br></br><br></br></p>
+        <p className="title">choose&nbsp;one&nbsp;to&nbsp;get&nbsp;started:<br></br><br></br></p>
         {!artist && !artists &&
         <h3>Loading artists...</h3>}
         {!artist && artists &&

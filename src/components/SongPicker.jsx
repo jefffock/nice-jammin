@@ -1,4 +1,4 @@
-import { Link, Outlet, useParams } from 'react-router-dom'
+import { Link, Outlet, useParams, useNavigate } from 'react-router-dom'
 import CurrentSelection from './CurrentSelection'
 import { useEffect } from 'react'
 
@@ -6,7 +6,8 @@ function SongPicker ({ artists, artist, songs, filteredSongs, song, version, fet
   fetchSongs, songSearchTerm, setSongSearchTerm, setArtist, setSong, setVersion, showAddLink, setShowAddLink, linkAdded, setLinkAdded,
   user, addOnePoint, canWrite, calcAverageForVersion, fetchRatings, addRatingCountToArtist, addRatingCountToSong }) {
 
-    let params = useParams()
+  let params = useParams()
+  let navigate = useNavigate()
 
   function handleSongClick(song) {
     setVersion(null)
@@ -21,6 +22,10 @@ function SongPicker ({ artists, artist, songs, filteredSongs, song, version, fet
     }
   }, [artist, artists, params, setArtist])
 
+  function handleAddSongClick() {
+    navigate('add-song')
+  }
+
   return (
     <>
     <CurrentSelection artist={artist} song={song} version={version} versions={versions} username={username}
@@ -33,18 +38,18 @@ function SongPicker ({ artists, artist, songs, filteredSongs, song, version, fet
     {params && !params.songId && params['*'] !== 'add-song' &&
       <div className="song-picker-container">
         <div className="song-picker-wrapper">
-          <p className="title">Choose a song:</p>
+          <p className="title">choose a song:</p>
           <div className="title">
             <input
             className="inputField search-bar"
             type="song"
-            placeholder="Search for a song..."
+            placeholder="search for a song..."
             value={songSearchTerm}
             onChange={(e) => {
               setSongSearchTerm(e.target.value)}}></input>
           </div>
       {!filteredSongs &&
-      <h3>Loading Songs...</h3>}
+      <h3>loading songs...</h3>}
       {filteredSongs &&
       filteredSongs.map((song, index) => {
         return (
@@ -58,7 +63,7 @@ function SongPicker ({ artists, artist, songs, filteredSongs, song, version, fet
         })}
       <div className="title">
         {/* <Link to="/add-song">Add a Song</Link> */}
-        <button className="small-button"><Link to="add-song" style={{ textDecoration: 'none' }}>Add a Song</Link></button>
+        <button className="small-button" onClick={() => {handleAddSongClick()}}>add a song</button>
         <br></br><br></br>
       </div>
         </div>

@@ -84,36 +84,36 @@ function AddIdea(props) {
 
   return (
     <div className="add-idea">
-      <h3>Add Idea</h3>
+      <h3>add idea</h3>
       <div className="tags">
-          <FilterChip currentFilterState={feature} text='Feature' setFilter={handleFeatureClick}/>
-          <FilterChip currentFilterState={artistIdea} text='Artist to add' setFilter={handleArtistIdeaClick}/>
-          <FilterChip currentFilterState={tagIdea} text='Tag' setFilter={handleTagIdeaClick}/>
-          <FilterChip currentFilterState={other} text='Other' setFilter={handleOtherClick}/>
+          <FilterChip currentFilterState={feature} text='feature' setFilter={handleFeatureClick}/>
+          <FilterChip currentFilterState={artistIdea} text='artist to add' setFilter={handleArtistIdeaClick}/>
+          <FilterChip currentFilterState={tagIdea} text='tag' setFilter={handleTagIdeaClick}/>
+          <FilterChip currentFilterState={other} text='other' setFilter={handleOtherClick}/>
         </div>
         <br></br>
-      <label htmlFor="idea" className="hidden">Idea: </label>
+      <label htmlFor="idea" className="hidden">idea: </label>
         <br></br>
         <textarea
         type="text-area"
         name="idea"
         className="inputField text-input"
-        placeholder="Your idea..."
+        placeholder="your idea... thank you!"
         cols="40"
         rows="5"
         value={idea}
         onChange={e => {setIdea(e.target.value); setShowSuccessMessage(false);}}></textarea>
         <br></br>
         <button className="primary-button large" disabled={showSuccessMessage}
-        onClick={e => testIdea()}>Add this idea</button>
+        onClick={e => testIdea()}>add this idea</button>
         <br></br>
         <br></br>
         {showSuccessMessage &&
-        <p>Successfully added this idea. Thank you!</p>}
+        <p>successfully added this idea. thank you!</p>}
         <br></br>
         <br></br>
         <button className="small-button back"
-        onClick={e => props.setShowAddIdea(false)}>Done Adding Ideas</button>
+        onClick={e => props.setShowAddIdea(false)}>done adding ideas</button>
     </div>
   )
 }

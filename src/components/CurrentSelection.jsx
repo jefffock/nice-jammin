@@ -85,7 +85,7 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
             <>
             <p className="location">{version.location}</p><br></br>
           <div className="current-selection-item current-selection-name-points">
-            <p>Added by</p>
+            <p>added by</p>
             <p className="name">{version.submitter_name}</p>
             <p className="points">{version.points}</p>
           </div>
@@ -93,7 +93,7 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
             <>
           <div className="action-button-wrapper" onClick={() => handleAddRatingClick()}>
           <button className="primary-button action-button"
-          >Rate this {song.song}</button>
+          >rate this {song.song}</button>
         </div>
             </>
           }
@@ -111,7 +111,7 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
            <>
              <div className="listen-link">
                <br></br>
-               <a className="listen-link link" href={version.listen_link}>Listen Here</a><br></br><br></br>
+               <a className="listen-link link" href={version.listen_link}>listen here</a><br></br><br></br>
              </div>
            </>
           }
@@ -120,16 +120,16 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
           <br></br>
           <div className="center-content">
           <button className="small-button"
-          onClick={e => setShowAddLink(true)}>Add a 'Listen Here' link</button>
+          onClick={e => setShowAddLink(true)}>add a 'listen here' link</button>
           </div>
           </>}
           {version && showAddLink && !user &&
-          <h3>Please sign in to contribute</h3>}
+          <h3>please sign in to contribute</h3>}
           {version && showAddLink && user &&
           <>
           <br></br><br></br>
           <div className="center-content">
-            <p className="center-text">Add audio link here:</p>
+            <p className="center-text">add audio link here:</p>
             </div>
           <div className="center-content">
             <input
@@ -143,7 +143,7 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
           </div>
           <div className="center-content">
             <button className="small-button" disabled={buttonDisabled}
-            onClick={e => insertAddLink()}>Add this link</button>
+            onClick={e => insertAddLink()}>add this link</button>
           </div>
           </>}
           {linkAdded &&

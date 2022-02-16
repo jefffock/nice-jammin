@@ -30,19 +30,19 @@ function BackButtons({ artist, song, version, setArtist, setSong, setVersion, se
       {artist &&
       <>
       <button className="back small-button"
-      onClick={() => handleChangeArtistClick()}>Artists</button>
+      onClick={() => handleChangeArtistClick()}>artists</button>
         <br></br>
       </>}
       {song &&
       <>
       <button className="back small-button"
-      onClick={() => handleChangeSongClick()}>Songs</button>
+      onClick={() => handleChangeSongClick()}>songs</button>
         <br></br>
       </>}
       {version &&
       <>
       <button className="back small-button"
-      onClick={() => handleChangeVersionClick()}>Versions</button>
+      onClick={() => handleChangeVersionClick()}>versions</button>
       </>}
     </div>
     )

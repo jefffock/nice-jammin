@@ -10,7 +10,7 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
   const [charCount, setCharCount] = useState(0)
   const [loading, setLoading] = useState(false);
   const [userAlreadyRated, setUserAlreadyRated] = useState(false)
-  const [submitRatingButtonText, setSubmitRatingButtonText] = useState('Add your rating')
+  const [submitRatingButtonText, setSubmitRatingButtonText] = useState('add your rating')
   const [addRatingStatus, setAddRatingStatus] = useState('')
   const [showAddTags, setShowAddTags] = useState(false)
   const [funky, setFunky] = useState(false)
@@ -65,7 +65,7 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
           setComment(data[0].comment)
           setRating(data[0].rating)
           setUserAlreadyRated(true)
-          setSubmitRatingButtonText('Update')
+          setSubmitRatingButtonText('update')
         }
       }
     }
@@ -88,109 +88,109 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
 
       let tagBuilder = '';
       if (version.acoustic) {
-        tagBuilder+='Acoustic, '
+        tagBuilder+='acoustic, '
       }
        if (version.ambient) {
-        tagBuilder+='Ambient, '
+        tagBuilder+='ambient, '
       }
       if (version.bliss) {
-        tagBuilder+='Bliss, '
+        tagBuilder+='bliss, '
       }
       if (version.bluesy) {
-        tagBuilder+='Bluesy, '
+        tagBuilder+='bluesy, '
       }
       if (version.chaotic) {
-        tagBuilder+='Chaotic, '
+        tagBuilder+='chaotic, '
       }
        if (version.crunchy) {
-        tagBuilder+='Crunchy, '
+        tagBuilder+='crunchy, '
       }
       if (version.dark) {
-        tagBuilder+='Dark, '
+        tagBuilder+='dark, '
       }
       if (version.dissonant) {
-        tagBuilder+='Dissonant, '
+        tagBuilder+='dissonant, '
       }
        if (version.fast) {
-        tagBuilder+='Fast, '
+        tagBuilder+='fast, '
       }
        if (version.funky) {
-        tagBuilder+='Funky, '
+        tagBuilder+='funky, '
       }
        if (version.groovy) {
-        tagBuilder+='Groovy, '
+        tagBuilder+='groovy, '
       }
        if (version.guest) {
-        tagBuilder+='Guest, '
+        tagBuilder+='guest, '
       }
        if (version.happy) {
-        tagBuilder+='Happy, '
+        tagBuilder+='happy, '
       }
        if (version.heavy) {
-        tagBuilder+='Heavy, '
+        tagBuilder+='heavy, '
       }
        if (version.jazzy) {
-        tagBuilder+='Jazzy, '
+        tagBuilder+='jazzy, '
       }
       if (version.long) {
-        tagBuilder+='Long, '
+        tagBuilder+='long, '
       }
       if (version.multi_part) {
-        tagBuilder+='Multi-part, '
+        tagBuilder+='multi-part, '
       }
       if (version.official_release) {
-        tagBuilder+='Official release, '
+        tagBuilder+='official release, '
       }
        if (version.peaks) {
-        tagBuilder+='Peaks, '
+        tagBuilder+='peaks, '
       }
        if (version.reggae) {
-        tagBuilder+='Reggae, '
+        tagBuilder+='reggae, '
       }
       if (version.segue) {
-        tagBuilder+='Segue, '
+        tagBuilder+='segue, '
       }
        if (version.shred) {
-        tagBuilder+='Shred, '
+        tagBuilder+='shred, '
       }
       if (version.silly) {
-       tagBuilder+='Silly, '
+       tagBuilder+='silly, '
      }
       if (version.sloppy) {
-        tagBuilder+='Sloppy, '
+        tagBuilder+='sloppy, '
       }
       if (version.slow) {
-       tagBuilder+='Slow, '
+       tagBuilder+='slow, '
      }
       if (version.sludgy) {
-        tagBuilder+='Sludgy, '
+        tagBuilder+='sludgy, '
       }
       if (version.soaring) {
-        tagBuilder+='Soaring, '
+        tagBuilder+='soaring, '
       }
       if (version.soulful) {
-        tagBuilder+='Soulful, '
+        tagBuilder+='soulful, '
       }
       if (version.stop_start) {
-        tagBuilder+='Stop-start, '
+        tagBuilder+='stop-start, '
       }
       if (version.synthy) {
-        tagBuilder+='Synthy, '
+        tagBuilder+='synthy, '
       }
        if (version.tease) {
-        tagBuilder+='Teases, '
+        tagBuilder+='teases, '
       }
       if (version.that_years_style) {
-        tagBuilder+='That year\'s style, '
+        tagBuilder+='that year\'s style, '
       }
        if (version.trippy) {
-        tagBuilder+='Trippy, '
+        tagBuilder+='trippy, '
       }
        if (version.type2) {
-        tagBuilder+='Type\u00A0II, '
+        tagBuilder+='type\u00A0II, '
       }
       if (version.unusual) {
-        tagBuilder+='Unusual, '
+        tagBuilder+='unusual, '
       }
       let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
       setTagText(finalTags)
@@ -267,148 +267,148 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
   }
 
   async function insertUpdateTags() {
-    setAddRatingStatus('Adding tags...')
+    setAddRatingStatus('adding tags...')
     let tagBuilder = '';
     let tagsToUpdate = {}
     if (showAddTags) {
       if (acoustic) {
-        tagBuilder+='Acoustic, ';
+        tagBuilder+='acoustic, ';
         tagsToUpdate.acoustic = true;
       }
        if (ambient) {
-        tagBuilder+='Ambient, '
+        tagBuilder+='ambient, '
         tagsToUpdate.ambient = true;
       }
       if (bliss) {
-        tagBuilder+='Bliss, '
+        tagBuilder+='bliss, '
         tagsToUpdate.bliss = true;
       }
       if (bluesy) {
-        tagBuilder+='Bluesy, '
+        tagBuilder+='bluesy, '
         tagsToUpdate.bluesy = true;
       }
       if (chaotic) {
-        tagBuilder+='Chaotic, '
+        tagBuilder+='chaotic, '
         tagsToUpdate.chaotic = true;
       }
        if (crunchy) {
-        tagBuilder+='Crunchy, '
+        tagBuilder+='crunchy, '
         tagsToUpdate.crunchy = true;
       }
       if (dark) {
-        tagBuilder+='Dark, '
+        tagBuilder+='dark, '
         tagsToUpdate.dark = true;
       }
       if (dissonant) {
-        tagBuilder+='Dissonant, '
+        tagBuilder+='dissonant, '
         tagsToUpdate.dissonant = true;
       }
        if (fast) {
-        tagBuilder+='Fast, '
+        tagBuilder+='fast, '
         tagsToUpdate.fast = true;
       }
        if (funky) {
-        tagBuilder+='Funky, '
+        tagBuilder+='funky, '
         tagsToUpdate.funky = true;
       }
        if (groovy) {
-        tagBuilder+='Groovy, '
+        tagBuilder+='groovy, '
         tagsToUpdate.groovy = true;
       }
        if (guest) {
-        tagBuilder+='Guest, '
+        tagBuilder+='guest, '
         tagsToUpdate.guest = true;
       }
        if (happy) {
-        tagBuilder+='Happy, '
+        tagBuilder+='happy, '
         tagsToUpdate.happy = true;
       }
        if (heavy) {
-        tagBuilder+='Heavy, '
+        tagBuilder+='heavy, '
         tagsToUpdate.heavy = true;
       }
        if (jazzy) {
-        tagBuilder+='Jazzy, '
+        tagBuilder+='jazzy, '
         tagsToUpdate.jazzy = true;
       }
       if (long) {
-        tagBuilder+='Long, '
+        tagBuilder+='long, '
         tagsToUpdate.long = true;
       }
       if (multiPart) {
-        tagBuilder+='Multi-part, '
+        tagBuilder+='multi-part, '
         tagsToUpdate.multi_part = true;
       }
       if (officialRelease) {
-        tagBuilder+='Official release, '
+        tagBuilder+='official release, '
         tagsToUpdate.official_release = true;
       }
        if (peaks) {
-        tagBuilder+='Peaks, '
+        tagBuilder+='peaks, '
         tagsToUpdate.peaks = true;
       }
        if (reggae) {
-        tagBuilder+='Reggae, '
+        tagBuilder+='reggae, '
         tagsToUpdate.reggae = true;
       }
       if (segue) {
-        tagBuilder+='Segue, '
+        tagBuilder+='segue, '
         tagsToUpdate.segue = true;
       }
        if (shred) {
-        tagBuilder+='Shred, '
+        tagBuilder+='shred, '
         tagsToUpdate.shred = true;
       }
       if (silly) {
-       tagBuilder+='Silly, '
+       tagBuilder+='silly, '
        tagsToUpdate.silly = true;
      }
       if (sloppy) {
-        tagBuilder+='Sloppy, '
+        tagBuilder+='sloppy, '
         tagsToUpdate.sloppy = true;
       }
       if (slow) {
-       tagBuilder+='Slow, '
+       tagBuilder+='slow, '
        tagsToUpdate.slow = true;
      }
       if (sludgy) {
-        tagBuilder+='Sludgy, '
+        tagBuilder+='sludgy, '
         tagsToUpdate.sludgy = true;
       }
       if (soaring) {
-        tagBuilder+='Soaring, '
+        tagBuilder+='soaring, '
         tagsToUpdate.soaring = true;
       }
       if (soulful) {
-        tagBuilder+='Soulful, '
+        tagBuilder+='soulful, '
         tagsToUpdate.soulful = true;
       }
       if (stopStart) {
-        tagBuilder+='Stop-start, '
+        tagBuilder+='stop-start, '
         tagsToUpdate.stop_start = true;
       }
       if (synthy) {
-        tagBuilder+='Synthy, '
+        tagBuilder+='synthy, '
         tagsToUpdate.synthy = true;
       }
        if (tease) {
-        tagBuilder+='Teases, '
+        tagBuilder+='teases, '
         tagsToUpdate.tease = true;
       }
       if (thatYearsStyle) {
-        tagBuilder+='That year\'s style, '
+        tagBuilder+='that year\'s style, '
         tagsToUpdate.that_years_style = true;
       }
        if (trippy) {
-        tagBuilder+='Trippy, '
+        tagBuilder+='trippy, '
         tagsToUpdate.trippy = true;
       }
        if (type2) {
-        tagBuilder+='Type\u00A0II, '
+        tagBuilder+='type\u00A0II, '
         tagsToUpdate.type2 = true;
       }
       if (unusual) {
-        tagBuilder+='Unusual, '
+        tagBuilder+='unusual, '
         tagsToUpdate.unusual = true;
       }
     } else {
@@ -427,12 +427,12 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
           length: tagsLength
         })
       if (error) {
-        setAddRatingStatus('Unable to update tags at this time.')
+        setAddRatingStatus('unable to update tags at this time.')
       } else {
         updateTags(tagsToUpdate)
       }
     } else {
-      setAddRatingStatus('Added your rating. Thanks for contributing!')
+      setAddRatingStatus('added your rating, thanks for contributing!')
       fetchVersions(song.id)
     }
   }
@@ -445,7 +445,7 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
     if (error) {
       setAddRatingStatus('Unable to update tags at this time.')
     } else {
-      setAddRatingStatus('Added/updated rating and added tags. Thanks for contributing!')
+      setAddRatingStatus('added/updated your rating and added tags, thanks for contributing!')
       fetchVersions(song.id)
     }
   }
@@ -465,10 +465,10 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
       <div className="add-rating-wrapper">
       {/* <h2>Your Rating</h2> */}
       {!user &&
-      <h3>Please sign in to contribute</h3>}
+      <h3>please sign in to contribute</h3>}
       {user &&
       <>
-        <label htmlFor="rating">Your Rating: </label>
+        <label htmlFor="rating">your rating: </label>
         <select
         name="rating"
         id="rating"
@@ -489,7 +489,7 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
         </select>
         <br></br>
         <br></br>
-        <label htmlFor="comment" className="comment-box-label">Comments (optional): </label>
+        <label htmlFor="comment" className="comment-box-label">comments (optional): </label>
         <br></br>
         <textarea
         type="text-area"
@@ -506,117 +506,117 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
         <br></br>
         {!showAddTags &&
         <>
-        <button className="small-button" onClick={e => setShowAddTags(true)}>Add tags</button><br></br>
+        <button className="small-button" onClick={e => setShowAddTags(true)}>add tags</button><br></br>
         </>}
         {showAddTags &&
         <>
-        <p>Current tags: {tagText}.<br></br><br></br> Please select all other tags that you feel apply to this version:</p>
+        <p>current tags: {tagText}.<br></br><br></br> please select all other tags that you feel apply to this version:</p>
         <br></br>
         <div className="tags">
           {!version.acoustic &&
-          <FilterChip currentFilterState={acoustic} text='Acoustic' setFilter={setAcoustic}/>
+          <FilterChip currentFilterState={acoustic} text='acoustic' setFilter={setAcoustic}/>
           }
           {!version.ambient &&
-          <FilterChip currentFilterState={ambient} text='Ambient/Space' setFilter={setAmbient}/>
+          <FilterChip currentFilterState={ambient} text='ambient/space' setFilter={setAmbient}/>
           }
           {!version.bliss &&
-          <FilterChip currentFilterState={bliss} text='Bliss' setFilter={setBliss}/>
+          <FilterChip currentFilterState={bliss} text='bliss' setFilter={setBliss}/>
         }
         {!version.bluesy &&
-          <FilterChip currentFilterState={bluesy} text='Bluesy' setFilter={setBluesy}/>
+          <FilterChip currentFilterState={bluesy} text='bluesy' setFilter={setBluesy}/>
         }
         {!version.chaotic &&
-          <FilterChip currentFilterState={chaotic} text='Chaotic' setFilter={setChaotic}/>
+          <FilterChip currentFilterState={chaotic} text='chaotic' setFilter={setChaotic}/>
         }
         {!version.crunchy &&
-          <FilterChip currentFilterState={crunchy} text='Crunchy' setFilter={setCrunchy}/>
+          <FilterChip currentFilterState={crunchy} text='crunchy' setFilter={setCrunchy}/>
         }
         {!version.dark &&
-          <FilterChip currentFilterState={dark} text='Dark' setFilter={setDark}/>
+          <FilterChip currentFilterState={dark} text='dark' setFilter={setDark}/>
         }
         {!version.dissonant &&
-          <FilterChip currentFilterState={dissonant} text='Dissonant' setFilter={setDissonant}/>
+          <FilterChip currentFilterState={dissonant} text='dissonant' setFilter={setDissonant}/>
         }
         {!version.fast &&
-          <FilterChip currentFilterState={fast} text='Fast' setFilter={setFast}/>
+          <FilterChip currentFilterState={fast} text='fast' setFilter={setFast}/>
         }
         {!version.funky &&
-          <FilterChip currentFilterState={funky} text='Funky' setFilter={setFunky}/>
+          <FilterChip currentFilterState={funky} text='funky' setFilter={setFunky}/>
         }
         {!version.groovy &&
-          <FilterChip currentFilterState={groovy} text='Groovy' setFilter={setGroovy}/>
+          <FilterChip currentFilterState={groovy} text='groovy' setFilter={setGroovy}/>
         }
         {!version.guest &&
-          <FilterChip currentFilterState={guest} text='Guest' setFilter={setGuest}/>
+          <FilterChip currentFilterState={guest} text='guest' setFilter={setGuest}/>
         }
         {!version.happy &&
-          <FilterChip currentFilterState={happy} text='Happy' setFilter={setHappy}/>
+          <FilterChip currentFilterState={happy} text='happy' setFilter={setHappy}/>
         }
         {!version.heavy &&
-          <FilterChip currentFilterState={heavy} text='Heavy' setFilter={setHeavy}/>
+          <FilterChip currentFilterState={heavy} text='heavy' setFilter={setHeavy}/>
         }
         {!version.jazzy &&
-          <FilterChip currentFilterState={jazzy} text='Jazzy' setFilter={setJazzy}/>
+          <FilterChip currentFilterState={jazzy} text='jazzy' setFilter={setJazzy}/>
         }
         {!version.long &&
-          <FilterChip currentFilterState={long} text='Long' setFilter={setLong}/>
+          <FilterChip currentFilterState={long} text='long' setFilter={setLong}/>
         }
         {!version.multi_part &&
-          <FilterChip currentFilterState={multiPart} text='Multi-part' setFilter={setMultiPart}/>
+          <FilterChip currentFilterState={multiPart} text='multi-part' setFilter={setMultiPart}/>
         }
         {!version.official_release &&
-          <FilterChip currentFilterState={officialRelease} text='Official Release' setFilter={setOfficialRelease}/>
+          <FilterChip currentFilterState={officialRelease} text='official release' setFilter={setOfficialRelease}/>
         }
         {!version.peaks &&
-          <FilterChip currentFilterState={peaks} text='Peaks' setFilter={setPeaks}/>
+          <FilterChip currentFilterState={peaks} text='peaks' setFilter={setPeaks}/>
         }
         {!version.reggae &&
-          <FilterChip currentFilterState={reggae} text='Reggae' setFilter={setReggae}/>
+          <FilterChip currentFilterState={reggae} text='reggae' setFilter={setReggae}/>
         }
         {!version.segue &&
-          <FilterChip currentFilterState={segue} text='Segue' setFilter={setSegue}/>
+          <FilterChip currentFilterState={segue} text='segue' setFilter={setSegue}/>
         }
         {!version.shred &&
-          <FilterChip currentFilterState={shred} text='Shred' setFilter={setShred}/>
+          <FilterChip currentFilterState={shred} text='shred' setFilter={setShred}/>
         }
         {!version.silly &&
-          <FilterChip currentFilterState={silly} text='Silly' setFilter={setSilly}/>
+          <FilterChip currentFilterState={silly} text='silly' setFilter={setSilly}/>
         }
         {!version.sloppy &&
-          <FilterChip currentFilterState={sloppy} text='Sloppy' setFilter={setSloppy}/>
+          <FilterChip currentFilterState={sloppy} text='sloppy' setFilter={setSloppy}/>
         }
         {!version.slow &&
-          <FilterChip currentFilterState={slow} text='Slow' setFilter={setSlow}/>
+          <FilterChip currentFilterState={slow} text='slow' setFilter={setSlow}/>
         }
         {!version.sludgy &&
-          <FilterChip currentFilterState={sludgy} text='Sludgy' setFilter={setSludgy}/>
+          <FilterChip currentFilterState={sludgy} text='sludgy' setFilter={setSludgy}/>
         }
         {!version.soaring &&
-          <FilterChip currentFilterState={soaring} text='Soaring' setFilter={setSoaring}/>
+          <FilterChip currentFilterState={soaring} text='soaring' setFilter={setSoaring}/>
         }
         {!version.soulful &&
-          <FilterChip currentFilterState={soulful} text='Soulful' setFilter={setSoulful}/>
+          <FilterChip currentFilterState={soulful} text='soulful' setFilter={setSoulful}/>
         }
         {!version.stop_start &&
-          <FilterChip currentFilterState={stopStart} text='Stop-start' setFilter={setStopStart}/>
+          <FilterChip currentFilterState={stopStart} text='stop-start' setFilter={setStopStart}/>
         }
         {!version.synthy &&
-          <FilterChip currentFilterState={synthy} text='Synthy' setFilter={setSynthy}/>
+          <FilterChip currentFilterState={synthy} text='synthy' setFilter={setSynthy}/>
         }
         {!version.tease &&
-          <FilterChip currentFilterState={tease} text='Teases' setFilter={setTease}/>
+          <FilterChip currentFilterState={tease} text='teases' setFilter={setTease}/>
         }
         {!version.this_years_style &&
-          <FilterChip currentFilterState={thatYearsStyle} text="That Year's Style" setFilter={setThatYearsStyle}/>
+          <FilterChip currentFilterState={thatYearsStyle} text="that year's style" setFilter={setThatYearsStyle}/>
         }
         {!version.trippy &&
-          <FilterChip currentFilterState={trippy} text='Trippy' setFilter={setTrippy}/>
+          <FilterChip currentFilterState={trippy} text='trippy' setFilter={setTrippy}/>
         }
         {!version.type2 &&
-          <FilterChip currentFilterState={type2} text='Type II' setFilter={setType2}/>
+          <FilterChip currentFilterState={type2} text='type II' setFilter={setType2}/>
         }
         {!version.unusual &&
-          <FilterChip currentFilterState={unusual} text='Unusual' setFilter={setUnusual}/>
+          <FilterChip currentFilterState={unusual} text='unusual' setFilter={setUnusual}/>
         }
           </div>
           <br></br>
@@ -629,7 +629,7 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
         <p>{addRatingStatus}</p>
         <br></br>
         <br></br>
-      <button className="small-button" onClick={() => handleBackClick()}>Back</button>
+      <button className="small-button" onClick={() => handleBackClick()}>back</button>
       </>}
       </div>
     // </div>

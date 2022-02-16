@@ -7,109 +7,109 @@ function Version(props) {
   useEffect(() => {
     let tagBuilder = '';
     if (props.versionData.acoustic) {
-      tagBuilder+='Acoustic, '
+      tagBuilder+='acoustic, '
     }
      if (props.versionData.ambient) {
-      tagBuilder+='Ambient, '
+      tagBuilder+='ambient, '
     }
     if (props.versionData.bliss) {
-      tagBuilder+='Bliss, '
+      tagBuilder+='bliss, '
     }
     if (props.versionData.bluesy) {
-      tagBuilder+='Bluesy, '
+      tagBuilder+='bluesy, '
     }
     if (props.versionData.chaotic) {
-      tagBuilder+='Chaotic, '
+      tagBuilder+='chaotic, '
     }
      if (props.versionData.crunchy) {
-      tagBuilder+='Crunchy, '
+      tagBuilder+='crunchy, '
     }
     if (props.versionData.dark) {
-      tagBuilder+='Dark, '
+      tagBuilder+='dark, '
     }
     if (props.versionData.dissonant) {
-      tagBuilder+='Dissonant, '
+      tagBuilder+='dissonant, '
     }
      if (props.versionData.fast) {
-      tagBuilder+='Fast, '
+      tagBuilder+='fast, '
     }
      if (props.versionData.funky) {
-      tagBuilder+='Funky, '
+      tagBuilder+='funky, '
     }
      if (props.versionData.groovy) {
-      tagBuilder+='Groovy, '
+      tagBuilder+='groovy, '
     }
      if (props.versionData.guest) {
-      tagBuilder+='Guest, '
+      tagBuilder+='guest, '
     }
      if (props.versionData.happy) {
-      tagBuilder+='Happy, '
+      tagBuilder+='happy, '
     }
      if (props.versionData.heavy) {
-      tagBuilder+='Heavy, '
+      tagBuilder+='heavy, '
     }
      if (props.versionData.jazzy) {
-      tagBuilder+='Jazzy, '
+      tagBuilder+='jazzy, '
     }
     if (props.versionData.long) {
-      tagBuilder+='Long, '
+      tagBuilder+='long, '
     }
     if (props.versionData.multi_part) {
-      tagBuilder+='Multi-part, '
+      tagBuilder+='multi-part, '
     }
     if (props.versionData.official_release) {
-      tagBuilder+='Official release, '
+      tagBuilder+='official release, '
     }
      if (props.versionData.peaks) {
-      tagBuilder+='Peaks, '
+      tagBuilder+='peaks, '
     }
      if (props.versionData.reggae) {
-      tagBuilder+='Reggae, '
+      tagBuilder+='reggae, '
     }
     if (props.versionData.segue) {
-      tagBuilder+='Segue, '
+      tagBuilder+='segue, '
     }
      if (props.versionData.shred) {
-      tagBuilder+='Shred, '
+      tagBuilder+='shred, '
     }
     if (props.versionData.silly) {
-     tagBuilder+='Silly, '
+      tagBuilder+='silly, '
    }
     if (props.versionData.sloppy) {
-      tagBuilder+='Sloppy, '
+      tagBuilder+='sloppy, '
     }
     if (props.versionData.slow) {
-     tagBuilder+='Slow, '
+     tagBuilder+='slow, '
    }
     if (props.versionData.sludgy) {
-      tagBuilder+='Sludgy, '
+      tagBuilder+='sludgy, '
     }
     if (props.versionData.soaring) {
-      tagBuilder+='Soaring, '
+      tagBuilder+='soaring, '
     }
     if (props.versionData.soulful) {
-      tagBuilder+='Soulful, '
+      tagBuilder+='soulful, '
     }
     if (props.versionData.stop_start) {
-      tagBuilder+='Stop-start, '
+      tagBuilder+='stop-start, '
     }
     if (props.versionData.synthy) {
-      tagBuilder+='Synthy, '
+      tagBuilder+='synthy, '
     }
      if (props.versionData.tease) {
-      tagBuilder+='Teases, '
+      tagBuilder+='teases, '
     }
     if (props.versionData.that_years_style) {
-      tagBuilder+='That year\'s style, '
+      tagBuilder+='that year\'s style, '
     }
      if (props.versionData.trippy) {
-      tagBuilder+='Trippy, '
+      tagBuilder+='trippy, '
     }
      if (props.versionData.type2) {
-      tagBuilder+='Type\u00A0II, '
+      tagBuilder+='type\u00A0II, '
     }
     if (props.versionData.unusual) {
-      tagBuilder+='Unusual, '
+      tagBuilder+='unusual, '
     }
     let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
     setTags(finalTags)

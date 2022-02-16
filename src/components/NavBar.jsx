@@ -57,47 +57,47 @@ function NavBar (props) {
     <nav className={menuIsOpen ? "nav-open" : "nav-close"}>
       <div className="logo" onClick={handleHomeClick}>
         <Link to="artists" style={{ textDecoration: 'none' }}>
-          <h1>Nice&nbsp;Jammin</h1>
+          <h1>nice&nbsp;jammin</h1>
         </Link>
       </div>
       <ul className={menuIsOpen ? "menu-items open" : "menu-items close"}>
         <li onClick={handleHomeClick}>
           <NavLink to="artists" style={({ isActive }) =>
               isActive ? activeStyle : undefined
-            } end>Home</NavLink>
+            } end>home</NavLink>
         </li>
         <li onClick={handleMenuItemClick}>
           <NavLink to="top-contributors" style={({ isActive }) =>
               isActive ? activeStyle : undefined
-            }>Top&nbsp;Contributors</NavLink>
+            }>top&nbsp;contributors</NavLink>
         </li>
         <li onClick={handleMenuItemClick}>
           <NavLink to="ideas" style={({ isActive }) =>
               isActive ? activeStyle : undefined
-            }>Ideas</NavLink>
+            }>ideas</NavLink>
         </li>
         <li onClick={handleMenuItemClick}>
           <NavLink to="about" style={({ isActive }) =>
               isActive ? activeStyle : undefined
-            }>About</NavLink>
+            }>about</NavLink>
         </li>
         {props.user &&
         <>
         <li onClick={handleMenuItemClick}>
           <NavLink to="account" style={({ isActive }) =>
               isActive ? activeStyle : undefined
-            }>Account</NavLink>
+            }>account</NavLink>
         </li>
         <li onClick={handleSignOutClick}>
-          <NavLink to="/">Sign out</NavLink></li>
+          <NavLink to="/">sign out</NavLink></li>
         </>}
         {!props.user &&
         <>
           <li className="sign-up-nav-button" onClick={handleMenuItemClick}>
-            <NavLink to="sign-up">Sign&nbsp;Up</NavLink>
+            <NavLink to="sign-up">sign&nbsp;Up</NavLink>
           </li>
           <li className="sign-in-nav-button" onClick={handleMenuItemClick}>
-            <NavLink to="sign-in">Sign&nbsp;In</NavLink>
+            <NavLink to="sign-in">sign&nbsp;In</NavLink>
           </li>
         </>}
       </ul>
