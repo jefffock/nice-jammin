@@ -12,9 +12,9 @@ export default function Account(props) {
     <>
     <div className="account-container">
       <div className="account-wrapper">
-      <h2>Hi, {props.username}!</h2>
-      <h3>Contributor score: {props.points}</h3>
-      <h3>Thank you!</h3>
+      <h2>hi, {props.username}!</h2>
+      <h3>contributor score: {props.points}</h3>
+      <h3>thank you!</h3>
       </div>
     </div>
     </>

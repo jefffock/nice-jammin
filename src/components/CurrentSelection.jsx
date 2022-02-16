@@ -1,40 +1,36 @@
-import { useEffect, useState } from 'react'
+import BackButtons from './BackButtons'
+import AddRating from './addRating'
+import { useState } from 'react'
 import { supabase } from './../supabaseClient'
 
-function CurrentSelection(props) {
-  const [wrapperClasses, setWrapperClasses] = useState('current-selection-wrapper hidden')
+function CurrentSelection({ artist, song, version, versions, setArtist, setSong, setVersion, showAddLink,
+  setShowAddLink, linkAdded, setLinkAdded, addTenPoints, fetchVersions, username, user,
+  canWrite, addOnePoint, calcAverageForVersion, fetchRatings, addRatingCountToSong, addRatingCountToArtist }) {
   const [linkToAdd, setLinkToAdd] = useState('')
   const [addLinkStatus, setAddLinkStatus] = useState('')
   const [buttonDisabled, setButtonDisabled] = useState(false)
-
-  useEffect(() => {
-    if (props.artist) {
-      setWrapperClasses('current-selection-wrapper')
-    } else {
-      setWrapperClasses('current-selection-wrapper hidden')
-    }
-  }, [props])
+  const [showingAddRating, setShowingAddRating] = useState(false)
+  const [ratingAdded, setRatingAdded] = useState(false)
 
   async function insertAddLink() {
-    props.setLinkAdded(true)
+    setLinkAdded(true)
     setButtonDisabled(true)
     setAddLinkStatus('Adding link...')
-    if (!props.username) {
+    if (!username) {
       setAddLinkStatus('Please log in to contribute')
     } else {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('add_link')
         .insert({
           link: linkToAdd,
-          version_id: props.version.id,
-          username: props.username
+          version_id: version.id,
+          username: username
         })
       if (error) {
         console.log('error inserting add link', error)
         setAddLinkStatus('Unable to add a link at this time.')
         setButtonDisabled(false)
       } else {
-        console.log('data from insert add link', data)
         updateVersionWithLink()
       }
     }
@@ -46,106 +42,100 @@ function CurrentSelection(props) {
       .update({
         listen_link: linkToAdd
       })
-      .match({id: props.version.id})
+      .match({id: version.id})
     if (error) {
       console.log('error adding link', error)
       setAddLinkStatus('Unable to add a link at this time.')
       setButtonDisabled(false)
     } else {
       setAddLinkStatus('Link added. Thanks for contributing!')
-      props.addTenPoints(props.username)
-      props.fetchVersions(props.songData.id)
-      props.setShowAddLink(false)
+      addTenPoints(username)
+      fetchVersions(song.id)
+      setShowAddLink(false)
       setLinkToAdd('')
     }
   }
 
+  function handleAddRatingClick() {
+    setShowingAddRating(true)
+    setRatingAdded(false)
+  }
+
   return (
     <>
-    <div className={wrapperClasses}>
+    <BackButtons artist={artist} song={song} version={version} setArtist={setArtist} setSong={setSong} setVersion={setVersion}
+    setShowingAddRating={setShowingAddRating} setRatingAdded={setRatingAdded}/>
+    <div className={artist ? 'current-selection-wrapper' : 'current-selection-wrapper hidden'}>
       <div className="current-selection-div">
+        {artist &&
         <div className="current-selection-item">
-        {props.artist &&
-        <h2 className="current-selection-text" onClick={e => {
-          props.setShowArtistPicker(true)
-          props.setArtist(null)
-          props.setSong(null)
-          props.setVersion(null)
-          props.setShowAddSong(false)
-          props.setShowAddVersion(false)
-          props.setShowAddRating(false)
-          props.setSongName(null)
-          props.setSongSearchTerm('')
-        }}>{props.artist.artist}</h2>}
-        </div>
+        <h2 className="current-selection-text">{artist.artist}</h2>
+        </div>}
+        {artist && song &&
         <div className="current-selection-item">
-          {!props.showAddVersion &&
-          <h2 className="current-selection-text" onClick={e => {
-            props.setSong(null)
-            props.setSongName(null)
-            props.setVersion(null)
-            props.setShowAddSong(false)
-            props.setShowAddVersion(false)
-            props.setShowAddRating(false)
-          }}>{props.songName}</h2>}
-        </div>
+          <h2 className="current-selection-text">{song.song}</h2>
+        </div>}
         <div className="current-selection-item">
-          {props.version &&
+          {artist && song && version &&
           <>
-          <h2 className="current-selection-text" onClick={e => {
-            props.setVersion(null)
-            props.setShowAddSong(false)
-            props.setShowAddVersion(false)
-            props.setShowAddRating(false)
-          }}>{props.version.date}</h2>
+          <h2 className="current-selection-text">{version.date}</h2>
           </>}
          </div>
-          {props.version && props.version.submitter_name &&
+          {version && version.submitter_name &&
             <>
-            <p className="location">{props.version.location}</p><br></br>
+            <p className="location">{version.location}</p><br></br>
           <div className="current-selection-item current-selection-name-points">
-            <p>Added by</p>
-            <p className="name">{props.version.submitter_name}</p>
-            <p className="points">{props.version.points}</p>
+            <p>added by</p>
+            <p className="name">{version.submitter_name}</p>
+            <p className="points">{version.points}</p>
           </div>
-          {!props.showAddRating &&
+          {version && song && !showingAddRating &&
             <>
-          <div className="action-button-wrapper">
+          <div className="action-button-wrapper" onClick={() => handleAddRatingClick()}>
           <button className="primary-button action-button"
-          onClick={e => props.setShowAddRating(true)}
-          >Rate this {props.songData.song}</button>
+          >rate this {song.song}</button>
         </div>
             </>
           }
         </>
-          }
-          {props.version && props.version.listen_link &&
+        }
+        {showingAddRating &&
+          <AddRating artist={artist} song={song} version={version} user={user} username={username} addOnePoint={addOnePoint}
+          addTenPoints={addTenPoints} canWrite={canWrite} calcAverageForVersion={calcAverageForVersion} fetchVersions={fetchVersions}
+          fetchRatings={fetchRatings} addRatingCountToSong={addRatingCountToSong} addRatingCountToArtist={addRatingCountToArtist}
+          setShowingAddRating={setShowingAddRating} setRatingAdded={setRatingAdded}
+          />}
+        {ratingAdded &&
+        <p className="title">Added your rating.<br></br>Thank you for contributing!</p>}
+          {version && version.listen_link &&
            <>
              <div className="listen-link">
                <br></br>
-               <a className="listen-link link" href={props.version.listen_link}>Listen Here</a><br></br><br></br>
+               <a className="listen-link link" href={version.listen_link}>listen here</a><br></br><br></br>
              </div>
            </>
           }
-          {props.version && !props.version.listen_link && !props.showAddLink && !props.linkAdded &&
+          {version && !version.listen_link && !showAddLink && !linkAdded && !showingAddRating &&
           <>
           <br></br>
           <div className="center-content">
           <button className="small-button"
-          onClick={e => props.setShowAddLink(true)}>Add a 'Listen Here' link</button>
+          onClick={e => setShowAddLink(true)}>add a 'listen here' link</button>
           </div>
           </>}
-          {props.version && props.showAddLink &&
+          {version && showAddLink && !user &&
+          <h3>please sign in to contribute</h3>}
+          {version && showAddLink && user &&
           <>
           <br></br><br></br>
           <div className="center-content">
-            <p className="center-text">Add audio link here:</p>
+            <p className="center-text">add audio link here:</p>
             </div>
           <div className="center-content">
             <input
               className="inputField search-bar audio-input"
               type="link"
-              placeholder="YouTube, Archive.org, etc."
+              placeholder="youtube, archive.org, etc."
               value={linkToAdd}
               onChange={(e) => {
             setLinkToAdd(e.target.value);
@@ -153,15 +143,14 @@ function CurrentSelection(props) {
           </div>
           <div className="center-content">
             <button className="small-button" disabled={buttonDisabled}
-            onClick={e => insertAddLink()}>Add this link</button>
+            onClick={e => insertAddLink()}>add this link</button>
           </div>
           </>}
-          {props.linkAdded &&
+          {linkAdded &&
           <div className="center-content">
             <p className="status">{addLinkStatus}</p>
           </div>
           }
-
         </div>
     </div>
         </>

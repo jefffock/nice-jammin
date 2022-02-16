@@ -1,14 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { supabase } from './../supabaseClient'
 
 function Review(props) {
 
   const [helpfulToShow, setHelpfulToShow] = useState(props.data.helpful)
   const [funnyToShow, setFunnyToShow] = useState(props.data.funny)
-
-  useEffect(() => {
-    console.log('props in review', props)
-  })
 
   async function checkAlreadyVotedHelpful() {
     if (props.username && props.username !== props.data.submitter_name) {
@@ -78,12 +74,12 @@ function Review(props) {
       <span>{props.data.comment}</span>
       </div>
       <div className="review-container">
-        <p className="review-rating">Rating: {props.data.rating}</p>
+        <p className="review-rating">rating: {props.data.rating}</p>
         <p className="review-username">{props.data.submitter_name}</p>
         <p className="review-helpful link"
-        onClick={e => checkAlreadyVotedHelpful()}>Helpful? {helpfulToShow}</p>
+        onClick={e => checkAlreadyVotedHelpful()}>helpful? {helpfulToShow}</p>
         <p className="review-funny link"
-        onClick={e => checkAlreadyVotedFunny()}>Funny? {funnyToShow}</p>
+        onClick={e => checkAlreadyVotedFunny()}>funny? {funnyToShow}</p>
       </div>
     </div>
   )

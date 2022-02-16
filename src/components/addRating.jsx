@@ -2,13 +2,15 @@ import { useState, useEffect } from 'react'
 import { supabase } from './../supabaseClient'
 import FilterChip from './FilterChip'
 
-function AddRating(props) {
+function AddRating({ artists, artist, songs, song, versions, version, user, username, addOnePoint,
+  addTenPoints, canWrite, setArtist, setSong, calcAverageForVersion, fetchRatings, fetchVersions,
+  addRatingCountToArtist, addRatingCountToSong, setShowingAddRating, setRatingAdded }) {
   const [rating, setRating] = useState(10);
   const [comment, setComment] = useState('');
   const [charCount, setCharCount] = useState(0)
   const [loading, setLoading] = useState(false);
   const [userAlreadyRated, setUserAlreadyRated] = useState(false)
-  const [submitRatingButtonText, setSubmitRatingButtonText] = useState('Add your rating')
+  const [submitRatingButtonText, setSubmitRatingButtonText] = useState('add your rating')
   const [addRatingStatus, setAddRatingStatus] = useState('')
   const [showAddTags, setShowAddTags] = useState(false)
   const [funky, setFunky] = useState(false)
@@ -49,14 +51,13 @@ function AddRating(props) {
   const [tagText, setTagText] = useState('')
 
   useEffect(() => {
-    console.log('props in add rating', props)
-    if (props.user) {
+    if (user) {
     async function checkUserAlreadyRated() {
       const { data, error } = await supabase
         .from('ratings')
         .select('*')
-        .eq('submitter_name', props.username)
-        .eq('version_id', props.version.id)
+        .eq('submitter_name', username)
+        .eq('version_id', version.id)
       if (error) {
         console.log('error in checkUserAlreadyRated', error)
       } else {
@@ -64,138 +65,141 @@ function AddRating(props) {
           setComment(data[0].comment)
           setRating(data[0].rating)
           setUserAlreadyRated(true)
-          setSubmitRatingButtonText('Update')
+          setSubmitRatingButtonText('update')
         }
       }
     }
     checkUserAlreadyRated()
     }
-  }, [props])
+  }, [user, username, version])
 
-  useEffect(() => {
-    if (!props.user) {
-      setAddRatingStatus('Please log in to add your comments and rating')
-    }
-  }, [props.user])
+  // useEffect(() => {
+  //   if (!user) {
+  //     setAddRatingStatus('Please log in to add your comments and rating')
+  //   }
+  // }, [user])
 
   useEffect(() => {
     setCharCount(comment.length)
   }, [comment])
 
   useEffect(() => {
-    let tagBuilder = '';
-    if (props.version.acoustic) {
-      tagBuilder+='Acoustic, '
+    if (version) {
+
+      let tagBuilder = '';
+      if (version.acoustic) {
+        tagBuilder+='acoustic, '
+      }
+       if (version.ambient) {
+        tagBuilder+='ambient, '
+      }
+      if (version.bliss) {
+        tagBuilder+='bliss, '
+      }
+      if (version.bluesy) {
+        tagBuilder+='bluesy, '
+      }
+      if (version.chaotic) {
+        tagBuilder+='chaotic, '
+      }
+       if (version.crunchy) {
+        tagBuilder+='crunchy, '
+      }
+      if (version.dark) {
+        tagBuilder+='dark, '
+      }
+      if (version.dissonant) {
+        tagBuilder+='dissonant, '
+      }
+       if (version.fast) {
+        tagBuilder+='fast, '
+      }
+       if (version.funky) {
+        tagBuilder+='funky, '
+      }
+       if (version.groovy) {
+        tagBuilder+='groovy, '
+      }
+       if (version.guest) {
+        tagBuilder+='guest, '
+      }
+       if (version.happy) {
+        tagBuilder+='happy, '
+      }
+       if (version.heavy) {
+        tagBuilder+='heavy, '
+      }
+       if (version.jazzy) {
+        tagBuilder+='jazzy, '
+      }
+      if (version.long) {
+        tagBuilder+='long, '
+      }
+      if (version.multi_part) {
+        tagBuilder+='multi-part, '
+      }
+      if (version.official_release) {
+        tagBuilder+='official release, '
+      }
+       if (version.peaks) {
+        tagBuilder+='peaks, '
+      }
+       if (version.reggae) {
+        tagBuilder+='reggae, '
+      }
+      if (version.segue) {
+        tagBuilder+='segue, '
+      }
+       if (version.shred) {
+        tagBuilder+='shred, '
+      }
+      if (version.silly) {
+       tagBuilder+='silly, '
+     }
+      if (version.sloppy) {
+        tagBuilder+='sloppy, '
+      }
+      if (version.slow) {
+       tagBuilder+='slow, '
+     }
+      if (version.sludgy) {
+        tagBuilder+='sludgy, '
+      }
+      if (version.soaring) {
+        tagBuilder+='soaring, '
+      }
+      if (version.soulful) {
+        tagBuilder+='soulful, '
+      }
+      if (version.stop_start) {
+        tagBuilder+='stop-start, '
+      }
+      if (version.synthy) {
+        tagBuilder+='synthy, '
+      }
+       if (version.tease) {
+        tagBuilder+='teases, '
+      }
+      if (version.that_years_style) {
+        tagBuilder+='that year\'s style, '
+      }
+       if (version.trippy) {
+        tagBuilder+='trippy, '
+      }
+       if (version.type2) {
+        tagBuilder+='type\u00A0II, '
+      }
+      if (version.unusual) {
+        tagBuilder+='unusual, '
+      }
+      let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
+      setTagText(finalTags)
     }
-     if (props.version.ambient) {
-      tagBuilder+='Ambient, '
-    }
-    if (props.version.bliss) {
-      tagBuilder+='Bliss, '
-    }
-    if (props.version.bluesy) {
-      tagBuilder+='Bluesy, '
-    }
-    if (props.version.chaotic) {
-      tagBuilder+='Chaotic, '
-    }
-     if (props.version.crunchy) {
-      tagBuilder+='Crunchy, '
-    }
-    if (props.version.dark) {
-      tagBuilder+='Dark, '
-    }
-    if (props.version.dissonant) {
-      tagBuilder+='Dissonant, '
-    }
-     if (props.version.fast) {
-      tagBuilder+='Fast, '
-    }
-     if (props.version.funky) {
-      tagBuilder+='Funky, '
-    }
-     if (props.version.groovy) {
-      tagBuilder+='Groovy, '
-    }
-     if (props.version.guest) {
-      tagBuilder+='Guest, '
-    }
-     if (props.version.happy) {
-      tagBuilder+='Happy, '
-    }
-     if (props.version.heavy) {
-      tagBuilder+='Heavy, '
-    }
-     if (props.version.jazzy) {
-      tagBuilder+='Jazzy, '
-    }
-    if (props.version.long) {
-      tagBuilder+='Long, '
-    }
-    if (props.version.multi_part) {
-      tagBuilder+='Multi-part, '
-    }
-    if (props.version.official_release) {
-      tagBuilder+='Official release, '
-    }
-     if (props.version.peaks) {
-      tagBuilder+='Peaks, '
-    }
-     if (props.version.reggae) {
-      tagBuilder+='Reggae, '
-    }
-    if (props.version.segue) {
-      tagBuilder+='Segue, '
-    }
-     if (props.version.shred) {
-      tagBuilder+='Shred, '
-    }
-    if (props.version.silly) {
-     tagBuilder+='Silly, '
-   }
-    if (props.version.sloppy) {
-      tagBuilder+='Sloppy, '
-    }
-    if (props.version.slow) {
-     tagBuilder+='Slow, '
-   }
-    if (props.version.sludgy) {
-      tagBuilder+='Sludgy, '
-    }
-    if (props.version.soaring) {
-      tagBuilder+='Soaring, '
-    }
-    if (props.version.soulful) {
-      tagBuilder+='Soulful, '
-    }
-    if (props.version.stop_start) {
-      tagBuilder+='Stop-start, '
-    }
-    if (props.version.synthy) {
-      tagBuilder+='Synthy, '
-    }
-     if (props.version.tease) {
-      tagBuilder+='Teases, '
-    }
-    if (props.version.that_years_style) {
-      tagBuilder+='That year\'s style, '
-    }
-     if (props.version.trippy) {
-      tagBuilder+='Trippy, '
-    }
-     if (props.version.type2) {
-      tagBuilder+='Type\u00A0II, '
-    }
-    if (props.version.unusual) {
-      tagBuilder+='Unusual, '
-    }
-    let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
-    setTagText(finalTags)
-  }, [props])
+  }, [version])
 
   async function testRating() {
     let ratingValid = true
-    if (!props.user || !props.canWrite) {
+    if (!user || !canWrite) {
       ratingValid = false
     } if (rating < 1 || rating > 10) {
       ratingValid = false
@@ -223,12 +227,12 @@ function AddRating(props) {
         comment: comment,
         rating: rating
       })
-      .match({submitter_name: props.username, version_id: props.version.id})
+      .match({submitter_name: username, version_id: version.id})
     if (error) {
       setAddRatingStatus('Unable to update your comments and rating at this time')
     } else {
       setAddRatingStatus('Updated your comments and rating')
-      props.calcAverageForVersion(props.version.id)
+      calcAverageForVersion(version.id)
       insertUpdateTags()
     }
   }
@@ -238,9 +242,9 @@ function AddRating(props) {
     const {  error } = await supabase
       .from('ratings')
       .insert(
-        { user_id: props.user.id,
-          version_id: props.version.id,
-          submitter_name: props.username,
+        { user_id: user.id,
+          version_id: version.id,
+          submitter_name: username,
           rating: rating,
           comment: comment
         }, {returning: 'minimal'})
@@ -248,190 +252,188 @@ function AddRating(props) {
         setAddRatingStatus('Unable to add your rating at this time.')
       } else {
         setAddRatingStatus('Added your rating')
+        setRatingAdded(true)
         insertUpdateTags()
-        props.fetchRatings(props.version.id)
-        props.fetchVersions()
-        props.addOnePoint(props.version.submitter_name)
-        props.addOnePoint(props.songData.submitter_name)
-        props.addTenPoints(props.username)
-        props.addRatingCountToSong(props.songData.id)
-        props.addRatingCountToArtist(props.artist.id)
-        props.calcAverageForVersion(props.version.id)
-        props.setShowAddRating(false)
+        fetchRatings(version.id)
+        fetchVersions()
+        addOnePoint(version.submitter_name)
+        addOnePoint(song.submitter_name)
+        addTenPoints(username)
+        addRatingCountToSong(song.id)
+        addRatingCountToArtist(artist.id)
+        calcAverageForVersion(version.id)
+        setShowingAddRating(false)
       }
   }
 
   async function insertUpdateTags() {
-    console.log('in insert update tags')
-    setAddRatingStatus('Adding tags...')
+    setAddRatingStatus('adding tags...')
     let tagBuilder = '';
     let tagsToUpdate = {}
     if (showAddTags) {
       if (acoustic) {
-        tagBuilder+='Acoustic, ';
+        tagBuilder+='acoustic, ';
         tagsToUpdate.acoustic = true;
       }
        if (ambient) {
-        tagBuilder+='Ambient, '
+        tagBuilder+='ambient, '
         tagsToUpdate.ambient = true;
       }
       if (bliss) {
-        tagBuilder+='Bliss, '
+        tagBuilder+='bliss, '
         tagsToUpdate.bliss = true;
       }
       if (bluesy) {
-        tagBuilder+='Bluesy, '
+        tagBuilder+='bluesy, '
         tagsToUpdate.bluesy = true;
       }
       if (chaotic) {
-        tagBuilder+='Chaotic, '
+        tagBuilder+='chaotic, '
         tagsToUpdate.chaotic = true;
       }
        if (crunchy) {
-        tagBuilder+='Crunchy, '
+        tagBuilder+='crunchy, '
         tagsToUpdate.crunchy = true;
       }
       if (dark) {
-        tagBuilder+='Dark, '
+        tagBuilder+='dark, '
         tagsToUpdate.dark = true;
       }
       if (dissonant) {
-        tagBuilder+='Dissonant, '
+        tagBuilder+='dissonant, '
         tagsToUpdate.dissonant = true;
       }
        if (fast) {
-        tagBuilder+='Fast, '
+        tagBuilder+='fast, '
         tagsToUpdate.fast = true;
       }
        if (funky) {
-        tagBuilder+='Funky, '
+        tagBuilder+='funky, '
         tagsToUpdate.funky = true;
       }
        if (groovy) {
-        tagBuilder+='Groovy, '
+        tagBuilder+='groovy, '
         tagsToUpdate.groovy = true;
       }
        if (guest) {
-        tagBuilder+='Guest, '
+        tagBuilder+='guest, '
         tagsToUpdate.guest = true;
       }
        if (happy) {
-        tagBuilder+='Happy, '
+        tagBuilder+='happy, '
         tagsToUpdate.happy = true;
       }
        if (heavy) {
-        tagBuilder+='Heavy, '
+        tagBuilder+='heavy, '
         tagsToUpdate.heavy = true;
       }
        if (jazzy) {
-        tagBuilder+='Jazzy, '
+        tagBuilder+='jazzy, '
         tagsToUpdate.jazzy = true;
       }
       if (long) {
-        tagBuilder+='Long, '
+        tagBuilder+='long, '
         tagsToUpdate.long = true;
       }
       if (multiPart) {
-        tagBuilder+='Multi-part, '
+        tagBuilder+='multi-part, '
         tagsToUpdate.multi_part = true;
       }
       if (officialRelease) {
-        tagBuilder+='Official release, '
+        tagBuilder+='official release, '
         tagsToUpdate.official_release = true;
       }
        if (peaks) {
-        tagBuilder+='Peaks, '
+        tagBuilder+='peaks, '
         tagsToUpdate.peaks = true;
       }
        if (reggae) {
-        tagBuilder+='Reggae, '
+        tagBuilder+='reggae, '
         tagsToUpdate.reggae = true;
       }
       if (segue) {
-        tagBuilder+='Segue, '
+        tagBuilder+='segue, '
         tagsToUpdate.segue = true;
       }
        if (shred) {
-        tagBuilder+='Shred, '
+        tagBuilder+='shred, '
         tagsToUpdate.shred = true;
       }
       if (silly) {
-       tagBuilder+='Silly, '
+       tagBuilder+='silly, '
        tagsToUpdate.silly = true;
      }
       if (sloppy) {
-        tagBuilder+='Sloppy, '
+        tagBuilder+='sloppy, '
         tagsToUpdate.sloppy = true;
       }
       if (slow) {
-       tagBuilder+='Slow, '
+       tagBuilder+='slow, '
        tagsToUpdate.slow = true;
      }
       if (sludgy) {
-        tagBuilder+='Sludgy, '
+        tagBuilder+='sludgy, '
         tagsToUpdate.sludgy = true;
       }
       if (soaring) {
-        tagBuilder+='Soaring, '
+        tagBuilder+='soaring, '
         tagsToUpdate.soaring = true;
       }
       if (soulful) {
-        tagBuilder+='Soulful, '
+        tagBuilder+='soulful, '
         tagsToUpdate.soulful = true;
       }
       if (stopStart) {
-        tagBuilder+='Stop-start, '
+        tagBuilder+='stop-start, '
         tagsToUpdate.stop_start = true;
       }
       if (synthy) {
-        tagBuilder+='Synthy, '
+        tagBuilder+='synthy, '
         tagsToUpdate.synthy = true;
       }
        if (tease) {
-        tagBuilder+='Teases, '
+        tagBuilder+='teases, '
         tagsToUpdate.tease = true;
       }
       if (thatYearsStyle) {
-        tagBuilder+='That year\'s style, '
+        tagBuilder+='that year\'s style, '
         tagsToUpdate.that_years_style = true;
       }
        if (trippy) {
-        tagBuilder+='Trippy, '
+        tagBuilder+='trippy, '
         tagsToUpdate.trippy = true;
       }
        if (type2) {
-        tagBuilder+='Type\u00A0II, '
+        tagBuilder+='type\u00A0II, '
         tagsToUpdate.type2 = true;
       }
       if (unusual) {
-        tagBuilder+='Unusual, '
+        tagBuilder+='unusual, '
         tagsToUpdate.unusual = true;
       }
     } else {
-      props.fetchVersions(props.songData.id)
+      fetchVersions(song.id)
       setAddRatingStatus('Added your rating. Thanks for contributing!')
     }
     let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
-    console.log('finalTags', finalTags)
     let tagsLength = finalTags.length;
-    console.log('tagsLength', tagsLength)
     if (finalTags.length > 0) {
       const { error } = await supabase
         .from('update_tags')
         .insert({
-          version_id: props.version.id,
-          username: props.username,
+          version_id: version.id,
+          username: username,
           tags_added: finalTags,
           length: tagsLength
         })
       if (error) {
-        setAddRatingStatus('Unable to update tags at this time.')
+        setAddRatingStatus('unable to update tags at this time.')
       } else {
         updateTags(tagsToUpdate)
       }
     } else {
-      setAddRatingStatus('Added your rating. Thanks for contributing!')
-      props.fetchVersions(props.songData.id)
+      setAddRatingStatus('added your rating, thanks for contributing!')
+      fetchVersions(song.id)
     }
   }
 
@@ -439,25 +441,34 @@ function AddRating(props) {
     const { error } = await supabase
       .from('versions')
       .update(tagsToUpdate)
-      .match({id: props.version.id})
+      .match({id:version.id})
     if (error) {
       setAddRatingStatus('Unable to update tags at this time.')
     } else {
-      setAddRatingStatus('Added/updated rating and added tags. Thanks for contributing!')
-      props.fetchVersions(props.songData.id)
+      setAddRatingStatus('added/updated your rating and added tags, thanks for contributing!')
+      fetchVersions(song.id)
     }
   }
 
   function handleBackClick() {
-    props.fetchRatings(props.version.id)
-    props.setShowAddRating(false)
+    fetchRatings(version.id)
+    setShowingAddRating(false)
   }
 
+  // return (
+  //   <h1>AddRating</h1>
+  // )
+
+
   return (
-    <div className="add-rating-container">
+    // <div className="add-rating-container">
       <div className="add-rating-wrapper">
-      <h2>Add Rating</h2>
-        <label htmlFor="rating">Rating: </label>
+      {/* <h2>Your Rating</h2> */}
+      {!user &&
+      <h3>please sign in to contribute</h3>}
+      {user &&
+      <>
+        <label htmlFor="rating">your rating: </label>
         <select
         name="rating"
         id="rating"
@@ -478,7 +489,7 @@ function AddRating(props) {
         </select>
         <br></br>
         <br></br>
-        <label htmlFor="comment" className="comment-box-label">Comments (optional): </label>
+        <label htmlFor="comment" className="comment-box-label">comments (optional): </label>
         <br></br>
         <textarea
         type="text-area"
@@ -495,117 +506,117 @@ function AddRating(props) {
         <br></br>
         {!showAddTags &&
         <>
-        <button className="small-button" onClick={e => setShowAddTags(true)}>Add tags</button><br></br><br></br>
+        <button className="small-button" onClick={e => setShowAddTags(true)}>add tags</button><br></br>
         </>}
         {showAddTags &&
         <>
-        <p>Current tags: {tagText}.<br></br><br></br> Please select all other tags that apply to this version:</p>
+        <p>current tags: {tagText}.<br></br><br></br> please select all other tags that you feel apply to this version:</p>
         <br></br>
         <div className="tags">
-          {!props.version.acoustic &&
-          <FilterChip currentFilterState={acoustic} text='Acoustic' setFilter={setAcoustic}/>
+          {!version.acoustic &&
+          <FilterChip currentFilterState={acoustic} text='acoustic' setFilter={setAcoustic}/>
           }
-          {!props.version.ambient &&
-          <FilterChip currentFilterState={ambient} text='Ambient/Space' setFilter={setAmbient}/>
+          {!version.ambient &&
+          <FilterChip currentFilterState={ambient} text='ambient/space' setFilter={setAmbient}/>
           }
-          {!props.version.bliss &&
-          <FilterChip currentFilterState={bliss} text='Bliss' setFilter={setBliss}/>
+          {!version.bliss &&
+          <FilterChip currentFilterState={bliss} text='bliss' setFilter={setBliss}/>
         }
-        {!props.version.bluesy &&
-          <FilterChip currentFilterState={bluesy} text='Bluesy' setFilter={setBluesy}/>
+        {!version.bluesy &&
+          <FilterChip currentFilterState={bluesy} text='bluesy' setFilter={setBluesy}/>
         }
-        {!props.version.chaotic &&
-          <FilterChip currentFilterState={chaotic} text='Chaotic' setFilter={setChaotic}/>
+        {!version.chaotic &&
+          <FilterChip currentFilterState={chaotic} text='chaotic' setFilter={setChaotic}/>
         }
-        {!props.version.crunchy &&
-          <FilterChip currentFilterState={crunchy} text='Crunchy' setFilter={setCrunchy}/>
+        {!version.crunchy &&
+          <FilterChip currentFilterState={crunchy} text='crunchy' setFilter={setCrunchy}/>
         }
-        {!props.version.dark &&
-          <FilterChip currentFilterState={dark} text='Dark' setFilter={setDark}/>
+        {!version.dark &&
+          <FilterChip currentFilterState={dark} text='dark' setFilter={setDark}/>
         }
-        {!props.version.dissonant &&
-          <FilterChip currentFilterState={dissonant} text='Dissonant' setFilter={setDissonant}/>
+        {!version.dissonant &&
+          <FilterChip currentFilterState={dissonant} text='dissonant' setFilter={setDissonant}/>
         }
-        {!props.version.fast &&
-          <FilterChip currentFilterState={fast} text='Fast' setFilter={setFast}/>
+        {!version.fast &&
+          <FilterChip currentFilterState={fast} text='fast' setFilter={setFast}/>
         }
-        {!props.version.funky &&
-          <FilterChip currentFilterState={funky} text='Funky' setFilter={setFunky}/>
+        {!version.funky &&
+          <FilterChip currentFilterState={funky} text='funky' setFilter={setFunky}/>
         }
-        {!props.version.groovy &&
-          <FilterChip currentFilterState={groovy} text='Groovy' setFilter={setGroovy}/>
+        {!version.groovy &&
+          <FilterChip currentFilterState={groovy} text='groovy' setFilter={setGroovy}/>
         }
-        {!props.version.guest &&
-          <FilterChip currentFilterState={guest} text='Guest' setFilter={setGuest}/>
+        {!version.guest &&
+          <FilterChip currentFilterState={guest} text='guest' setFilter={setGuest}/>
         }
-        {!props.version.happy &&
-          <FilterChip currentFilterState={happy} text='Happy' setFilter={setHappy}/>
+        {!version.happy &&
+          <FilterChip currentFilterState={happy} text='happy' setFilter={setHappy}/>
         }
-        {!props.version.heavy &&
-          <FilterChip currentFilterState={heavy} text='Heavy' setFilter={setHeavy}/>
+        {!version.heavy &&
+          <FilterChip currentFilterState={heavy} text='heavy' setFilter={setHeavy}/>
         }
-        {!props.version.jazzy &&
-          <FilterChip currentFilterState={jazzy} text='Jazzy' setFilter={setJazzy}/>
+        {!version.jazzy &&
+          <FilterChip currentFilterState={jazzy} text='jazzy' setFilter={setJazzy}/>
         }
-        {!props.version.long &&
-          <FilterChip currentFilterState={long} text='Long' setFilter={setLong}/>
+        {!version.long &&
+          <FilterChip currentFilterState={long} text='long' setFilter={setLong}/>
         }
-        {!props.version.multi_part &&
-          <FilterChip currentFilterState={multiPart} text='Multi-part' setFilter={setMultiPart}/>
+        {!version.multi_part &&
+          <FilterChip currentFilterState={multiPart} text='multi-part' setFilter={setMultiPart}/>
         }
-        {!props.version.official_release &&
-          <FilterChip currentFilterState={officialRelease} text='Official Release' setFilter={setOfficialRelease}/>
+        {!version.official_release &&
+          <FilterChip currentFilterState={officialRelease} text='official release' setFilter={setOfficialRelease}/>
         }
-        {!props.version.peaks &&
-          <FilterChip currentFilterState={peaks} text='Peaks' setFilter={setPeaks}/>
+        {!version.peaks &&
+          <FilterChip currentFilterState={peaks} text='peaks' setFilter={setPeaks}/>
         }
-        {!props.version.reggae &&
-          <FilterChip currentFilterState={reggae} text='Reggae' setFilter={setReggae}/>
+        {!version.reggae &&
+          <FilterChip currentFilterState={reggae} text='reggae' setFilter={setReggae}/>
         }
-        {!props.version.segue &&
-          <FilterChip currentFilterState={segue} text='Segue' setFilter={setSegue}/>
+        {!version.segue &&
+          <FilterChip currentFilterState={segue} text='segue' setFilter={setSegue}/>
         }
-        {!props.version.shred &&
-          <FilterChip currentFilterState={shred} text='Shred' setFilter={setShred}/>
+        {!version.shred &&
+          <FilterChip currentFilterState={shred} text='shred' setFilter={setShred}/>
         }
-        {!props.version.silly &&
-          <FilterChip currentFilterState={silly} text='Silly' setFilter={setSilly}/>
+        {!version.silly &&
+          <FilterChip currentFilterState={silly} text='silly' setFilter={setSilly}/>
         }
-        {!props.version.sloppy &&
-          <FilterChip currentFilterState={sloppy} text='Sloppy' setFilter={setSloppy}/>
+        {!version.sloppy &&
+          <FilterChip currentFilterState={sloppy} text='sloppy' setFilter={setSloppy}/>
         }
-        {!props.version.slow &&
-          <FilterChip currentFilterState={slow} text='Slow' setFilter={setSlow}/>
+        {!version.slow &&
+          <FilterChip currentFilterState={slow} text='slow' setFilter={setSlow}/>
         }
-        {!props.version.sludgy &&
-          <FilterChip currentFilterState={sludgy} text='Sludgy' setFilter={setSludgy}/>
+        {!version.sludgy &&
+          <FilterChip currentFilterState={sludgy} text='sludgy' setFilter={setSludgy}/>
         }
-        {!props.version.soaring &&
-          <FilterChip currentFilterState={soaring} text='Soaring' setFilter={setSoaring}/>
+        {!version.soaring &&
+          <FilterChip currentFilterState={soaring} text='soaring' setFilter={setSoaring}/>
         }
-        {!props.version.soulful &&
-          <FilterChip currentFilterState={soulful} text='Soulful' setFilter={setSoulful}/>
+        {!version.soulful &&
+          <FilterChip currentFilterState={soulful} text='soulful' setFilter={setSoulful}/>
         }
-        {!props.version.stop_start &&
-          <FilterChip currentFilterState={stopStart} text='Stop-start' setFilter={setStopStart}/>
+        {!version.stop_start &&
+          <FilterChip currentFilterState={stopStart} text='stop-start' setFilter={setStopStart}/>
         }
-        {!props.version.synthy &&
-          <FilterChip currentFilterState={synthy} text='Synthy' setFilter={setSynthy}/>
+        {!version.synthy &&
+          <FilterChip currentFilterState={synthy} text='synthy' setFilter={setSynthy}/>
         }
-        {!props.version.tease &&
-          <FilterChip currentFilterState={tease} text='Teases' setFilter={setTease}/>
+        {!version.tease &&
+          <FilterChip currentFilterState={tease} text='teases' setFilter={setTease}/>
         }
-        {!props.version.this_years_style &&
-          <FilterChip currentFilterState={thatYearsStyle} text="That Year's Style" setFilter={setThatYearsStyle}/>
+        {!version.this_years_style &&
+          <FilterChip currentFilterState={thatYearsStyle} text="that year's style" setFilter={setThatYearsStyle}/>
         }
-        {!props.version.trippy &&
-          <FilterChip currentFilterState={trippy} text='Trippy' setFilter={setTrippy}/>
+        {!version.trippy &&
+          <FilterChip currentFilterState={trippy} text='trippy' setFilter={setTrippy}/>
         }
-        {!props.version.type2 &&
-          <FilterChip currentFilterState={type2} text='Type II' setFilter={setType2}/>
+        {!version.type2 &&
+          <FilterChip currentFilterState={type2} text='type II' setFilter={setType2}/>
         }
-        {!props.version.unusual &&
-          <FilterChip currentFilterState={unusual} text='Unusual' setFilter={setUnusual}/>
+        {!version.unusual &&
+          <FilterChip currentFilterState={unusual} text='unusual' setFilter={setUnusual}/>
         }
           </div>
           <br></br>
@@ -618,10 +629,12 @@ function AddRating(props) {
         <p>{addRatingStatus}</p>
         <br></br>
         <br></br>
-      <button className="small-button" onClick={e => handleBackClick()}>Back</button>
+      <button className="small-button" onClick={() => handleBackClick()}>back</button>
+      </>}
       </div>
-    </div>
+    // </div>
   )
+
 }
 
 export default AddRating

@@ -1,9 +1,9 @@
-function Support (props) {
+function About (props) {
 
   return (
     <div className="support-container">
       <div className="support-wrapper">
-        <h3>Support</h3>
+        <h3>about</h3>
         <p>Enjoying Nice Jammin? There are several ways you can show your support:</p>
         <br></br>
         <div className="support-list-item">
@@ -23,4 +23,4 @@ function Support (props) {
   )
 }
 
-export default Support
+export default About

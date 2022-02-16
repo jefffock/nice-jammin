@@ -1,32 +1,48 @@
-function BackButtons(props) {
+import { useNavigate } from 'react-router-dom'
+
+function BackButtons({ artist, song, version, setArtist, setSong, setVersion, setShowingAddRating}) {
+
+  let navigate = useNavigate()
+
+  function handleChangeArtistClick() {
+    setShowingAddRating(false)
+    setArtist(null)
+    setSong(null);
+    setVersion(null);
+    navigate('/')
+  }
+
+  function handleChangeSongClick() {
+    setShowingAddRating(false)
+    setSong(null);
+    setVersion(null);
+    navigate(`/artists/${artist.id}`)
+  }
+
+  function handleChangeVersionClick() {
+    setShowingAddRating(false)
+    setVersion(null);
+    navigate(`/artists/${artist.id}/songs/${song.id}`)
+  }
 
     return (
       <div className="back-buttons-div">
-      {props.artist && !props.showAddSong && !props.showAddVersion && !props.showAddRating &&
+      {artist &&
       <>
-      <button className="back small-button" onClick={e => { props.setArtist(null);
-      props.setSong(null);
-      props.setSongName(null)
-      props.setVersion(null);
-      props.setShowArtistPicker(true)}}>Change Artist</button>
+      <button className="back small-button"
+      onClick={() => handleChangeArtistClick()}>artists</button>
         <br></br>
       </>}
-      {props.song && !props.showAddSong && !props.showAddVersion && !props.showAddRating &&
+      {song &&
       <>
-      <button className="back small-button" onClick={e => {
-        props.setSong(null);
-        props.setSongName(null);
-        props.setVersion(null);}}>Change Song</button>
+      <button className="back small-button"
+      onClick={() => handleChangeSongClick()}>songs</button>
         <br></br>
       </>}
-      {props.version && !props.showAddSong && !props.showAddVersion && !props.showAddRating &&
+      {version &&
       <>
-      <button className="back small-button" onClick={e => {
-        props.setVersion(null)}}>Change Version</button>
-      </>}
-      {props.artist &&
-      <>
-      <br></br>
+      <button className="back small-button"
+      onClick={() => handleChangeVersionClick()}>versions</button>
       </>}
     </div>
     )

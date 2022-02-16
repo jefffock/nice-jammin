@@ -1,18 +1,20 @@
 import './index.css'
 import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Auth from './Auth'
-import './App.css';
 import Versions from './components/versions'
 import Reviews from './components/reviews'
 import AddSong from './components/addSong'
 import AddVersion from './components/addVersion'
-import AddRating from './components/addRating'
-import Header from './components/header'
 import SongPicker from './components/SongPicker'
-import BackButtons from './components/BackButtons'
-import CurrentSelection from './components/CurrentSelection'
 import ArtistPicker from './components/ArtistPicker'
+import NavBar from './components/NavBar'
+import Ideas from './components/Ideas'
+import Leaderboard from './components/Leaderboard'
+import Account from './components/Account'
+import About from './components/About'
+
 
 function App() {
   const [session, setSession] = useState(null)
@@ -21,37 +23,18 @@ function App() {
   const [artist, setArtist] = useState(null)
   const [songs, setSongs] = useState(null)
   const [song, setSong] = useState(null)
-  const [songData, setSongData] = useState(null)
-  const [songName, setSongName] = useState(null)
   const [filteredSongs, setFilteredSongs] = useState([])
   const [songSearchTerm, setSongSearchTerm] = useState('')
   const [versions, setVersions] = useState(null)
   const [version, setVersion] = useState(null)
   const [reviews, setReviews] = useState(null)
-  const [showSignIn, setShowSignIn] = useState(false)
-  const [showProfile, setShowProfile] = useState(false)
-  const [showPleaseConfirm, setShowPleaseConfirm] = useState(false)
-  const [showAddSong, setShowAddSong] = useState(false)
-  const [showAddVersion, setShowAddVersion] = useState(false)
-  const [showAddRating, setShowAddRating] = useState(false)
-  const [showMenu, setShowMenu] = useState(false)
   const [username, setUsername] = useState(null)
   const [points, setPoints] = useState(null)
-  const [avatar_url, setAvatarUrl] = useState(null)
-  const [showSignUp, setShowSignUp] = useState(false)
-  const [showArtistPicker, setShowArtistPicker] = useState(true)
-  const [showSongPicker, setShowSongPicker] = useState(false)
-  const [showVersions, setShowVersions] = useState(false)
   const [ideas, setIdeas] = useState(null)
-  const [showIdeas, setShowIdeas] = useState(null)
-  const [showAccount, setShowAccount] = useState(false)
-  const [showSupport, setShowSupport] = useState(false)
-  const [emailToConfirm, setEmailToConfirm] = useState('')
   const [canWrite, setCanWrite] = useState(true)
   const [showAddLink, setShowAddLink] = useState(false)
   const [linkAdded, setLinkAdded] = useState(false)
   const [leaders, setLeaders] = useState(null)
-  const [showLeaders, setShowLeaders] = useState(false)
 
   useEffect(() => {
     setSession(supabase.auth.session())
@@ -61,16 +44,14 @@ function App() {
         setUser(session.user)
       }
     })
-  }, [])
+  }, [session])
 
   useEffect(() => {
     setUser(supabase.auth.user())
   }, [])
 
   useEffect(() => {
-    if (user) {
-      setShowPleaseConfirm(false)
-    } fetchProfile()
+    fetchProfile()
   }, [session, user])
 
   useEffect(() => {
@@ -82,11 +63,6 @@ function App() {
   useEffect(() => {
     if (artist) {
       fetchSongs(artist.artist)
-      setShowArtistPicker(false)
-      setShowSongPicker(true)
-    } else {
-      setShowSongPicker(false)
-      setShowVersions(false)
     }
     setSong(null);
     setVersions(null);
@@ -94,16 +70,9 @@ function App() {
 
   useEffect(() => {
     if (song) {
-      setSongData(song)
-      setSongName(song.song)
       fetchVersions(song.id)
-      setShowSongPicker(false)
-    } else {
-      if (artist) {
-        setShowSongPicker(true)
-      }
     }
-  }, [song, artist])
+  }, [song])
 
   useEffect(() => {
     setShowAddLink(false)
@@ -112,40 +81,6 @@ function App() {
       fetchRatings(version.id)
     }
   }, [version])
-
-  useEffect(() => {
-    if (versions) {
-      setShowArtistPicker(false)
-      setShowSongPicker(false)
-    }
-  }, [versions])
-
-  useEffect(() => {
-    if (showAccount || showIdeas || showSupport || showLeaders) {
-      setArtist(null)
-      setSong(null)
-      setVersion(null)
-      setShowAddSong(false)
-      setShowAddVersion(false)
-      setShowAddRating(false)
-      setShowProfile(false)
-      setSongName(null)
-      setSongSearchTerm('')
-      setShowSignUp(false)
-      setShowArtistPicker(false)
-    } if (!showAccount && !showIdeas && !showSupport && !showLeaders) {
-      setShowArtistPicker(true)
-    }
-  }, [showAccount, showIdeas, showSupport, showLeaders])
-
-  useEffect(() => {
-    if (showAddSong) {
-      setShowAddVersion(false)
-      setShowVersions(false)
-      setSong(null)
-      setSongName('')
-    }
-  }, [showAddSong])
 
   async function fetchProfile() {
     const user = supabase.auth.user()
@@ -160,7 +95,6 @@ function App() {
       } if (data[0]) {
         setUsername(data[0].name)
         setPoints(data[0].points)
-        setAvatarUrl(data[0].avatar_url)
         setCanWrite(data[0].can_write)
       }
     }
@@ -265,18 +199,7 @@ useEffect(() => {
     if (error) {
       console.log('error fetching top contributors', error)
     } else {
-      console.log('top contributors', data)
       setLeaders(data)
-    }
-  }
-
-  async function signOut() {
-    setShowProfile(false)
-    const { error } = await supabase.auth.signOut()
-    if (error) {
-      console.log('error', error)
-    } else {
-      console.log('signed out')
     }
   }
 
@@ -339,34 +262,6 @@ useEffect(() => {
       }
   }
 
-  function handleNotConfirmedYet() {
-    setShowPleaseConfirm(true)
-  }
-
-  function goHome() {
-    setShowMenu(false)
-    setArtist(null)
-    setSong(null)
-    setVersion(null)
-    setShowAddSong(false)
-    setShowAddVersion(false)
-    setShowAddRating(false)
-    setShowProfile(false)
-    setSongName(null)
-    setSongSearchTerm('')
-    setShowSignUp(false)
-    setShowArtistPicker(true)
-  }
-
-  function handleShowAddSong(songName) {
-    if (songName) {
-      setSongSearchTerm(songName)
-    }
-    setShowAddVersion(false)
-    setShowAddSong(true)
-    setSongName('')
-  }
-
   function addPointsToVersion(id, points) {
     for (var i = 0; i < versions.length; i++) {
       if (versions[i].id === id) {
@@ -376,29 +271,59 @@ useEffect(() => {
     }
   }
 
-  if (showSignIn || showSignUp) {
-    return (
-      <div className="app">
-        <div className="header-and-subheading">
-        <h1>Nice Jammin</h1>
-        <h3>Helping fans find jams</h3>
-        </div>
-        <Auth
-        handleNotConfirmedYet={handleNotConfirmedYet}
-        setUser={setUser}
-        setSession={setSession}
-        fetchProfile={fetchProfile}
-        showSignIn={showSignIn}
-        setShowSignIn={setShowSignIn}
-        setShowSignUp={setShowSignUp}
-        showSignUp={showSignUp}
-        setEmailToConfirm={setEmailToConfirm}/>
-      </div>
-    )
-  } return (
+  return (
     <>
       <div className="app">
-        <Header session={session}
+        <Router>
+          <NavBar user={user} setArtist={setArtist} setSong={setSong} setVersion={setVersion}/>
+          <div className="app-body">
+          <Routes>
+            <Route path="/" element={<Navigate to="/artists"/>}/>
+            <Route path="top-contributors" element={<Leaderboard fetchLeaders={fetchLeaders} leaders={leaders}/>}/>
+            <Route path="ideas" element={<Ideas fetchIdeas={fetchIdeas} ideas={ideas} countHelpfulVotesIdeas={countHelpfulVotesIdeas} username={username}
+            addOnePoint={addOnePoint}/>}/>
+            <Route path="account" element={<Account fetchProfile={fetchProfile} username={username} points={points}/>}/>
+            <Route path="about" element={<About />}/>
+            <Route path="sign-up" element={<Auth setUser={setUser} setSession={setSession} fetchProfile={fetchProfile} showSignIn={false} showSignUp={true}/>}/>
+            <Route path="sign-in" element={<Auth setUser={setUser} setSession={setSession} fetchProfile={fetchProfile} showSignIn={true} showSignUp={false}/>}/>
+            <Route path="artists/*" element={<ArtistPicker artists={artists} setArtist={setArtist} setSong={setSong} artist={artist}
+            setVersion={setVersion} />}>
+
+              <Route path=":artistId/*" element={<SongPicker artists={artists} artist={artist} songs={songs} filteredSongs={filteredSongs}
+               song={song} version={version} versions={versions} fetchArtists={fetchArtists} fetchSongs={fetchSongs} setSongSearchTerm={setSongSearchTerm}
+              songSearchTerm={songSearchTerm} setArtist={setArtist} setSong={setSong} setVersion={setVersion}  showAddLink={showAddLink} username={username}
+              setShowAddLink={setShowAddLink} linkAdded={linkAdded} setLinkAdded={setLinkAdded} addTenPoints={addTenPoints} fetchVersions={fetchVersions}
+              user={user} addOnePoint={addOnePoint} canWrite={canWrite} fetchRatings={fetchRatings} calcAverageForVersion={calcAverageForVersion}
+              addRatingCountToArtist={addRatingCountToArtist} addRatingCountToSong={addRatingCountToSong}/>}>
+
+                <Route path="add-song" element={<AddSong artist={artist} user={user} fetchSongs={fetchSongs}
+                nameToAdd={songSearchTerm} username={username} addTenPoints={addTenPoints} canWrite={canWrite}/>}/>
+
+                <Route path="songs/:songId/*" element={<Versions versions={versions} addPointsToVersion={addPointsToVersion}
+                setVersion={setVersion} artists={artists} fetchArtists={fetchArtists} artist={artist} setArtist={setArtist}
+                songs={songs} song={song} fetchSongs={fetchSongs} setSong={setSong} fetchVersions={fetchVersions}/>}>
+
+                  <Route path="add-version" element={<AddVersion artists={artists} artist={artist} songs={songs} song={song} user={user} fetchArtists={fetchArtists}
+                  fetchSongs={fetchSongs} setArtist={setArtist} setSong={setSong} fetchVersions={fetchVersions} username={username} addOnePoint={addOnePoint}
+                  addTenPoints={addTenPoints} canWrite={canWrite} />}></Route>
+
+                  <Route path="versions/:versionId/*" element={<Reviews reviews={reviews} fetchRatings={fetchRatings} artist={artist} setArtist={setArtist} songs={songs}
+                  song={song} setSong={setSong} versions={versions} version={version} setVersion={setVersion} username={username}
+                  countHelpfulVotesRatings={countHelpfulVotesRatings} countFunnyVotesRatings={countFunnyVotesRatings} addOnePoint={addOnePoint}/>}>
+
+                    {/* <Route path="add-rating" element={<AddRating artists={artists} artist={artist} songs={songs} song={song} user={user} fetchArtists={fetchArtists}
+                    setArtist={setArtist} setSong={setSong} fetchVersions={fetchVersions} username={username} addOnePoint={addOnePoint}
+                    addTenPoints={addTenPoints} canWrite={canWrite} calcAverageForVersion={calcAverageForVersion}
+                    fetchRatings={fetchRatings} addRatingCountToSong={addRatingCountToSong} addRatingCountToArtist={addRatingCountToArtist}
+                    />}></Route> */}
+                  </Route>
+                </Route>
+              </Route>
+            </Route>
+          </Routes>
+          </div>
+        </Router>
+        {/* <Header session={session}
           showPleaseConfirm={showPleaseConfirm}
           setShowSignIn={setShowSignIn}
           setShowSignUp={setShowSignUp}
@@ -462,10 +387,10 @@ useEffect(() => {
           setSongName={setSongName}
           setSongSearchTerm={setSongSearchTerm}
           songData={songData}
-          showAddLink={showAddLink}
-          setShowAddLink={setShowAddLink}
           username={username}
           addTenPoints={addTenPoints}
+          showAddLink={showAddLink}
+          setShowAddLink={setShowAddLink}
           fetchVersions={fetchVersions}
           linkAdded={linkAdded}
           setLinkAdded={setLinkAdded}/>
@@ -549,7 +474,7 @@ useEffect(() => {
         artist={artist}
         calcAverageForVersion={calcAverageForVersion}
         canWrite={canWrite}/>}
-        <div className="header-spacer"></div>
+        <div className="header-spacer"></div> */}
       </div>
     </>
   )

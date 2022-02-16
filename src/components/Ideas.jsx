@@ -98,7 +98,7 @@ return (
   <div className="ideas-container">
     <div className="ideas-wrapper">
       {!showAddIdea &&
-      <h3>Ideas</h3>
+      <h3>ideas</h3>
       }
     <br></br>
     {showAddIdea &&
@@ -108,15 +108,15 @@ return (
     addTenPoints={props.addTenPoints}
     fetchIdeas={props.fetchIdeas}/>}
     {!showAddIdea && <button className="small-button header-button"
-    onClick={e => setShowAddIdea(true)}>Add An Idea</button>}
+    onClick={e => setShowAddIdea(true)}>add an idea</button>}
     {! showAddIdea &&
     <>
     <br></br>
     <br></br>
-    <FilterChip currentFilterState={fillFeature} text='Feature' setFilter={handleFeatureClick}/>
-    <FilterChip currentFilterState={fillArtist} text='Artist to add' setFilter={handleArtistIdeaClick}/>
-    <FilterChip currentFilterState={fillTag} text='Tag' setFilter={handleTagIdeaClick}/>
-    <FilterChip currentFilterState={fillOther} text='Other' setFilter={handleOtherClick}/>
+    <FilterChip currentFilterState={fillFeature} text='feature' setFilter={handleFeatureClick}/>
+    <FilterChip currentFilterState={fillArtist} text='artist to add' setFilter={handleArtistIdeaClick}/>
+    <FilterChip currentFilterState={fillTag} text='tag' setFilter={handleTagIdeaClick}/>
+    <FilterChip currentFilterState={fillOther} text='other' setFilter={handleOtherClick}/>
     <br></br>
     <br></br>
     </>    }

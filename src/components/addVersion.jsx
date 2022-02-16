@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './../supabaseClient'
 import FilterChip from './FilterChip'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 
-function AddVersion (props) {
+function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint, addTenPoints,
+  canWrite, setArtist, setSong, fetchVersions}) {
   const [songExists, setSongExists] = useState(true)
-  const [songName, setSongName] = useState(props.songName)
+  const [songName, setSongName] = useState(() => getInitialSongName())
   const [filteredSongs, setFilteredSongs] = useState(null)
   const [date, setDate] = useState('')
   const [year, setYear] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [songId, setSongId] = useState('')
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [showAlreadyExistsMessage, setShowAlreadyExistsMessage] = useState(false)
   const [location, setLocation] = useState('')
@@ -50,26 +51,65 @@ function AddVersion (props) {
   const [long, setLong] = useState(false)
   const [thatYearsStyle, setThatYearsStyle] = useState(false)
 
+  let { artistId, songId } = useParams()
+  let navigate = useNavigate();
+
+
   useEffect(() => {
-    setSongId(props.songData.id)
-  }, [props])
+    if (artists) {
+      let correctArtist = (artist) => JSON.stringify(artist.id) === artistId
+      let index = artists.findIndex(correctArtist)
+      setArtist(artists[index])
+    }
+  }, [artistId, artist, setArtist, artists])
+
+  useEffect(() => {
+    if (songs) {
+      let correctSong = (song) => JSON.stringify(song.id) === songId
+      let index = songs.findIndex(correctSong)
+      setSong(songs[index])
+    }
+  }, [songs, songId, setSong])
+
+  useEffect(() => {
+    if (song) {
+      setSongName(song.song)
+      if (songId !== JSON.stringify(song.id)) {
+        navigate(`../../songs/${song.id}/add-version`)
+      }
+   }
+  }, [song, songId, navigate])
 
   useEffect(() => {
     let yearString = date.slice(0,4)
     setYear(parseInt(yearString))
   }, [date])
 
+  function getInitialSongName() {
+    if (song) {
+      return song.song
+    } else {
+      return ''
+    }
+  }
+
 
   async function testVersion(date) {
     let locationValid = true
     let dateValid = true
-    if (!props.canWrite) {
+    let currentDate = new Date()
+    if (currentDate < Date.parse(date)) {
+      dateValid = false
+      alert(`Hello, time traveller! Thanks for trying to add this version of ${song.song}.\n\nUnfortunately, that would create a few paradoxes.\n\nIf the jam is great again in this timeline, feel free to come back and add it. Thank you, and safe travels!`)
+    }
+    if (!canWrite) {
       locationValid = false;
       dateValid = false;
     }
-    if ((props.artist.start_year && year < props.artist.start_year) || (props.artist.end_year && year > props.artist.end_year)) {
+    if ((artist.start_year && year < artist.start_year) ||
+    (artist.end_year && year > artist.end_year)) {
         dateValid = false
-        alert(`I don't think ${props.artist.artist} played in ${year}. Imagine if they did, though!`)
+        alert(`I don't think ${artist.artist} played in ${year}. Imagine if they did, though!`)
     }
     if (location === '') {
       alert('Please enter a location')
@@ -84,10 +124,11 @@ function AddVersion (props) {
     } if (dateValid && locationValid) {
       setLoading(true)
       setShowSuccessMessage(false)
+      let songid = parseInt(song.id)
       const { data, error } = await supabase
         .from('versions')
         .select('id')
-        .eq('song_id', songId)
+        .eq('song_id', songid)
         .eq('date', date)
       if (error) {
         console.log('error', error)
@@ -106,10 +147,10 @@ function AddVersion (props) {
       .from('versions')
       .insert(
         [{ song_id: songId,
-          user_id: props.user.id,
-          submitter_name: props.username,
+          user_id: user.id,
+          submitter_name: username,
           location: location,
-          artist: props.artist.artist,
+          artist: artist.artist,
           date: date,
           funky: funky,
           ambient: ambient,
@@ -151,9 +192,9 @@ function AddVersion (props) {
     if (error) {
     } else {
       setShowSuccessMessage(true)
-      props.addOnePoint(props.songData.submitter_name)
-      props.addTenPoints(props.username)
-      props.fetchVersions(props.songData.id)
+      addOnePoint(song.submitter_name)
+      addTenPoints(username)
+      fetchVersions(song.id)
       }
   }
 
@@ -164,9 +205,9 @@ function AddVersion (props) {
     } else {
       let newFilteredSongs = []
       let myRegex = new RegExp(searchTerm, "ig")
-      for (var i = 0; i < props.songs.length; i++) {
-        if (myRegex.test(props.songs[i].song)) {
-          newFilteredSongs.push(props.songs[i])
+      for (var i = 0; i < songs.length; i++) {
+        if (myRegex.test(songs[i].song)) {
+          newFilteredSongs.push(songs[i])
         }
       }
       setFilteredSongs(newFilteredSongs)
@@ -178,28 +219,37 @@ function AddVersion (props) {
     }
   }
 
-  function handleSongChange(songid, songName) {
-    setSongId(songid)
-    setSongExists(true)
-    setSongName(songName)
+  function handleSongClick(song) {
+    setSongName(song.song)
     setFilteredSongs([])
     setSongExists(true)
+    setSong(song)
+  }
+
+  function handleDateChange(e) {
+    setDate(e.target.value);
+    setShowSuccessMessage(false);
+    setShowAlreadyExistsMessage(false)
   }
 
 
 
   function handleBackClick() {
-    props.fetchVersions(props.songData.id)
-    props.setShowAddVersion(false)
+    fetchVersions(song.id)
+    navigate('../')
   }
 
   return (
     <>
     <div className="add-version-container">
       <div className="add-version-wrapper">
-      <h3>Add Version</h3>
+        {!user &&
+        <h3>please sign in to contribute</h3>}
+        {user &&
+        <>
+      <h3>add version</h3>
       <div className="add-version-inputs">
-      <label htmlFor="song">Song: </label><br></br>
+      <label htmlFor="song">song: </label><br></br>
       <input
         className="inputField search-bar bar"
         type="song"
@@ -210,123 +260,127 @@ function AddVersion (props) {
           setShowSuccessMessage(false);
           setShowAlreadyExistsMessage(false);}
         }/>
-        {filteredSongs && filteredSongs.length > 0 &&
+        {/* {filteredSongs && filteredSongs.length > 0 &&
         <>
         <br></br>
         <br></br>
         </>
-        }
-        {filteredSongs && filteredSongs.length > 0 &&
+        } */}
+        {filteredSongs && filteredSongs.length > 0 && songName !== song.song &&
         filteredSongs.map(song => {
           return (
-            <button className="button-in-list-large song-select"
-            onClick={() => handleSongChange(song.id, song.song)}>{song.song}</button>
+            <div className="item-in-list-large" onClick={() => handleSongClick(song)}>
+              <span>{song.song}</span>
+            </div>
           )
         })}
+        {songExists &&
+        <>
         <br></br>
         <br></br>
-        <label htmlFor="version">Date: </label><br></br>
+        <label htmlFor="version">date: </label><br></br>
         <input
         className="inputField search-bar bar"
         type="date"
         placeholder=""
         value={date}
-        onChange={(e) => {
-          setDate(e.target.value);
-          setShowSuccessMessage(false);
-          setShowAlreadyExistsMessage(false)}
-        }/>
-        <br></br>
-        <br></br>
-        <label htmlFor="location">Location: </label><br></br>
-        <input
-        className="inputField search-bar bar"
-        type="text"
-        placeholder="City or Venue"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}/><br></br><br></br>
-        <label htmlFor="listen">Link to listen (optional): </label><br></br>
-        <input
-        className="inputField search-bar bar"
-        type="text"
-        placeholder="YouTube, Archive.org, etc..."
-        value={listenLink}
-        onChange={(e) => setListenLink(e.target.value)}/>
-      </div>
+        onChange={(e) => handleDateChange(e)}/>
+        </>
+        }
+        {songExists && date.length > 9 && (date.charAt(0) === '1' || date.charAt(0) === '2') &&
+        <>
+          <br></br>
+          <br></br>
+          <label htmlFor="location">location: </label><br></br>
+          <input
+          className="inputField search-bar bar"
+          type="text"
+          placeholder="city or venue"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}/><br></br><br></br>
+          <label htmlFor="listen">link to listen (optional): </label><br></br>
+          <input
+          className="inputField search-bar bar"
+          type="text"
+          placeholder="youtube, archive.org..."
+          value={listenLink}
+          onChange={(e) => setListenLink(e.target.value)}/>
+        </>}
+        </div>
         <br></br>
         <br></br>
         {!songExists && (songName !== '') &&
         <>
         <br></br>
         <br></br>
-        <p>If "{songName}" is a song played by {props.artist.artist}, please add it!</p>
+        <p>if "{songName}" is a song played by {artist.artist}, please add it!</p>
         <br></br>
-        <button className="small-button"
-        onClick={e => props.handleShowAddSong(songName)}>Go to 'Add A Song'</button>
+        <Link to="../../add-song" >go to 'add a song'</Link>
         </>
         }
-        {songExists && (date !== '') &&
+        {songExists && date.length > 9 && (date.charAt(0) === '1' || date.charAt(0) === '2') &&
         <>
-        <p>Please select all that apply to this version:</p>
+        <p>please select the tags that you feel apply to this version:</p>
         <br></br>
         <div className="tags">
-          <FilterChip currentFilterState={acoustic} text='Acoustic' setFilter={setAcoustic}/>
-          <FilterChip currentFilterState={ambient} text='Ambient/Space' setFilter={setAmbient}/>
-          <FilterChip currentFilterState={bliss} text='Bliss' setFilter={setBliss}/>
-          <FilterChip currentFilterState={bluesy} text='Bluesy' setFilter={setBluesy}/>
-          <FilterChip currentFilterState={chaotic} text='Chaotic' setFilter={setChaotic}/>
-          <FilterChip currentFilterState={crunchy} text='Crunchy' setFilter={setCrunchy}/>
-          <FilterChip currentFilterState={dark} text='Dark' setFilter={setDark}/>
-          <FilterChip currentFilterState={dissonant} text='Dissonant' setFilter={setDissonant}/>
-          <FilterChip currentFilterState={fast} text='Fast' setFilter={setFast}/>
-          <FilterChip currentFilterState={funky} text='Funky' setFilter={setFunky}/>
-          <FilterChip currentFilterState={groovy} text='Groovy' setFilter={setGroovy}/>
-          <FilterChip currentFilterState={guest} text='Guest' setFilter={setGuest}/>
-          <FilterChip currentFilterState={happy} text='Happy' setFilter={setHappy}/>
-          <FilterChip currentFilterState={heavy} text='Heavy' setFilter={setHeavy}/>
-          <FilterChip currentFilterState={jazzy} text='Jazzy' setFilter={setJazzy}/>
-          <FilterChip currentFilterState={long} text='Long' setFilter={setLong}/>
-          <FilterChip currentFilterState={multiPart} text='Multi-part' setFilter={setMultiPart}/>
-          <FilterChip currentFilterState={officialRelease} text='Official Release' setFilter={setOfficialRelease}/>
-          <FilterChip currentFilterState={peaks} text='Peaks' setFilter={setPeaks}/>
-          <FilterChip currentFilterState={reggae} text='Reggae' setFilter={setReggae}/>
-          <FilterChip currentFilterState={segue} text='Segue' setFilter={setSegue}/>
-          <FilterChip currentFilterState={shred} text='Shred' setFilter={setShred}/>
-          <FilterChip currentFilterState={silly} text='Silly' setFilter={setSilly}/>
-          <FilterChip currentFilterState={sloppy} text='Sloppy' setFilter={setSloppy}/>
-          <FilterChip currentFilterState={slow} text='Slow' setFilter={setSlow}/>
-          <FilterChip currentFilterState={sludgy} text='Sludgy' setFilter={setSludgy}/>
-          <FilterChip currentFilterState={soaring} text='Soaring' setFilter={setSoaring}/>
-          <FilterChip currentFilterState={soulful} text='Soulful' setFilter={setSoulful}/>
-          <FilterChip currentFilterState={stopStart} text='Stop-start' setFilter={setStopStart}/>
-          <FilterChip currentFilterState={synthy} text='Synthy' setFilter={setSynthy}/>
-          <FilterChip currentFilterState={tease} text='Teases' setFilter={setTease}/>
-          <FilterChip currentFilterState={thatYearsStyle} text="That Year's Style" setFilter={setThatYearsStyle}/>
-          <FilterChip currentFilterState={trippy} text='Trippy' setFilter={setTrippy}/>
-          <FilterChip currentFilterState={type2} text='Type II' setFilter={setType2}/>
-          <FilterChip currentFilterState={unusual} text='Unusual' setFilter={setUnusual}/>
+          <FilterChip currentFilterState={acoustic} text='acoustic' setFilter={setAcoustic}/>
+          <FilterChip currentFilterState={ambient} text='ambient/space' setFilter={setAmbient}/>
+          <FilterChip currentFilterState={bliss} text='bliss' setFilter={setBliss}/>
+          <FilterChip currentFilterState={bluesy} text='bluesy' setFilter={setBluesy}/>
+          <FilterChip currentFilterState={chaotic} text='chaotic' setFilter={setChaotic}/>
+          <FilterChip currentFilterState={crunchy} text='crunchy' setFilter={setCrunchy}/>
+          <FilterChip currentFilterState={dark} text='dark' setFilter={setDark}/>
+          <FilterChip currentFilterState={dissonant} text='dissonant' setFilter={setDissonant}/>
+          <FilterChip currentFilterState={fast} text='fast' setFilter={setFast}/>
+          <FilterChip currentFilterState={funky} text='funky' setFilter={setFunky}/>
+          <FilterChip currentFilterState={groovy} text='groovy' setFilter={setGroovy}/>
+          <FilterChip currentFilterState={guest} text='guest' setFilter={setGuest}/>
+          <FilterChip currentFilterState={happy} text='happy' setFilter={setHappy}/>
+          <FilterChip currentFilterState={heavy} text='heavy' setFilter={setHeavy}/>
+          <FilterChip currentFilterState={jazzy} text='jazzy' setFilter={setJazzy}/>
+          <FilterChip currentFilterState={long} text='long' setFilter={setLong}/>
+          <FilterChip currentFilterState={multiPart} text='multi-part' setFilter={setMultiPart}/>
+          <FilterChip currentFilterState={officialRelease} text='official release' setFilter={setOfficialRelease}/>
+          <FilterChip currentFilterState={peaks} text='peaks' setFilter={setPeaks}/>
+          <FilterChip currentFilterState={reggae} text='reggae' setFilter={setReggae}/>
+          <FilterChip currentFilterState={segue} text='segue' setFilter={setSegue}/>
+          <FilterChip currentFilterState={shred} text='shred' setFilter={setShred}/>
+          <FilterChip currentFilterState={silly} text='silly' setFilter={setSilly}/>
+          <FilterChip currentFilterState={sloppy} text='sloppy' setFilter={setSloppy}/>
+          <FilterChip currentFilterState={slow} text='slow' setFilter={setSlow}/>
+          <FilterChip currentFilterState={sludgy} text='sludgy' setFilter={setSludgy}/>
+          <FilterChip currentFilterState={soaring} text='soaring' setFilter={setSoaring}/>
+          <FilterChip currentFilterState={soulful} text='soulful' setFilter={setSoulful}/>
+          <FilterChip currentFilterState={stopStart} text='stop-start' setFilter={setStopStart}/>
+          <FilterChip currentFilterState={synthy} text='synthy' setFilter={setSynthy}/>
+          <FilterChip currentFilterState={tease} text='teases' setFilter={setTease}/>
+          <FilterChip currentFilterState={thatYearsStyle} text="that year's style" setFilter={setThatYearsStyle}/>
+          <FilterChip currentFilterState={trippy} text='trippy' setFilter={setTrippy}/>
+          <FilterChip currentFilterState={type2} text='type II' setFilter={setType2}/>
+          <FilterChip currentFilterState={unusual} text='unusual' setFilter={setUnusual}/>
           </div>
           <br></br>
         </>}
-      {songExists && date &&
+      {songExists && date.length > 9 && (date.charAt(0) === '1' || date.charAt(0) === '2') &&
       <button className="primary-button"
       onClick={e => testVersion(date)}
-      disabled={loading}>Add this version</button>}
+      disabled={loading}>add this version</button>}
       {showSuccessMessage &&
       <>
-      <br></br><br></br><p>Added the {date} version of {songName}. Thank you for contributing!</p>
+      <br></br><br></br><p>added the {date} version of {songName}. thank you for contributing!</p>
       </>
       }
       {showAlreadyExistsMessage &&
       <>
-      <p>You have good taste: the {date} version of {songName} has already been added.</p>
+      <p>you have good taste: the {date} version of {songName} has already been added.</p>
       <br></br>
       <br></br>
       </>}
       <br></br>
       <br></br>
+        </>}
       <button className="small-button"
-        onClick={e => handleBackClick()}>Back</button>
+        onClick={e => handleBackClick()}>back</button>
       </div>
       </div>
     </>

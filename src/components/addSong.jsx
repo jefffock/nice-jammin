@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './../supabaseClient'
 import FilterChip from './FilterChip'
+import { Link } from 'react-router-dom'
 
-function AddSong(props) {
-  const [song, setSong] = useState(props.nameToAdd || '')
+function AddSong({ artist, user, fetchSongs, nameToAdd, username, addTenPoints, canWrite}) {
+  const [song, setSong] = useState(nameToAdd || '')
   const [loading, setLoading] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
   const [showAlreadyExistsMessage, setShowAlreadyExistsMessage] = useState(false)
   const [original, setOriginal] = useState(true)
   const [cover, setCover] = useState(false)
 
-  useEffect(() => {
-  }, [props.user])
+
 
   useEffect(() => {
     if (cover || !original) {
@@ -34,7 +34,7 @@ function AddSong(props) {
     if (error) {
       console.log(error)
     } else if (data.length === 0) {
-      if (props.canWrite) {
+      if (canWrite) {
         addSong(artistname, song)
       }
     } else {
@@ -48,13 +48,13 @@ function AddSong(props) {
     const { error } = await supabase
       .from('songs')
       .insert(
-        { song: song, artist: artistname, cover: cover, submitter_name: props.username }, {returning: 'minimal'})
+        { song: song, artist: artistname, cover: cover, submitter_name: username }, {returning: 'minimal'})
     if (error) {
       console.log(error)
     } else {
       setShowSuccessMessage(true)
-      props.addTenPoints(props.username)
-      props.fetchSongs(artistname)
+      addTenPoints(username)
+      fetchSongs(artistname)
     }
   }
 
@@ -68,14 +68,14 @@ function AddSong(props) {
     setCover(false)
   }
 
-  function handleBackClick() {
-    props.setShowAddSong(false)
-  }
-
   return (
     <div className="add-song-container">
       <div className="add-song-wrapper">
-      <h3>Add Song</h3>
+      {!user &&
+      <h3>please sign in to contribute</h3>}
+        {artist && user &&
+        <>
+      <h3>add a song by {artist.artist}</h3>
       <div>
           {/* <label htmlFor="song">Song: </label> */}
           <input
@@ -90,34 +90,38 @@ function AddSong(props) {
           }/>
           <br></br>
           <br></br>
-          <p>Please check for typos &#x263A;</p>
+          <p>please check for typos &#x263A;</p>
           <br></br>
           <FilterChip currentFilterState={original} text='Original' setFilter={handleOriginalClick}/>
           <FilterChip currentFilterState={cover} text='Cover' setFilter={handleCoverClick}/>
       </div>
       <button className="primary-button"
-      onClick={e => testSong(props.artist.artist, song)}
-      disabled={loading}>Add this song</button>
+      onClick={e => testSong(artist.artist, song)}
+      disabled={loading}>add this song</button>
       <br></br>
+        </>}
       {showSuccessMessage &&
       <>
       <br></br>
       <br></br>
-      <p>Successfully added {song}.</p>
+      <p>successfully added {song}.</p>
       <br></br>
-      <p>Thank you for contributing!</p>
+      <p>thank you for contributing!</p>
       <br></br>
       </>}
       {showAlreadyExistsMessage &&
       <>
       <br></br>
       <br></br>
-      <p>{song} by {props.artist.artist} has already been added.</p>
+      <p>{song} by {artist.artist} has already been added.</p>
       </>
       }
       <br></br>
-      <button className="small-button"
-        onClick={e => handleBackClick()}>Back</button>
+      {artist &&
+      <Link to ={`/artists/${artist.id}`} style={{textDecoration: 'none'}}>
+        <button className="small-button">back to songs</button>
+      </Link>
+      }
       </div>
     </div>
   )

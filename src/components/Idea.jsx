@@ -43,7 +43,7 @@ function Idea(props) {
       <p className="idea-body">{props.ideaData.idea_body}</p>
       <p className="idea-name">{props.ideaData.user_name}</p>
       <p className="idea-votes link"
-      onClick={e => checkAlreadyVotedHelpful()}>Support: {helpfulToShow}</p>
+      onClick={() => checkAlreadyVotedHelpful()}>support: {helpfulToShow}</p>
       </div>
     </div>
     <br></br>
