@@ -61,7 +61,7 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
       let index = artists.findIndex(correctArtist)
       setArtist(artists[index])
     }
-  }, [artistId, artist, setArtist])
+  }, [artistId, artist, setArtist, artists])
 
   useEffect(() => {
     if (songs) {

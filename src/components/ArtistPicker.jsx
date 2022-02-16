@@ -1,17 +1,17 @@
 import { Link, useParams, Outlet } from 'react-router-dom'
 import { useEffect } from 'react'
 
-function ArtistPicker(props) {
+function ArtistPicker({ artists, setArtist, setSong, setVersion, artist }) {
   let params = useParams()
 
   useEffect(() => {
-    props.setArtist(null)
-    props.setSong(null)
-    props.setVersion(null)
-  }, [])
+    setArtist(null)
+    setSong(null)
+    setVersion(null)
+  }, [setArtist, setSong, setVersion])
 
   function handleArtistClick(artist)  {
-    props.setArtist(artist)
+    setArtist(artist)
   }
 
   return (
@@ -26,10 +26,10 @@ function ArtistPicker(props) {
         <h2 className="title">bands<br></br>beyond<br></br>description</h2>
         <br></br>
         <p className="title">Choose&nbsp;one&nbsp;to&nbsp;get&nbsp;started:<br></br><br></br></p>
-        {!props.artist && !props.artists &&
+        {!artist && !artists &&
         <h3>Loading artists...</h3>}
-        {!props.artist && props.artists &&
-          props.artists.map((artist, index) => {
+        {!artist && artists &&
+          artists.map((artist, index) => {
             return (
               <div className="artist" key={index}>
                 <Link to={JSON.stringify(artist.id)} style={{ textDecoration: 'none' }}>

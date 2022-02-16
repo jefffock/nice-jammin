@@ -1,8 +1,7 @@
 import BackButtons from './BackButtons'
 import AddRating from './addRating'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { supabase } from './../supabaseClient'
-import { Link, useNavigate } from 'react-router-dom'
 
 function CurrentSelection({ artist, song, version, versions, setArtist, setSong, setVersion, showAddLink,
   setShowAddLink, linkAdded, setLinkAdded, addTenPoints, fetchVersions, username, user,
@@ -13,8 +12,6 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
   const [showingAddRating, setShowingAddRating] = useState(false)
   const [ratingAdded, setRatingAdded] = useState(false)
 
-  let navigate = useNavigate()
-
   async function insertAddLink() {
     setLinkAdded(true)
     setButtonDisabled(true)
@@ -22,7 +19,7 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
     if (!username) {
       setAddLinkStatus('Please log in to contribute')
     } else {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('add_link')
         .insert({
           link: linkToAdd,
@@ -62,7 +59,6 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
   function handleAddRatingClick() {
     setShowingAddRating(true)
     setRatingAdded(false)
-    // navigate(`/artists/${artist.id}/songs/${song.id}/versions/${version.id}/add-rating`)
   }
 
   return (

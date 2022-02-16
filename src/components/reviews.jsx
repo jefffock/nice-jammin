@@ -1,13 +1,12 @@
 import { useEffect } from 'react'
 import Review from './review'
-import { useParams, Link, Outlet } from 'react-router-dom'
+import { useParams, Outlet } from 'react-router-dom'
 
 
 function Reviews({ reviews, fetchRatings, artists, artist, setArtist, songs, song, setSong,
 versions, version, setVersion, username, countHelpfulVotesRatings, countFunnyVotesRatings, addOnePoint}) {
 
   let { artistId, songId, versionId } = useParams()
-  let params = useParams()
 
   useEffect(() => {
     if (artists) {

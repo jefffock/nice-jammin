@@ -1,20 +1,15 @@
 import './index.css'
 import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Auth from './Auth'
 import Versions from './components/versions'
 import Reviews from './components/reviews'
 import AddSong from './components/addSong'
 import AddVersion from './components/addVersion'
-import AddRating from './components/addRating'
-import Header from './components/header'
 import SongPicker from './components/SongPicker'
-import BackButtons from './components/BackButtons'
-import CurrentSelection from './components/CurrentSelection'
 import ArtistPicker from './components/ArtistPicker'
 import NavBar from './components/NavBar'
-import Home from './components/Home'
 import Ideas from './components/Ideas'
 import Leaderboard from './components/Leaderboard'
 import Account from './components/Account'
@@ -28,36 +23,18 @@ function App() {
   const [artist, setArtist] = useState(null)
   const [songs, setSongs] = useState(null)
   const [song, setSong] = useState(null)
-  const [songData, setSongData] = useState(null)
-  const [songName, setSongName] = useState(null)
   const [filteredSongs, setFilteredSongs] = useState([])
   const [songSearchTerm, setSongSearchTerm] = useState('')
   const [versions, setVersions] = useState(null)
   const [version, setVersion] = useState(null)
   const [reviews, setReviews] = useState(null)
-  const [showProfile, setShowProfile] = useState(false)
-  const [showPleaseConfirm, setShowPleaseConfirm] = useState(false)
-  const [showingAddSong, setShowingAddSong] = useState(false)
-  const [showingAddVersion, setShowingAddVersion] = useState(false)
-  const [showingAddRating, setShowingAddRating] = useState(false)
-  const [showMenu, setShowMenu] = useState(false)
   const [username, setUsername] = useState(null)
   const [points, setPoints] = useState(null)
-  const [avatar_url, setAvatarUrl] = useState(null)
-  const [showSignIn, setShowSignIn] = useState(true)
-  const [showSignUp, setShowSignUp] = useState(true)
-  const [showVersions, setShowVersions] = useState(false)
   const [ideas, setIdeas] = useState(null)
-  const [showIdeas, setShowIdeas] = useState(null)
-  const [showAccount, setShowAccount] = useState(false)
-  const [showSupport, setShowSupport] = useState(false)
-  const [emailToConfirm, setEmailToConfirm] = useState('')
   const [canWrite, setCanWrite] = useState(true)
   const [showAddLink, setShowAddLink] = useState(false)
   const [linkAdded, setLinkAdded] = useState(false)
   const [leaders, setLeaders] = useState(null)
-  const [showLeaders, setShowLeaders] = useState(false)
-  const [params, setParams] = useState(null)
 
   useEffect(() => {
     setSession(supabase.auth.session())
@@ -74,9 +51,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if (user) {
-      setShowPleaseConfirm(false)
-    } fetchProfile()
+    fetchProfile()
   }, [session, user])
 
   useEffect(() => {
@@ -120,7 +95,6 @@ function App() {
       } if (data[0]) {
         setUsername(data[0].name)
         setPoints(data[0].points)
-        setAvatarUrl(data[0].avatar_url)
         setCanWrite(data[0].can_write)
       }
     }
@@ -288,10 +262,6 @@ useEffect(() => {
       }
   }
 
-  function handleNotConfirmedYet() {
-    setShowPleaseConfirm(true)
-  }
-
   function addPointsToVersion(id, points) {
     for (var i = 0; i < versions.length; i++) {
       if (versions[i].id === id) {
@@ -314,25 +284,9 @@ useEffect(() => {
             addOnePoint={addOnePoint}/>}/>
             <Route path="account" element={<Account fetchProfile={fetchProfile} username={username} points={points}/>}/>
             <Route path="about" element={<About />}/>
-            <Route path="sign-up" element={<Auth handleNotConfirmedYet={handleNotConfirmedYet}
-              setUser={setUser}
-              setSession={setSession}
-              fetchProfile={fetchProfile}
-              showSignIn={false}
-              setShowSignIn={setShowSignIn}
-              setShowSignUp={setShowSignUp}
-              showSignUp={true}
-              setEmailToConfirm={setEmailToConfirm}/>}/>
-            <Route path="sign-in" element={<Auth handleNotConfirmedYet={handleNotConfirmedYet}
-              setUser={setUser}
-              setSession={setSession}
-              fetchProfile={fetchProfile}
-              showSignIn={true}
-              setShowSignIn={setShowSignIn}
-              setShowSignUp={setShowSignUp}
-              showSignUp={false}
-              setEmailToConfirm={setEmailToConfirm}/>}/>
-            <Route path="artists/*" element={<ArtistPicker artists={artists} setArtist={setArtist} setSong={setSong}
+            <Route path="sign-up" element={<Auth setUser={setUser} setSession={setSession} fetchProfile={fetchProfile} showSignIn={false} showSignUp={true}/>}/>
+            <Route path="sign-in" element={<Auth setUser={setUser} setSession={setSession} fetchProfile={fetchProfile} showSignIn={true} showSignUp={false}/>}/>
+            <Route path="artists/*" element={<ArtistPicker artists={artists} setArtist={setArtist} setSong={setSong} artist={artist}
             setVersion={setVersion} />}>
 
               <Route path=":artistId/*" element={<SongPicker artists={artists} artist={artist} songs={songs} filteredSongs={filteredSongs}
