@@ -125,10 +125,12 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
     } if (dateValid && locationValid) {
       setLoading(true)
       setShowSuccessMessage(false)
+      let songid = parseInt(song.id)
+      console.log('songid', songid)
       const { data, error } = await supabase
         .from('versions')
         .select('id')
-        .eq('song_id', Number.parse(songId))
+        .eq('song_id', songid)
         .eq('date', date)
       if (error) {
         console.log('error', error)
@@ -246,6 +248,10 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
     <>
     <div className="add-version-container">
       <div className="add-version-wrapper">
+        {!user &&
+        <h3>Please sign in to contribute</h3>}
+        {user &&
+        <>
       <h3>Add Version</h3>
       <div className="add-version-inputs">
       <label htmlFor="song">Song: </label><br></br>
@@ -377,6 +383,7 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
       </>}
       <br></br>
       <br></br>
+        </>}
       <button className="small-button"
         onClick={e => handleBackClick()}>Back</button>
       </div>

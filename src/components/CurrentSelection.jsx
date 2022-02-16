@@ -1,14 +1,20 @@
 import BackButtons from './BackButtons'
+import AddRating from './addRating'
 import { useEffect, useState } from 'react'
 import { supabase } from './../supabaseClient'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function CurrentSelection({ artist, song, version, versions, setArtist, setSong, setVersion, showAddLink,
-  setShowAddLink, linkAdded, setLinkAdded, addTenPoints, fetchVersions, username}) {
+  setShowAddLink, linkAdded, setLinkAdded, addTenPoints, fetchVersions, username, user,
+  canWrite, addOnePoint, calcAverageForVersion, fetchRatings, addRatingCountToSong, addRatingCountToArtist }) {
   // const [wrapperClasses, setWrapperClasses] = useState('current-selection-wrapper hidden')
   const [linkToAdd, setLinkToAdd] = useState('')
   const [addLinkStatus, setAddLinkStatus] = useState('')
   const [buttonDisabled, setButtonDisabled] = useState(false)
+  const [showingAddRating, setShowingAddRating] = useState(false)
+  const [ratingAdded, setRatingAdded] = useState(false)
+
+  let navigate = useNavigate()
 
   // useEffect(() => {
   //   if (props.artist) {
@@ -68,10 +74,16 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
     }
   }
 
+  function handleAddRatingClick() {
+    setShowingAddRating(true)
+    setRatingAdded(false)
+    // navigate(`/artists/${artist.id}/songs/${song.id}/versions/${version.id}/add-rating`)
+  }
+
   return (
     <>
     <BackButtons artist={artist} song={song} version={version} setArtist={setArtist} setSong={setSong} setVersion={setVersion}
-    />
+    setShowingAddRating={setShowingAddRating} setRatingAdded={setRatingAdded}/>
     <div className={artist ? 'current-selection-wrapper' : 'current-selection-wrapper hidden'}>
       <div className="current-selection-div">
         {artist &&
@@ -96,18 +108,24 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
             <p className="name">{version.submitter_name}</p>
             <p className="points">{version.points}</p>
           </div>
-          {version && song &&
-            <><Link to="add-rating">
-          <div className="action-button-wrapper">
+          {version && song && !showingAddRating &&
+            <>
+          <div className="action-button-wrapper" onClick={() => handleAddRatingClick()}>
           <button className="primary-button action-button"
-          // onClick={e => setShowAddRating(true)}
           >Rate this {song.song}</button>
         </div>
-            </Link>
             </>
           }
         </>
-          }
+        }
+        {showingAddRating &&
+          <AddRating artist={artist} song={song} version={version} user={user} username={username} addOnePoint={addOnePoint}
+          addTenPoints={addTenPoints} canWrite={canWrite} calcAverageForVersion={calcAverageForVersion} fetchVersions={fetchVersions}
+          fetchRatings={fetchRatings} addRatingCountToSong={addRatingCountToSong} addRatingCountToArtist={addRatingCountToArtist}
+          setShowingAddRating={setShowingAddRating} setRatingAdded={setRatingAdded}
+          />}
+        {ratingAdded &&
+        <p className="title">Added your rating.<br></br>Thank you for contributing!</p>}
           {version && version.listen_link &&
            <>
              <div className="listen-link">
@@ -116,7 +134,7 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
              </div>
            </>
           }
-          {version && !version.listen_link && !showAddLink && !linkAdded &&
+          {version && !version.listen_link && !showAddLink && !linkAdded && !showingAddRating &&
           <>
           <br></br>
           <div className="center-content">
@@ -124,7 +142,9 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
           onClick={e => setShowAddLink(true)}>Add a 'Listen Here' link</button>
           </div>
           </>}
-          {version && showAddLink &&
+          {version && showAddLink && !user &&
+          <h3>Please sign in to contribute</h3>}
+          {version && showAddLink && user &&
           <>
           <br></br><br></br>
           <div className="center-content">
@@ -150,7 +170,6 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
             <p className="status">{addLinkStatus}</p>
           </div>
           }
-
         </div>
     </div>
         </>

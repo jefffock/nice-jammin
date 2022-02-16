@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom'
 
-function BackButtons({ artist, song, version, setArtist, setSong, setVersion}) {
+function BackButtons({ artist, song, version, setArtist, setSong, setVersion, setShowingAddRating}) {
 
   let navigate = useNavigate()
 
   function handleChangeArtistClick() {
+    setShowingAddRating(false)
     setArtist(null)
     setSong(null);
     setVersion(null);
@@ -12,13 +13,15 @@ function BackButtons({ artist, song, version, setArtist, setSong, setVersion}) {
   }
 
   function handleChangeSongClick() {
+    setShowingAddRating(false)
     setSong(null);
     setVersion(null);
     navigate(`/artists/${artist.id}`)
   }
 
   function handleChangeVersionClick() {
-   setVersion(null);
+    setShowingAddRating(false)
+    setVersion(null);
     navigate(`/artists/${artist.id}/songs/${song.id}`)
   }
 

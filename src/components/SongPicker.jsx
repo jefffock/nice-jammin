@@ -3,7 +3,8 @@ import CurrentSelection from './CurrentSelection'
 import { useEffect } from 'react'
 
 function SongPicker ({ artists, artist, songs, filteredSongs, song, version, fetchArtists, addTenPoints, fetchVersions, username, versions,
-  fetchSongs, songSearchTerm, setSongSearchTerm, setArtist, setSong, setVersion, showAddLink, setShowAddLink, linkAdded, setLinkAdded }) {
+  fetchSongs, songSearchTerm, setSongSearchTerm, setArtist, setSong, setVersion, showAddLink, setShowAddLink, linkAdded, setLinkAdded,
+  user, addOnePoint, canWrite, calcAverageForVersion, fetchRatings, addRatingCountToArtist, addRatingCountToSong }) {
 
     let params = useParams()
 
@@ -23,9 +24,11 @@ function SongPicker ({ artists, artist, songs, filteredSongs, song, version, fet
   return (
     <>
     <CurrentSelection artist={artist} song={song} version={version} versions={versions} username={username}
-    setArtist={setArtist} setSong={setSong} setVersion={setVersion}
+    setArtist={setArtist} setSong={setSong} setVersion={setVersion} user={user}
     showAddLink={showAddLink} setShowAddLink={setShowAddLink} linkAdded={linkAdded}
-    setLinkAdded={setLinkAdded} addTenPoints={addTenPoints} fetchVersions={fetchVersions}/>
+    setLinkAdded={setLinkAdded} addTenPoints={addTenPoints} fetchVersions={fetchVersions}
+    addOnePoint={addOnePoint} canWrite={canWrite} calcAverageForVersion={calcAverageForVersion}
+    fetchRatings={fetchRatings} addRatingCountToSong={addRatingCountToSong} addRatingCountToArtist={addRatingCountToArtist}/>
     <Outlet />
     {params && !params.songId && params['*'] !== 'add-song' &&
       <div className="song-picker-container">

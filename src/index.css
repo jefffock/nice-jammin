@@ -93,7 +93,7 @@ h3 {
   font-size: 20px;
 }
 
-p {
+p, label {
   font-family: 'Epilogue', sans-serif;
   color: var(--primary-color-darker);
   font-size: 16px;
@@ -317,6 +317,7 @@ button:hover {
   margin-right: 0.5em;
   border: 1px solid var(--card-border);
   box-shadow: var(--small-shadow);
+  margin-bottom: 0.5em;
 }
 
 .versions-container {
@@ -424,9 +425,8 @@ button:hover {
   /* background-color: var(--background-color-lighter-one); */
   background: var(--cloud-two-gradient);
   border-radius: 2em;
-  padding-bottom: 1.5em;
-  margin-left: 0.5em;
-  margin-right: 0.5em;
+  padding-bottom: 1em;
+  margin: 0.5em;
   border: 1px solid var(--section-border);
   box-shadow: var(--small-shadow);
 }
@@ -632,7 +632,6 @@ button:hover {
 
 .add-song-wrapper,
 .add-version-wrapper,
-.add-rating-wrapper,
 .ideas-wrapper,
 .account-wrapper,
 .bug-wrapper,
@@ -654,6 +653,15 @@ button:hover {
   margin-left: 0.5em;
   margin-right: 0.5em;
   border: 1px solid var(--section-border);
+}
+
+.add-rating-wrapper {
+  text-align: center;
+  padding-top: 2em;
+  /* padding-left: 1em;
+  padding-right: 1em;
+  margin-left: 0.5em;
+  margin-right: 0.5em; */
 }
 
 .leaders-container {

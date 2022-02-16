@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import Review from './review'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, Outlet } from 'react-router-dom'
 
 
 function Reviews({ reviews, fetchRatings, artists, artist, setArtist, songs, song, setSong,
@@ -42,6 +42,8 @@ versions, version, setVersion, username, countHelpfulVotesRatings, countFunnyVot
   })
 
   return (
+    <>
+    <Outlet />
     <div className="reviews">
       <br></br>
       {reviews && (reviews.length === 0) &&
@@ -59,6 +61,7 @@ versions, version, setVersion, username, countHelpfulVotesRatings, countFunnyVot
           } return <></>
         })}
     </div>
+    </>
   )
 }
 

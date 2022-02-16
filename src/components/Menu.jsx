@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import Account from './Account'
 import Ideas from './Ideas'
-import Support from './Support'
+import About from './About'
 import Leaderboard from './Leaderboard'
 
 function Menu (props) {
@@ -120,8 +120,8 @@ function Menu (props) {
         addTenPoints={props.addTenPoints}
         addOnePoint={props.addOnePoint}/>}
 
-        {props.showMenu && props.showSupport &&
-        <Support />}
+        {/* {props.showMenu && props.showSupport &&
+        <Support />} */}
 
         {props.showMenu && props.showLeaders &&
         <Leaderboard leaders={props.leaders} fetchLeaders={props.fetchLeaders} />}

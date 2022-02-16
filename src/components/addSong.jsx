@@ -71,7 +71,9 @@ function AddSong({ artist, user, fetchSongs, nameToAdd, username, addTenPoints, 
   return (
     <div className="add-song-container">
       <div className="add-song-wrapper">
-        {artist &&
+      {!user &&
+      <h3>Please sign in to contribute</h3>}
+        {artist && user &&
         <>
       <h3>Add a song by {artist.artist}</h3>
       <div>

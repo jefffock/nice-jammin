@@ -276,7 +276,7 @@ useEffect(() => {
       <div className="loading">
         <p>Loading...</p>
         <br></br>
-        <p>Or maybe no versions have been added yet!<br></br><br></br>If you know a good one, please add it!</p>
+        <p>...Or, if you have time to read this, maybe no versions of {song.song} have been added yet!<br></br><br></br>If you know a great one, please add it!</p>
       </div>
       </>}
       {!showingAddVersion &&

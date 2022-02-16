@@ -58,9 +58,9 @@ function NavBar (props) {
             }>Ideas</NavLink>
         </li>
         <li onClick={handleMenuItemClick}>
-          <NavLink to="support" style={({ isActive }) =>
+          <NavLink to="about" style={({ isActive }) =>
               isActive ? activeStyle : undefined
-            }>Support</NavLink>
+            }>About</NavLink>
         </li>
         {props.user &&
         <>

@@ -3,7 +3,8 @@ import { supabase } from './../supabaseClient'
 import FilterChip from './FilterChip'
 
 function AddRating({ artists, artist, songs, song, versions, version, user, username, addOnePoint,
-  addTenPoints, canWrite, setArtist, setSong, calcAverageForVersion, fetchRatings, fetchVersions, addRatingCountToArtist, addRatingCountToSong}) {
+  addTenPoints, canWrite, setArtist, setSong, calcAverageForVersion, fetchRatings, fetchVersions,
+  addRatingCountToArtist, addRatingCountToSong, setShowingAddRating, setRatingAdded }) {
   const [rating, setRating] = useState(10);
   const [comment, setComment] = useState('');
   const [charCount, setCharCount] = useState(0)
@@ -71,7 +72,7 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
     }
     checkUserAlreadyRated()
     }
-  }, [user, username,])
+  }, [user, username, version])
 
   // useEffect(() => {
   //   if (!user) {
@@ -84,114 +85,117 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
   }, [comment])
 
   useEffect(() => {
-    let tagBuilder = '';
-    if (version.acoustic) {
-      tagBuilder+='Acoustic, '
+    if (version) {
+
+      let tagBuilder = '';
+      if (version.acoustic) {
+        tagBuilder+='Acoustic, '
+      }
+       if (version.ambient) {
+        tagBuilder+='Ambient, '
+      }
+      if (version.bliss) {
+        tagBuilder+='Bliss, '
+      }
+      if (version.bluesy) {
+        tagBuilder+='Bluesy, '
+      }
+      if (version.chaotic) {
+        tagBuilder+='Chaotic, '
+      }
+       if (version.crunchy) {
+        tagBuilder+='Crunchy, '
+      }
+      if (version.dark) {
+        tagBuilder+='Dark, '
+      }
+      if (version.dissonant) {
+        tagBuilder+='Dissonant, '
+      }
+       if (version.fast) {
+        tagBuilder+='Fast, '
+      }
+       if (version.funky) {
+        tagBuilder+='Funky, '
+      }
+       if (version.groovy) {
+        tagBuilder+='Groovy, '
+      }
+       if (version.guest) {
+        tagBuilder+='Guest, '
+      }
+       if (version.happy) {
+        tagBuilder+='Happy, '
+      }
+       if (version.heavy) {
+        tagBuilder+='Heavy, '
+      }
+       if (version.jazzy) {
+        tagBuilder+='Jazzy, '
+      }
+      if (version.long) {
+        tagBuilder+='Long, '
+      }
+      if (version.multi_part) {
+        tagBuilder+='Multi-part, '
+      }
+      if (version.official_release) {
+        tagBuilder+='Official release, '
+      }
+       if (version.peaks) {
+        tagBuilder+='Peaks, '
+      }
+       if (version.reggae) {
+        tagBuilder+='Reggae, '
+      }
+      if (version.segue) {
+        tagBuilder+='Segue, '
+      }
+       if (version.shred) {
+        tagBuilder+='Shred, '
+      }
+      if (version.silly) {
+       tagBuilder+='Silly, '
+     }
+      if (version.sloppy) {
+        tagBuilder+='Sloppy, '
+      }
+      if (version.slow) {
+       tagBuilder+='Slow, '
+     }
+      if (version.sludgy) {
+        tagBuilder+='Sludgy, '
+      }
+      if (version.soaring) {
+        tagBuilder+='Soaring, '
+      }
+      if (version.soulful) {
+        tagBuilder+='Soulful, '
+      }
+      if (version.stop_start) {
+        tagBuilder+='Stop-start, '
+      }
+      if (version.synthy) {
+        tagBuilder+='Synthy, '
+      }
+       if (version.tease) {
+        tagBuilder+='Teases, '
+      }
+      if (version.that_years_style) {
+        tagBuilder+='That year\'s style, '
+      }
+       if (version.trippy) {
+        tagBuilder+='Trippy, '
+      }
+       if (version.type2) {
+        tagBuilder+='Type\u00A0II, '
+      }
+      if (version.unusual) {
+        tagBuilder+='Unusual, '
+      }
+      let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
+      setTagText(finalTags)
     }
-     if (version.ambient) {
-      tagBuilder+='Ambient, '
-    }
-    if (version.bliss) {
-      tagBuilder+='Bliss, '
-    }
-    if (version.bluesy) {
-      tagBuilder+='Bluesy, '
-    }
-    if (version.chaotic) {
-      tagBuilder+='Chaotic, '
-    }
-     if (version.crunchy) {
-      tagBuilder+='Crunchy, '
-    }
-    if (version.dark) {
-      tagBuilder+='Dark, '
-    }
-    if (version.dissonant) {
-      tagBuilder+='Dissonant, '
-    }
-     if (version.fast) {
-      tagBuilder+='Fast, '
-    }
-     if (version.funky) {
-      tagBuilder+='Funky, '
-    }
-     if (version.groovy) {
-      tagBuilder+='Groovy, '
-    }
-     if (version.guest) {
-      tagBuilder+='Guest, '
-    }
-     if (version.happy) {
-      tagBuilder+='Happy, '
-    }
-     if (version.heavy) {
-      tagBuilder+='Heavy, '
-    }
-     if (version.jazzy) {
-      tagBuilder+='Jazzy, '
-    }
-    if (version.long) {
-      tagBuilder+='Long, '
-    }
-    if (version.multi_part) {
-      tagBuilder+='Multi-part, '
-    }
-    if (version.official_release) {
-      tagBuilder+='Official release, '
-    }
-     if (version.peaks) {
-      tagBuilder+='Peaks, '
-    }
-     if (version.reggae) {
-      tagBuilder+='Reggae, '
-    }
-    if (version.segue) {
-      tagBuilder+='Segue, '
-    }
-     if (version.shred) {
-      tagBuilder+='Shred, '
-    }
-    if (version.silly) {
-     tagBuilder+='Silly, '
-   }
-    if (version.sloppy) {
-      tagBuilder+='Sloppy, '
-    }
-    if (version.slow) {
-     tagBuilder+='Slow, '
-   }
-    if (version.sludgy) {
-      tagBuilder+='Sludgy, '
-    }
-    if (version.soaring) {
-      tagBuilder+='Soaring, '
-    }
-    if (version.soulful) {
-      tagBuilder+='Soulful, '
-    }
-    if (version.stop_start) {
-      tagBuilder+='Stop-start, '
-    }
-    if (version.synthy) {
-      tagBuilder+='Synthy, '
-    }
-     if (version.tease) {
-      tagBuilder+='Teases, '
-    }
-    if (version.that_years_style) {
-      tagBuilder+='That year\'s style, '
-    }
-     if (version.trippy) {
-      tagBuilder+='Trippy, '
-    }
-     if (version.type2) {
-      tagBuilder+='Type\u00A0II, '
-    }
-    if (version.unusual) {
-      tagBuilder+='Unusual, '
-    }
-    let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
-    setTagText(finalTags)
   }, [version])
 
   async function testRating() {
@@ -249,6 +253,7 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
         setAddRatingStatus('Unable to add your rating at this time.')
       } else {
         setAddRatingStatus('Added your rating')
+        setRatingAdded(true)
         insertUpdateTags()
         fetchRatings(version.id)
         fetchVersions()
@@ -258,7 +263,7 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
         addRatingCountToSong(song.id)
         addRatingCountToArtist(artist.id)
         calcAverageForVersion(version.id)
-        // setShowAddRating(false)
+        setShowingAddRating(false)
       }
   }
 
@@ -451,14 +456,23 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
 
   function handleBackClick() {
     fetchRatings(version.id)
-    // setShowAddRating(false)
+    setShowingAddRating(false)
   }
 
+  // return (
+  //   <h1>AddRating</h1>
+  // )
+
+
   return (
-    <div className="add-rating-container">
+    // <div className="add-rating-container">
       <div className="add-rating-wrapper">
-      <h2>Add Rating</h2>
-        <label htmlFor="rating">Rating: </label>
+      {/* <h2>Your Rating</h2> */}
+      {!user &&
+      <h3>Please sign in to contribute</h3>}
+      {user &&
+      <>
+        <label htmlFor="rating">Your Rating: </label>
         <select
         name="rating"
         id="rating"
@@ -496,11 +510,11 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
         <br></br>
         {!showAddTags &&
         <>
-        <button className="small-button" onClick={e => setShowAddTags(true)}>Add tags</button><br></br><br></br>
+        <button className="small-button" onClick={e => setShowAddTags(true)}>Add tags</button><br></br>
         </>}
         {showAddTags &&
         <>
-        <p>Current tags: {tagText}.<br></br><br></br> Please select all other tags that apply to this version:</p>
+        <p>Current tags: {tagText}.<br></br><br></br> Please select all other tags that you feel apply to this version:</p>
         <br></br>
         <div className="tags">
           {!version.acoustic &&
@@ -619,10 +633,12 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
         <p>{addRatingStatus}</p>
         <br></br>
         <br></br>
-      <button className="small-button" onClick={e => handleBackClick()}>Back</button>
+      <button className="small-button" onClick={() => handleBackClick()}>Back</button>
+      </>}
       </div>
-    </div>
+    // </div>
   )
+
 }
 
 export default AddRating
