@@ -9,18 +9,10 @@ versions, version, setVersion, username, countHelpfulVotesRatings, countFunnyVot
   let { artistId, songId, versionId } = useParams()
   let params = useParams()
 
-  // useEffect(() => {
-  //   console.log('props in reviews', props.reviews, props)
-  // if (!props) {
-  //   console.log('no props, going to fetch reviews')
-  // }
-  // })
-
   useEffect(() => {
     if (artists) {
       let correctArtist = (artist) => JSON.stringify(artist.id) === artistId
       let index = artists.findIndex(correctArtist)
-      console.log('artist at index', artists[index])
       setArtist(artists[index])
     }
   }, [artists, setArtist, artistId])

@@ -67,7 +67,7 @@ function App() {
         setUser(session.user)
       }
     })
-  }, [])
+  }, [session])
 
   useEffect(() => {
     setUser(supabase.auth.user())
@@ -106,40 +106,6 @@ function App() {
       fetchRatings(version.id)
     }
   }, [version])
-
-  useEffect(() => {
-    if (versions) {
-      // setShowArtistPicker(false)
-      // setShowSongPicker(false)
-    }
-  }, [versions])
-
-  // useEffect(() => {
-  //   if (showAccount || showIdeas || showSupport || showLeaders) {
-  //     setArtist(null)
-  //     setSong(null)
-  //     setVersion(null)
-  //     setShowAddSong(false)
-  //     setShowAddVersion(false)
-  //     setShowAddRating(false)
-  //     setShowProfile(false)
-  //     setSongName(null)
-  //     setSongSearchTerm('')
-  //     setShowSignUp(false)
-  //     // setShowArtistPicker(false)
-  //   } if (!showAccount && !showIdeas && !showSupport && !showLeaders) {
-  //     // setShowArtistPicker(true)
-  //   }
-  // }, [showAccount, showIdeas, showSupport, showLeaders])
-
-  // useEffect(() => {
-  //   if (showAddSong) {
-  //     setShowAddVersion(false)
-  //     setShowVersions(false)
-  //     setSong(null)
-  //     setSongName('')
-  //   }
-  // }, [showAddSong])
 
   async function fetchProfile() {
     const user = supabase.auth.user()
@@ -259,18 +225,7 @@ useEffect(() => {
     if (error) {
       console.log('error fetching top contributors', error)
     } else {
-      console.log('top contributors', data)
       setLeaders(data)
-    }
-  }
-
-  async function signOut() {
-    setShowProfile(false)
-    const { error } = await supabase.auth.signOut()
-    if (error) {
-      console.log('error', error)
-    } else {
-      console.log('signed out')
     }
   }
 
@@ -337,31 +292,6 @@ useEffect(() => {
     setShowPleaseConfirm(true)
   }
 
-  // function goHome() {
-  //   console.log('in go home')
-  //   setShowMenu(false)
-  //   setArtist(null)
-  //   setSong(null)
-  //   setVersion(null)
-  //   setShowAddSong(false)
-  //   setShowAddVersion(false)
-  //   setShowAddRating(false)
-  //   setShowProfile(false)
-  //   setSongName(null)
-  //   // setSongSearchTerm('')
-  //   setShowSignUp(false)
-  //   // setShowArtistPicker(true)
-  // }
-
-  // function handleShowAddSong(songName) {
-  //   if (songName) {
-  //     setSongSearchTerm(songName)
-  //   }
-  //   setShowAddVersion(false)
-  //   setShowAddSong(true)
-  //   setSongName('')
-  // }
-
   function addPointsToVersion(id, points) {
     for (var i = 0; i < versions.length; i++) {
       if (versions[i].id === id) {
@@ -380,7 +310,8 @@ useEffect(() => {
           <Routes>
             <Route path="/" element={<Navigate to="/artists"/>}/>
             <Route path="top-contributors" element={<Leaderboard fetchLeaders={fetchLeaders} leaders={leaders}/>}/>
-            <Route path="ideas" element={<Ideas fetchIdeas={fetchIdeas} ideas={ideas}/>}/>
+            <Route path="ideas" element={<Ideas fetchIdeas={fetchIdeas} ideas={ideas} countHelpfulVotesIdeas={countHelpfulVotesIdeas} username={username}
+            addOnePoint={addOnePoint}/>}/>
             <Route path="account" element={<Account fetchProfile={fetchProfile} username={username} points={points}/>}/>
             <Route path="about" element={<About />}/>
             <Route path="sign-up" element={<Auth handleNotConfirmedYet={handleNotConfirmedYet}
@@ -390,13 +321,13 @@ useEffect(() => {
               showSignIn={false}
               setShowSignIn={setShowSignIn}
               setShowSignUp={setShowSignUp}
-              showSignUp={showSignUp}
+              showSignUp={true}
               setEmailToConfirm={setEmailToConfirm}/>}/>
             <Route path="sign-in" element={<Auth handleNotConfirmedYet={handleNotConfirmedYet}
               setUser={setUser}
               setSession={setSession}
               fetchProfile={fetchProfile}
-              showSignIn={showSignIn}
+              showSignIn={true}
               setShowSignIn={setShowSignIn}
               setShowSignUp={setShowSignUp}
               showSignUp={false}

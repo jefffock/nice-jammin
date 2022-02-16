@@ -51,7 +51,6 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
   const [tagText, setTagText] = useState('')
 
   useEffect(() => {
-    // console.log('props in add rating', props)
     if (user) {
     async function checkUserAlreadyRated() {
       const { data, error } = await supabase
@@ -268,7 +267,6 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
   }
 
   async function insertUpdateTags() {
-    console.log('in insert update tags')
     setAddRatingStatus('Adding tags...')
     let tagBuilder = '';
     let tagsToUpdate = {}
@@ -418,9 +416,7 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
       setAddRatingStatus('Added your rating. Thanks for contributing!')
     }
     let finalTags = tagBuilder.slice(0, tagBuilder.length - 2)
-    console.log('finalTags', finalTags)
     let tagsLength = finalTags.length;
-    console.log('tagsLength', tagsLength)
     if (finalTags.length > 0) {
       const { error } = await supabase
         .from('update_tags')

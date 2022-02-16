@@ -6,8 +6,6 @@ function Leaderboard(props) {
 useEffect(() => {
   if (!props.leaders) {
     props.fetchLeaders()
-  } else {
-    console.log('props.leaders', props.leaders)
   }
 })
 

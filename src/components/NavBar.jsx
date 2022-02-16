@@ -1,10 +1,12 @@
 import { React, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { supabase } from '../supabaseClient'
 import './../styles/NavBar.css'
 
 function NavBar (props) {
 
   let [menuIsOpen, setMenuIsOpen] = useState(false)
+  let navigate = useNavigate()
 
   let activeStyle = {
     textDecoration: "underline"
@@ -31,6 +33,23 @@ function NavBar (props) {
       let body = document.body;
       body.classList.toggle('disable-scroll')
     } setMenuIsOpen(false)
+  }
+
+  function handleSignOutClick() {
+    if (menuIsOpen) {
+      let body = document.body;
+      body.classList.toggle('disable-scroll')
+    } setMenuIsOpen(false)
+    signOut()
+  }
+
+  async function signOut() {
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      console.log('error', error)
+    } else {
+      navigate('/')
+    }
   }
 
   return (
@@ -69,9 +88,8 @@ function NavBar (props) {
               isActive ? activeStyle : undefined
             }>Account</NavLink>
         </li>
-        <li onClick={handleMenuItemClick}>
-          <NavLink to="/logout" >Sign&nbsp;Out</NavLink>
-        </li>
+        <li onClick={handleSignOutClick}>
+          <NavLink to="/">Sign out</NavLink></li>
         </>}
         {!props.user &&
         <>

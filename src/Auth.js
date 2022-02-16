@@ -18,10 +18,9 @@ export default function Auth(props) {
       password: password,
     })
     if (error) {
-      alert(error.error_description || error.message)
       setLoading(false)
+      setStatus(error.error_description || error.message)
     } else {
-      console.log('user after sign in', user)
       setLoading(false)
       props.setShowSignIn(false)
       props.setUser(user)
@@ -51,6 +50,7 @@ export default function Auth(props) {
       if (error) {
         console.log(error)
         setLoading(false)
+        setStatus('Something went wrong, sorry about that! Please refresh the page and try again')
       }
       if (data.length > 0) {
         setStatus('Great minds think alike! Someone else already has that username. Please choose another.')
@@ -61,7 +61,7 @@ export default function Auth(props) {
           password: password,
         })
         if (error) {
-          alert(error.error_description || error.message)
+          setStatus('Something went wrong signing up. Please refresh the page and try again')
           setLoading(false)
         } else {
           props.setEmailToConfirm(email)
@@ -71,7 +71,6 @@ export default function Auth(props) {
           props.handleNotConfirmedYet()
           props.setSession(session)
           setLoading(false)
-
         }
       }
     }
@@ -87,7 +86,9 @@ export default function Auth(props) {
       alert (error)
     } else {
       setLoading(false)
-      setStatus('Created your account! Please check your email to confirm!')
+      setStatus(`Welcome, ${displayName}!
+      Please check for an email from nicejammin@nicejammin.com.
+      Once you confirm your account, you can start contributing!`)
     }
   }
 
@@ -142,11 +143,7 @@ export default function Auth(props) {
         </div>
         <br></br>
         <br></br>
-        <br></br>
-        <p className="link" onClick={e => {
-          props.setShowSignUp(true);
-          props.setShowSignIn(false)}}>Create an account
-        </p>
+        <p className="link" onClick={() => navigate('/sign-up')}>Create an account</p>
         <br></br>
         <br></br>
         <p className="link" onClick={() => {handleBackClick()}}>Nevermind, I just want to browse</p>
@@ -177,7 +174,6 @@ export default function Auth(props) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          </div>
           <br></br>
           <br></br>
           <label htmlFor="display-name">Display name: </label><br></br>
@@ -187,7 +183,8 @@ export default function Auth(props) {
             placeholder="TroyPistachio"
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
-          />
+            />
+            </div>
         </div>
         <br></br>
         <div>
@@ -206,12 +203,8 @@ export default function Auth(props) {
         <p className="error-message">{status}</p>
         <br></br>
         <br></br>
-        <br></br>
-        <br></br>
         <div>
-          <p className="link" onClick={e => {
-            props.setShowSignUp(false);
-            props.setShowSignIn(true)}}>I already have an account
+          <p className="link" onClick={() => navigate('/sign-in')}>I already have an account
           </p>
         </div>
         <br></br>

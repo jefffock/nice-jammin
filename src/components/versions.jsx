@@ -55,9 +55,7 @@ function Versions({ artists, artist, songs, song, versions, version, fetchArtist
   let params = useParams()
 
 useEffect(() => {
-  console.log('params in versions', params)
   let split = params['*'].split('/')
-    console.log('split', split)
     if (split[2] === 'add-version') {
       setShowingAddVersion(true)
     } else {
@@ -70,7 +68,6 @@ useEffect(() => {
     if (artists) {
       let correctArtist = (artist) => JSON.stringify(artist.id) === artistId
       let index = artists.findIndex(correctArtist)
-      console.log('artist at index', artists[index])
       setArtist(artists[index])
     }
   }, [artists, setArtist, artistId])
@@ -211,7 +208,6 @@ useEffect(() => {
       return (b.avg_rating - a.avg_rating)
     }
     let sortedVersions = filteredVersions.sort(compareRating);
-    console.log('sortedVersions', sortedVersions)
     setFilteredVersions(sortedVersions)
   }
 
@@ -228,7 +224,6 @@ useEffect(() => {
       } return 0
     }
     let sortedVersions = filteredVersions.sort(sortNewest);
-    console.log('sortedVersions', sortedVersions)
     setFilteredVersions(sortedVersions)
   }
 
@@ -245,7 +240,6 @@ useEffect(() => {
       } return 0
     }
     let sortedVersions = filteredVersions.sort(sortOldest);
-    console.log('sortedVersions', sortedVersions)
     setFilteredVersions(sortedVersions)
   }
 
@@ -262,7 +256,6 @@ useEffect(() => {
       } return 0
     }
     let sortedVersions = filteredVersions.sort(sortLocation);
-    console.log('sortedVersions', sortedVersions)
     setFilteredVersions(sortedVersions)
   }
 
@@ -276,7 +269,7 @@ useEffect(() => {
       <div className="loading">
         <p>Loading...</p>
         <br></br>
-        <p>...Or, if you have time to read this, maybe no versions of {song.song} have been added yet!<br></br><br></br>If you know a great one, please add it!</p>
+        <p>...Or, if you have time to read this, maybe no versions have been added yet!<br></br><br></br>If you know a great one, please add it!</p>
       </div>
       </>}
       {!showingAddVersion &&

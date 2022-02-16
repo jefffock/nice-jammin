@@ -64,13 +64,9 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
   }, [artistId, artist, setArtist])
 
   useEffect(() => {
-    console.log('songId', songId)
-    console.log('songs', songs)
     if (songs) {
       let correctSong = (song) => JSON.stringify(song.id) === songId
       let index = songs.findIndex(correctSong)
-      console.log('index', index)
-      console.log('songs[index]', songs[index])
       setSong(songs[index])
     }
   }, [songs, songId, setSong])
@@ -79,8 +75,6 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
     if (song) {
       setSongName(song.song)
       if (songId !== JSON.stringify(song.id)) {
-        console.log('songId', songId, 'song.id')
-        console.log('about to navigate')
         navigate(`../../songs/${song.id}/add-version`)
       }
    }
@@ -103,6 +97,11 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
   async function testVersion(date) {
     let locationValid = true
     let dateValid = true
+    let currentDate = new Date()
+    if (currentDate < Date.parse(date)) {
+      dateValid = false
+      alert(`Hello, time traveller! Thanks for trying to add this version of ${song.song}.\n\nUnfortunately, that would create a few paradoxes.\n\nIf the jam is great again in this timeline, feel free to come back and add it. Thank you, and safe travels!`)
+    }
     if (!canWrite) {
       locationValid = false;
       dateValid = false;
@@ -126,7 +125,6 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
       setLoading(true)
       setShowSuccessMessage(false)
       let songid = parseInt(song.id)
-      console.log('songid', songid)
       const { data, error } = await supabase
         .from('versions')
         .select('id')
@@ -212,7 +210,6 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
           newFilteredSongs.push(songs[i])
         }
       }
-      console.log('new filtered songs', newFilteredSongs)
       setFilteredSongs(newFilteredSongs)
       if ((newFilteredSongs.length === 1 ) && (searchTerm === newFilteredSongs[0].song)) {
         setSongExists(true)
@@ -230,8 +227,6 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
   }
 
   function handleDateChange(e) {
-    console.log('date', e.target.value)
-    console.log('first char', e.target.value.charAt(0))
     setDate(e.target.value);
     setShowSuccessMessage(false);
     setShowAlreadyExistsMessage(false)

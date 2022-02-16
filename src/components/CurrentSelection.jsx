@@ -7,7 +7,6 @@ import { Link, useNavigate } from 'react-router-dom'
 function CurrentSelection({ artist, song, version, versions, setArtist, setSong, setVersion, showAddLink,
   setShowAddLink, linkAdded, setLinkAdded, addTenPoints, fetchVersions, username, user,
   canWrite, addOnePoint, calcAverageForVersion, fetchRatings, addRatingCountToSong, addRatingCountToArtist }) {
-  // const [wrapperClasses, setWrapperClasses] = useState('current-selection-wrapper hidden')
   const [linkToAdd, setLinkToAdd] = useState('')
   const [addLinkStatus, setAddLinkStatus] = useState('')
   const [buttonDisabled, setButtonDisabled] = useState(false)
@@ -15,19 +14,6 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
   const [ratingAdded, setRatingAdded] = useState(false)
 
   let navigate = useNavigate()
-
-  // useEffect(() => {
-  //   if (props.artist) {
-  //     setWrapperClasses('current-selection-wrapper')
-  //   } else {
-  //     setWrapperClasses('current-selection-wrapper hidden')
-  //   }
-  // }, [props])
-
-  useEffect(() => {
-    console.log('versions in currentSelection', versions)
-    console.log('version in currentSelection', version)
-  })
 
   async function insertAddLink() {
     setLinkAdded(true)
@@ -48,7 +34,6 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
         setAddLinkStatus('Unable to add a link at this time.')
         setButtonDisabled(false)
       } else {
-        console.log('data from insert add link', data)
         updateVersionWithLink()
       }
     }
