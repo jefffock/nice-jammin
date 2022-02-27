@@ -17,14 +17,20 @@ function SongPicker ({ artists, artist, songs, filteredSongs, song, version, fet
 
 
   useEffect(() => {
-    if (artists) {
-      let correctArtist = (artist) => JSON.stringify(artist.id) === params.artistId
-      let index = artists.findIndex(correctArtist)
+    if (!params.songId) {
+      setSong(null)
+    }
+    if (!params.versionId) {
+      setVersion(null)
+    }
+    if (songs) {
+      let correctSong = (song) => JSON.stringify(song.id) === params.songId
+      let index = songs.findIndex(correctSong)
       if (index > -1) {
-        setArtist(artists[index])
+        setSong(songs[index])
       }
     }
-  }, [artist, artists, params, setArtist])
+  }, [song, songs, params, setSong, setVersion])
 
   function handleAddSongClick() {
     navigate('add-song')
