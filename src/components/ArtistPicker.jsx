@@ -4,16 +4,18 @@ import { useEffect } from 'react'
 function ArtistPicker({ artists, setArtist, setSong, setVersion, artist, fetchArtists }) {
   let params = useParams()
 
-  useEffect(() => {
-    setArtist(null)
-    setSong(null)
-    setVersion(null)
-    if (!artists) {
-      fetchArtists()
-    }
-  }, [setArtist, setSong, setVersion, artists, fetchArtists])
+  // useEffect(() => {
+  //   setArtist(null)
+  //   setSong(null)
+  //   setVersion(null)
+  //   if (!artists) {
+  //     fetchArtists()
+  //   }
+  // }, [setArtist, setSong, setVersion, artists, fetchArtists])
 
   function handleArtistClick(artist)  {
+    console.log('in handleArtistClick')
+    console.log('artist', artist)
     setArtist(artist)
   }
 

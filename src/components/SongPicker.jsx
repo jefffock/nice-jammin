@@ -14,11 +14,15 @@ function SongPicker ({ artists, artist, songs, filteredSongs, song, version, fet
     setSong(song)
   }
 
+
+
   useEffect(() => {
     if (artists) {
       let correctArtist = (artist) => JSON.stringify(artist.id) === params.artistId
       let index = artists.findIndex(correctArtist)
-      setArtist(artists[index])
+      if (index > -1) {
+        setArtist(artists[index])
+      }
     }
   }, [artist, artists, params, setArtist])
 

@@ -44,11 +44,11 @@ function App() {
         setUser(session.user)
       }
     })
-  }, [session])
+  })
 
   useEffect(() => {
     setUser(supabase.auth.user())
-  }, [])
+  }, [session])
 
   useEffect(() => {
     fetchProfile()
@@ -58,7 +58,7 @@ function App() {
     if (!artists) {
       fetchArtists()
     }
-  })
+  }, [artists])
 
   useEffect(() => {
     if (artist) {
@@ -281,7 +281,7 @@ useEffect(() => {
             <Route path="/" element={<Navigate to="/artists"/>}/>
             <Route path="top-contributors" element={<Leaderboard fetchLeaders={fetchLeaders} leaders={leaders}/>}/>
             <Route path="ideas" element={<Ideas fetchIdeas={fetchIdeas} ideas={ideas} countHelpfulVotesIdeas={countHelpfulVotesIdeas} username={username}
-            addOnePoint={addOnePoint}/>}/>
+            addOnePoint={addOnePoint} addTenPoints={addTenPoints}/>}/>
             <Route path="account" element={<Account fetchProfile={fetchProfile} username={username} points={points}/>}/>
             <Route path="about" element={<About />}/>
             <Route path="sign-up" element={<Auth setUser={setUser} setSession={setSession} fetchProfile={fetchProfile} showSignIn={false} showSignUp={true}/>}/>
@@ -311,11 +311,6 @@ useEffect(() => {
                   song={song} setSong={setSong} versions={versions} version={version} setVersion={setVersion} username={username}
                   countHelpfulVotesRatings={countHelpfulVotesRatings} countFunnyVotesRatings={countFunnyVotesRatings} addOnePoint={addOnePoint}/>}>
 
-                    {/* <Route path="add-rating" element={<AddRating artists={artists} artist={artist} songs={songs} song={song} user={user} fetchArtists={fetchArtists}
-                    setArtist={setArtist} setSong={setSong} fetchVersions={fetchVersions} username={username} addOnePoint={addOnePoint}
-                    addTenPoints={addTenPoints} canWrite={canWrite} calcAverageForVersion={calcAverageForVersion}
-                    fetchRatings={fetchRatings} addRatingCountToSong={addRatingCountToSong} addRatingCountToArtist={addRatingCountToArtist}
-                    />}></Route> */}
                   </Route>
                 </Route>
               </Route>
