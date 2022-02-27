@@ -44,7 +44,7 @@ function App() {
         setUser(session.user)
       }
     })
-  })
+  }, [])
 
   useEffect(() => {
     setUser(supabase.auth.user())
