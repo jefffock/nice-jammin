@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
 import { useNavigate } from 'react-router-dom'
 
@@ -10,6 +10,14 @@ export default function Auth(props) {
   const [status, setStatus] = useState('')
 
   let navigate = useNavigate();
+
+  useEffect(() => {
+    if (displayName.length > 20) {
+      setStatus('maximum username length: 20 characters')
+    } else {
+      setStatus('')
+    }
+  }, [displayName])
 
   async function signInWithEmail(email, password) {
     setLoading(true)
@@ -32,12 +40,12 @@ export default function Auth(props) {
     setStatus('Creating your account')
     if (displayName.length < 1) {
       valid = false;
-      setStatus('Although a blank username would be super cool, it needs to be at least 1 character. Thank you for understanding.')
+      setStatus('although a blank username would be super cool, it needs to be at least 1 character. Thank you for understanding.')
       setLoading(false)
     }
     if (displayName.length > 20) {
       valid = false;
-      setStatus('Maximum username length: 20 characters')
+      setStatus('maximum username length: 20 characters')
       setLoading(false)
     } if (valid) {
       const { data, error } = await supabase
@@ -47,10 +55,10 @@ export default function Auth(props) {
       if (error) {
         console.log(error)
         setLoading(false)
-        setStatus('Something went wrong, sorry about that! Please refresh the page and try again')
+        setStatus('something went wrong, sorry about that! please refresh the page and try again')
       }
       if (data.length > 0) {
-        setStatus('Great minds think alike! Someone else already has that username. Please choose another.')
+        setStatus('someone else already has that username. please choose another.')
         setLoading(false)
       } else {
         const { user, session, error } = await supabase.auth.signUp({
@@ -218,10 +226,7 @@ export default function Auth(props) {
           </p>
         </div>
         <br></br>
-        <br></br>
         </div>
-          {/* <p className="link" onClick={() => handleBackClick()}>Nevermind, I just want to browse</p> */}
-          <br></br>
         </>}
       </div>
     </div>
