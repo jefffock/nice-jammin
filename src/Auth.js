@@ -69,6 +69,15 @@ export default function Auth(props) {
     }
   }
 
+  function showPassword() {
+    let passwordBox = document.getElementById('password')
+    if (passwordBox.type === 'password') {
+      passwordBox.type = 'text'
+    } else {
+      passwordBox.type = 'password'
+    }
+  }
+
   async function createProfile(displayName, user) {
     const { error } = await supabase
       .from('profiles')
@@ -115,9 +124,13 @@ export default function Auth(props) {
           className="inputField search-bar text"
           type="password"
           placeholder="your password"
+          id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          />
+          /><br></br>
+          <label htmlFor="showPass">show password: </label>
+          <input type="checkbox" id="showPass"
+          onClick={() => showPassword()}></input>
           </div>
         </div>
         <br></br>
@@ -162,11 +175,15 @@ export default function Auth(props) {
           <label htmlFor="password">password: </label><br></br>
            <input
             className="inputField search-bar text"
-            type="password"
+            type="password" required
             placeholder="your password"
             value={password}
+            id="password"
             onChange={(e) => setPassword(e.target.value)}
-          />
+          /><br></br>
+          <label htmlFor="showPass">show password: </label>
+          <input type="checkbox" id="showPass"
+          onClick={() => showPassword()}></input>
           <br></br>
           <br></br>
           <label htmlFor="display-name">display name: </label><br></br>
