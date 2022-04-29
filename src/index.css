@@ -772,3 +772,12 @@ input[type=text] {
 .status {
   margin-top: 1em;
 }
+
+.roadmap {
+  text-align: left;
+  margin: 1em;
+}
+
+.roadmap-item {
+  margin-top: 1em;
+}

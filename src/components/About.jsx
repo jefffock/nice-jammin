@@ -61,24 +61,33 @@ function About (props) {
   return (
     <div className="support-container">
       <div className="support-wrapper">
-        <h3>mission: make &#128293; jams easier to find</h3>
+        <h3>thank you for helping make &#128293; jams easier to find</h3>
         <p><strong>{userCount} music lovers</strong> have added</p><br></br>
         <p><strong>{versionCount} versions</strong> of</p><br></br>
         <p><strong>{songCount} songs</strong> by</p><br></br>
         <p><strong>{artistCount} artists</strong></p><br></br><br></br>
-        <p>enjoying nice jammin? there are several ways you can show your support:</p>
+        <p></p>
+        <div className="roadmap">
+        <h3>Roadmap</h3>
+        <p className="roadmap-item">Home page has "Discover" - see highest versions of all songs, or filter by artist or by song or filters</p>
+        <p className="roadmap-item">Link existing jam resources for each band</p>
+        <p className="roadmap-item">Modern feel and look</p>
+        <p className="roadmap-item">Automatically add every version of every song so when you go to rate it, it's there</p>
+        <p className="roadmap-item">Your Ideas!</p>
+        </div>
+        <br></br><br/>
+        <p>Enjoying nice jammin? there are several ways you can show your support:</p>
         <br></br>
         <div className="support-list-item">
         <p className="support-list-item">1. share your knowledge by adding songs, versions, ratings, comments, and ideas.</p>
         <br></br>
-        <p className="support-list-item">2. share it with your friends.</p>
+        <p className="support-list-item">2. share this with your friends!</p>
         <br></br>
         <p className="support-list-item">3. contribute code to the <a href="https://github.com/jefffock/nice-jammin">Github repository</a></p>
         <br></br>
-        <p className="support-list-item">4. if you feel called to give financial support, you can do so through <a href="https://www.paypal.com/donate/?business=J23RPKN828CTA&no_recurring=0&item_name=Thank+you+for+supporting+Nice+Jammin%21&currency_code=USD">PayPal</a> or Venmo: @Jeff-Fox</p>
         </div>
         <br></br>
-        <p>All support is appreciated. Thank you!</p>
+        <p>Thank you!</p>
       </div>
     </div>
 
