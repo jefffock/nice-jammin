@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 
 function SongPicker ({ artists, artist, songs, filteredSongs, song, version, fetchArtists, addTenPoints, fetchVersions, username, versions,
   fetchSongs, songSearchTerm, setSongSearchTerm, setArtist, setSong, setVersion, showAddLink, setShowAddLink, linkAdded, setLinkAdded,
-  user, addOnePoint, canWrite, calcAverageForVersion, fetchRatings, addRatingCountToArtist, addRatingCountToSong }) {
+  user, addOnePoint, canWrite, calcAverageForVersion, fetchRatings, addRatingCountToArtist, addRatingCountToSong, addRatingCountToVersion }) {
 
   let params = useParams()
   let navigate = useNavigate()
@@ -43,7 +43,7 @@ function SongPicker ({ artists, artist, songs, filteredSongs, song, version, fet
     showAddLink={showAddLink} setShowAddLink={setShowAddLink} linkAdded={linkAdded}
     setLinkAdded={setLinkAdded} addTenPoints={addTenPoints} fetchVersions={fetchVersions}
     addOnePoint={addOnePoint} canWrite={canWrite} calcAverageForVersion={calcAverageForVersion}
-    fetchRatings={fetchRatings} addRatingCountToSong={addRatingCountToSong} addRatingCountToArtist={addRatingCountToArtist}/>
+    fetchRatings={fetchRatings} addRatingCountToSong={addRatingCountToSong} addRatingCountToArtist={addRatingCountToArtist} addRatingCountToVersion={addRatingCountToVersion}/>
     <Outlet />
     {params && !params.songId && params['*'] !== 'add-song' &&
       <div className="song-picker-container">

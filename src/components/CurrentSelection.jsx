@@ -5,7 +5,7 @@ import { supabase } from './../supabaseClient'
 
 function CurrentSelection({ artist, song, version, versions, setArtist, setSong, setVersion, showAddLink,
   setShowAddLink, linkAdded, setLinkAdded, addTenPoints, fetchVersions, username, user,
-  canWrite, addOnePoint, calcAverageForVersion, fetchRatings, addRatingCountToSong, addRatingCountToArtist }) {
+  canWrite, addOnePoint, calcAverageForVersion, fetchRatings, addRatingCountToSong, addRatingCountToArtist, addRatingCountToVersion }) {
   const [linkToAdd, setLinkToAdd] = useState('')
   const [addLinkStatus, setAddLinkStatus] = useState('')
   const [buttonDisabled, setButtonDisabled] = useState(false)
@@ -103,7 +103,7 @@ function CurrentSelection({ artist, song, version, versions, setArtist, setSong,
           <AddRating artist={artist} song={song} version={version} user={user} username={username} addOnePoint={addOnePoint}
           addTenPoints={addTenPoints} canWrite={canWrite} calcAverageForVersion={calcAverageForVersion} fetchVersions={fetchVersions}
           fetchRatings={fetchRatings} addRatingCountToSong={addRatingCountToSong} addRatingCountToArtist={addRatingCountToArtist}
-          setShowingAddRating={setShowingAddRating} setRatingAdded={setRatingAdded}
+          setShowingAddRating={setShowingAddRating} setRatingAdded={setRatingAdded} addRatingCountToVersion={addRatingCountToVersion}
           />}
         {ratingAdded &&
         <p className="title">Added your rating.<br></br>Thank you for contributing!</p>}

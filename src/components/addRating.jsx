@@ -4,7 +4,7 @@ import FilterChip from './FilterChip'
 
 function AddRating({ artists, artist, songs, song, versions, version, user, username, addOnePoint,
   addTenPoints, canWrite, setArtist, setSong, calcAverageForVersion, fetchRatings, fetchVersions,
-  addRatingCountToArtist, addRatingCountToSong, setShowingAddRating, setRatingAdded }) {
+  addRatingCountToArtist, addRatingCountToSong, addRatingCountToVersion, setShowingAddRating, setRatingAdded }) {
   const [rating, setRating] = useState(10);
   const [comment, setComment] = useState('');
   const [charCount, setCharCount] = useState(0)
@@ -261,6 +261,7 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
         addTenPoints(username)
         addRatingCountToSong(song.id)
         addRatingCountToArtist(artist.id)
+        addRatingCountToVersion(version.id)
         calcAverageForVersion(version.id)
         setShowingAddRating(false)
       }

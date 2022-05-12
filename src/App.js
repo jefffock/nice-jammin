@@ -224,11 +224,19 @@ useEffect(() => {
     }
   }
 
-    async function addRatingCountToSong(songId) {
-      let song_id = parseInt(songId)
+  async function addRatingCountToSong(songId) {
+    let song_id = parseInt(songId)
     const { error } = await supabase.rpc( 'increment_song_rating_count', { songid: song_id })
     if (error) {
       console.log('error adding incrementing song rating count', error)
+    }
+  }
+
+  async function addRatingCountToVersion(versionId) {
+    let version_id = parseInt(versionId)
+    const { error } = await supabase.rpc( 'increment_version_rating_count', { versionid: version_id })
+    if (error) {
+      console.log('error adding incrementing version rating count', error)
     }
   }
 
@@ -294,7 +302,7 @@ useEffect(() => {
               songSearchTerm={songSearchTerm} setArtist={setArtist} setSong={setSong} setVersion={setVersion}  showAddLink={showAddLink} username={username}
               setShowAddLink={setShowAddLink} linkAdded={linkAdded} setLinkAdded={setLinkAdded} addTenPoints={addTenPoints} fetchVersions={fetchVersions}
               user={user} addOnePoint={addOnePoint} canWrite={canWrite} fetchRatings={fetchRatings} calcAverageForVersion={calcAverageForVersion}
-              addRatingCountToArtist={addRatingCountToArtist} addRatingCountToSong={addRatingCountToSong}/>}>
+              addRatingCountToArtist={addRatingCountToArtist} addRatingCountToSong={addRatingCountToSong} addRatingCountToVersion={addRatingCountToVersion}/>}>
 
                 <Route path="add-song" element={<AddSong artist={artist} user={user} fetchSongs={fetchSongs}
                 nameToAdd={songSearchTerm} username={username} addTenPoints={addTenPoints} canWrite={canWrite}/>}/>
