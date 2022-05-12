@@ -455,15 +455,9 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
     setShowingAddRating(false)
   }
 
-  // return (
-  //   <h1>AddRating</h1>
-  // )
-
 
   return (
-    // <div className="add-rating-container">
       <div className="add-rating-wrapper">
-      {/* <h2>Your Rating</h2> */}
       {!user &&
       <h3>please sign in to contribute</h3>}
       {user &&
@@ -632,7 +626,6 @@ function AddRating({ artists, artist, songs, song, versions, version, user, user
       <button className="small-button" onClick={() => handleBackClick()}>back</button>
       </>}
       </div>
-    // </div>
   )
 
 }

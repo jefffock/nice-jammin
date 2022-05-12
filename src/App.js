@@ -226,7 +226,7 @@ useEffect(() => {
 
     async function addRatingCountToSong(songId) {
       let song_id = parseInt(songId)
-    const { error } = await supabase.rpc( 'increment_rating_count_song', { songid: song_id })
+    const { error } = await supabase.rpc( 'increment_song_rating_count', { songid: song_id })
     if (error) {
       console.log('error adding incrementing song rating count', error)
     }
