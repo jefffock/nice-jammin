@@ -114,9 +114,9 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
     if (location === '') {
       alert('Please enter a location')
       locationValid = false
-    } if (location.length > 20) {
+    } if (location.length > 60) {
       locationValid = false
-      alert('Please make the location shorter (20 characters max.)')
+      alert('Please make the location shorter (60 characters max.)')
     }
     if (date === '') {
       dateValid = false
@@ -179,6 +179,7 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
           listen_link: listenLink,
           multi_part: multiPart,
           sludgy: sludgy,
+          song_name: songName,
           synthy: synthy,
           chaotic: chaotic,
           dissonant: dissonant,
