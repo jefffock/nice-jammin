@@ -133,7 +133,6 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
   }
 
   async function insertVersion(date) {
-    console.log('songName', songName)
     setLoading(true)
     const { error } = await supabase
       .from('versions')
@@ -253,12 +252,6 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
           setShowSuccessMessage(false);
           setShowAlreadyExistsMessage(false);}
         }/>
-        {/* {filteredSongs && filteredSongs.length > 0 &&
-        <>
-        <br></br>
-        <br></br>
-        </>
-        } */}
         {filteredSongs && filteredSongs.length > 0 && songName !== song.song &&
         filteredSongs.map(song => {
           return (
