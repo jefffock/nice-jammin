@@ -365,7 +365,7 @@ useEffect(() => {
           {filteredVersions &&
           filteredVersions.map((version, index) => {
             return (
-              <div onClick={() => setVersion(version)}>
+              <div onClick={() => setVersion(version)} key={index}>
                 <Link to={`versions/${version.id}`} className="version" key={index} style={{ textDecoration: 'none' }}>
                   <Version versionData={version}
                   setVersion={setVersion}

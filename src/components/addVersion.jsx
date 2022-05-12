@@ -6,7 +6,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom'
 function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint, addTenPoints,
   canWrite, setArtist, setSong, fetchVersions}) {
   const [songExists, setSongExists] = useState(true)
-  const [songName, setSongName] = useState(() => getInitialSongName())
+  const [songName, setSongName] = useState(song ? song.song : '')
   const [filteredSongs, setFilteredSongs] = useState(null)
   const [date, setDate] = useState('')
   const [year, setYear] = useState(null)
@@ -85,15 +85,6 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
     setYear(parseInt(yearString))
   }, [date])
 
-  function getInitialSongName() {
-    if (song) {
-      return song.song
-    } else {
-      return ''
-    }
-  }
-
-
   async function testVersion(date) {
     let locationValid = true
     let dateValid = true
@@ -142,11 +133,13 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
   }
 
   async function insertVersion(date) {
+    console.log('songName', songName)
     setLoading(true)
     const { error } = await supabase
       .from('versions')
       .insert(
         [{ song_id: songId,
+          song_name: songName,
           user_id: user.id,
           submitter_name: username,
           location: location,
@@ -179,7 +172,6 @@ function AddVersion ({ artists, artist, song, songs, user, username, addOnePoint
           listen_link: listenLink,
           multi_part: multiPart,
           sludgy: sludgy,
-          song_name: songName,
           synthy: synthy,
           chaotic: chaotic,
           dissonant: dissonant,
